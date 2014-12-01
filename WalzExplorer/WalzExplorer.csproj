@@ -35,11 +35,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.14.0.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.0.14.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -84,6 +93,111 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblPerson_Person.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblProject_Project.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_Activity.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_ActivityChildActivity.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_ActivityContractor.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_ActivityLabour.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_ActivityMaterial.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_Contractor.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_ContractorType.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_Drawing.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_Item.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_LabourStandard.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_Material.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_Schedule.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_Status.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_Step.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_Supplier.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_Supplier_Material.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_UnitOfMeasure.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_WorkGroup.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_WorkGroupHeader.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTender_WorkGroupItem.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblWEX_LHSTab.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblWEX_NTSecurityGroup.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblWEX_RHSTab.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblWEX_Tree.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblWEX_TreeNode.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblWEX_TreeNodeType.cs">
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WalzExplorerModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WalzExplorerModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WalzExplorerModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WalzExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WalzExplorerModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WalzExplorerModel.edmx</DependentUpon>
+    </Compile>
     <Page Include="Controls\MainStatusBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -155,6 +269,23 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <EntityDeploy Include="WalzExplorerModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>WalzExplorerModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="WalzExplorerModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WalzExplorerModel.edmx</DependentUpon>
+      <LastGenOutput>WalzExplorerModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="WalzExplorerModel.edmx.diagram">
+      <DependentUpon>WalzExplorerModel.edmx</DependentUpon>
+    </None>
+    <None Include="WalzExplorerModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WalzExplorerModel.edmx</DependentUpon>
+      <LastGenOutput>WalzExplorerModel.cs</LastGenOutput>
+    </None>
     <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +299,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\RHSTabs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
