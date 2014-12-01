@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,23 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
 
-namespace WalzExplorer
+namespace WalzExplorer.Controls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for StatusBar.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class MainStatusBar : UserControl
     {
-        public MainWindow()
+        public MainStatusBar()
         {
             InitializeComponent();
-        }
-
-        private void tcRHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }
