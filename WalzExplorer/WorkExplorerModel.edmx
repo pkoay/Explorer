@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="WalzExplorerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="WalzExplorerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -1152,7 +1152,8 @@
             <End Role="tblWEX_TreeNodeType_RHSTab" EntitySet="tblWEX_TreeNodeType_RHSTab" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WalzExplorerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1212,9 +1213,9 @@
           <NavigationProperty Name="tblTender_LabourStandard" Relationship="Self.FK_tblTender_LabourStandard_tblTender" FromRole="tblTender" ToRole="tblTender_LabourStandard" />
           <NavigationProperty Name="tblTender_Material" Relationship="Self.FK_tblTender_Material_tblTender" FromRole="tblTender" ToRole="tblTender_Material" />
           <NavigationProperty Name="tblTender_Supplier" Relationship="Self.FK_tblTender_Supplier_tblTender" FromRole="tblTender" ToRole="tblTender_Supplier" />
+          <NavigationProperty Name="tblTender_Status" Relationship="Self.FK_tblTender_tblTender_Status" FromRole="tblTender" ToRole="tblTender_Status" />
           <NavigationProperty Name="tblTender_UnitOfMeasure" Relationship="Self.FK_tblTender_UnitOfMeasure_tblTender" FromRole="tblTender" ToRole="tblTender_UnitOfMeasure" />
           <NavigationProperty Name="tblTender_WorkGroup" Relationship="Self.FK_tblTender_WorkGroup_tblTender" FromRole="tblTender" ToRole="tblTender_WorkGroup" />
-          <NavigationProperty Name="tblTender_Status" Relationship="WalzExplorerModel.FK_tblTender_tblTender_Status" FromRole="tblTender" ToRole="tblTender_Status" />
         </EntityType>
         <EntityType Name="tblTender_Activity">
           <Key>
@@ -1440,7 +1441,7 @@
           </Key>
           <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblTenders" Relationship="WalzExplorerModel.FK_tblTender_tblTender_Status" FromRole="tblTender_Status" ToRole="tblTender" />
+          <NavigationProperty Name="tblTenders" Relationship="Self.FK_tblTender_tblTender_Status" FromRole="tblTender_Status" ToRole="tblTender" />
         </EntityType>
         <EntityType Name="tblTender_Step">
           <Key>
@@ -1699,6 +1700,18 @@
             </Principal>
             <Dependent Role="tblTender_Supplier">
               <PropertyRef Name="TenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_tblTender_Status">
+          <End Role="tblTender_Status" Type="Self.tblTender_Status" Multiplicity="1" />
+          <End Role="tblTender" Type="Self.tblTender" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_Status">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="tblTender">
+              <PropertyRef Name="StatusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2141,6 +2154,10 @@
             <End Role="tblTender" EntitySet="tblTenders" />
             <End Role="tblTender_Supplier" EntitySet="tblTender_Supplier" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblTender_tblTender_Status" Association="Self.FK_tblTender_tblTender_Status">
+            <End Role="tblTender_Status" EntitySet="tblTender_Status" />
+            <End Role="tblTender" EntitySet="tblTenders" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblTender_UnitOfMeasure_tblTender" Association="Self.FK_tblTender_UnitOfMeasure_tblTender">
             <End Role="tblTender" EntitySet="tblTenders" />
             <End Role="tblTender_UnitOfMeasure" EntitySet="tblTender_UnitOfMeasure" />
@@ -2273,23 +2290,7 @@
             <End Role="tblWEX_RHSTab" EntitySet="tblWEX_RHSTab" />
             <End Role="tblWEX_TreeNodeType" EntitySet="tblWEX_TreeNodeType" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblTender_tblTender_Status" Association="WalzExplorerModel.FK_tblTender_tblTender_Status">
-            <End Role="tblTender_Status" EntitySet="tblTender_Status" />
-            <End Role="tblTender" EntitySet="tblTenders" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_tblTender_tblTender_Status">
-          <End Type="WalzExplorerModel.tblTender_Status" Role="tblTender_Status" Multiplicity="1" />
-          <End Type="WalzExplorerModel.tblTender" Role="tblTender" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_Status">
-              <PropertyRef Name="StatusID" />
-            </Principal>
-            <Dependent Role="tblTender">
-              <PropertyRef Name="StatusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

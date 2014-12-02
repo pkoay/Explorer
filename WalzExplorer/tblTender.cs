@@ -46,8 +46,8 @@ namespace WalzExplorer
         public virtual ICollection<tblTender_LabourStandard> tblTender_LabourStandard { get; set; }
         public virtual ICollection<tblTender_Material> tblTender_Material { get; set; }
         public virtual ICollection<tblTender_Supplier> tblTender_Supplier { get; set; }
+        public virtual tblTender_Status tblTender_Status { get; set; }
         public virtual ICollection<tblTender_UnitOfMeasure> tblTender_UnitOfMeasure { get; set; }
         public virtual ICollection<tblTender_WorkGroup> tblTender_WorkGroup { get; set; }
-        public virtual tblTender_Status tblTender_Status { get; set; }
     }
 }
