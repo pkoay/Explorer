@@ -96,118 +96,132 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Database\Database.cs" />
+    <Compile Include="Controls\TreeView\NodeTreeView.xaml.cs">
+      <DependentUpon>NodeTreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TreeView\ViewModel\CanvasFromString.cs" />
+    <Compile Include="Controls\TreeView\ViewModel\NodeViewModel.cs" />
+    <Compile Include="Controls\TreeView\ViewModel\RootViewModel.cs" />
+    <Compile Include="Controls\TreeView\ViewModel\TreeViewItemViewModel.cs" />
+    <Compile Include="Model\WEXTreeRoot.cs" />
     <Compile Include="Model\WEXNode.cs" />
     <Compile Include="Model\Person.cs" />
     <Compile Include="Model\WEXRHSTab.cs" />
     <Compile Include="Model\WEXConnection.cs" />
     <Compile Include="Model\WEXUser.cs" />
-    <Compile Include="sysdiagram.cs">
+    <Compile Include="Database\spWEX_TreeRootList_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblPerson_Person.cs">
+    <Compile Include="Database\sysdiagram.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblProject_Project.cs">
+    <Compile Include="Database\tblPerson_Person.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender.cs">
+    <Compile Include="Database\tblProject_Project.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_Activity.cs">
+    <Compile Include="Database\tblTender.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_ActivityChildActivity.cs">
+    <Compile Include="Database\tblTender_Activity.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_ActivityContractor.cs">
+    <Compile Include="Database\tblTender_ActivityChildActivity.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_ActivityLabour.cs">
+    <Compile Include="Database\tblTender_ActivityContractor.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_ActivityMaterial.cs">
+    <Compile Include="Database\tblTender_ActivityLabour.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_Contractor.cs">
+    <Compile Include="Database\tblTender_ActivityMaterial.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_ContractorType.cs">
+    <Compile Include="Database\tblTender_Contractor.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_Drawing.cs">
+    <Compile Include="Database\tblTender_ContractorType.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_Item.cs">
+    <Compile Include="Database\tblTender_Drawing.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_LabourStandard.cs">
+    <Compile Include="Database\tblTender_Item.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_Material.cs">
+    <Compile Include="Database\tblTender_LabourStandard.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_Schedule.cs">
+    <Compile Include="Database\tblTender_Material.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_Status.cs">
+    <Compile Include="Database\tblTender_Schedule.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_Step.cs">
+    <Compile Include="Database\tblTender_Status.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_Supplier.cs">
+    <Compile Include="Database\tblTender_Step.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_Supplier_Material.cs">
+    <Compile Include="Database\tblTender_Supplier.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_UnitOfMeasure.cs">
+    <Compile Include="Database\tblTender_Supplier_Material.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_WorkGroup.cs">
+    <Compile Include="Database\tblTender_UnitOfMeasure.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_WorkGroupHeader.cs">
+    <Compile Include="Database\tblTender_WorkGroup.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblTender_WorkGroupItem.cs">
+    <Compile Include="Database\tblTender_WorkGroupHeader.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblWEX_LHSTab.cs">
+    <Compile Include="Database\tblTender_WorkGroupItem.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblWEX_NTSecurityGroup.cs">
+    <Compile Include="Database\tblWEX_LHSTab.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblWEX_RHSTab.cs">
+    <Compile Include="Database\tblWEX_NTSecurityGroup.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblWEX_Tree.cs">
+    <Compile Include="Database\tblWEX_RHSTab.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblWEX_TreeNode.cs">
+    <Compile Include="Database\tblWEX_Tree.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblWEX_TreeNodeType.cs">
+    <Compile Include="Database\tblWEX_TreeNode.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="WalzExplorerEntites.cs" />
-    <Compile Include="WorkExplorerModel.Context.cs">
+    <Compile Include="Database\tblWEX_TreeNodeType.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\WalzExplorerEntites.cs" />
+    <Compile Include="Database\WorkExplorerModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WorkExplorerModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="WorkExplorerModel.cs">
+    <Compile Include="Database\WorkExplorerModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="WorkExplorerModel.Designer.cs">
+    <Compile Include="Database\WorkExplorerModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WorkExplorerModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="Controls\TreeView\NodeTreeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -272,19 +286,19 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <EntityDeploy Include="WorkExplorerModel.edmx">
+    <EntityDeploy Include="Database\WorkExplorerModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>WorkExplorerModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="WorkExplorerModel.Context.tt">
+    <None Include="Database\WorkExplorerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>WorkExplorerModel.edmx</DependentUpon>
       <LastGenOutput>WorkExplorerModel.Context.cs</LastGenOutput>
     </None>
-    <None Include="WorkExplorerModel.edmx.diagram">
+    <None Include="Database\WorkExplorerModel.edmx.diagram">
       <DependentUpon>WorkExplorerModel.edmx</DependentUpon>
     </None>
-    <None Include="WorkExplorerModel.tt">
+    <None Include="Database\WorkExplorerModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>WorkExplorerModel.edmx</DependentUpon>
       <LastGenOutput>WorkExplorerModel.cs</LastGenOutput>

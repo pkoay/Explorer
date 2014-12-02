@@ -3,9 +3,42 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
                     xmlns:MahApps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:walzTreeView="clr-namespace:WalzExplorer.Controls.TreeView"
                      Title="Walz Explorer" Height="350" Width="525" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="CanResizeWithGrip"
                 
                      Loaded="MetroWindow_Loaded">
+    
+    
+    <MahApps:MetroWindow.RightWindowCommands>
+        <MahApps:WindowCommands>
+
+            <StackPanel Orientation="Horizontal">
+
+                <TextBox Name="tbSearch" KeyDown="tbSearch_KeyDown" Width="200" Height="20" Background="{DynamicResource HighlightBrush}"/>
+                <Button Name="btnSearch" Click="btnSearch_Click">
+                    <Rectangle Width="16" Height="16" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_magnify}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+            </StackPanel>
+
+            <Button>
+                <Rectangle Width="16" Height="16"
+                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cog}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+
+
+        </MahApps:WindowCommands>
+    </MahApps:MetroWindow.RightWindowCommands>
+
+
+
     <Grid>
         <DockPanel LastChildFill="True">
             <StatusBar Name="sb" DockPanel.Dock="Bottom" Background="{DynamicResource AccentColorBrush}">
@@ -25,19 +58,19 @@
                     </ItemsPanelTemplate>
                 </StatusBar.ItemsPanel>
                 <StatusBarItem>
-                    <TextBlock Name="sbStatus" Text="Some status text..."/>
+                    <TextBlock Name="sbStatus" Text=""/>
                 </StatusBarItem>
                 <Separator Grid.Column="1" />
                 <StatusBarItem Grid.Column="2">
-                    <TextBlock Name="sbUserName"/>
+                    <TextBlock Name="sbUserName" Text="User:"/>
                 </StatusBarItem>
                 <Separator Grid.Column="3" />
                 <StatusBarItem Grid.Column="4">
-                    <TextBlock Name="sbServerName" Text="Server:WALZSQL1" />
+                    <TextBlock Name="sbServerName" Text="Server:" />
                 </StatusBarItem>
                 <Separator Grid.Column="5" />
                 <StatusBarItem Grid.Column="6">
-                    <TextBlock Name="sbDatabaseName" Text="Database:Production" />
+                    <TextBlock Name="sbDatabaseName" Text="Database:" />
                 </StatusBarItem>
             </StatusBar>
             <Grid>
@@ -46,13 +79,56 @@
                     <ColumnDefinition Width="5"/>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-
+                
+                <TabControl Name="tcLHS" SelectionChanged="tcLHS_SelectionChanged">
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource TextBrush}" Margin="0,0,10,0">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_user}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Text="Role" />
+                            </StackPanel>
+                        </TabItem.Header>
+                        <walzTreeView:NodeTreeView x:Name="tvRole" NodeChanged="tvLHS_NodeChanged"/>
+                    </TabItem>
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource TextBrush}" Margin="0,0,10,0">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_star}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Text="Favourites" />
+                            </StackPanel>
+                        </TabItem.Header>
+                        <TreeView></TreeView>
+                        <!--<walzNodeTreeView:NodeTreeView x:Name="tvFavourites" NodeChanged="tvLHS_NodeChanged" />-->
+                    </TabItem>
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource TextBrush}" Margin="0,0,10,0">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_magnify}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Text="Search" />
+                            </StackPanel>
+                        </TabItem.Header>
+                        <TreeView></TreeView>
+                        <!--<walzNodeTreeView:NodeTreeView x:Name="tvSearch"  NodeChanged="tvLHS_NodeChanged"/>-->
+                    </TabItem>
+                </TabControl>
                 <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
                 <TabControl Name="tcRHS" Grid.Column="2" ItemsSource="{Binding RHSTabs}" SelectionChanged="tcRHS_SelectionChanged" >
 
                 </TabControl>
             </Grid>
-            <telerik:RadGridView />
+            
         </DockPanel>
     </Grid>
 </MahApps:MetroWindow>

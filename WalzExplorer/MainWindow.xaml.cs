@@ -18,6 +18,7 @@ using MahApps.Metro.Controls;
 using System.Security.Principal;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using WalzExplorer.Database;
 
 namespace WalzExplorer
 {
@@ -46,10 +47,30 @@ namespace WalzExplorer
 
 
             WalzExplorerEntities we = new WalzExplorerEntities();
+           
             sbDatabaseName.Text = "Database: " + we.Database.Connection.Database;
             sbServerName.Text = "Server: " + we.Database.Connection.DataSource;
 
      
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void tbSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void tcLHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void tvLHS_NodeChanged(object sender, EventArgs e)
+        {
         }
     }
 }

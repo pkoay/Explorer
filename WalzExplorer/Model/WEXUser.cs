@@ -6,6 +6,7 @@ using System.DirectoryServices.AccountManagement;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity.Core.Objects;
+using WalzExplorer.Database;
 
 namespace WalzExplorer
 {
