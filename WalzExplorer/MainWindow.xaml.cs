@@ -27,8 +27,7 @@ namespace WalzExplorer
     public partial class MainWindow : MetroWindow
     {
         public WEXUser user = new WEXUser();
-        private string connectionString;
-
+        
 
         public MainWindow()
         {
