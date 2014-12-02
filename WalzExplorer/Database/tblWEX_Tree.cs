@@ -22,10 +22,9 @@ namespace WalzExplorer.Database
         public string TreeID { get; set; }
         public string LHSTabID { get; set; }
         public int Order { get; set; }
-        public string RootTreeNodeID { get; set; }
+        public string RootSQL { get; set; }
     
         public virtual tblWEX_LHSTab tblWEX_LHSTab { get; set; }
-        public virtual tblWEX_TreeNode tblWEX_TreeNode { get; set; }
         public virtual ICollection<tblWEX_NTSecurityGroup> tblWEX_NTSecurityGroup { get; set; }
     }
 }

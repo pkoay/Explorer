@@ -10,18 +10,14 @@
 namespace WalzExplorer.Database
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblWEX_TreeNode
+    public partial class spWEX_Node_TenderComponentList_Result
     {
-        public tblWEX_TreeNode()
-        {
-            this.tblWEX_Tree = new HashSet<tblWEX_Tree>();
-        }
-    
-        public string TreeNodeID { get; set; }
-        public string SQL { get; set; }
-    
-        public virtual ICollection<tblWEX_Tree> tblWEX_Tree { get; set; }
+        public string NodeType { get; set; }
+        public string NodeDescription { get; set; }
+        public int NodeID { get; set; }
+        public string NodeIconOpen { get; set; }
+        public string NodeIconClosed { get; set; }
+        public string NodeChildSQL { get; set; }
     }
 }

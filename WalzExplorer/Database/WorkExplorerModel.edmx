@@ -350,7 +350,7 @@
           <Property Name="TreeID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LHSTabID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Order" Type="int" Nullable="false" />
-          <Property Name="RootTreeNodeID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RootSQL" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="tblWEX_Tree_Security">
           <Key>
@@ -359,13 +359,6 @@
           </Key>
           <Property Name="TreeID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="NTSecurityGroup" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblWEX_TreeNode">
-          <Key>
-            <PropertyRef Name="TreeNodeID" />
-          </Key>
-          <Property Name="TreeNodeID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="SQL" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="tblWEX_TreeNodeType">
           <Key>
@@ -897,18 +890,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_WIMS_Tree_WIMS_TreeNode">
-          <End Role="tblWEX_TreeNode" Type="Self.tblWEX_TreeNode" Multiplicity="1" />
-          <End Role="tblWEX_Tree" Type="Self.tblWEX_Tree" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblWEX_TreeNode">
-              <PropertyRef Name="TreeNodeID" />
-            </Principal>
-            <Dependent Role="tblWEX_Tree">
-              <PropertyRef Name="RootTreeNodeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_WIMS_TreeNodeType_Tab_WIMS_Tab">
           <End Role="tblWEX_RHSTab" Type="Self.tblWEX_RHSTab" Multiplicity="1" />
           <End Role="tblWEX_TreeNodeType_RHSTab" Type="Self.tblWEX_TreeNodeType_RHSTab" Multiplicity="*" />
@@ -933,6 +914,269 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="fnCommon_Split_VarcharToTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnCommon.Split_VarcharToTable">
+          <Parameter Name="input" Type="varchar(max)" Mode="In" />
+          <Parameter Name="seperator" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Value" Type="varchar(max)" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fnTender_Activity_List" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_List">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="TopParentID" Type="int" Nullable="false" />
+                <Property Name="ComponentID" Type="int" Nullable="false" />
+                <Property Name="Structure" Type="varchar(max)" />
+                <Property Name="Level" Type="int" Nullable="false" />
+                <Property Name="Quantity" Type="float" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fnTender_Activity_List_ForActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_List_ForActivity">
+          <Parameter Name="ComponentID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="TopParentID" Type="int" Nullable="false" />
+                <Property Name="ComponentID" Type="int" Nullable="false" />
+                <Property Name="Structure" Type="varchar(max)" />
+                <Property Name="Level" Type="int" Nullable="false" />
+                <Property Name="Quantity" Type="float" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fnTender_Activity_ListDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_ListDetail">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="SchedCode" Type="varchar(max)" />
+                <Property Name="SchedTitle" Type="varchar(max)" />
+                <Property Name="ComponentStructure" Type="varchar(max)" />
+                <Property Name="ComponentTitle" Type="varchar(max)" />
+                <Property Name="EstQty" Type="float" />
+                <Property Name="CompQty" Type="float" />
+                <Property Name="ItemStep" Type="varchar(max)" />
+                <Property Name="ItemType" Type="varchar(max)" />
+                <Property Name="ItemTitle" Type="varchar(max)" />
+                <Property Name="TotalQuantity" Type="float" />
+                <Property Name="TotalCost" Type="float" />
+                <Property Name="TotalCharge" Type="float" />
+                <Property Name="TotalHours" Type="float" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fnTender_Activity_ListDetail_GivenComponentID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_ListDetail_GivenComponentID">
+          <Parameter Name="ComponentID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ComponentStructure" Type="varchar" MaxLength="255" />
+                <Property Name="ComponentTitle" Type="varchar" MaxLength="50" />
+                <Property Name="ComponentQuantity" Type="float" />
+                <Property Name="ItemStep" Type="varchar" MaxLength="50" />
+                <Property Name="ItemType" Type="varchar" MaxLength="50" />
+                <Property Name="ItemTitle" Type="varchar" MaxLength="255" />
+                <Property Name="TotalQuantity" Type="float" />
+                <Property Name="TotalCost" Type="float" />
+                <Property Name="TotalCharge" Type="float" />
+                <Property Name="TotalHours" Type="float" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fnTender_Activity_ListDetail_GivenScheduleID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_ListDetail_GivenScheduleID">
+          <Parameter Name="ScheduleID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="SchedCode" Type="varchar(max)" />
+                <Property Name="SchedTitle" Type="varchar(max)" />
+                <Property Name="ComponentStructure" Type="varchar(max)" />
+                <Property Name="ComponentTitle" Type="varchar(max)" />
+                <Property Name="EstQty" Type="float" />
+                <Property Name="CompQty" Type="float" />
+                <Property Name="ItemStep" Type="varchar(max)" />
+                <Property Name="ItemType" Type="varchar(max)" />
+                <Property Name="ItemTitle" Type="varchar(max)" />
+                <Property Name="TotalQuantity" Type="float" />
+                <Property Name="TotalCost" Type="float" />
+                <Property Name="TotalCharge" Type="float" />
+                <Property Name="TotalHours" Type="float" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fnTender_Activity_UsedALL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_UsedALL">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="TopParentID" Type="int" Nullable="false" />
+                <Property Name="ComponentID" Type="int" Nullable="false" />
+                <Property Name="Structure" Type="varchar(max)" />
+                <Property Name="Level" Type="int" Nullable="false" />
+                <Property Name="BaseCost" Type="float" Nullable="false" />
+                <Property Name="MultipliedCost" Type="float" />
+                <Property Name="RolledUpCost" Type="float" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fnTender_Activity_UsedDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_UsedDetail">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="TopParentID" Type="int" Nullable="false" />
+                <Property Name="ComponentID" Type="int" Nullable="false" />
+                <Property Name="Structure" Type="varchar(max)" />
+                <Property Name="Level" Type="int" Nullable="false" />
+                <Property Name="BaseCost" Type="float" Nullable="false" />
+                <Property Name="MultipliedCost" Type="float" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fnTender_Activity_UsedRolledUp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_UsedRolledUp">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ComponentID" Type="int" Nullable="false" />
+                <Property Name="RolledUpCost" Type="float" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fnTender_ActivityBaseCost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.ActivityBaseCost">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ComponentID" Type="int" Nullable="false" />
+                <Property Name="BaseLabourCost" Type="float" />
+                <Property Name="BaseMaterialCost" Type="float" />
+                <Property Name="BaseContractorCost" Type="float" />
+                <Property Name="BaseTotalCost" Type="float" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fnTender_ActivityRolledUpCost2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.ActivityRolledUpCost2">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ComponentID" Type="int" Nullable="false" />
+                <Property Name="RolledUpCost" Type="float" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fnTender_Schedule_List" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Schedule_List">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="TopParentID" Type="int" Nullable="false" />
+                <Property Name="ScheduleID" Type="int" Nullable="false" />
+                <Property Name="Structure" Type="varchar(max)" />
+                <Property Name="Level" Type="int" Nullable="false" />
+                <Property Name="SortOrder" Type="float" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spTender_CloneActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spTender.CloneActivity">
+          <Parameter Name="ComponentID" Type="int" Mode="In" />
+          <Parameter Name="Factor" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spTender_Drawing_ComboList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spTender.Drawing_ComboList">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spTender_Schedule_ComboList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spTender.Schedule_ComboList">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spWEX_Node_AllProjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_AllProjects" />
+        <Function Name="spWEX_Node_AllProjectsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_AllProjectsList" />
+        <Function Name="spWEX_Node_FoundProjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_FoundProjects" />
+        <Function Name="spWEX_Node_FoundProjectsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_FoundProjectsList">
+          <Parameter Name="SearchString" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="spWEX_Node_MyProjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_MyProjects" />
+        <Function Name="spWEX_Node_MyProjectsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_MyProjectsList">
+          <Parameter Name="UserPersonID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="spWEX_Node_TenderComponentList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderComponentList">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+          <Parameter Name="ComponentParentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spWEX_Node_TenderDrawingList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderDrawingList">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spWEX_Node_TenderFolders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderFolders">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spWEX_Node_TendersAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TendersAll" />
+        <Function Name="spWEX_Node_TendersAllList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TendersAllList" />
+        <Function Name="spWEX_Node_TenderScheduleAndActivityList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderScheduleAndActivityList">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+          <Parameter Name="ScheduleParentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spWEX_Node_TenderSetupList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderSetupList">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spWEX_Node_TendersOpen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TendersOpen" />
+        <Function Name="spWEX_Node_TendersOpenList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TendersOpenList" />
+        <Function Name="spWEX_Node_TendersWorkGroupList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TendersWorkGroupList">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spWEX_RHSTabList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHSTabList">
+          <Parameter Name="TreeNodeTypeID" Type="varchar" Mode="In" />
+          <Parameter Name="NTSecurityGroups" Type="varchar(max)" Mode="In" />
+          <Parameter Name="NTSecurityGroupsSeperator" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="spWEX_TreeRootList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.TreeRootList">
           <Parameter Name="LHSTabID" Type="varchar" Mode="In" />
           <Parameter Name="NTSecurityGroups" Type="varchar(max)" Mode="In" />
@@ -969,7 +1213,6 @@
           <EntitySet Name="tblWEX_RHSTab_Security" EntityType="Self.tblWEX_RHSTab_Security" Schema="dbo" Table="tblWEX.RHSTab_Security" store:Type="Tables" />
           <EntitySet Name="tblWEX_Tree" EntityType="Self.tblWEX_Tree" Schema="dbo" Table="tblWEX.Tree" store:Type="Tables" />
           <EntitySet Name="tblWEX_Tree_Security" EntityType="Self.tblWEX_Tree_Security" Schema="dbo" Table="tblWEX.Tree_Security" store:Type="Tables" />
-          <EntitySet Name="tblWEX_TreeNode" EntityType="Self.tblWEX_TreeNode" Schema="dbo" Table="tblWEX.TreeNode" store:Type="Tables" />
           <EntitySet Name="tblWEX_TreeNodeType" EntityType="Self.tblWEX_TreeNodeType" Schema="dbo" Table="tblWEX.TreeNodeType" store:Type="Tables" />
           <EntitySet Name="tblWEX_TreeNodeType_RHSTab" EntityType="Self.tblWEX_TreeNodeType_RHSTab" Schema="dbo" Table="tblWEX.TreeNodeType_RHSTab" store:Type="Tables" />
           <AssociationSet Name="FK_Project_Project_Person_Person" Association="Self.FK_Project_Project_Person_Person">
@@ -1143,10 +1386,6 @@
           <AssociationSet Name="FK_WIMS_Tree_Security_WIMS_Tree" Association="Self.FK_WIMS_Tree_Security_WIMS_Tree">
             <End Role="tblWEX_Tree" EntitySet="tblWEX_Tree" />
             <End Role="tblWEX_Tree_Security" EntitySet="tblWEX_Tree_Security" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WIMS_Tree_WIMS_TreeNode" Association="Self.FK_WIMS_Tree_WIMS_TreeNode">
-            <End Role="tblWEX_TreeNode" EntitySet="tblWEX_TreeNode" />
-            <End Role="tblWEX_Tree" EntitySet="tblWEX_Tree" />
           </AssociationSet>
           <AssociationSet Name="FK_WIMS_TreeNodeType_Tab_WIMS_Tab" Association="Self.FK_WIMS_TreeNodeType_Tab_WIMS_Tab">
             <End Role="tblWEX_RHSTab" EntitySet="tblWEX_RHSTab" />
@@ -1579,18 +1818,9 @@
           <Property Name="TreeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LHSTabID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Order" Type="Int32" Nullable="false" />
-          <Property Name="RootTreeNodeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="tblWEX_LHSTab" Relationship="Self.FK_WEX_Tree_WEX_LHSTab" FromRole="tblWEX_Tree" ToRole="tblWEX_LHSTab" />
-          <NavigationProperty Name="tblWEX_TreeNode" Relationship="Self.FK_WIMS_Tree_WIMS_TreeNode" FromRole="tblWEX_Tree" ToRole="tblWEX_TreeNode" />
           <NavigationProperty Name="tblWEX_NTSecurityGroup" Relationship="Self.tblWEX_Tree_Security" FromRole="tblWEX_Tree" ToRole="tblWEX_NTSecurityGroup" />
-        </EntityType>
-        <EntityType Name="tblWEX_TreeNode">
-          <Key>
-            <PropertyRef Name="TreeNodeID" />
-          </Key>
-          <Property Name="TreeNodeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SQL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblWEX_Tree" Relationship="Self.FK_WIMS_Tree_WIMS_TreeNode" FromRole="tblWEX_TreeNode" ToRole="tblWEX_Tree" />
+          <Property Name="RootSQL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblWEX_TreeNodeType">
           <Key>
@@ -2067,18 +2297,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_WIMS_Tree_WIMS_TreeNode">
-          <End Role="tblWEX_TreeNode" Type="Self.tblWEX_TreeNode" Multiplicity="1" />
-          <End Role="tblWEX_Tree" Type="Self.tblWEX_Tree" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblWEX_TreeNode">
-              <PropertyRef Name="TreeNodeID" />
-            </Principal>
-            <Dependent Role="tblWEX_Tree">
-              <PropertyRef Name="RootTreeNodeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="tblWEX_RHSTab_Security">
           <End Role="tblWEX_NTSecurityGroup" Type="Self.tblWEX_NTSecurityGroup" Multiplicity="*" />
           <End Role="tblWEX_RHSTab" Type="Self.tblWEX_RHSTab" Multiplicity="*" />
@@ -2120,7 +2338,6 @@
           <EntitySet Name="tblWEX_NTSecurityGroup" EntityType="Self.tblWEX_NTSecurityGroup" />
           <EntitySet Name="tblWEX_RHSTab" EntityType="Self.tblWEX_RHSTab" />
           <EntitySet Name="tblWEX_Tree" EntityType="Self.tblWEX_Tree" />
-          <EntitySet Name="tblWEX_TreeNode" EntityType="Self.tblWEX_TreeNode" />
           <EntitySet Name="tblWEX_TreeNodeType" EntityType="Self.tblWEX_TreeNodeType" />
           <AssociationSet Name="FK_Project_Project_Person_Person" Association="Self.FK_Project_Project_Person_Person">
             <End Role="tblPerson_Person" EntitySet="tblPerson_Person" />
@@ -2278,10 +2495,6 @@
             <End Role="tblWEX_LHSTab" EntitySet="tblWEX_LHSTab" />
             <End Role="tblWEX_Tree" EntitySet="tblWEX_Tree" />
           </AssociationSet>
-          <AssociationSet Name="FK_WIMS_Tree_WIMS_TreeNode" Association="Self.FK_WIMS_Tree_WIMS_TreeNode">
-            <End Role="tblWEX_TreeNode" EntitySet="tblWEX_TreeNode" />
-            <End Role="tblWEX_Tree" EntitySet="tblWEX_Tree" />
-          </AssociationSet>
           <AssociationSet Name="tblWEX_RHSTab_Security" Association="Self.tblWEX_RHSTab_Security">
             <End Role="tblWEX_NTSecurityGroup" EntitySet="tblWEX_NTSecurityGroup" />
             <End Role="tblWEX_RHSTab" EntitySet="tblWEX_RHSTab" />
@@ -2299,10 +2512,336 @@
             <Parameter Name="NTSecurityGroups" Mode="In" Type="String" />
             <Parameter Name="NTSecurityGroupsSeperator" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="fnCommon_Split_VarcharToTable" IsComposable="true" ReturnType="Collection(String)">
+            <Parameter Name="input" Mode="In" Type="String" />
+            <Parameter Name="seperator" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="fnTender_Activity_List" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_List_Result)">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fnTender_Activity_List_ForActivity" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_List_ForActivity_Result)">
+          <Parameter Name="ComponentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fnTender_Activity_ListDetail" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_ListDetail_Result)">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fnTender_Activity_ListDetail_GivenComponentID" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_ListDetail_GivenComponentID_Result)">
+          <Parameter Name="ComponentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fnTender_Activity_ListDetail_GivenScheduleID" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_ListDetail_GivenScheduleID_Result)">
+          <Parameter Name="ScheduleID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fnTender_Activity_UsedALL" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_UsedALL_Result)">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fnTender_Activity_UsedDetail" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_UsedDetail_Result)">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fnTender_Activity_UsedRolledUp" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_UsedRolledUp_Result)">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fnTender_ActivityBaseCost" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_ActivityBaseCost_Result)">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fnTender_ActivityRolledUpCost2" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_ActivityRolledUpCost2_Result)">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fnTender_Schedule_List" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Schedule_List_Result)">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(WalzExplorerModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(WalzExplorerModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="spTender_CloneActivity">
+            <Parameter Name="ComponentID" Mode="In" Type="Int32" />
+            <Parameter Name="Factor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spTender_Drawing_ComboList">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spTender_Schedule_ComboList">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_Node_AllProjects" ReturnType="Collection(WalzExplorerModel.spWEX_Node_AllProjects_Result)" />
+          <FunctionImport Name="spWEX_Node_AllProjectsList" />
+          <FunctionImport Name="spWEX_Node_FoundProjects" ReturnType="Collection(WalzExplorerModel.spWEX_Node_FoundProjects_Result)" />
+          <FunctionImport Name="spWEX_Node_FoundProjectsList">
+          <Parameter Name="SearchString" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_Node_MyProjects" ReturnType="Collection(WalzExplorerModel.spWEX_Node_MyProjects_Result)" />
+          <FunctionImport Name="spWEX_Node_MyProjectsList">
+          <Parameter Name="UserPersonID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_Node_TenderComponentList" ReturnType="Collection(WalzExplorerModel.spWEX_Node_TenderComponentList_Result)">
+            <Parameter Name="TenderID" Mode="In" Type="Int32" />
+            <Parameter Name="ComponentParentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_Node_TenderDrawingList" ReturnType="Collection(WalzExplorerModel.spWEX_Node_TenderDrawingList_Result)">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_Node_TenderFolders" ReturnType="Collection(WalzExplorerModel.spWEX_Node_TenderFolders_Result)">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_Node_TendersAll" ReturnType="Collection(WalzExplorerModel.spWEX_Node_TendersAll_Result)" />
+          <FunctionImport Name="spWEX_Node_TendersAllList" ReturnType="Collection(WalzExplorerModel.spWEX_Node_TendersAllList_Result)" />
+          <FunctionImport Name="spWEX_Node_TenderScheduleAndActivityList" ReturnType="Collection(WalzExplorerModel.spWEX_Node_TenderScheduleAndActivityList_Result)">
+            <Parameter Name="TenderID" Mode="In" Type="Int32" />
+            <Parameter Name="ScheduleParentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_Node_TenderSetupList" ReturnType="Collection(WalzExplorerModel.spWEX_Node_TenderSetupList_Result)">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_Node_TendersOpen" ReturnType="Collection(WalzExplorerModel.spWEX_Node_TendersOpen_Result)" />
+          <FunctionImport Name="spWEX_Node_TendersOpenList" ReturnType="Collection(WalzExplorerModel.spWEX_Node_TendersOpenList_Result)" />
+          <FunctionImport Name="spWEX_Node_TendersWorkGroupList" ReturnType="Collection(WalzExplorerModel.spWEX_Node_TendersWorkGroupList_Result)">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_RHSTabList">
+            <Parameter Name="TreeNodeTypeID" Mode="In" Type="String" />
+            <Parameter Name="NTSecurityGroups" Mode="In" Type="String" />
+            <Parameter Name="NTSecurityGroupsSeperator" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="spWEX_TreeRootList_Result">
           <Property Type="String" Name="TreeID" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="SQL" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="fnTender_Activity_List_Result">
+          <Property Type="Int32" Name="TopParentID" Nullable="false" />
+          <Property Type="Int32" Name="ComponentID" Nullable="false" />
+          <Property Type="String" Name="Structure" Nullable="true" />
+          <Property Type="Int32" Name="Level" Nullable="false" />
+          <Property Type="Double" Name="Quantity" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="fnTender_Activity_List_ForActivity_Result">
+          <Property Type="Int32" Name="TopParentID" Nullable="false" />
+          <Property Type="Int32" Name="ComponentID" Nullable="false" />
+          <Property Type="String" Name="Structure" Nullable="true" />
+          <Property Type="Int32" Name="Level" Nullable="false" />
+          <Property Type="Double" Name="Quantity" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="fnTender_Activity_ListDetail_Result">
+          <Property Type="String" Name="SchedCode" Nullable="true" />
+          <Property Type="String" Name="SchedTitle" Nullable="true" />
+          <Property Type="String" Name="ComponentStructure" Nullable="true" />
+          <Property Type="String" Name="ComponentTitle" Nullable="true" />
+          <Property Type="Double" Name="EstQty" Nullable="true" />
+          <Property Type="Double" Name="CompQty" Nullable="true" />
+          <Property Type="String" Name="ItemStep" Nullable="true" />
+          <Property Type="String" Name="ItemType" Nullable="true" />
+          <Property Type="String" Name="ItemTitle" Nullable="true" />
+          <Property Type="Double" Name="TotalQuantity" Nullable="true" />
+          <Property Type="Double" Name="TotalCost" Nullable="true" />
+          <Property Type="Double" Name="TotalCharge" Nullable="true" />
+          <Property Type="Double" Name="TotalHours" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fnTender_Activity_ListDetail_GivenComponentID_Result">
+          <Property Type="String" Name="ComponentStructure" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ComponentTitle" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="ComponentQuantity" Nullable="true" />
+          <Property Type="String" Name="ItemStep" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ItemType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ItemTitle" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="TotalQuantity" Nullable="true" />
+          <Property Type="Double" Name="TotalCost" Nullable="true" />
+          <Property Type="Double" Name="TotalCharge" Nullable="true" />
+          <Property Type="Double" Name="TotalHours" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fnTender_Activity_ListDetail_GivenScheduleID_Result">
+          <Property Type="String" Name="SchedCode" Nullable="true" />
+          <Property Type="String" Name="SchedTitle" Nullable="true" />
+          <Property Type="String" Name="ComponentStructure" Nullable="true" />
+          <Property Type="String" Name="ComponentTitle" Nullable="true" />
+          <Property Type="Double" Name="EstQty" Nullable="true" />
+          <Property Type="Double" Name="CompQty" Nullable="true" />
+          <Property Type="String" Name="ItemStep" Nullable="true" />
+          <Property Type="String" Name="ItemType" Nullable="true" />
+          <Property Type="String" Name="ItemTitle" Nullable="true" />
+          <Property Type="Double" Name="TotalQuantity" Nullable="true" />
+          <Property Type="Double" Name="TotalCost" Nullable="true" />
+          <Property Type="Double" Name="TotalCharge" Nullable="true" />
+          <Property Type="Double" Name="TotalHours" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fnTender_Activity_UsedALL_Result">
+          <Property Type="Int32" Name="TopParentID" Nullable="false" />
+          <Property Type="Int32" Name="ComponentID" Nullable="false" />
+          <Property Type="String" Name="Structure" Nullable="true" />
+          <Property Type="Int32" Name="Level" Nullable="false" />
+          <Property Type="Double" Name="BaseCost" Nullable="false" />
+          <Property Type="Double" Name="MultipliedCost" Nullable="true" />
+          <Property Type="Double" Name="RolledUpCost" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fnTender_Activity_UsedDetail_Result">
+          <Property Type="Int32" Name="TopParentID" Nullable="false" />
+          <Property Type="Int32" Name="ComponentID" Nullable="false" />
+          <Property Type="String" Name="Structure" Nullable="true" />
+          <Property Type="Int32" Name="Level" Nullable="false" />
+          <Property Type="Double" Name="BaseCost" Nullable="false" />
+          <Property Type="Double" Name="MultipliedCost" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fnTender_Activity_UsedRolledUp_Result">
+          <Property Type="Int32" Name="ComponentID" Nullable="false" />
+          <Property Type="Double" Name="RolledUpCost" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fnTender_ActivityBaseCost_Result">
+          <Property Type="Int32" Name="ComponentID" Nullable="false" />
+          <Property Type="Double" Name="BaseLabourCost" Nullable="true" />
+          <Property Type="Double" Name="BaseMaterialCost" Nullable="true" />
+          <Property Type="Double" Name="BaseContractorCost" Nullable="true" />
+          <Property Type="Double" Name="BaseTotalCost" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fnTender_ActivityRolledUpCost2_Result">
+          <Property Type="Int32" Name="ComponentID" Nullable="false" />
+          <Property Type="Double" Name="RolledUpCost" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fnTender_Schedule_List_Result">
+          <Property Type="Int32" Name="TopParentID" Nullable="false" />
+          <Property Type="Int32" Name="ScheduleID" Nullable="false" />
+          <Property Type="String" Name="Structure" Nullable="true" />
+          <Property Type="Int32" Name="Level" Nullable="false" />
+          <Property Type="Double" Name="SortOrder" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spWEX_Node_AllProjects_Result">
+          <Property Type="String" Name="NodeType" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="NodeDescription" Nullable="false" MaxLength="12" />
+          <Property Type="String" Name="NodeID" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="NodeIconOpen" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="NodeIconClosed" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="NodeChildSQL" Nullable="false" MaxLength="22" />
+        </ComplexType>
+        <ComplexType Name="spWEX_Node_FoundProjects_Result">
+          <Property Type="String" Name="NodeType" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="NodeDescription" Nullable="false" MaxLength="14" />
+          <Property Type="String" Name="NodeID" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="NodeIconOpen" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="NodeIconClosed" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="NodeChildSQL" Nullable="false" MaxLength="53" />
+        </ComplexType>
+        <ComplexType Name="spWEX_Node_MyProjects_Result">
+          <Property Type="String" Name="NodeType" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="NodeDescription" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="NodeID" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="NodeIconOpen" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="NodeIconClosed" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="NodeChildSQL" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="spWEX_Node_TenderComponentList_Result">
+          <Property Type="String" Name="NodeType" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="NodeDescription" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="NodeID" Nullable="false" />
+          <Property Type="String" Name="NodeIconOpen" Nullable="false" MaxLength="16" />
+          <Property Type="String" Name="NodeIconClosed" Nullable="false" MaxLength="16" />
+          <Property Type="String" Name="NodeChildSQL" Nullable="true" MaxLength="158" />
+        </ComplexType>
+        <ComplexType Name="spWEX_Node_TenderDrawingList_Result">
+          <Property Type="String" Name="NodeType" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="NodeDescription" Nullable="false" MaxLength="102" />
+          <Property Type="Int32" Name="NodeID" Nullable="false" />
+          <Property Type="String" Name="NodeIconOpen" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="NodeIconClosed" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="NodeChildSQL" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="spWEX_Node_TenderFolders_Result">
+          <Property Type="String" Name="NodeType" Nullable="false" MaxLength="21" />
+          <Property Type="String" Name="NodeDescription" Nullable="false" MaxLength="14" />
+          <Property Type="Int32" Name="NodeID" Nullable="true" />
+          <Property Type="String" Name="NodeIconOpen" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="NodeIconClosed" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="NodeChildSQL" Nullable="true" MaxLength="121" />
+        </ComplexType>
+        <ComplexType Name="spWEX_Node_TendersAll_Result">
+          <Property Type="String" Name="NodeType" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="NodeDescription" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="NodeID" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="NodeIconOpen" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="NodeIconClosed" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="NodeChildSQL" Nullable="false" MaxLength="21" />
+        </ComplexType>
+        <ComplexType Name="spWEX_Node_TendersAllList_Result">
+          <Property Type="String" Name="NodeType" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="NodeDescription" Nullable="false" MaxLength="101" />
+          <Property Type="Int32" Name="NodeID" Nullable="false" />
+          <Property Type="String" Name="NodeIconOpen" Nullable="false" MaxLength="12" />
+          <Property Type="String" Name="NodeIconClosed" Nullable="false" MaxLength="12" />
+          <Property Type="String" Name="NodeChildSQL" Nullable="true" MaxLength="81" />
+        </ComplexType>
+        <ComplexType Name="spWEX_Node_TenderScheduleAndActivityList_Result">
+          <Property Type="String" Name="NodeType" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="NodeDescription" Nullable="false" MaxLength="306" />
+          <Property Type="Int32" Name="NodeID" Nullable="false" />
+          <Property Type="String" Name="NodeIconOpen" Nullable="false" MaxLength="16" />
+          <Property Type="String" Name="NodeIconClosed" Nullable="false" MaxLength="16" />
+          <Property Type="String" Name="NodeChildSQL" Nullable="true" MaxLength="167" />
+        </ComplexType>
+        <ComplexType Name="spWEX_Node_TenderSetupList_Result">
+          <Property Type="String" Name="NodeType" Nullable="false" MaxLength="32" />
+          <Property Type="String" Name="NodeDescription" Nullable="false" MaxLength="16" />
+          <Property Type="Int32" Name="NodeID" Nullable="true" />
+          <Property Type="String" Name="NodeIconOpen" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="NodeIconClosed" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="NodeChildSQL" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="spWEX_Node_TendersOpen_Result">
+          <Property Type="String" Name="NodeType" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="NodeDescription" Nullable="false" MaxLength="12" />
+          <Property Type="String" Name="NodeID" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="NodeIconOpen" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="NodeIconClosed" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="NodeChildSQL" Nullable="false" MaxLength="22" />
+        </ComplexType>
+        <ComplexType Name="spWEX_Node_TendersOpenList_Result">
+          <Property Type="String" Name="NodeType" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="NodeDescription" Nullable="false" MaxLength="101" />
+          <Property Type="Int32" Name="NodeID" Nullable="false" />
+          <Property Type="String" Name="NodeIconOpen" Nullable="false" MaxLength="12" />
+          <Property Type="String" Name="NodeIconClosed" Nullable="false" MaxLength="12" />
+          <Property Type="String" Name="NodeChildSQL" Nullable="true" MaxLength="81" />
+        </ComplexType>
+        <ComplexType Name="spWEX_Node_TendersWorkGroupList_Result">
+          <Property Type="String" Name="NodeType" Nullable="false" MaxLength="34" />
+          <Property Type="String" Name="NodeDescription" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="NodeID" Nullable="true" />
+          <Property Type="String" Name="NodeIconOpen" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="NodeIconClosed" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="NodeChildSQL" Nullable="false" MaxLength="1" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2669,18 +3208,10 @@
           <EntitySetMapping Name="tblWEX_Tree">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblWEX_Tree">
               <MappingFragment StoreEntitySet="tblWEX_Tree">
+                <ScalarProperty Name="RootSQL" ColumnName="RootSQL" />
                 <ScalarProperty Name="TreeID" ColumnName="TreeID" />
                 <ScalarProperty Name="LHSTabID" ColumnName="LHSTabID" />
                 <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="RootTreeNodeID" ColumnName="RootTreeNodeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblWEX_TreeNode">
-            <EntityTypeMapping TypeName="WalzExplorerModel.tblWEX_TreeNode">
-              <MappingFragment StoreEntitySet="tblWEX_TreeNode">
-                <ScalarProperty Name="TreeNodeID" ColumnName="TreeNodeID" />
-                <ScalarProperty Name="SQL" ColumnName="SQL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2723,6 +3254,333 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fnCommon_Split_VarcharToTable" FunctionName="WalzExplorerModel.Store.fnCommon_Split_VarcharToTable" />
+          <FunctionImportMapping FunctionImportName="fnTender_Activity_List" FunctionName="WalzExplorerModel.Store.fnTender_Activity_List">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_List_Result">
+                <ScalarProperty Name="TopParentID" ColumnName="TopParentID" />
+                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
+                <ScalarProperty Name="Structure" ColumnName="Structure" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fnTender_Activity_List_ForActivity" FunctionName="WalzExplorerModel.Store.fnTender_Activity_List_ForActivity">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_List_ForActivity_Result">
+                <ScalarProperty Name="TopParentID" ColumnName="TopParentID" />
+                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
+                <ScalarProperty Name="Structure" ColumnName="Structure" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fnTender_Activity_ListDetail" FunctionName="WalzExplorerModel.Store.fnTender_Activity_ListDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_ListDetail_Result">
+                <ScalarProperty Name="SchedCode" ColumnName="SchedCode" />
+                <ScalarProperty Name="SchedTitle" ColumnName="SchedTitle" />
+                <ScalarProperty Name="ComponentStructure" ColumnName="ComponentStructure" />
+                <ScalarProperty Name="ComponentTitle" ColumnName="ComponentTitle" />
+                <ScalarProperty Name="EstQty" ColumnName="EstQty" />
+                <ScalarProperty Name="CompQty" ColumnName="CompQty" />
+                <ScalarProperty Name="ItemStep" ColumnName="ItemStep" />
+                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+                <ScalarProperty Name="ItemTitle" ColumnName="ItemTitle" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+                <ScalarProperty Name="TotalCharge" ColumnName="TotalCharge" />
+                <ScalarProperty Name="TotalHours" ColumnName="TotalHours" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fnTender_Activity_ListDetail_GivenComponentID" FunctionName="WalzExplorerModel.Store.fnTender_Activity_ListDetail_GivenComponentID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_ListDetail_GivenComponentID_Result">
+                <ScalarProperty Name="ComponentStructure" ColumnName="ComponentStructure" />
+                <ScalarProperty Name="ComponentTitle" ColumnName="ComponentTitle" />
+                <ScalarProperty Name="ComponentQuantity" ColumnName="ComponentQuantity" />
+                <ScalarProperty Name="ItemStep" ColumnName="ItemStep" />
+                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+                <ScalarProperty Name="ItemTitle" ColumnName="ItemTitle" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+                <ScalarProperty Name="TotalCharge" ColumnName="TotalCharge" />
+                <ScalarProperty Name="TotalHours" ColumnName="TotalHours" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fnTender_Activity_ListDetail_GivenScheduleID" FunctionName="WalzExplorerModel.Store.fnTender_Activity_ListDetail_GivenScheduleID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_ListDetail_GivenScheduleID_Result">
+                <ScalarProperty Name="SchedCode" ColumnName="SchedCode" />
+                <ScalarProperty Name="SchedTitle" ColumnName="SchedTitle" />
+                <ScalarProperty Name="ComponentStructure" ColumnName="ComponentStructure" />
+                <ScalarProperty Name="ComponentTitle" ColumnName="ComponentTitle" />
+                <ScalarProperty Name="EstQty" ColumnName="EstQty" />
+                <ScalarProperty Name="CompQty" ColumnName="CompQty" />
+                <ScalarProperty Name="ItemStep" ColumnName="ItemStep" />
+                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+                <ScalarProperty Name="ItemTitle" ColumnName="ItemTitle" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+                <ScalarProperty Name="TotalCharge" ColumnName="TotalCharge" />
+                <ScalarProperty Name="TotalHours" ColumnName="TotalHours" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fnTender_Activity_UsedALL" FunctionName="WalzExplorerModel.Store.fnTender_Activity_UsedALL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_UsedALL_Result">
+                <ScalarProperty Name="TopParentID" ColumnName="TopParentID" />
+                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
+                <ScalarProperty Name="Structure" ColumnName="Structure" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="BaseCost" ColumnName="BaseCost" />
+                <ScalarProperty Name="MultipliedCost" ColumnName="MultipliedCost" />
+                <ScalarProperty Name="RolledUpCost" ColumnName="RolledUpCost" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fnTender_Activity_UsedDetail" FunctionName="WalzExplorerModel.Store.fnTender_Activity_UsedDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_UsedDetail_Result">
+                <ScalarProperty Name="TopParentID" ColumnName="TopParentID" />
+                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
+                <ScalarProperty Name="Structure" ColumnName="Structure" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="BaseCost" ColumnName="BaseCost" />
+                <ScalarProperty Name="MultipliedCost" ColumnName="MultipliedCost" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fnTender_Activity_UsedRolledUp" FunctionName="WalzExplorerModel.Store.fnTender_Activity_UsedRolledUp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_UsedRolledUp_Result">
+                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
+                <ScalarProperty Name="RolledUpCost" ColumnName="RolledUpCost" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fnTender_ActivityBaseCost" FunctionName="WalzExplorerModel.Store.fnTender_ActivityBaseCost">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_ActivityBaseCost_Result">
+                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
+                <ScalarProperty Name="BaseLabourCost" ColumnName="BaseLabourCost" />
+                <ScalarProperty Name="BaseMaterialCost" ColumnName="BaseMaterialCost" />
+                <ScalarProperty Name="BaseContractorCost" ColumnName="BaseContractorCost" />
+                <ScalarProperty Name="BaseTotalCost" ColumnName="BaseTotalCost" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fnTender_ActivityRolledUpCost2" FunctionName="WalzExplorerModel.Store.fnTender_ActivityRolledUpCost2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_ActivityRolledUpCost2_Result">
+                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
+                <ScalarProperty Name="RolledUpCost" ColumnName="RolledUpCost" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fnTender_Schedule_List" FunctionName="WalzExplorerModel.Store.fnTender_Schedule_List">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Schedule_List_Result">
+                <ScalarProperty Name="TopParentID" ColumnName="TopParentID" />
+                <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
+                <ScalarProperty Name="Structure" ColumnName="Structure" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="WalzExplorerModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="WalzExplorerModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="WalzExplorerModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="WalzExplorerModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="WalzExplorerModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="WalzExplorerModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="WalzExplorerModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="spTender_CloneActivity" FunctionName="WalzExplorerModel.Store.spTender_CloneActivity" />
+          <FunctionImportMapping FunctionImportName="spTender_Drawing_ComboList" FunctionName="WalzExplorerModel.Store.spTender_Drawing_ComboList" />
+          <FunctionImportMapping FunctionImportName="spTender_Schedule_ComboList" FunctionName="WalzExplorerModel.Store.spTender_Schedule_ComboList" />
+          <FunctionImportMapping FunctionImportName="spWEX_Node_AllProjects" FunctionName="WalzExplorerModel.Store.spWEX_Node_AllProjects">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_AllProjects_Result">
+                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
+                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
+                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
+                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_Node_AllProjectsList" FunctionName="WalzExplorerModel.Store.spWEX_Node_AllProjectsList" />
+          <FunctionImportMapping FunctionImportName="spWEX_Node_FoundProjects" FunctionName="WalzExplorerModel.Store.spWEX_Node_FoundProjects">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_FoundProjects_Result">
+                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
+                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
+                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
+                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_Node_FoundProjectsList" FunctionName="WalzExplorerModel.Store.spWEX_Node_FoundProjectsList" />
+          <FunctionImportMapping FunctionImportName="spWEX_Node_MyProjects" FunctionName="WalzExplorerModel.Store.spWEX_Node_MyProjects">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_MyProjects_Result">
+                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
+                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
+                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
+                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_Node_MyProjectsList" FunctionName="WalzExplorerModel.Store.spWEX_Node_MyProjectsList" />
+          <FunctionImportMapping FunctionImportName="spWEX_Node_TenderComponentList" FunctionName="WalzExplorerModel.Store.spWEX_Node_TenderComponentList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TenderComponentList_Result">
+                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
+                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
+                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
+                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_Node_TenderDrawingList" FunctionName="WalzExplorerModel.Store.spWEX_Node_TenderDrawingList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TenderDrawingList_Result">
+                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
+                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
+                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
+                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_Node_TenderFolders" FunctionName="WalzExplorerModel.Store.spWEX_Node_TenderFolders">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TenderFolders_Result">
+                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
+                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
+                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
+                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_Node_TendersAll" FunctionName="WalzExplorerModel.Store.spWEX_Node_TendersAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TendersAll_Result">
+                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
+                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
+                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
+                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_Node_TendersAllList" FunctionName="WalzExplorerModel.Store.spWEX_Node_TendersAllList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TendersAllList_Result">
+                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
+                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
+                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
+                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_Node_TenderScheduleAndActivityList" FunctionName="WalzExplorerModel.Store.spWEX_Node_TenderScheduleAndActivityList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TenderScheduleAndActivityList_Result">
+                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
+                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
+                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
+                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_Node_TenderSetupList" FunctionName="WalzExplorerModel.Store.spWEX_Node_TenderSetupList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TenderSetupList_Result">
+                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
+                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
+                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
+                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_Node_TendersOpen" FunctionName="WalzExplorerModel.Store.spWEX_Node_TendersOpen">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TendersOpen_Result">
+                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
+                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
+                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
+                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_Node_TendersOpenList" FunctionName="WalzExplorerModel.Store.spWEX_Node_TendersOpenList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TendersOpenList_Result">
+                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
+                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
+                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
+                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_Node_TendersWorkGroupList" FunctionName="WalzExplorerModel.Store.spWEX_Node_TendersWorkGroupList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TendersWorkGroupList_Result">
+                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
+                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
+                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
+                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHSTabList" FunctionName="WalzExplorerModel.Store.spWEX_RHSTabList" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
