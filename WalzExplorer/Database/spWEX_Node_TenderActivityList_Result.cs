@@ -11,13 +11,13 @@ namespace WalzExplorer.Database
 {
     using System;
     
-    public partial class fnTender_Activity_UsedDetail_Result
+    public partial class spWEX_Node_TenderActivityList_Result
     {
-        public int TopParentID { get; set; }
-        public int ComponentID { get; set; }
-        public string Structure { get; set; }
-        public int Level { get; set; }
-        public double BaseCost { get; set; }
-        public Nullable<double> MultipliedCost { get; set; }
+        public string TypeID { get; set; }
+        public string Name { get; set; }
+        public string ID { get; set; }
+        public string IconOpen { get; set; }
+        public string IconClosed { get; set; }
+        public string ChildSQL { get; set; }
     }
 }

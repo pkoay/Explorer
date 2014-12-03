@@ -24,6 +24,7 @@ using WalzExplorer.Controls.TreeView;
 using WalzExplorer.Controls.TreeView.ViewModel;
 using WalzExplorer.Controls.RHSTabs;
 using System.Collections.ObjectModel;
+using WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab;
 
 namespace WalzExplorer
 {
@@ -55,6 +56,10 @@ namespace WalzExplorer
             Dictionary<string, string> dicSQLSubsitutes = new Dictionary<string, string>();
             dicSQLSubsitutes.Add("@@UserPersonID", "'" + user.Person.PersonID + "'");
             tvRole.PopulateRoot(user, dicSQLSubsitutes);
+            TabItem x = new TabItem();
+            //x.Header="Hello";
+            //x.Content = new ExampleGrid2();
+            //tcRHS.Items.Add(x);
         }
 
         private void tbSearch_KeyDown(object sender, KeyEventArgs e)
@@ -157,7 +162,7 @@ namespace WalzExplorer
                 for (int i = 0; i < NewTabs.Count; i++)
                 {
                     if (NewTabs[i].ID != ((WEXRHSTab)tcRHS[i]).ID) return false;
-                    if (NewTabs[i].Name != ((WEXRHSTab)tcRHS[i]).Name) return false;
+                    if (NewTabs[i].Header != ((WEXRHSTab)tcRHS[i]).Header) return false;
                 }
                 return true;
             }

@@ -20,6 +20,7 @@ namespace WalzExplorer.Database
         }
     
         public string LHSTabID { get; set; }
+        public string Icon { get; set; }
     
         public virtual ICollection<tblWEX_Tree> tblWEX_Tree { get; set; }
     }

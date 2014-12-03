@@ -29,13 +29,13 @@
           DataType="{x:Type local:NodeViewModel}" 
           ItemsSource="{Binding Children}"
           >
-                <StackPanel Orientation="Horizontal" Margin="5,5,5,5">
-                    <Rectangle Width="16" Height="16" Fill="{DynamicResource TextBrush}" Margin="0,0,10,0" >
+                <StackPanel Orientation="Horizontal" Margin="2,2,2,2">
+                    <Rectangle Width="12" Height="12" Fill="White" Margin="0,0,10,0" >
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill" Visual="{Binding NodeIcon,Converter={StaticResource CanvasFromString}}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
-                    <TextBlock Text="{Binding NodeName}" />
+                    <TextBlock Text="{Binding NodeName}" FontSize="12" />
                 </StackPanel>
 
             </HierarchicalDataTemplate>

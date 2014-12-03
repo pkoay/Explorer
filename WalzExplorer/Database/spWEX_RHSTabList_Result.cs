@@ -14,6 +14,6 @@ namespace WalzExplorer.Database
     public partial class spWEX_RHSTabList_Result
     {
         public string ID { get; set; }
-        public string Name { get; set; }
+        public string Header { get; set; }
     }
 }

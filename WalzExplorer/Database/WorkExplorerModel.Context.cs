@@ -71,106 +71,6 @@ namespace WalzExplorer.Database
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<string>("[WalzExplorerEntities].[fnCommon_Split_VarcharToTable](@input, @seperator)", inputParameter, seperatorParameter);
         }
     
-        [DbFunction("WalzExplorerEntities", "fnTender_Activity_List")]
-        public virtual IQueryable<fnTender_Activity_List_Result> fnTender_Activity_List(Nullable<int> tenderID)
-        {
-            var tenderIDParameter = tenderID.HasValue ?
-                new ObjectParameter("TenderID", tenderID) :
-                new ObjectParameter("TenderID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnTender_Activity_List_Result>("[WalzExplorerEntities].[fnTender_Activity_List](@TenderID)", tenderIDParameter);
-        }
-    
-        [DbFunction("WalzExplorerEntities", "fnTender_Activity_List_ForActivity")]
-        public virtual IQueryable<fnTender_Activity_List_ForActivity_Result> fnTender_Activity_List_ForActivity(Nullable<int> componentID)
-        {
-            var componentIDParameter = componentID.HasValue ?
-                new ObjectParameter("ComponentID", componentID) :
-                new ObjectParameter("ComponentID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnTender_Activity_List_ForActivity_Result>("[WalzExplorerEntities].[fnTender_Activity_List_ForActivity](@ComponentID)", componentIDParameter);
-        }
-    
-        [DbFunction("WalzExplorerEntities", "fnTender_Activity_ListDetail")]
-        public virtual IQueryable<fnTender_Activity_ListDetail_Result> fnTender_Activity_ListDetail(Nullable<int> tenderID)
-        {
-            var tenderIDParameter = tenderID.HasValue ?
-                new ObjectParameter("TenderID", tenderID) :
-                new ObjectParameter("TenderID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnTender_Activity_ListDetail_Result>("[WalzExplorerEntities].[fnTender_Activity_ListDetail](@TenderID)", tenderIDParameter);
-        }
-    
-        [DbFunction("WalzExplorerEntities", "fnTender_Activity_ListDetail_GivenComponentID")]
-        public virtual IQueryable<fnTender_Activity_ListDetail_GivenComponentID_Result> fnTender_Activity_ListDetail_GivenComponentID(Nullable<int> componentID)
-        {
-            var componentIDParameter = componentID.HasValue ?
-                new ObjectParameter("ComponentID", componentID) :
-                new ObjectParameter("ComponentID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnTender_Activity_ListDetail_GivenComponentID_Result>("[WalzExplorerEntities].[fnTender_Activity_ListDetail_GivenComponentID](@ComponentID)", componentIDParameter);
-        }
-    
-        [DbFunction("WalzExplorerEntities", "fnTender_Activity_ListDetail_GivenScheduleID")]
-        public virtual IQueryable<fnTender_Activity_ListDetail_GivenScheduleID_Result> fnTender_Activity_ListDetail_GivenScheduleID(Nullable<int> scheduleID)
-        {
-            var scheduleIDParameter = scheduleID.HasValue ?
-                new ObjectParameter("ScheduleID", scheduleID) :
-                new ObjectParameter("ScheduleID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnTender_Activity_ListDetail_GivenScheduleID_Result>("[WalzExplorerEntities].[fnTender_Activity_ListDetail_GivenScheduleID](@ScheduleID)", scheduleIDParameter);
-        }
-    
-        [DbFunction("WalzExplorerEntities", "fnTender_Activity_UsedALL")]
-        public virtual IQueryable<fnTender_Activity_UsedALL_Result> fnTender_Activity_UsedALL(Nullable<int> tenderID)
-        {
-            var tenderIDParameter = tenderID.HasValue ?
-                new ObjectParameter("TenderID", tenderID) :
-                new ObjectParameter("TenderID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnTender_Activity_UsedALL_Result>("[WalzExplorerEntities].[fnTender_Activity_UsedALL](@TenderID)", tenderIDParameter);
-        }
-    
-        [DbFunction("WalzExplorerEntities", "fnTender_Activity_UsedDetail")]
-        public virtual IQueryable<fnTender_Activity_UsedDetail_Result> fnTender_Activity_UsedDetail(Nullable<int> tenderID)
-        {
-            var tenderIDParameter = tenderID.HasValue ?
-                new ObjectParameter("TenderID", tenderID) :
-                new ObjectParameter("TenderID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnTender_Activity_UsedDetail_Result>("[WalzExplorerEntities].[fnTender_Activity_UsedDetail](@TenderID)", tenderIDParameter);
-        }
-    
-        [DbFunction("WalzExplorerEntities", "fnTender_Activity_UsedRolledUp")]
-        public virtual IQueryable<fnTender_Activity_UsedRolledUp_Result> fnTender_Activity_UsedRolledUp(Nullable<int> tenderID)
-        {
-            var tenderIDParameter = tenderID.HasValue ?
-                new ObjectParameter("TenderID", tenderID) :
-                new ObjectParameter("TenderID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnTender_Activity_UsedRolledUp_Result>("[WalzExplorerEntities].[fnTender_Activity_UsedRolledUp](@TenderID)", tenderIDParameter);
-        }
-    
-        [DbFunction("WalzExplorerEntities", "fnTender_ActivityBaseCost")]
-        public virtual IQueryable<fnTender_ActivityBaseCost_Result> fnTender_ActivityBaseCost(Nullable<int> tenderID)
-        {
-            var tenderIDParameter = tenderID.HasValue ?
-                new ObjectParameter("TenderID", tenderID) :
-                new ObjectParameter("TenderID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnTender_ActivityBaseCost_Result>("[WalzExplorerEntities].[fnTender_ActivityBaseCost](@TenderID)", tenderIDParameter);
-        }
-    
-        [DbFunction("WalzExplorerEntities", "fnTender_ActivityRolledUpCost2")]
-        public virtual IQueryable<fnTender_ActivityRolledUpCost2_Result> fnTender_ActivityRolledUpCost2(Nullable<int> tenderID)
-        {
-            var tenderIDParameter = tenderID.HasValue ?
-                new ObjectParameter("TenderID", tenderID) :
-                new ObjectParameter("TenderID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fnTender_ActivityRolledUpCost2_Result>("[WalzExplorerEntities].[fnTender_ActivityRolledUpCost2](@TenderID)", tenderIDParameter);
-        }
-    
         [DbFunction("WalzExplorerEntities", "fnTender_Schedule_List")]
         public virtual IQueryable<fnTender_Schedule_List_Result> fnTender_Schedule_List(Nullable<int> tenderID)
         {
@@ -450,6 +350,19 @@ namespace WalzExplorer.Database
                 new ObjectParameter("NTSecurityGroupsSeperator", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_TreeRootList_Result>("spWEX_TreeRootList", lHSTabIDParameter, nTSecurityGroupsParameter, nTSecurityGroupsSeperatorParameter);
+        }
+    
+        public virtual ObjectResult<spWEX_Node_TenderActivityList_Result> spWEX_Node_TenderActivityList(Nullable<int> tenderID, Nullable<int> activityParentID)
+        {
+            var tenderIDParameter = tenderID.HasValue ?
+                new ObjectParameter("TenderID", tenderID) :
+                new ObjectParameter("TenderID", typeof(int));
+    
+            var activityParentIDParameter = activityParentID.HasValue ?
+                new ObjectParameter("ActivityParentID", activityParentID) :
+                new ObjectParameter("ActivityParentID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_Node_TenderActivityList_Result>("spWEX_Node_TenderActivityList", tenderIDParameter, activityParentIDParameter);
         }
     
         public virtual ObjectResult<spWEX_RHSTabList_Result> spWEX_RHSTabList(string treeNodeTypeID, string nTSecurityGroups, string nTSecurityGroupsSeperator)

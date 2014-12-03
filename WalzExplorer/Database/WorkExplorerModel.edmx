@@ -163,7 +163,7 @@
           <Key>
             <PropertyRef Name="DrawingID" />
           </Key>
-          <Property Name="DrawingID" Type="int" Nullable="false" />
+          <Property Name="DrawingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenderID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="RevisionNo" Type="varchar" MaxLength="50" Nullable="false" />
@@ -218,7 +218,7 @@
           <Key>
             <PropertyRef Name="ScheduleID" />
           </Key>
-          <Property Name="ScheduleID" Type="int" Nullable="false" />
+          <Property Name="ScheduleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenderID" Type="int" Nullable="false" />
           <Property Name="ClientCode" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ClientDescription" Type="varchar" MaxLength="255" Nullable="false" />
@@ -249,7 +249,7 @@
           <Key>
             <PropertyRef Name="SupplierID" />
           </Key>
-          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="SupplierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenderID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Comment" Type="varchar(max)" />
@@ -280,7 +280,7 @@
           <Key>
             <PropertyRef Name="WorkGroupID" />
           </Key>
-          <Property Name="WorkGroupID" Type="int" Nullable="false" />
+          <Property Name="WorkGroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenderID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="OnsiteLabourRate" Type="float" Nullable="false" />
@@ -294,7 +294,7 @@
           <Key>
             <PropertyRef Name="WorkGroupHeaderID" />
           </Key>
-          <Property Name="WorkGroupHeaderID" Type="int" Nullable="false" />
+          <Property Name="WorkGroupHeaderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenderID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
@@ -304,7 +304,7 @@
           <Key>
             <PropertyRef Name="WorkGroupItemID" />
           </Key>
-          <Property Name="WorkGroupItemID" Type="int" Nullable="false" />
+          <Property Name="WorkGroupItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WorkGroupID" Type="int" Nullable="false" />
           <Property Name="WorkGroupHeaderID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
@@ -320,6 +320,7 @@
             <PropertyRef Name="LHSTabID" />
           </Key>
           <Property Name="LHSTabID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Icon" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblWEX_NTSecurityGroup">
           <Key>
@@ -926,164 +927,6 @@
             </CollectionType>
           </ReturnType>
         </Function>
-        <Function Name="fnTender_Activity_List" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_List">
-          <Parameter Name="TenderID" Type="int" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="TopParentID" Type="int" Nullable="false" />
-                <Property Name="ComponentID" Type="int" Nullable="false" />
-                <Property Name="Structure" Type="varchar(max)" />
-                <Property Name="Level" Type="int" Nullable="false" />
-                <Property Name="Quantity" Type="float" Nullable="false" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="fnTender_Activity_List_ForActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_List_ForActivity">
-          <Parameter Name="ComponentID" Type="int" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="TopParentID" Type="int" Nullable="false" />
-                <Property Name="ComponentID" Type="int" Nullable="false" />
-                <Property Name="Structure" Type="varchar(max)" />
-                <Property Name="Level" Type="int" Nullable="false" />
-                <Property Name="Quantity" Type="float" Nullable="false" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="fnTender_Activity_ListDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_ListDetail">
-          <Parameter Name="TenderID" Type="int" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="SchedCode" Type="varchar(max)" />
-                <Property Name="SchedTitle" Type="varchar(max)" />
-                <Property Name="ComponentStructure" Type="varchar(max)" />
-                <Property Name="ComponentTitle" Type="varchar(max)" />
-                <Property Name="EstQty" Type="float" />
-                <Property Name="CompQty" Type="float" />
-                <Property Name="ItemStep" Type="varchar(max)" />
-                <Property Name="ItemType" Type="varchar(max)" />
-                <Property Name="ItemTitle" Type="varchar(max)" />
-                <Property Name="TotalQuantity" Type="float" />
-                <Property Name="TotalCost" Type="float" />
-                <Property Name="TotalCharge" Type="float" />
-                <Property Name="TotalHours" Type="float" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="fnTender_Activity_ListDetail_GivenComponentID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_ListDetail_GivenComponentID">
-          <Parameter Name="ComponentID" Type="int" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="ComponentStructure" Type="varchar" MaxLength="255" />
-                <Property Name="ComponentTitle" Type="varchar" MaxLength="50" />
-                <Property Name="ComponentQuantity" Type="float" />
-                <Property Name="ItemStep" Type="varchar" MaxLength="50" />
-                <Property Name="ItemType" Type="varchar" MaxLength="50" />
-                <Property Name="ItemTitle" Type="varchar" MaxLength="255" />
-                <Property Name="TotalQuantity" Type="float" />
-                <Property Name="TotalCost" Type="float" />
-                <Property Name="TotalCharge" Type="float" />
-                <Property Name="TotalHours" Type="float" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="fnTender_Activity_ListDetail_GivenScheduleID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_ListDetail_GivenScheduleID">
-          <Parameter Name="ScheduleID" Type="int" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="SchedCode" Type="varchar(max)" />
-                <Property Name="SchedTitle" Type="varchar(max)" />
-                <Property Name="ComponentStructure" Type="varchar(max)" />
-                <Property Name="ComponentTitle" Type="varchar(max)" />
-                <Property Name="EstQty" Type="float" />
-                <Property Name="CompQty" Type="float" />
-                <Property Name="ItemStep" Type="varchar(max)" />
-                <Property Name="ItemType" Type="varchar(max)" />
-                <Property Name="ItemTitle" Type="varchar(max)" />
-                <Property Name="TotalQuantity" Type="float" />
-                <Property Name="TotalCost" Type="float" />
-                <Property Name="TotalCharge" Type="float" />
-                <Property Name="TotalHours" Type="float" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="fnTender_Activity_UsedALL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_UsedALL">
-          <Parameter Name="TenderID" Type="int" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="TopParentID" Type="int" Nullable="false" />
-                <Property Name="ComponentID" Type="int" Nullable="false" />
-                <Property Name="Structure" Type="varchar(max)" />
-                <Property Name="Level" Type="int" Nullable="false" />
-                <Property Name="BaseCost" Type="float" Nullable="false" />
-                <Property Name="MultipliedCost" Type="float" />
-                <Property Name="RolledUpCost" Type="float" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="fnTender_Activity_UsedDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_UsedDetail">
-          <Parameter Name="TenderID" Type="int" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="TopParentID" Type="int" Nullable="false" />
-                <Property Name="ComponentID" Type="int" Nullable="false" />
-                <Property Name="Structure" Type="varchar(max)" />
-                <Property Name="Level" Type="int" Nullable="false" />
-                <Property Name="BaseCost" Type="float" Nullable="false" />
-                <Property Name="MultipliedCost" Type="float" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="fnTender_Activity_UsedRolledUp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Activity_UsedRolledUp">
-          <Parameter Name="TenderID" Type="int" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="ComponentID" Type="int" Nullable="false" />
-                <Property Name="RolledUpCost" Type="float" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="fnTender_ActivityBaseCost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.ActivityBaseCost">
-          <Parameter Name="TenderID" Type="int" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="ComponentID" Type="int" Nullable="false" />
-                <Property Name="BaseLabourCost" Type="float" />
-                <Property Name="BaseMaterialCost" Type="float" />
-                <Property Name="BaseContractorCost" Type="float" />
-                <Property Name="BaseTotalCost" Type="float" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="fnTender_ActivityRolledUpCost2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.ActivityRolledUpCost2">
-          <Parameter Name="TenderID" Type="int" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="ComponentID" Type="int" Nullable="false" />
-                <Property Name="RolledUpCost" Type="float" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
         <Function Name="fnTender_Schedule_List" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="fnTender.Schedule_List">
           <Parameter Name="TenderID" Type="int" Mode="In" />
           <ReturnType>
@@ -1148,9 +991,9 @@
         <Function Name="spWEX_Node_MyProjectsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_MyProjectsList">
           <Parameter Name="UserPersonID" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="spWEX_Node_TenderComponentList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderComponentList">
+        <Function Name="spWEX_Node_TenderActivityList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderActivityList">
           <Parameter Name="TenderID" Type="int" Mode="In" />
-          <Parameter Name="ComponentParentID" Type="int" Mode="In" />
+          <Parameter Name="ActivityParentID" Type="int" Mode="In" />
         </Function>
         <Function Name="spWEX_Node_TenderDrawingList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderDrawingList">
           <Parameter Name="TenderID" Type="int" Mode="In" />
@@ -1792,6 +1635,7 @@
           </Key>
           <Property Name="LHSTabID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="tblWEX_Tree" Relationship="Self.FK_WEX_Tree_WEX_LHSTab" FromRole="tblWEX_LHSTab" ToRole="tblWEX_Tree" />
+          <Property Name="Icon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblWEX_NTSecurityGroup">
           <Key>
@@ -2511,36 +2355,6 @@
             <Parameter Name="input" Mode="In" Type="String" />
             <Parameter Name="seperator" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="fnTender_Activity_List" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_List_Result)">
-          <Parameter Name="TenderID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="fnTender_Activity_List_ForActivity" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_List_ForActivity_Result)">
-          <Parameter Name="ComponentID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="fnTender_Activity_ListDetail" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_ListDetail_Result)">
-          <Parameter Name="TenderID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="fnTender_Activity_ListDetail_GivenComponentID" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_ListDetail_GivenComponentID_Result)">
-          <Parameter Name="ComponentID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="fnTender_Activity_ListDetail_GivenScheduleID" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_ListDetail_GivenScheduleID_Result)">
-          <Parameter Name="ScheduleID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="fnTender_Activity_UsedALL" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_UsedALL_Result)">
-          <Parameter Name="TenderID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="fnTender_Activity_UsedDetail" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_UsedDetail_Result)">
-          <Parameter Name="TenderID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="fnTender_Activity_UsedRolledUp" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Activity_UsedRolledUp_Result)">
-          <Parameter Name="TenderID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="fnTender_ActivityBaseCost" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_ActivityBaseCost_Result)">
-          <Parameter Name="TenderID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="fnTender_ActivityRolledUpCost2" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_ActivityRolledUpCost2_Result)">
-          <Parameter Name="TenderID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="fnTender_Schedule_List" IsComposable="true" ReturnType="Collection(WalzExplorerModel.fnTender_Schedule_List_Result)">
           <Parameter Name="TenderID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -2623,100 +2437,16 @@
             <Parameter Name="NTSecurityGroups" Mode="In" Type="String" />
             <Parameter Name="NTSecurityGroupsSeperator" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="spWEX_Node_TenderActivityList" ReturnType="Collection(WalzExplorerModel.spWEX_Node_TenderActivityList_Result)">
+            <Parameter Name="TenderID" Mode="In" Type="Int32" />
+            <Parameter Name="ActivityParentID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="spWEX_RHSTabList" ReturnType="Collection(WalzExplorerModel.spWEX_RHSTabList_Result)">
             <Parameter Name="TreeNodeTypeID" Mode="In" Type="String" />
             <Parameter Name="NTSecurityGroups" Mode="In" Type="String" />
             <Parameter Name="NTSecurityGroupsSeperator" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="fnTender_Activity_List_Result">
-          <Property Type="Int32" Name="TopParentID" Nullable="false" />
-          <Property Type="Int32" Name="ComponentID" Nullable="false" />
-          <Property Type="String" Name="Structure" Nullable="true" />
-          <Property Type="Int32" Name="Level" Nullable="false" />
-          <Property Type="Double" Name="Quantity" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="fnTender_Activity_List_ForActivity_Result">
-          <Property Type="Int32" Name="TopParentID" Nullable="false" />
-          <Property Type="Int32" Name="ComponentID" Nullable="false" />
-          <Property Type="String" Name="Structure" Nullable="true" />
-          <Property Type="Int32" Name="Level" Nullable="false" />
-          <Property Type="Double" Name="Quantity" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="fnTender_Activity_ListDetail_Result">
-          <Property Type="String" Name="SchedCode" Nullable="true" />
-          <Property Type="String" Name="SchedTitle" Nullable="true" />
-          <Property Type="String" Name="ComponentStructure" Nullable="true" />
-          <Property Type="String" Name="ComponentTitle" Nullable="true" />
-          <Property Type="Double" Name="EstQty" Nullable="true" />
-          <Property Type="Double" Name="CompQty" Nullable="true" />
-          <Property Type="String" Name="ItemStep" Nullable="true" />
-          <Property Type="String" Name="ItemType" Nullable="true" />
-          <Property Type="String" Name="ItemTitle" Nullable="true" />
-          <Property Type="Double" Name="TotalQuantity" Nullable="true" />
-          <Property Type="Double" Name="TotalCost" Nullable="true" />
-          <Property Type="Double" Name="TotalCharge" Nullable="true" />
-          <Property Type="Double" Name="TotalHours" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="fnTender_Activity_ListDetail_GivenComponentID_Result">
-          <Property Type="String" Name="ComponentStructure" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="ComponentTitle" Nullable="true" MaxLength="50" />
-          <Property Type="Double" Name="ComponentQuantity" Nullable="true" />
-          <Property Type="String" Name="ItemStep" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="ItemType" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="ItemTitle" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="TotalQuantity" Nullable="true" />
-          <Property Type="Double" Name="TotalCost" Nullable="true" />
-          <Property Type="Double" Name="TotalCharge" Nullable="true" />
-          <Property Type="Double" Name="TotalHours" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="fnTender_Activity_ListDetail_GivenScheduleID_Result">
-          <Property Type="String" Name="SchedCode" Nullable="true" />
-          <Property Type="String" Name="SchedTitle" Nullable="true" />
-          <Property Type="String" Name="ComponentStructure" Nullable="true" />
-          <Property Type="String" Name="ComponentTitle" Nullable="true" />
-          <Property Type="Double" Name="EstQty" Nullable="true" />
-          <Property Type="Double" Name="CompQty" Nullable="true" />
-          <Property Type="String" Name="ItemStep" Nullable="true" />
-          <Property Type="String" Name="ItemType" Nullable="true" />
-          <Property Type="String" Name="ItemTitle" Nullable="true" />
-          <Property Type="Double" Name="TotalQuantity" Nullable="true" />
-          <Property Type="Double" Name="TotalCost" Nullable="true" />
-          <Property Type="Double" Name="TotalCharge" Nullable="true" />
-          <Property Type="Double" Name="TotalHours" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="fnTender_Activity_UsedALL_Result">
-          <Property Type="Int32" Name="TopParentID" Nullable="false" />
-          <Property Type="Int32" Name="ComponentID" Nullable="false" />
-          <Property Type="String" Name="Structure" Nullable="true" />
-          <Property Type="Int32" Name="Level" Nullable="false" />
-          <Property Type="Double" Name="BaseCost" Nullable="false" />
-          <Property Type="Double" Name="MultipliedCost" Nullable="true" />
-          <Property Type="Double" Name="RolledUpCost" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="fnTender_Activity_UsedDetail_Result">
-          <Property Type="Int32" Name="TopParentID" Nullable="false" />
-          <Property Type="Int32" Name="ComponentID" Nullable="false" />
-          <Property Type="String" Name="Structure" Nullable="true" />
-          <Property Type="Int32" Name="Level" Nullable="false" />
-          <Property Type="Double" Name="BaseCost" Nullable="false" />
-          <Property Type="Double" Name="MultipliedCost" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="fnTender_Activity_UsedRolledUp_Result">
-          <Property Type="Int32" Name="ComponentID" Nullable="false" />
-          <Property Type="Double" Name="RolledUpCost" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="fnTender_ActivityBaseCost_Result">
-          <Property Type="Int32" Name="ComponentID" Nullable="false" />
-          <Property Type="Double" Name="BaseLabourCost" Nullable="true" />
-          <Property Type="Double" Name="BaseMaterialCost" Nullable="true" />
-          <Property Type="Double" Name="BaseContractorCost" Nullable="true" />
-          <Property Type="Double" Name="BaseTotalCost" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="fnTender_ActivityRolledUpCost2_Result">
-          <Property Type="Int32" Name="ComponentID" Nullable="false" />
-          <Property Type="Double" Name="RolledUpCost" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
           <Property Type="Int32" Name="ScheduleID" Nullable="false" />
@@ -2843,9 +2573,17 @@
           <Property Type="String" Name="TreeID" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="RootSQL" Nullable="true" MaxLength="255" />
         </ComplexType>
+        <ComplexType Name="spWEX_Node_TenderActivityList_Result">
+          <Property Type="String" Name="TypeID" Nullable="false" MaxLength="14" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ID" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="IconOpen" Nullable="false" MaxLength="16" />
+          <Property Type="String" Name="IconClosed" Nullable="false" MaxLength="16" />
+          <Property Type="String" Name="ChildSQL" Nullable="true" MaxLength="162" />
+        </ComplexType>
         <ComplexType Name="spWEX_RHSTabList_Result">
           <Property Type="String" Name="ID" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Header" Nullable="false" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3189,6 +2927,7 @@
           <EntitySetMapping Name="tblWEX_LHSTab">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblWEX_LHSTab">
               <MappingFragment StoreEntitySet="tblWEX_LHSTab">
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
                 <ScalarProperty Name="LHSTabID" ColumnName="LHSTabID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3251,134 +2990,6 @@
             </EndProperty>
           </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="fnCommon_Split_VarcharToTable" FunctionName="WalzExplorerModel.Store.fnCommon_Split_VarcharToTable" />
-          <FunctionImportMapping FunctionImportName="fnTender_Activity_List" FunctionName="WalzExplorerModel.Store.fnTender_Activity_List">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_List_Result">
-                <ScalarProperty Name="TopParentID" ColumnName="TopParentID" />
-                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
-                <ScalarProperty Name="Structure" ColumnName="Structure" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="fnTender_Activity_List_ForActivity" FunctionName="WalzExplorerModel.Store.fnTender_Activity_List_ForActivity">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_List_ForActivity_Result">
-                <ScalarProperty Name="TopParentID" ColumnName="TopParentID" />
-                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
-                <ScalarProperty Name="Structure" ColumnName="Structure" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="fnTender_Activity_ListDetail" FunctionName="WalzExplorerModel.Store.fnTender_Activity_ListDetail">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_ListDetail_Result">
-                <ScalarProperty Name="SchedCode" ColumnName="SchedCode" />
-                <ScalarProperty Name="SchedTitle" ColumnName="SchedTitle" />
-                <ScalarProperty Name="ComponentStructure" ColumnName="ComponentStructure" />
-                <ScalarProperty Name="ComponentTitle" ColumnName="ComponentTitle" />
-                <ScalarProperty Name="EstQty" ColumnName="EstQty" />
-                <ScalarProperty Name="CompQty" ColumnName="CompQty" />
-                <ScalarProperty Name="ItemStep" ColumnName="ItemStep" />
-                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
-                <ScalarProperty Name="ItemTitle" ColumnName="ItemTitle" />
-                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
-                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
-                <ScalarProperty Name="TotalCharge" ColumnName="TotalCharge" />
-                <ScalarProperty Name="TotalHours" ColumnName="TotalHours" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="fnTender_Activity_ListDetail_GivenComponentID" FunctionName="WalzExplorerModel.Store.fnTender_Activity_ListDetail_GivenComponentID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_ListDetail_GivenComponentID_Result">
-                <ScalarProperty Name="ComponentStructure" ColumnName="ComponentStructure" />
-                <ScalarProperty Name="ComponentTitle" ColumnName="ComponentTitle" />
-                <ScalarProperty Name="ComponentQuantity" ColumnName="ComponentQuantity" />
-                <ScalarProperty Name="ItemStep" ColumnName="ItemStep" />
-                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
-                <ScalarProperty Name="ItemTitle" ColumnName="ItemTitle" />
-                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
-                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
-                <ScalarProperty Name="TotalCharge" ColumnName="TotalCharge" />
-                <ScalarProperty Name="TotalHours" ColumnName="TotalHours" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="fnTender_Activity_ListDetail_GivenScheduleID" FunctionName="WalzExplorerModel.Store.fnTender_Activity_ListDetail_GivenScheduleID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_ListDetail_GivenScheduleID_Result">
-                <ScalarProperty Name="SchedCode" ColumnName="SchedCode" />
-                <ScalarProperty Name="SchedTitle" ColumnName="SchedTitle" />
-                <ScalarProperty Name="ComponentStructure" ColumnName="ComponentStructure" />
-                <ScalarProperty Name="ComponentTitle" ColumnName="ComponentTitle" />
-                <ScalarProperty Name="EstQty" ColumnName="EstQty" />
-                <ScalarProperty Name="CompQty" ColumnName="CompQty" />
-                <ScalarProperty Name="ItemStep" ColumnName="ItemStep" />
-                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
-                <ScalarProperty Name="ItemTitle" ColumnName="ItemTitle" />
-                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
-                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
-                <ScalarProperty Name="TotalCharge" ColumnName="TotalCharge" />
-                <ScalarProperty Name="TotalHours" ColumnName="TotalHours" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="fnTender_Activity_UsedALL" FunctionName="WalzExplorerModel.Store.fnTender_Activity_UsedALL">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_UsedALL_Result">
-                <ScalarProperty Name="TopParentID" ColumnName="TopParentID" />
-                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
-                <ScalarProperty Name="Structure" ColumnName="Structure" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
-                <ScalarProperty Name="BaseCost" ColumnName="BaseCost" />
-                <ScalarProperty Name="MultipliedCost" ColumnName="MultipliedCost" />
-                <ScalarProperty Name="RolledUpCost" ColumnName="RolledUpCost" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="fnTender_Activity_UsedDetail" FunctionName="WalzExplorerModel.Store.fnTender_Activity_UsedDetail">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_UsedDetail_Result">
-                <ScalarProperty Name="TopParentID" ColumnName="TopParentID" />
-                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
-                <ScalarProperty Name="Structure" ColumnName="Structure" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
-                <ScalarProperty Name="BaseCost" ColumnName="BaseCost" />
-                <ScalarProperty Name="MultipliedCost" ColumnName="MultipliedCost" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="fnTender_Activity_UsedRolledUp" FunctionName="WalzExplorerModel.Store.fnTender_Activity_UsedRolledUp">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Activity_UsedRolledUp_Result">
-                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
-                <ScalarProperty Name="RolledUpCost" ColumnName="RolledUpCost" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="fnTender_ActivityBaseCost" FunctionName="WalzExplorerModel.Store.fnTender_ActivityBaseCost">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_ActivityBaseCost_Result">
-                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
-                <ScalarProperty Name="BaseLabourCost" ColumnName="BaseLabourCost" />
-                <ScalarProperty Name="BaseMaterialCost" ColumnName="BaseMaterialCost" />
-                <ScalarProperty Name="BaseContractorCost" ColumnName="BaseContractorCost" />
-                <ScalarProperty Name="BaseTotalCost" ColumnName="BaseTotalCost" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="fnTender_ActivityRolledUpCost2" FunctionName="WalzExplorerModel.Store.fnTender_ActivityRolledUpCost2">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_ActivityRolledUpCost2_Result">
-                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
-                <ScalarProperty Name="RolledUpCost" ColumnName="RolledUpCost" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="fnTender_Schedule_List" FunctionName="WalzExplorerModel.Store.fnTender_Schedule_List">
             <ResultMapping>
               <ComplexTypeMapping TypeName="WalzExplorerModel.fnTender_Schedule_List_Result">
@@ -3456,18 +3067,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spWEX_Node_MyProjectsList" FunctionName="WalzExplorerModel.Store.spWEX_Node_MyProjectsList" />
-          <FunctionImportMapping FunctionImportName="spWEX_Node_TenderComponentList" FunctionName="WalzExplorerModel.Store.spWEX_Node_TenderComponentList">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TenderComponentList_Result">
-                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
-                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
-                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
-                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
-                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
-                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spWEX_Node_TenderDrawingList" FunctionName="WalzExplorerModel.Store.spWEX_Node_TenderDrawingList">
             <ResultMapping>
               <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TenderDrawingList_Result">
@@ -3584,11 +3183,23 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_Node_TenderActivityList" FunctionName="WalzExplorerModel.Store.spWEX_Node_TenderActivityList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TenderActivityList_Result">
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IconOpen" ColumnName="IconOpen" />
+                <ScalarProperty Name="IconClosed" ColumnName="IconClosed" />
+                <ScalarProperty Name="ChildSQL" ColumnName="ChildSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spWEX_RHSTabList" FunctionName="WalzExplorerModel.Store.spWEX_RHSTabList">
             <ResultMapping>
               <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHSTabList_Result">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

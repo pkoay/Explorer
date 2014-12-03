@@ -14,9 +14,16 @@ namespace WalzExplorer.Controls.TreeView.ViewModel
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo language)
         {
-            ResourceDictionary rdIcon = new ResourceDictionary();
-            rdIcon.Source = new Uri("/WalzExplorer;component/Resources/Icons.xaml", UriKind.RelativeOrAbsolute);
-            return rdIcon[value as string] as Canvas;
+            if (value != null)
+            {
+                ResourceDictionary rdIcon = new ResourceDictionary();
+                rdIcon.Source = new Uri("/WalzExplorer;component/Resources/Icons.xaml", UriKind.RelativeOrAbsolute);
+                return rdIcon[value as string] as Canvas;
+            }
+            else
+            {
+                return null;
+            }
 
         }
 

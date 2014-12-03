@@ -62,18 +62,18 @@ namespace WalzExplorer.Controls.RHSTabs.TenderViewerTab
             switch (node.TypeID)
             {
                 case "Tender" :
-                    CmdString = "SELECT * FROM [dbo].[fnComponent_ListDetail] (" + node.ID + ") ORDER BY SchedCode,ComponentStructure, ItemStep";
+                    CmdString = "SELECT * FROM [dbo].[fnTender.Activity_ListDetail] (" + node.ID + ") ORDER BY SchedCode,ActivityStructure, ItemStep";
                     break;
                 case "TenderSchedule":
-                    CmdString = "SELECT * FROM [dbo].[fnComponent_ListDetail_GivenScheduleID]( " + node.ID + ") ORDER BY ComponentStructure, ItemStep";
+                    CmdString = "SELECT * FROM [dbo].[fnTender.Activity_ListDetail_GivenScheduleID]( " + node.ID + ") ORDER BY ActivityStructure, ItemStep";
                     break;
                 case "TenderComponent":
-                    CmdString = "SELECT * FROM [dbo].[fnComponent_ListDetail_GivenComponentID]( " + node.ID + ") ORDER BY ComponentStructure, ItemStep";
+                    CmdString = "SELECT * FROM [dbo].[fnTender.Activity_ListDetail_GivenActivityID]( " + node.ID + ") ORDER BY ActivityStructure, ItemStep";
                     break;
                 default:
                     break;
             }
-            string ConString = "Data Source=localhost;Initial Catalog=Tender_Prototype;Integrated Security=SSPI;";
+            string ConString = "Data Source=localhost;Initial Catalog=WalzExplorer;Integrated Security=SSPI;";
             
             
             using (SqlConnection con = new SqlConnection(ConString))
