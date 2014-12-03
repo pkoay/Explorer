@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2fb347df5c3d4e0c93f4192576989bc7" Name="Diagram1">
+      <Diagram DiagramId="2fb347df5c3d4e0c93f4192576989bc7" Name="All">
         <EntityTypeShape EntityType="WalzExplorerModel.sysdiagram" Width="1.5" PointX="7.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblPerson_Person" Width="1.5" PointX="2.75" PointY="7.25" IsExpanded="true" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblProject_Project" Width="1.5" PointX="5" PointY="7.375" IsExpanded="true" />

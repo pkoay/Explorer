@@ -30,7 +30,7 @@
           ItemsSource="{Binding Children}"
           >
                 <StackPanel Orientation="Horizontal" Margin="5,5,5,5">
-                    <Rectangle Width="16" Height="16" Fill="AntiqueWhite" Margin="0,0,10,0" >
+                    <Rectangle Width="16" Height="16" Fill="{DynamicResource TextBrush}" Margin="0,0,10,0" >
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill" Visual="{Binding NodeIcon,Converter={StaticResource CanvasFromString}}" />
                         </Rectangle.OpacityMask>

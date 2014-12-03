@@ -17,7 +17,7 @@ namespace WalzExplorer.Controls.TreeView.ViewModel
         readonly Dictionary<string, string> _dicSQLSubsitutes;
 
         public NodeViewModel(NodeViewModel parent,WEXNode node, Dictionary<string, string> dicSQLSubsitutes)
-            : base(parent, node.HasChildren)
+            : base(parent, node.HasChildren())
         {
             _dicSQLSubsitutes = dicSQLSubsitutes;
             _node = node;

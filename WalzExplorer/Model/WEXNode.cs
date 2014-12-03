@@ -18,6 +18,12 @@ namespace WalzExplorer
         public string IconOpen { get; set; }
         public string IconClosed { get; set; }
         public string ChildSQL { get; set; }
-        public bool HasChildren { get; set; }
+        public bool HasChildren ()
+        {
+            if (ChildSQL == null)
+                return false;
+            else return ChildSQL.Trim() != "";
+             
+        }
     }
 }

@@ -2507,11 +2507,6 @@
             <End Role="tblWEX_RHSTab" EntitySet="tblWEX_RHSTab" />
             <End Role="tblWEX_TreeNodeType" EntitySet="tblWEX_TreeNodeType" />
           </AssociationSet>
-          <FunctionImport Name="spWEX_TreeRootList" ReturnType="Collection(WalzExplorerModel.spWEX_TreeRootList_Result)">
-            <Parameter Name="LHSTabID" Mode="In" Type="String" />
-            <Parameter Name="NTSecurityGroups" Mode="In" Type="String" />
-            <Parameter Name="NTSecurityGroupsSeperator" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="fnCommon_Split_VarcharToTable" IsComposable="true" ReturnType="Collection(String)">
             <Parameter Name="input" Mode="In" Type="String" />
             <Parameter Name="seperator" Mode="In" Type="String" />
@@ -2623,16 +2618,17 @@
           <FunctionImport Name="spWEX_Node_TendersWorkGroupList" ReturnType="Collection(WalzExplorerModel.spWEX_Node_TendersWorkGroupList_Result)">
           <Parameter Name="TenderID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="spWEX_RHSTabList">
+          <FunctionImport Name="spWEX_TreeRootList" ReturnType="Collection(WalzExplorerModel.spWEX_TreeRootList_Result)">
+            <Parameter Name="LHSTabID" Mode="In" Type="String" />
+            <Parameter Name="NTSecurityGroups" Mode="In" Type="String" />
+            <Parameter Name="NTSecurityGroupsSeperator" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_RHSTabList" ReturnType="Collection(WalzExplorerModel.spWEX_RHSTabList_Result)">
             <Parameter Name="TreeNodeTypeID" Mode="In" Type="String" />
             <Parameter Name="NTSecurityGroups" Mode="In" Type="String" />
             <Parameter Name="NTSecurityGroupsSeperator" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="spWEX_TreeRootList_Result">
-          <Property Type="String" Name="TreeID" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="SQL" Nullable="false" MaxLength="50" />
-        </ComplexType>
         <ComplexType Name="fnTender_Activity_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
           <Property Type="Int32" Name="ComponentID" Nullable="false" />
@@ -2842,6 +2838,14 @@
           <Property Type="String" Name="NodeIconOpen" Nullable="false" MaxLength="11" />
           <Property Type="String" Name="NodeIconClosed" Nullable="false" MaxLength="11" />
           <Property Type="String" Name="NodeChildSQL" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="spWEX_TreeRootList_Result">
+          <Property Type="String" Name="TreeID" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="RootSQL" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="spWEX_RHSTabList_Result">
+          <Property Type="String" Name="ID" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3246,14 +3250,6 @@
               <ScalarProperty Name="TreeNodeTypeID" ColumnName="TreeNodeTypeID" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="spWEX_TreeRootList" FunctionName="WalzExplorerModel.Store.spWEX_TreeRootList">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_TreeRootList_Result">
-                <ScalarProperty Name="TreeID" ColumnName="TreeID" />
-                <ScalarProperty Name="SQL" ColumnName="SQL" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="fnCommon_Split_VarcharToTable" FunctionName="WalzExplorerModel.Store.fnCommon_Split_VarcharToTable" />
           <FunctionImportMapping FunctionImportName="fnTender_Activity_List" FunctionName="WalzExplorerModel.Store.fnTender_Activity_List">
             <ResultMapping>
@@ -3580,7 +3576,22 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spWEX_RHSTabList" FunctionName="WalzExplorerModel.Store.spWEX_RHSTabList" />
+          <FunctionImportMapping FunctionImportName="spWEX_TreeRootList" FunctionName="WalzExplorerModel.Store.spWEX_TreeRootList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_TreeRootList_Result">
+                <ScalarProperty Name="TreeID" ColumnName="TreeID" />
+                <ScalarProperty Name="RootSQL" ColumnName="RootSQL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHSTabList" FunctionName="WalzExplorerModel.Store.spWEX_RHSTabList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHSTabList_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -20,6 +20,11 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using WalzExplorer.Database;
 
+using WalzExplorer.Controls.TreeView;
+using WalzExplorer.Controls.TreeView.ViewModel;
+using WalzExplorer.Controls.RHSTabs;
+using System.Collections.ObjectModel;
+
 namespace WalzExplorer
 {
     /// <summary>
@@ -35,11 +40,6 @@ namespace WalzExplorer
             InitializeComponent();
         }
 
-        private void tcRHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             user.LoginID = WindowsIdentity.GetCurrent().Name;
@@ -51,26 +51,117 @@ namespace WalzExplorer
             sbDatabaseName.Text = "Database: " + we.Database.Connection.Database;
             sbServerName.Text = "Server: " + we.Database.Connection.DataSource;
 
-     
-        }
-
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
-        {
-
+            //Build dictionary of SQL subsitutions
+            Dictionary<string, string> dicSQLSubsitutes = new Dictionary<string, string>();
+            dicSQLSubsitutes.Add("@@UserPersonID", "'" + user.Person.PersonID + "'");
+            tvRole.PopulateRoot(user, dicSQLSubsitutes);
         }
 
         private void tbSearch_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Return)
+            {
+                //Search();
+            }
+        }
 
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            //Search();
         }
 
         private void tcLHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+            switch (tcLHS.SelectedIndex)
+            {
+                case 0: //Role
+                    tvLHS_NodeChanged(tvRole, null);
+                    break;
+                case 1: //Favourites
+                    tvLHS_NodeChanged(tvFavourites, null);
+                    break;
+                case 2: //Search
+                    tvLHS_NodeChanged(tvSearch, null);
+                    break;
+            }
+
+        }
+
+        private void tcRHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            //TabItem ti = (TabItem) tcRHS.Items[tcRHS.SelectedIndex];
+            //ti.Content = new ProjectDetail ();
+
+
+            WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
+            if (CurrentTab != null)
+            {
+                CurrentTab.SetNode(tvRole.SelectedNode());
+                CurrentTab.Content.Update();
+            }
         }
 
         private void tvLHS_NodeChanged(object sender, EventArgs e)
         {
+            NodeTreeView ntv = (NodeTreeView)sender;
+            //if (ntv.SelectedItem()!=null)
+            //    MessageBox.Show(ntv.SelectedItem().NodeTypeID);
+
+            RHSTabViewModel _rhsTabs = new RHSTabViewModel(ntv.SelectedItem(), user);
+
+
+            //if tab list the same
+            if (RHSTabsSame(_rhsTabs.RHSTabs, tcRHS.Items))
+            {
+                if (tcRHS.Items.Count != 0)
+                {
+                    // should reload control content
+                    WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
+                    CurrentTab.SetNode(ntv.SelectedNode());
+                    CurrentTab.Content.Update();
+                }
+            }
+            else
+            {
+                //Store selected Tab ID if tabs exist
+                string SelectedTabID = "";
+                if (tcRHS.Items.Count != 0)
+                    SelectedTabID = ((WEXRHSTab)tcRHS.SelectedItem).ID;
+
+                //apply new tab list
+                base.DataContext = _rhsTabs;
+
+                //set selected tab to the same as before if possible or first
+                if (tcRHS.Items.Count != 0)
+                    for (int i = 0; i < tcRHS.Items.Count; i++)
+                    {
+                        if (((WEXRHSTab)tcRHS.Items[i]).ID == SelectedTabID)
+                        {
+                            tcRHS.SelectedIndex = i;
+                            break;
+                        }
+
+                    }
+                if (tcRHS.SelectedIndex == -1)
+                    tcRHS.SelectedIndex = 0;
+            }
+
+        }
+
+        private bool RHSTabsSame(ObservableCollection<WEXRHSTab> NewTabs, ItemCollection tcRHS)
+        {
+            if (NewTabs.Count == tcRHS.Count)
+            {
+                for (int i = 0; i < NewTabs.Count; i++)
+                {
+                    if (NewTabs[i].ID != ((WEXRHSTab)tcRHS[i]).ID) return false;
+                    if (NewTabs[i].Name != ((WEXRHSTab)tcRHS[i]).Name) return false;
+                }
+                return true;
+            }
+            else return false;
         }
     }
 }

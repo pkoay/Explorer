@@ -57,23 +57,6 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblWEX_Tree> tblWEX_Tree { get; set; }
         public virtual DbSet<tblWEX_TreeNodeType> tblWEX_TreeNodeType { get; set; }
     
-        public virtual ObjectResult<spWEX_TreeRootList_Result> spWEX_TreeRootList(string lHSTabID, string nTSecurityGroups, string nTSecurityGroupsSeperator)
-        {
-            var lHSTabIDParameter = lHSTabID != null ?
-                new ObjectParameter("LHSTabID", lHSTabID) :
-                new ObjectParameter("LHSTabID", typeof(string));
-    
-            var nTSecurityGroupsParameter = nTSecurityGroups != null ?
-                new ObjectParameter("NTSecurityGroups", nTSecurityGroups) :
-                new ObjectParameter("NTSecurityGroups", typeof(string));
-    
-            var nTSecurityGroupsSeperatorParameter = nTSecurityGroupsSeperator != null ?
-                new ObjectParameter("NTSecurityGroupsSeperator", nTSecurityGroupsSeperator) :
-                new ObjectParameter("NTSecurityGroupsSeperator", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_TreeRootList_Result>("spWEX_TreeRootList", lHSTabIDParameter, nTSecurityGroupsParameter, nTSecurityGroupsSeperatorParameter);
-        }
-    
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)
         {
@@ -452,7 +435,24 @@ namespace WalzExplorer.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_Node_TendersWorkGroupList_Result>("spWEX_Node_TendersWorkGroupList", tenderIDParameter);
         }
     
-        public virtual int spWEX_RHSTabList(string treeNodeTypeID, string nTSecurityGroups, string nTSecurityGroupsSeperator)
+        public virtual ObjectResult<spWEX_TreeRootList_Result> spWEX_TreeRootList(string lHSTabID, string nTSecurityGroups, string nTSecurityGroupsSeperator)
+        {
+            var lHSTabIDParameter = lHSTabID != null ?
+                new ObjectParameter("LHSTabID", lHSTabID) :
+                new ObjectParameter("LHSTabID", typeof(string));
+    
+            var nTSecurityGroupsParameter = nTSecurityGroups != null ?
+                new ObjectParameter("NTSecurityGroups", nTSecurityGroups) :
+                new ObjectParameter("NTSecurityGroups", typeof(string));
+    
+            var nTSecurityGroupsSeperatorParameter = nTSecurityGroupsSeperator != null ?
+                new ObjectParameter("NTSecurityGroupsSeperator", nTSecurityGroupsSeperator) :
+                new ObjectParameter("NTSecurityGroupsSeperator", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_TreeRootList_Result>("spWEX_TreeRootList", lHSTabIDParameter, nTSecurityGroupsParameter, nTSecurityGroupsSeperatorParameter);
+        }
+    
+        public virtual ObjectResult<spWEX_RHSTabList_Result> spWEX_RHSTabList(string treeNodeTypeID, string nTSecurityGroups, string nTSecurityGroupsSeperator)
         {
             var treeNodeTypeIDParameter = treeNodeTypeID != null ?
                 new ObjectParameter("TreeNodeTypeID", treeNodeTypeID) :
@@ -466,7 +466,7 @@ namespace WalzExplorer.Database
                 new ObjectParameter("NTSecurityGroupsSeperator", nTSecurityGroupsSeperator) :
                 new ObjectParameter("NTSecurityGroupsSeperator", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spWEX_RHSTabList", treeNodeTypeIDParameter, nTSecurityGroupsParameter, nTSecurityGroupsSeperatorParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHSTabList_Result>("spWEX_RHSTabList", treeNodeTypeIDParameter, nTSecurityGroupsParameter, nTSecurityGroupsSeperatorParameter);
         }
     }
 }

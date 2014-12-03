@@ -11,9 +11,9 @@ namespace WalzExplorer.Database
 {
     using System;
     
-    public partial class spWEX_TreeRootList_Result
+    public partial class spWEX_RHSTabList_Result
     {
-        public string TreeID { get; set; }
-        public string RootSQL { get; set; }
+        public string ID { get; set; }
+        public string Name { get; set; }
     }
 }
