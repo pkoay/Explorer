@@ -7,6 +7,7 @@ using System;
 using WalzExplorer.Controls.TreeView;
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace WalzExplorer.Controls.LHSTabs
 {
@@ -18,19 +19,20 @@ namespace WalzExplorer.Controls.LHSTabs
     {
         WalzExplorerEntities context = new WalzExplorerEntities();
         public ObservableCollection<WEXLHSTab> LHSTabs { get; set; }
-        public LHSTabViewModel(WEXUser user, Dictionary<string, string> dicSQLSubsitutes)
+        public LHSTabViewModel()
         {
             LHSTabs = new ObservableCollection<WEXLHSTab>();
             foreach (tblWEX_LHSTab t in  context.tblWEX_LHSTab.OrderByDescending(x=>x.Icon))
             {
                 WEXLHSTab lt=new WEXLHSTab { ID = t.LHSTabID, Icon = t.Icon };
-                NodeTreeView  tv=  new NodeTreeView(){Name=lt.TreeviewName(),Tag=lt.ID};
-                tv.Background = Brushes.Red;
+                //NodeTreeView  tv=  new NodeTreeView(){Name=lt.TreeviewName(),Tag=lt.ID};
+                //tv.Background = Brushes.Red;
 
-                Button b = new Button() { Background = Brushes.Red };
-                tv.PopulateRoot(user, dicSQLSubsitutes);
-                
-                lt.Content=tv;
+                //Button b = new Button() { Background = Brushes.Red };
+                //tv.PopulateRoot(user, dicSQLSubsitutes);
+                //tv.NodeChanged+=new RoutedEventHandler(tvLHS_NodeChanged);
+
+                //lt.Content=tv;
 
                 LHSTabs.Add(lt);
             }

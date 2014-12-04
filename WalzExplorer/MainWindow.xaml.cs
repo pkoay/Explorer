@@ -40,7 +40,7 @@ namespace WalzExplorer
     public partial class MainWindow : MetroWindow
     {
         public WEXUser user = new WEXUser();
-        
+        public Dictionary<string, string> dicSQLSubsitutes = new Dictionary<string, string>();
 
         public MainWindow()
         {
@@ -58,13 +58,10 @@ namespace WalzExplorer
             sbDatabaseName.Text = "Database: " + we.Database.Connection.Database;
             sbServerName.Text = "Server: " + we.Database.Connection.DataSource;
 
-            //Build dictionary of SQL subsitutions
-            Dictionary<string, string> dicSQLSubsitutes = new Dictionary<string, string>();
+            //Build dictionary of SQL subsitutions 
             dicSQLSubsitutes.Add("@@UserPersonID", "'" + user.Person.PersonID + "'");
 
-
-
-            LHSTabViewModel _LHSTabs = new LHSTabViewModel(user, dicSQLSubsitutes);
+            LHSTabViewModel _LHSTabs = new LHSTabViewModel();
             tcLHS.DataContext = _LHSTabs;
             tcLHS.SelectedIndex = 0;
 
@@ -85,26 +82,28 @@ namespace WalzExplorer
 
         private void tcLHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //If no treecontrol exits create it
             RadTabControl tc = (RadTabControl)sender;
             if (tc.SelectedItem != null)
             {
                 WEXLHSTab ti = (WEXLHSTab)tc.SelectedItem;
-                //NodeTreeView tv = (NodeTreeView)ti.Content;
-                //tvLHS_NodeChanged(tv, null);
-            }
-            //switch (tcLHS.SelectedIndex)
-            //{
-            //    case 0: //Role
-            //        tvLHS_NodeChanged(sender., null);
-            //        break;
-            //    case 1: //Favourites
-            //        tvLHS_NodeChanged(tvFavourites, null);
-            //        break;
-            //    case 2: //Search
-            //        tvLHS_NodeChanged(tvSearch, null);
-            //        break;
-            //}
 
+                if (ti.Content == null)
+                {
+                    //Create Treeview if not created
+                    NodeTreeView tv = new NodeTreeView() { Name = ti.TreeviewName(), Tag = ti.ID };
+                    tv.PopulateRoot(user, dicSQLSubsitutes);
+                    tv.NodeChanged += new EventHandler(tvLHS_NodeChanged);
+                    ti.Content = tv;
+                }
+                else
+                {
+                    // Fire node change event when tab changed
+                    NodeTreeView tv = (NodeTreeView)ti.Content;
+                    tvLHS_NodeChanged(tv, null);
+                }
+            }
+            
         }
 
         private void tcRHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -117,7 +116,7 @@ namespace WalzExplorer
             WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
             if (CurrentTab != null)
             {
-                //CurrentTab.SetNode(tvRole.SelectedNode());
+                CurrentTab.SetNode(SelectedNode());
                 CurrentTab.Content.Update();
             }
         }
@@ -125,9 +124,6 @@ namespace WalzExplorer
         private void tvLHS_NodeChanged(object sender, EventArgs e)
         {
             NodeTreeView ntv = (NodeTreeView)sender;
-            //if (ntv.SelectedItem()!=null)
-            //    MessageBox.Show(ntv.SelectedItem().NodeTypeID);
-
             RHSTabViewModel _rhsTabs = new RHSTabViewModel(ntv.SelectedItem(), user);
 
 
@@ -144,7 +140,9 @@ namespace WalzExplorer
             }
             else
             {
-                //Store selected Tab ID if tabs exist
+                //Recreate tabs and set current tab (current tab= original tab or first tab) 
+
+                //Store currently selected Tab ID (if tabs exist)
                 string SelectedTabID = "";
                 if (tcRHS.Items.Count != 0)
                     SelectedTabID = ((WEXRHSTab)tcRHS.SelectedItem).ID;
@@ -161,10 +159,14 @@ namespace WalzExplorer
                             tcRHS.SelectedIndex = i;
                             break;
                         }
-
                     }
                 if (tcRHS.SelectedIndex == -1)
                     tcRHS.SelectedIndex = 0;
+
+                //// should reload control content
+                //WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
+                //CurrentTab.SetNode(ntv.SelectedNode());
+                //CurrentTab.Content.Update();
             }
 
         }
@@ -181,6 +183,25 @@ namespace WalzExplorer
                 return true;
             }
             else return false;
+        }
+
+        private WEXNode SelectedNode()
+        {
+            if (tcLHS.SelectedItem != null)
+            {
+                WEXLHSTab ti = (WEXLHSTab)tcLHS.SelectedItem;
+                if (ti.Content != null)
+                {
+                    NodeTreeView tv = (NodeTreeView)ti.Content;
+                    if (tv.SelectedItem() != null)
+                    {
+                        return (WEXNode) tv.SelectedNode();
+                    }
+                    return null;
+                }
+                return null;
+            }
+            return null;
         }
     }
 }
