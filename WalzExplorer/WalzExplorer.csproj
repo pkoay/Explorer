@@ -96,25 +96,80 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\RHSTabs\ExampleGrid2Tab\ExampleGrid2.xaml.cs">
+      <DependentUpon>ExampleGrid2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\RHSTabContentBase.cs" />
+    <Compile Include="Controls\LHSTabs\LHSTabViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\RHSTabViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\TenderViewerTab\TenderViewer.xaml.cs">
+      <DependentUpon>TenderViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TreeView\NodeTreeView.xaml.cs">
       <DependentUpon>NodeTreeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TreeView\ViewModel\CanvasFromString.cs" />
+    <Compile Include="Common\CanvasFromString.cs" />
     <Compile Include="Controls\TreeView\ViewModel\NodeViewModel.cs" />
     <Compile Include="Controls\TreeView\ViewModel\RootViewModel.cs" />
     <Compile Include="Controls\TreeView\ViewModel\TreeViewItemViewModel.cs" />
+    <Compile Include="Database\fnTender_Schedule_List_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_AllProjects_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_FoundProjects_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_MyProjects_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TenderActivityList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TenderComponentList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TenderDrawingList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TenderFolders_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TendersAllList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TendersAll_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TenderScheduleAndActivityList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TenderSetupList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TendersOpenList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TendersOpen_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TendersWorkGroupList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_RHSTabList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_TreeRootList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\WEXLHSTab.cs" />
     <Compile Include="Model\WEXTreeRoot.cs" />
     <Compile Include="Model\WEXNode.cs" />
     <Compile Include="Model\Person.cs" />
     <Compile Include="Model\WEXRHSTab.cs" />
     <Compile Include="Model\WEXConnection.cs" />
     <Compile Include="Model\WEXUser.cs" />
-    <Compile Include="Database\spWEX_TreeRootList_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\sysdiagram.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Database\tblPerson_Person.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -196,9 +251,6 @@
     <Compile Include="Database\tblWEX_Tree.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\tblWEX_TreeNode.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Database\tblWEX_TreeNodeType.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -218,6 +270,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WorkExplorerModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="Controls\RHSTabs\ExampleGrid2Tab\ExampleGrid2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\TenderViewerTab\TenderViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\TreeView\NodeTreeView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -314,9 +374,7 @@
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\RHSTabs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

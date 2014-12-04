@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Principal;
 using System.DirectoryServices.AccountManagement;
-using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity.Core.Objects;
 using WalzExplorer.Database;

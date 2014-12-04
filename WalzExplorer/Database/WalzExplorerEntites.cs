@@ -11,10 +11,12 @@ using System.Threading.Tasks;
 
 using System.Data.SqlClient;
 using System.Data.Entity.Core.EntityClient;
+using WalzExplorer.Controls.TreeView.ViewModel;
+using WalzExplorer.Controls.RHSTabs;
 
 namespace WalzExplorer.Database
 {
-    public partial class WalzExplorerEntities 
+    public partial class WalzExplorerEntities
     {
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //{
@@ -22,10 +24,10 @@ namespace WalzExplorer.Database
         //    modelBuilder.Entity<tblTender_Drawing>().Property(p => p.RowVersion).IsConcurrencyToken(true);
         //}
 
-        
+
         public override int SaveChanges()
         {
-            
+
 
             var modifiedEntries = ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
@@ -50,17 +52,14 @@ namespace WalzExplorer.Database
             return base.SaveChanges();
         }
 
-        public  List<WEXNode> GetRootNodes(string strLHSTabID, WEXUser user, Dictionary<string, string> dicSQLSubsitutes)
+        public List<WEXNode> GetRootNodes(string strLHSTabID, WEXUser user, Dictionary<string, string> dicSQLSubsitutes)
         {
 
             List<WEXNode> nodes = new List<WEXNode>();
 
-            var pLHSTabID = new SqlParameter("@LHSTabID", strLHSTabID);
-            var pNTSecurityGroups = new SqlParameter("@NTSecurityGroups", 4);
-            var pNTSecurityGroupsSeperator = new SqlParameter("@NTSecurityGroupsSeperator", "|");
-            foreach (WEXTreeRoot tr in this.Database.SqlQuery<WEXTreeRoot>("spWEX.TreeRootList", pLHSTabID, pNTSecurityGroups, pNTSecurityGroupsSeperator))
+            foreach (spWEX_TreeRootList_Result tr in spWEX_TreeRootList(strLHSTabID, user.SecurityGroupAsString(), "|"))
             {
-                foreach (WEXNode n in (GetNodes(tr.SQL, dicSQLSubsitutes)))
+                foreach (WEXNode n in (GetNodes(tr.RootSQL, dicSQLSubsitutes)))
                 {
                     nodes.Add(n);
                 }
@@ -68,7 +67,7 @@ namespace WalzExplorer.Database
             return nodes;
         }
 
-        public  List<WEXNode> GetNodes(string strNodeSQL, Dictionary<string, string> dicSQLSubsitutes)
+        public List<WEXNode> GetNodes(string strNodeSQL, Dictionary<string, string> dicSQLSubsitutes)
         {
 
             List<WEXNode> nodes = new List<WEXNode>();
@@ -81,88 +80,25 @@ namespace WalzExplorer.Database
             return this.Database.SqlQuery<WEXNode>(strNodeSQL).ToList();
         }
 
-        //  public static List<RHSTab> GetRHSTabs(NodeViewModel LHSNode, WEXUser user)
-        //{
-        //    List<RHSTab> tabs = new List<RHSTab>();
-        //    if (LHSNode != null)
-        //    {
-        //        string strSQL = "spRHSTabList";
+        public List<WEXRHSTab> GetRHSTabs(NodeViewModel LHSNode, WEXUser user)
+        {
+            List<WEXRHSTab> tabs = new List<WEXRHSTab>();
+            if (LHSNode != null)
+            {
+                foreach (spWEX_RHSTabList_Result t in spWEX_RHSTabList(LHSNode.NodeTypeID, user.SecurityGroupAsString(), "|"))
+                {
+                    WEXRHSTab wt = new WEXRHSTab {ID=t.ID,Header=t.Header};
+                    tabs.Add(wt);
+                }
 
-
-        //        //Create node from strNodeSQL
-        //        using (SqlConnection con = new SqlConnection(strConnection))
-        //        {
-        //            using (SqlCommand cmd = new SqlCommand(strSQL, con))
-        //            {
-        //                cmd.CommandType = CommandType.StoredProcedure;
-
-        //                cmd.Parameters.Add("@TreeNodeTypeID", SqlDbType.VarChar).Value = LHSNode.NodeTypeID;
-        //                cmd.Parameters.Add("@NTSecurityGroups", SqlDbType.VarChar).Value = user.SecurityGroupAsString();
-        //                cmd.Parameters.Add("@NTSecurityGroupsSeperator", SqlDbType.VarChar).Value = "|";
-        //                con.Open();
-        //                using (var reader = cmd.ExecuteReader())
-        //                {
-        //                    while (reader.Read())
-        //                    {
-        //                        RHSTab tab = new RHSTab();
-        //                        tab.ID = reader["ID"].ToString();
-        //                        tab.Name = reader["Name"].ToString();
-        //                        //tab.Content = new ProjectDetail();
-        //                        string strTabClass = tab.ID.Substring(3); // remove tab prefix
-        //                        tab.Content = (RHSTabContentBase)Activator.CreateInstance(Type.GetType("WalzExplorer.Controls.RHSTabContent." + strTabClass + "Tab." + strTabClass));
-        //                        //switch (tab.ID)
-        //                        //{
-        //                        //    case "TabProjectDetail":
-        //                        //        tab.Content = new ProjectDetail();
-        //                        //        break;
-        //                        //    case "TabProjectReport":
-        //                        //        tab.Content = new ProjectReport();
-        //                        //        break;
-        //                        //    default: 
-        //                        //        tab.Content = new ProjectDetail();
-        //                        //        break;
-        //                        //}
-        //                        tabs.Add(tab);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return tabs;
+                //var pTreeNodeTypeID = new SqlParameter("@TreeNodeTypeID", LHSNode.NodeTypeID);
+                //var pNTSecurityGroups = new SqlParameter("@NTSecurityGroups", user.SecurityGroupAsString());
+                //var pNTSecurityGroupsSeperator = new SqlParameter("@NTSecurityGroupsSeperator", "|");
+                //tabs = this.Database.SqlQuery<WEXRHSTab>("spWEX.RHSTabList", pTreeNodeTypeID, pNTSecurityGroups, pNTSecurityGroupsSeperator).ToList();
+            }
+            return tabs;
+        }
     }
 
-
-    //public partial class WalzExplorerEntites : ObjectContext
-    //{
-    //    public WalzExplorerEntites()
-    //        : base("name=Tender_PrototypeEntities", "Tender_PrototypeEntities")
-    //    {
-    //    }
-
-    //    public override int SaveChanges()
-    //    {
-
-    //        foreach (ObjectStateEntry entry in
-    //            ObjectStateManager.GetObjectStateEntries(
-    //            EntityState.Added | EntityState.Modified))
-    //        {
-    //            if (HasMethod(entry.Entity, "UpdatedBy"))
-    //            {
-    //                Type type = entry.Entity.GetType();
-    //                PropertyInfo prop = type.GetProperty("UpdatedBy");
-    //                prop.SetValue(entry.Entity, WindowsIdentity.GetCurrent().Name, null);
-    //            }
-
-    //            if (HasMethod(entry.Entity, "UpdatedDate"))
-    //            {
-    //                Type type = entry.Entity.GetType();
-    //                PropertyInfo prop = type.GetProperty("UpdatedDate");
-    //                prop.SetValue(entry.Entity, DateTime.Now, null);
-    //            }
-
-    //        }
-    //        return base.SaveChanges();
-    //    }
- 
-
 }
+    

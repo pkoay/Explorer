@@ -1,13 +1,19 @@
-﻿<MahApps:MetroWindow x:Class="WalzExplorer.MainWindow"
+﻿
+
+<MahApps:MetroWindow x:Class="WalzExplorer.MainWindow"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
                     xmlns:MahApps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      xmlns:walzTreeView="clr-namespace:WalzExplorer.Controls.TreeView"
+                    xmlns:Common="clr-namespace:WalzExplorer.Common"
                      Title="Walz Explorer" Height="350" Width="525" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="CanResizeWithGrip"
-                
+          
                      Loaded="MetroWindow_Loaded">
-    
+
+    <MahApps:MetroWindow.Resources>
+        <Style TargetType="telerik:RadTabControl" BasedOn="{StaticResource RadTabControlStyle}"/>
+        <Style TargetType="telerik:RadTreeView" BasedOn="{StaticResource RadTreeViewStyle}"/>
+    </MahApps:MetroWindow.Resources>
     
     <MahApps:MetroWindow.RightWindowCommands>
         <MahApps:WindowCommands>
@@ -79,12 +85,34 @@
                     <ColumnDefinition Width="5"/>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                
-                <TabControl Name="tcLHS" SelectionChanged="tcLHS_SelectionChanged">
-                    <TabItem>
+
+                <telerik:RadTabControl Name="tcLHS" SelectionChanged="tcLHS_SelectionChanged" ItemsSource="{Binding LHSTabs}">
+
+                    <telerik:RadTabControl.Resources>
+                        <Common:CanvasFromString x:Key="CanvasFromString" x:Name="CanvasFromString"/>
+                    </telerik:RadTabControl.Resources>
+                    <telerik:RadTabControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" >
+                                <Rectangle Width="16" Height="16"  Margin="0,0,10,0" Fill="{DynamicResource TextBrush}" >
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Fill" Visual="{Binding Icon , Converter={StaticResource CanvasFromString}}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Text="{Binding ID}" FontSize="16" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:RadTabControl.ItemTemplate>
+                    <telerik:RadTabControl.ContentTemplate>
+                        <ItemContainerTemplate >
+                            <ContentControl Content="{Binding Content}" />
+                        </ItemContainerTemplate>
+                    </telerik:RadTabControl.ContentTemplate>
+
+                    <!--<TabItem>
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource TextBrush}" Margin="0,0,10,0">
+                                <Rectangle Width="16" Height="16"  Margin="0,0,10,0" Fill="{DynamicResource TextBrush}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_user}" />
                                     </Rectangle.OpacityMask>
@@ -97,7 +125,7 @@
                     <TabItem>
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource TextBrush}" Margin="0,0,10,0">
+                                <Rectangle Width="16" Height="16"  Margin="0,0,10,0" Fill="{DynamicResource TextBrush}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_star}" />
                                     </Rectangle.OpacityMask>
@@ -105,27 +133,34 @@
                                 <TextBlock Text="Favourites" />
                             </StackPanel>
                         </TabItem.Header>
-                        <TreeView></TreeView>
-                        <!--<walzNodeTreeView:NodeTreeView x:Name="tvFavourites" NodeChanged="tvLHS_NodeChanged" />-->
+                        <walzTreeView:NodeTreeView x:Name="tvFavourites" NodeChanged="tvLHS_NodeChanged"/>
                     </TabItem>
                     <TabItem>
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource TextBrush}" Margin="0,0,10,0">
+                                <Rectangle Width="16" Height="16"  Margin="0,0,10,0" Fill="{DynamicResource TextBrush}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_magnify}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Text="Search" />
+                                <TextBlock Text="Search"/>
                             </StackPanel>
                         </TabItem.Header>
-                        <TreeView></TreeView>
-                        <!--<walzNodeTreeView:NodeTreeView x:Name="tvSearch"  NodeChanged="tvLHS_NodeChanged"/>-->
-                    </TabItem>
-                </TabControl>
+                        <walzTreeView:NodeTreeView x:Name="tvSearch"  NodeChanged="tvLHS_NodeChanged"/>
+                    </TabItem>-->
+                </telerik:RadTabControl>
                 <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
                 <TabControl Name="tcRHS" Grid.Column="2" ItemsSource="{Binding RHSTabs}" SelectionChanged="tcRHS_SelectionChanged" >
-
+                    <TabControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Header}" FontSize="12" />
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
+                    <TabControl.ContentTemplate>
+                        <ItemContainerTemplate >
+                            <ContentControl Content="{Binding Content}" />
+                        </ItemContainerTemplate>
+                    </TabControl.ContentTemplate>
                 </TabControl>
             </Grid>
             
