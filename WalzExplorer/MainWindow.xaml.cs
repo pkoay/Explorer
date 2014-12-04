@@ -48,7 +48,7 @@ namespace WalzExplorer
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
-        { 
+        {  
             user.LoginID = WindowsIdentity.GetCurrent().Name;
             sbUserName.Text = "User: " + user.LoginID;
 
