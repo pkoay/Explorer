@@ -20,13 +20,13 @@ namespace WalzExplorer.Controls.TreeView
     /// <summary>
     /// Interaction logic for NodeTreeView.xaml
     /// </summary>
-    public partial class NodeTreeView : UserControl
+    public partial class WEXTreeView : UserControl
     {
         WalzExplorerEntities context = new WalzExplorerEntities();
         private RootViewModel _rootNode;
         private NodeViewModel _selectedNode;
 
-        public NodeTreeView()
+        public WEXTreeView()
         {
             InitializeComponent();
         }

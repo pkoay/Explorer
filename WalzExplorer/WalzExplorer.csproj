@@ -105,8 +105,8 @@
     <Compile Include="Controls\RHSTabs\TenderViewerTab\TenderViewer.xaml.cs">
       <DependentUpon>TenderViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TreeView\NodeTreeView.xaml.cs">
-      <DependentUpon>NodeTreeView.xaml</DependentUpon>
+    <Compile Include="Controls\TreeView\WEXTreeView.xaml.cs">
+      <DependentUpon>WEXTreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\CanvasFromString.cs" />
     <Compile Include="Controls\TreeView\ViewModel\NodeViewModel.cs" />
@@ -278,7 +278,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\TreeView\NodeTreeView.xaml">
+    <Page Include="Controls\TreeView\WEXTreeView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

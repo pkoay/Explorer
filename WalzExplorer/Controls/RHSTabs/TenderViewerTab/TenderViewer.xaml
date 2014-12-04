@@ -10,7 +10,7 @@
     <Grid>
 
 
-        <telerik:RadGridView  Name="grd" VerticalAlignment="Top" IsReadOnly="True" AlternationCount="3" AlternateRowBackground="AliceBlue"
+        <telerik:RadGridView  Name="grd" VerticalAlignment="Top" IsReadOnly="True" AlternationCount="3" 
                               ClipboardCopyMode="All" SelectionMode="Extended"   ShowColumnFooters="True"  ShowGroupFooters="True" GridLinesVisibility="None">
 
         

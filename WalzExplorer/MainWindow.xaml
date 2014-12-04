@@ -97,12 +97,12 @@
                     <telerik:RadTabControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" >
-                                <Rectangle Width="16" Height="16"  Margin="0,0,10,0" Fill="{DynamicResource TextBrush}" >
+                                <Rectangle Width="12" Height="12"  Margin="0,0,10,0" Fill="{DynamicResource TextBrush}" >
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Fill" Visual="{Binding Icon , Converter={StaticResource CanvasFromString}}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Text="{Binding ID}" FontSize="16" />
+                                <TextBlock Text="{Binding ID}" FontSize="12" />
                             </StackPanel>
                         </DataTemplate>
                     </telerik:RadTabControl.ItemTemplate>
@@ -111,23 +111,23 @@
                             <ContentControl Content="{Binding Content}" />
                         </ItemContainerTemplate>
                     </telerik:RadTabControl.ContentTemplate>
-
-                    
-                <!--RHS TAB CONTROL-->
                 </telerik:RadTabControl>
+                
                 <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
-                <TabControl Name="tcRHS" Grid.Column="2" ItemsSource="{Binding RHSTabs}" SelectionChanged="tcRHS_SelectionChanged" >
-                    <TabControl.ItemTemplate>
+                
+                <!--RHS TAB CONTROL-->
+                <telerik:RadTabControl Name="tcRHS" Grid.Column="2" ItemsSource="{Binding RHSTabs}" SelectionChanged="tcRHS_SelectionChanged" Visibility="Hidden">
+                    <telerik:RadTabControl.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Header}" FontSize="12" />
                         </DataTemplate>
-                    </TabControl.ItemTemplate>
-                    <TabControl.ContentTemplate>
+                    </telerik:RadTabControl.ItemTemplate>
+                    <telerik:RadTabControl.ContentTemplate>
                         <ItemContainerTemplate >
                             <ContentControl Content="{Binding Content}" />
                         </ItemContainerTemplate>
-                    </TabControl.ContentTemplate>
-                </TabControl>
+                    </telerik:RadTabControl.ContentTemplate>
+                </telerik:RadTabControl>
             </Grid>
             
         </DockPanel>

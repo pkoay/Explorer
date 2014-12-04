@@ -91,7 +91,7 @@ namespace WalzExplorer
                 if (ti.Content == null)
                 {
                     //Create Treeview if not created
-                    NodeTreeView tv = new NodeTreeView() { Name = ti.TreeviewName(), Tag = ti.ID };
+                    WEXTreeView tv = new WEXTreeView() { Name = ti.TreeviewName(), Tag = ti.ID };
                     tv.PopulateRoot(user, dicSQLSubsitutes);
                     tv.NodeChanged += new EventHandler(tvLHS_NodeChanged);
                     ti.Content = tv;
@@ -99,7 +99,7 @@ namespace WalzExplorer
                 else
                 {
                     // Fire node change event when tab changed
-                    NodeTreeView tv = (NodeTreeView)ti.Content;
+                    WEXTreeView tv = (WEXTreeView)ti.Content;
                     tvLHS_NodeChanged(tv, null);
                 }
             }
@@ -123,7 +123,7 @@ namespace WalzExplorer
 
         private void tvLHS_NodeChanged(object sender, EventArgs e)
         {
-            NodeTreeView ntv = (NodeTreeView)sender;
+            WEXTreeView ntv = (WEXTreeView)sender;
             RHSTabViewModel _rhsTabs = new RHSTabViewModel(ntv.SelectedItem(), user);
 
 
@@ -152,6 +152,8 @@ namespace WalzExplorer
 
                 //set selected tab to the same as before if possible or first
                 if (tcRHS.Items.Count != 0)
+                {
+                    tcRHS.Visibility = System.Windows.Visibility.Visible;
                     for (int i = 0; i < tcRHS.Items.Count; i++)
                     {
                         if (((WEXRHSTab)tcRHS.Items[i]).ID == SelectedTabID)
@@ -160,6 +162,9 @@ namespace WalzExplorer
                             break;
                         }
                     }
+                }
+                else
+                    tcRHS.Visibility = System.Windows.Visibility.Hidden;
                 if (tcRHS.SelectedIndex == -1)
                     tcRHS.SelectedIndex = 0;
 
@@ -192,7 +197,7 @@ namespace WalzExplorer
                 WEXLHSTab ti = (WEXLHSTab)tcLHS.SelectedItem;
                 if (ti.Content != null)
                 {
-                    NodeTreeView tv = (NodeTreeView)ti.Content;
+                    WEXTreeView tv = (WEXTreeView)ti.Content;
                     if (tv.SelectedItem() != null)
                     {
                         return (WEXNode) tv.SelectedNode();
