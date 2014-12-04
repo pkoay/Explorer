@@ -46,7 +46,7 @@
         <DockPanel LastChildFill="True">
             
             <!--STATUSBAR-->
-            <StatusBar Name="sb" DockPanel.Dock="Bottom" Background="{DynamicResource AccentColorBrush}">
+            <StatusBar Name="sb" DockPanel.Dock="Bottom" Background="{telerik:VisualStudio2013Resource ResourceKey=AccentDarkBrush}">
                 <StatusBar.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid>
@@ -112,8 +112,8 @@
                         </ItemContainerTemplate>
                     </telerik:RadTabControl.ContentTemplate>
                 </telerik:RadTabControl>
-                
-                <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
+
+                <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="{telerik:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"/>
                 
                 <!--RHS TAB CONTROL-->
                 <telerik:RadTabControl Name="tcRHS" Grid.Column="2" ItemsSource="{Binding RHSTabs}" SelectionChanged="tcRHS_SelectionChanged" Visibility="Hidden">
