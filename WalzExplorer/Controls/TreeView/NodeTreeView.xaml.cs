@@ -35,7 +35,7 @@ namespace WalzExplorer.Controls.TreeView
         {
             //Populate Role tree
             
-            List<WEXNode> nodesRole = context.GetRootNodes("Role", user, dicSQLSubsitutes);
+            List<WEXNode> nodesRole = context.GetRootNodes(this.Tag.ToString(), user, dicSQLSubsitutes);
             // Create UI-friendly wrappers around the 
             // raw data objects (i.e. the view-model).
             _rootNode = new RootViewModel(nodesRole, dicSQLSubsitutes);

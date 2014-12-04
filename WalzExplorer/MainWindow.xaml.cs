@@ -61,10 +61,10 @@ namespace WalzExplorer
             //Build dictionary of SQL subsitutions
             Dictionary<string, string> dicSQLSubsitutes = new Dictionary<string, string>();
             dicSQLSubsitutes.Add("@@UserPersonID", "'" + user.Person.PersonID + "'");
-            
-            
-    
-            LHSTabViewModel _LHSTabs = new LHSTabViewModel();
+
+
+
+            LHSTabViewModel _LHSTabs = new LHSTabViewModel(user, dicSQLSubsitutes);
             tcLHS.DataContext = _LHSTabs;
             //tcLHS.GetBindingExpression(TabControl.ItemsSourceProperty).UpdateTarget();
 

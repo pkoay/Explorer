@@ -10,18 +10,15 @@
             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
               
-            <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />-->
-                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TabControl.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Window.xaml" />-->
-                <!--<ResourceDictionary Source="Themes/VisualStudio2013/System.Windows.xaml" />-->
+      
+            <ResourceDictionary Source="Themes/VisualStudio2013/System.Windows.xaml" />
             <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.xaml" />
             <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.Data.xaml" />
             <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.GridView.xaml" />
             <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.Input.xaml" />
             <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.Navigation.xaml" />
 
-                <ResourceDictionary Source="/Resources/Icons.xaml" />
+            <ResourceDictionary Source="/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
       </ResourceDictionary>
     </Application.Resources>

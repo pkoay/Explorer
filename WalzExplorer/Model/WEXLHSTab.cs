@@ -12,7 +12,7 @@ namespace WalzExplorer
     {
         public string ID { get; set; }
         public string Icon { get; set; }
-        public Button Content { get; set; }
+        public NodeTreeView Content { get; set; }
         public string TreeviewName ()
         {
             return "tv" + ID;

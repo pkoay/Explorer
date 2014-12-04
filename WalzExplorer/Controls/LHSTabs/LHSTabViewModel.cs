@@ -18,17 +18,20 @@ namespace WalzExplorer.Controls.LHSTabs
     {
         WalzExplorerEntities context = new WalzExplorerEntities();
         public ObservableCollection<WEXLHSTab> LHSTabs { get; set; }
-        public LHSTabViewModel()
+        public LHSTabViewModel(WEXUser user, Dictionary<string, string> dicSQLSubsitutes)
         {
             LHSTabs = new ObservableCollection<WEXLHSTab>();
             foreach (tblWEX_LHSTab t in  context.tblWEX_LHSTab.OrderByDescending(x=>x.Icon))
             {
                 WEXLHSTab lt=new WEXLHSTab { ID = t.LHSTabID, Icon = t.Icon };
-                NodeTreeView  tv=  new NodeTreeView(){Name=lt.TreeviewName()};
+                NodeTreeView  tv=  new NodeTreeView(){Name=lt.TreeviewName(),Tag=lt.ID};
                 tv.Background = Brushes.Red;
 
                 Button b = new Button() { Background = Brushes.Red };
-                lt.Content=b;
+                tv.PopulateRoot(user, dicSQLSubsitutes);
+                
+                lt.Content=tv;
+
                 LHSTabs.Add(lt);
             }
         }
