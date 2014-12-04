@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace WalzExplorer.Controls.TreeView.ViewModel
+namespace WalzExplorer.Common
 {
     public class CanvasFromString : IValueConverter
     {

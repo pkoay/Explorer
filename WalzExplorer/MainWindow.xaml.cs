@@ -25,6 +25,12 @@ using WalzExplorer.Controls.TreeView.ViewModel;
 using WalzExplorer.Controls.RHSTabs;
 using System.Collections.ObjectModel;
 using WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab;
+using WalzExplorer.Controls.LHSTabs;
+
+using Telerik.Windows.Controls;
+using Telerik.Windows.Controls.TabControl;
+using Telerik.Windows.Controls.Input;
+using Telerik.Windows.Data;
 
 namespace WalzExplorer
 {
@@ -55,11 +61,14 @@ namespace WalzExplorer
             //Build dictionary of SQL subsitutions
             Dictionary<string, string> dicSQLSubsitutes = new Dictionary<string, string>();
             dicSQLSubsitutes.Add("@@UserPersonID", "'" + user.Person.PersonID + "'");
-            tvRole.PopulateRoot(user, dicSQLSubsitutes);
-            TabItem x = new TabItem();
-            //x.Header="Hello";
-            //x.Content = new ExampleGrid2();
-            //tcRHS.Items.Add(x);
+            
+            
+    
+            LHSTabViewModel _LHSTabs = new LHSTabViewModel();
+            tcLHS.DataContext = _LHSTabs;
+            //tcLHS.GetBindingExpression(TabControl.ItemsSourceProperty).UpdateTarget();
+
+            //tvRole.PopulateRoot(user, dicSQLSubsitutes);
         }
 
         private void tbSearch_KeyDown(object sender, KeyEventArgs e)
@@ -77,19 +86,25 @@ namespace WalzExplorer
 
         private void tcLHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            switch (tcLHS.SelectedIndex)
+            RadTabControl tc = (RadTabControl)sender;
+            if (tc.SelectedItem != null)
             {
-                case 0: //Role
-                    tvLHS_NodeChanged(tvRole, null);
-                    break;
-                case 1: //Favourites
-                    tvLHS_NodeChanged(tvFavourites, null);
-                    break;
-                case 2: //Search
-                    tvLHS_NodeChanged(tvSearch, null);
-                    break;
+                WEXLHSTab ti = (WEXLHSTab)tc.SelectedItem;
+                //NodeTreeView tv = (NodeTreeView)ti.Content;
+                //tvLHS_NodeChanged(tv, null);
             }
+            //switch (tcLHS.SelectedIndex)
+            //{
+            //    case 0: //Role
+            //        tvLHS_NodeChanged(sender., null);
+            //        break;
+            //    case 1: //Favourites
+            //        tvLHS_NodeChanged(tvFavourites, null);
+            //        break;
+            //    case 2: //Search
+            //        tvLHS_NodeChanged(tvSearch, null);
+            //        break;
+            //}
 
         }
 
@@ -103,7 +118,7 @@ namespace WalzExplorer
             WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
             if (CurrentTab != null)
             {
-                CurrentTab.SetNode(tvRole.SelectedNode());
+                //CurrentTab.SetNode(tvRole.SelectedNode());
                 CurrentTab.Content.Update();
             }
         }

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using WalzExplorer.Controls.TreeView.ViewModel;
 using WalzExplorer.Database;
 using System;
+using WalzExplorer.Controls.TreeView;
+using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace WalzExplorer.Controls.LHSTabs
 {
@@ -18,11 +21,16 @@ namespace WalzExplorer.Controls.LHSTabs
         public LHSTabViewModel()
         {
             LHSTabs = new ObservableCollection<WEXLHSTab>();
-            foreach (tblWEX_LHSTab t in  context.tblWEX_LHSTab)
+            foreach (tblWEX_LHSTab t in  context.tblWEX_LHSTab.OrderByDescending(x=>x.Icon))
             {
-                LHSTabs.Add(new WEXLHSTab { ID = t.LHSTabID, Icon = t.Icon });
+                WEXLHSTab lt=new WEXLHSTab { ID = t.LHSTabID, Icon = t.Icon };
+                NodeTreeView  tv=  new NodeTreeView(){Name=lt.TreeviewName()};
+                tv.Background = Brushes.Red;
+
+                Button b = new Button() { Background = Brushes.Red };
+                lt.Content=b;
+                LHSTabs.Add(lt);
             }
-          
         }
     }
 }
