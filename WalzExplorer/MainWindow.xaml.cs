@@ -66,9 +66,8 @@ namespace WalzExplorer
 
             LHSTabViewModel _LHSTabs = new LHSTabViewModel(user, dicSQLSubsitutes);
             tcLHS.DataContext = _LHSTabs;
-            //tcLHS.GetBindingExpression(TabControl.ItemsSourceProperty).UpdateTarget();
+            tcLHS.SelectedIndex = 0;
 
-            //tvRole.PopulateRoot(user, dicSQLSubsitutes);
         }
 
         private void tbSearch_KeyDown(object sender, KeyEventArgs e)
