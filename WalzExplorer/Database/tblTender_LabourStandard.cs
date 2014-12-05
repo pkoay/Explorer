@@ -20,6 +20,9 @@ namespace WalzExplorer.Database
         public string Title { get; set; }
         public int UnitOfMeasureID { get; set; }
         public double StandardHours { get; set; }
+        public string UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public byte[] RowVersion { get; set; }
     
         public virtual tblTender tblTender { get; set; }
         public virtual tblTender_UnitOfMeasure tblTender_UnitOfMeasure { get; set; }

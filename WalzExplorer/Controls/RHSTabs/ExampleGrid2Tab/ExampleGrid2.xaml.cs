@@ -48,7 +48,7 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
         private void grd_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
         {
             
-            context.Database.ExecuteSqlCommand("UPDATE tblTender_Drawing SET UpdatedDate=GetDate()");
+            context.Database.ExecuteSqlCommand("UPDATE [tblTender.Drawing] SET UpdatedDate=GetDate()");
             bool saveFailed;
             do
             {

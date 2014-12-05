@@ -18,10 +18,13 @@ namespace WalzExplorer.Database
 {
     public partial class WalzExplorerEntities
     {
+
+
+        //Not usable in Database First.
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //{
-        //    modelBuilder.Entity<tblTender>().Property(p => p.RowVersion).IsConcurrencyToken(true);
-        //    modelBuilder.Entity<tblTender_Drawing>().Property(p => p.RowVersion).IsConcurrencyToken(true);
+        //    modelBuilder.Entity<tblTender>().Property(p => p.RowVersion).IsRowVersion();
+        //    modelBuilder.Entity<tblTender_Drawing>().Property(p => p.RowVersion).IsRowVersion();
         //}
 
 

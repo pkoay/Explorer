@@ -30,6 +30,7 @@ namespace WalzExplorer.Database
         public string Comment { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public byte[] RowVersion { get; set; }
     
         public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_ActivityLabour> tblTender_ActivityLabour { get; set; }

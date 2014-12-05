@@ -351,17 +351,13 @@ namespace WalzExplorer.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_TreeRootList_Result>("spWEX_TreeRootList", lHSTabIDParameter, nTSecurityGroupsParameter, nTSecurityGroupsSeperatorParameter);
         }
     
-        public virtual ObjectResult<spWEX_Node_TenderActivityList_Result> spWEX_Node_TenderActivityList(Nullable<int> tenderID, Nullable<int> activityParentID)
+        public virtual ObjectResult<spWEX_Node_TenderActivityList_Result> spWEX_Node_TenderActivityList(Nullable<int> tenderID)
         {
             var tenderIDParameter = tenderID.HasValue ?
                 new ObjectParameter("TenderID", tenderID) :
                 new ObjectParameter("TenderID", typeof(int));
     
-            var activityParentIDParameter = activityParentID.HasValue ?
-                new ObjectParameter("ActivityParentID", activityParentID) :
-                new ObjectParameter("ActivityParentID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_Node_TenderActivityList_Result>("spWEX_Node_TenderActivityList", tenderIDParameter, activityParentIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_Node_TenderActivityList_Result>("spWEX_Node_TenderActivityList", tenderIDParameter);
         }
     
         public virtual ObjectResult<spWEX_RHSTabList_Result> spWEX_RHSTabList(string treeNodeTypeID, string nTSecurityGroups, string nTSecurityGroupsSeperator)

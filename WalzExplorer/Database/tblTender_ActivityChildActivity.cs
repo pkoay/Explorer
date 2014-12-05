@@ -25,6 +25,7 @@ namespace WalzExplorer.Database
         public double SortOrder { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public byte[] RowVersion { get; set; }
     
         public virtual tblTender_Activity tblTender_Activity { get; set; }
         public virtual tblTender_Activity tblTender_Activity1 { get; set; }

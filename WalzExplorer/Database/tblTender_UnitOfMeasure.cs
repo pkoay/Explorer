@@ -28,6 +28,7 @@ namespace WalzExplorer.Database
         public string ShortTitle { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public byte[] RowVersion { get; set; }
     
         public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_Activity> tblTender_Activity { get; set; }

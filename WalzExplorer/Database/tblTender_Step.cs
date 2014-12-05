@@ -26,6 +26,9 @@ namespace WalzExplorer.Database
         public int TenderID { get; set; }
         public string Title { get; set; }
         public int SortOrder { get; set; }
+        public string UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public byte[] RowVersion { get; set; }
     
         public virtual ICollection<tblTender_ActivityChildActivity> tblTender_ActivityChildActivity { get; set; }
         public virtual ICollection<tblTender_ActivityContractor> tblTender_ActivityContractor { get; set; }

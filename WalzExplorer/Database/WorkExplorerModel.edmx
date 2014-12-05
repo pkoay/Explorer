@@ -53,6 +53,7 @@
           <Property Name="Comment" Type="varchar(max)" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_ActivityChildActivity">
           <Key>
@@ -69,6 +70,7 @@
           <Property Name="SortOrder" Type="float" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_ActivityContractor">
           <Key>
@@ -86,6 +88,7 @@
           <Property Name="SortOrder" Type="float" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_ActivityLabour">
           <Key>
@@ -105,6 +108,7 @@
           <Property Name="SortOrder" Type="float" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_ActivityMaterial">
           <Key>
@@ -125,6 +129,7 @@
           <Property Name="SortOrder" Type="float" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_Contractor">
           <Key>
@@ -137,6 +142,7 @@
           <Property Name="Comment" Type="varchar(max)" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_ContractorType">
           <Key>
@@ -148,6 +154,7 @@
           <Property Name="Comment" Type="varchar(max)" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_Drawing">
           <Key>
@@ -178,6 +185,7 @@
           <Property Name="Comment" Type="varchar(max)" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_LabourStandard">
           <Key>
@@ -189,6 +197,9 @@
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UnitOfMeasureID" Type="int" Nullable="false" />
           <Property Name="StandardHours" Type="float" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_Material">
           <Key>
@@ -203,6 +214,7 @@
           <Property Name="Comment" Type="varchar(max)" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_Schedule">
           <Key>
@@ -218,6 +230,7 @@
           <Property Name="Comment" Type="varchar(max)" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_Status">
           <Key>
@@ -225,6 +238,9 @@
           </Key>
           <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_Step">
           <Key>
@@ -234,6 +250,9 @@
           <Property Name="TenderID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_Supplier">
           <Key>
@@ -245,6 +264,7 @@
           <Property Name="Comment" Type="varchar(max)" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_Supplier_Material">
           <Key>
@@ -265,6 +285,7 @@
           <Property Name="ShortTitle" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_WorkGroup">
           <Key>
@@ -279,6 +300,7 @@
           <Property Name="Comment" Type="varchar(max)" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_WorkGroupHeader">
           <Key>
@@ -289,6 +311,7 @@
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_WorkGroupItem">
           <Key>
@@ -304,6 +327,7 @@
           <Property Name="Comments" Type="varchar(max)" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="tblWEX_LHSTab">
           <Key>
@@ -678,30 +702,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblTender_LabourStandard_tblTender_UnitOfMeasure">
-          <End Role="tblTender_UnitOfMeasure" Type="Self.tblTender_UnitOfMeasure" Multiplicity="1" />
-          <End Role="tblTender_LabourStandard" Type="Self.tblTender_LabourStandard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_UnitOfMeasure">
-              <PropertyRef Name="UnitOfMeasureID" />
-            </Principal>
-            <Dependent Role="tblTender_LabourStandard">
-              <PropertyRef Name="UnitOfMeasureID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblTender_LabourStandard_tblTender_WorkGroup">
-          <End Role="tblTender_WorkGroup" Type="Self.tblTender_WorkGroup" Multiplicity="1" />
-          <End Role="tblTender_LabourStandard" Type="Self.tblTender_LabourStandard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_WorkGroup">
-              <PropertyRef Name="WorkGroupID" />
-            </Principal>
-            <Dependent Role="tblTender_LabourStandard">
-              <PropertyRef Name="WorkGroupID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblTender_Material_tblTender">
           <End Role="tblTender" Type="Self.tblTender" Multiplicity="1" />
           <End Role="tblTender_Material" Type="Self.tblTender_Material" Multiplicity="*" />
@@ -953,7 +953,6 @@
         </Function>
         <Function Name="spWEX_Node_TenderActivityList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderActivityList">
           <Parameter Name="TenderID" Type="int" Mode="In" />
-          <Parameter Name="ActivityParentID" Type="int" Mode="In" />
         </Function>
         <Function Name="spWEX_Node_TenderDrawingList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderDrawingList">
           <Parameter Name="TenderID" Type="int" Mode="In" />
@@ -1121,14 +1120,6 @@
             <End Role="tblTender" EntitySet="tblTender" />
             <End Role="tblTender_LabourStandard" EntitySet="tblTender_LabourStandard" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblTender_LabourStandard_tblTender_UnitOfMeasure" Association="Self.FK_tblTender_LabourStandard_tblTender_UnitOfMeasure">
-            <End Role="tblTender_UnitOfMeasure" EntitySet="tblTender_UnitOfMeasure" />
-            <End Role="tblTender_LabourStandard" EntitySet="tblTender_LabourStandard" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblTender_LabourStandard_tblTender_WorkGroup" Association="Self.FK_tblTender_LabourStandard_tblTender_WorkGroup">
-            <End Role="tblTender_WorkGroup" EntitySet="tblTender_WorkGroup" />
-            <End Role="tblTender_LabourStandard" EntitySet="tblTender_LabourStandard" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblTender_Material_tblTender" Association="Self.FK_tblTender_Material_tblTender">
             <End Role="tblTender" EntitySet="tblTender" />
             <End Role="tblTender_Material" EntitySet="tblTender_Material" />
@@ -1271,6 +1262,7 @@
           <NavigationProperty Name="tblTender_ActivityChildActivity" Relationship="Self.FK_tblTender_ComponentSubcomponent_tblTender_Component" FromRole="tblTender_Activity" ToRole="tblTender_ActivityChildActivity" />
           <NavigationProperty Name="tblTender_ActivityChildActivity1" Relationship="Self.FK_tblTender_ComponentSubcomponent_tblTender_Component1" FromRole="tblTender_Activity" ToRole="tblTender_ActivityChildActivity" />
           <NavigationProperty Name="tblTender_Item" Relationship="Self.FK_tblTender_Item_tblTender_Component" FromRole="tblTender_Activity" ToRole="tblTender_Item" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_ActivityChildActivity">
           <Key>
@@ -1290,6 +1282,7 @@
           <NavigationProperty Name="tblTender_Activity" Relationship="Self.FK_tblTender_ComponentSubcomponent_tblTender_Component" FromRole="tblTender_ActivityChildActivity" ToRole="tblTender_Activity" />
           <NavigationProperty Name="tblTender_Activity1" Relationship="Self.FK_tblTender_ComponentSubcomponent_tblTender_Component1" FromRole="tblTender_ActivityChildActivity" ToRole="tblTender_Activity" />
           <NavigationProperty Name="tblTender_Step" Relationship="Self.FK_tblTender_ComponentSubcomponent_tblTender_Step" FromRole="tblTender_ActivityChildActivity" ToRole="tblTender_Step" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_ActivityContractor">
           <Key>
@@ -1310,6 +1303,7 @@
           <NavigationProperty Name="tblTender_Activity" Relationship="Self.FK_tblTender_ComponentContractor_tblTender_Component" FromRole="tblTender_ActivityContractor" ToRole="tblTender_Activity" />
           <NavigationProperty Name="tblTender_Contractor" Relationship="Self.FK_tblTender_ComponentContractor_tblTender_Contractor" FromRole="tblTender_ActivityContractor" ToRole="tblTender_Contractor" />
           <NavigationProperty Name="tblTender_Step" Relationship="Self.FK_tblTender_ComponentContractor_tblTender_Step" FromRole="tblTender_ActivityContractor" ToRole="tblTender_Step" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_ActivityLabour">
           <Key>
@@ -1333,6 +1327,7 @@
           <NavigationProperty Name="tblTender_Step" Relationship="Self.FK_tblTender_ComponentLabour_tblTender_Step" FromRole="tblTender_ActivityLabour" ToRole="tblTender_Step" />
           <NavigationProperty Name="tblTender_UnitOfMeasure" Relationship="Self.FK_tblTender_ComponentLabour_tblTender_UnitOfMeasure" FromRole="tblTender_ActivityLabour" ToRole="tblTender_UnitOfMeasure" />
           <NavigationProperty Name="tblTender_WorkGroup" Relationship="Self.FK_tblTender_ComponentLabour_tblTender_WorkGroup" FromRole="tblTender_ActivityLabour" ToRole="tblTender_WorkGroup" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_ActivityMaterial">
           <Key>
@@ -1357,6 +1352,7 @@
           <NavigationProperty Name="tblTender_Material" Relationship="Self.FK_tblTender_ComponentMaterial_tblTender_Material" FromRole="tblTender_ActivityMaterial" ToRole="tblTender_Material" />
           <NavigationProperty Name="tblTender_Step" Relationship="Self.FK_tblTender_ComponentMaterial_tblTender_Step" FromRole="tblTender_ActivityMaterial" ToRole="tblTender_Step" />
           <NavigationProperty Name="tblTender_Supplier" Relationship="Self.FK_tblTender_ComponentMaterial_tblTender_Supplier" FromRole="tblTender_ActivityMaterial" ToRole="tblTender_Supplier" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_Contractor">
           <Key>
@@ -1372,6 +1368,7 @@
           <NavigationProperty Name="tblTender" Relationship="Self.FK_tblTender_Contractor_tblTender" FromRole="tblTender_Contractor" ToRole="tblTender" />
           <NavigationProperty Name="tblTender_ActivityContractor" Relationship="Self.FK_tblTender_ComponentContractor_tblTender_Contractor" FromRole="tblTender_Contractor" ToRole="tblTender_ActivityContractor" />
           <NavigationProperty Name="tblTender_ContractorType" Relationship="Self.FK_tblTender_Contractor_tblTender_ContractorType" FromRole="tblTender_Contractor" ToRole="tblTender_ContractorType" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_ContractorType">
           <Key>
@@ -1385,6 +1382,7 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblTender" Relationship="Self.FK_tblTender_ContractorType_tblTender" FromRole="tblTender_ContractorType" ToRole="tblTender" />
           <NavigationProperty Name="tblTender_Contractor" Relationship="Self.FK_tblTender_Contractor_tblTender_ContractorType" FromRole="tblTender_ContractorType" ToRole="tblTender_Contractor" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_Drawing">
           <Key>
@@ -1397,7 +1395,7 @@
           <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="tblTender" Relationship="Self.FK_tblTender_Drawing_tblTender" FromRole="tblTender_Drawing" ToRole="tblTender" />
           <NavigationProperty Name="tblTender_Item" Relationship="Self.FK_tblTender_Item_tblTender_Drawing" FromRole="tblTender_Drawing" ToRole="tblTender_Item" />
         </EntityType>
@@ -1421,6 +1419,7 @@
           <NavigationProperty Name="tblTender_Activity" Relationship="Self.FK_tblTender_Item_tblTender_Component" FromRole="tblTender_Item" ToRole="tblTender_Activity" />
           <NavigationProperty Name="tblTender_Drawing" Relationship="Self.FK_tblTender_Item_tblTender_Drawing" FromRole="tblTender_Item" ToRole="tblTender_Drawing" />
           <NavigationProperty Name="tblTender_Schedule" Relationship="Self.FK_tblTender_Item_tblTender_Schedule" FromRole="tblTender_Item" ToRole="tblTender_Schedule" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_LabourStandard">
           <Key>
@@ -1435,6 +1434,9 @@
           <NavigationProperty Name="tblTender" Relationship="Self.FK_tblTender_LabourStandard_tblTender" FromRole="tblTender_LabourStandard" ToRole="tblTender" />
           <NavigationProperty Name="tblTender_UnitOfMeasure" Relationship="Self.FK_tblTender_LabourStandard_tblTender_UnitOfMeasure" FromRole="tblTender_LabourStandard" ToRole="tblTender_UnitOfMeasure" />
           <NavigationProperty Name="tblTender_WorkGroup" Relationship="Self.FK_tblTender_LabourStandard_tblTender_WorkGroup" FromRole="tblTender_LabourStandard" ToRole="tblTender_WorkGroup" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_Material">
           <Key>
@@ -1453,6 +1455,7 @@
           <NavigationProperty Name="tblTender_ActivityMaterial" Relationship="Self.FK_tblTender_ComponentMaterial_tblTender_Material" FromRole="tblTender_Material" ToRole="tblTender_ActivityMaterial" />
           <NavigationProperty Name="tblTender_UnitOfMeasure" Relationship="Self.FK_tblTender_Material_tblTender_UnitOfMeasure" FromRole="tblTender_Material" ToRole="tblTender_UnitOfMeasure" />
           <NavigationProperty Name="tblTender_Supplier_Material" Relationship="Self.FK_tblTender_Supplier_Material_tblTender_Material" FromRole="tblTender_Material" ToRole="tblTender_Supplier_Material" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_Schedule">
           <Key>
@@ -1469,6 +1472,7 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblTender_Item" Relationship="Self.FK_tblTender_Item_tblTender_Schedule" FromRole="tblTender_Schedule" ToRole="tblTender_Item" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_Status">
           <Key>
@@ -1477,6 +1481,9 @@
           <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="tblTenders" Relationship="Self.FK_tblTender_tblTender_Status" FromRole="tblTender_Status" ToRole="tblTender" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_Step">
           <Key>
@@ -1490,6 +1497,9 @@
           <NavigationProperty Name="tblTender_ActivityContractor" Relationship="Self.FK_tblTender_ComponentContractor_tblTender_Step" FromRole="tblTender_Step" ToRole="tblTender_ActivityContractor" />
           <NavigationProperty Name="tblTender_ActivityLabour" Relationship="Self.FK_tblTender_ComponentLabour_tblTender_Step" FromRole="tblTender_Step" ToRole="tblTender_ActivityLabour" />
           <NavigationProperty Name="tblTender_ActivityMaterial" Relationship="Self.FK_tblTender_ComponentMaterial_tblTender_Step" FromRole="tblTender_Step" ToRole="tblTender_ActivityMaterial" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_Supplier">
           <Key>
@@ -1504,6 +1514,7 @@
           <NavigationProperty Name="tblTender" Relationship="Self.FK_tblTender_Supplier_tblTender" FromRole="tblTender_Supplier" ToRole="tblTender" />
           <NavigationProperty Name="tblTender_ActivityMaterial" Relationship="Self.FK_tblTender_ComponentMaterial_tblTender_Supplier" FromRole="tblTender_Supplier" ToRole="tblTender_ActivityMaterial" />
           <NavigationProperty Name="tblTender_Supplier_Material" Relationship="Self.FK_tblTender_Supplier_Material_tblTender_Supplier" FromRole="tblTender_Supplier" ToRole="tblTender_Supplier_Material" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_Supplier_Material">
           <Key>
@@ -1531,6 +1542,7 @@
           <NavigationProperty Name="tblTender_ActivityLabour" Relationship="Self.FK_tblTender_ComponentLabour_tblTender_UnitOfMeasure" FromRole="tblTender_UnitOfMeasure" ToRole="tblTender_ActivityLabour" />
           <NavigationProperty Name="tblTender_LabourStandard" Relationship="Self.FK_tblTender_LabourStandard_tblTender_UnitOfMeasure" FromRole="tblTender_UnitOfMeasure" ToRole="tblTender_LabourStandard" />
           <NavigationProperty Name="tblTender_Material" Relationship="Self.FK_tblTender_Material_tblTender_UnitOfMeasure" FromRole="tblTender_UnitOfMeasure" ToRole="tblTender_Material" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_WorkGroup">
           <Key>
@@ -1549,6 +1561,7 @@
           <NavigationProperty Name="tblTender_ActivityLabour" Relationship="Self.FK_tblTender_ComponentLabour_tblTender_WorkGroup" FromRole="tblTender_WorkGroup" ToRole="tblTender_ActivityLabour" />
           <NavigationProperty Name="tblTender_LabourStandard" Relationship="Self.FK_tblTender_LabourStandard_tblTender_WorkGroup" FromRole="tblTender_WorkGroup" ToRole="tblTender_LabourStandard" />
           <NavigationProperty Name="tblTender_WorkGroupItem" Relationship="Self.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" FromRole="tblTender_WorkGroup" ToRole="tblTender_WorkGroupItem" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_WorkGroupHeader">
           <Key>
@@ -1560,6 +1573,7 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblTender_WorkGroupItem" Relationship="Self.FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader" FromRole="tblTender_WorkGroupHeader" ToRole="tblTender_WorkGroupItem" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblTender_WorkGroupItem">
           <Key>
@@ -1577,6 +1591,7 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblTender_WorkGroup" Relationship="Self.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" FromRole="tblTender_WorkGroupItem" ToRole="tblTender_WorkGroup" />
           <NavigationProperty Name="tblTender_WorkGroupHeader" Relationship="Self.FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader" FromRole="tblTender_WorkGroupItem" ToRole="tblTender_WorkGroupHeader" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblWEX_LHSTab">
           <Key>
@@ -2387,8 +2402,7 @@
             <Parameter Name="NTSecurityGroupsSeperator" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spWEX_Node_TenderActivityList" ReturnType="Collection(WalzExplorerModel.spWEX_Node_TenderActivityList_Result)">
-            <Parameter Name="TenderID" Mode="In" Type="Int32" />
-            <Parameter Name="ActivityParentID" Mode="In" Type="Int32" />
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spWEX_RHSTabList" ReturnType="Collection(WalzExplorerModel.spWEX_RHSTabList_Result)">
             <Parameter Name="TreeNodeTypeID" Mode="In" Type="String" />
@@ -2572,6 +2586,7 @@
           <EntitySetMapping Name="tblTender_Activity">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Activity">
               <MappingFragment StoreEntitySet="tblTender_Activity">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -2585,6 +2600,7 @@
           <EntitySetMapping Name="tblTender_ActivityChildActivity">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_ActivityChildActivity">
               <MappingFragment StoreEntitySet="tblTender_ActivityChildActivity">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="ActivityChildActivityID" ColumnName="ActivityChildActivityID" />
                 <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
                 <ScalarProperty Name="ChildActivityID" ColumnName="ChildActivityID" />
@@ -2602,6 +2618,7 @@
           <EntitySetMapping Name="tblTender_ActivityContractor">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_ActivityContractor">
               <MappingFragment StoreEntitySet="tblTender_ActivityContractor">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="ActivityContractorID" ColumnName="ActivityContractorID" />
                 <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -2620,6 +2637,7 @@
           <EntitySetMapping Name="tblTender_ActivityLabour">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_ActivityLabour">
               <MappingFragment StoreEntitySet="tblTender_ActivityLabour">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="ActivityLabourID" ColumnName="ActivityLabourID" />
                 <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
                 <ScalarProperty Name="LabourStandardID" ColumnName="LabourStandardID" />
@@ -2640,6 +2658,7 @@
           <EntitySetMapping Name="tblTender_ActivityMaterial">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_ActivityMaterial">
               <MappingFragment StoreEntitySet="tblTender_ActivityMaterial">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="ActivityMaterialID" ColumnName="ActivityMaterialID" />
                 <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -2661,6 +2680,7 @@
           <EntitySetMapping Name="tblTender_Contractor">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Contractor">
               <MappingFragment StoreEntitySet="tblTender_Contractor">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -2674,6 +2694,7 @@
           <EntitySetMapping Name="tblTender_ContractorType">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_ContractorType">
               <MappingFragment StoreEntitySet="tblTender_ContractorType">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="ContractorTypeID" ColumnName="ContractorTypeID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -2700,6 +2721,7 @@
           <EntitySetMapping Name="tblTender_Item">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Item">
               <MappingFragment StoreEntitySet="tblTender_Item">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
@@ -2718,6 +2740,9 @@
           <EntitySetMapping Name="tblTender_LabourStandard">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_LabourStandard">
               <MappingFragment StoreEntitySet="tblTender_LabourStandard">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="LabourStandardID" ColumnName="LabourStandardID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="WorkGroupID" ColumnName="WorkGroupID" />
@@ -2730,6 +2755,7 @@
           <EntitySetMapping Name="tblTender_Material">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Material">
               <MappingFragment StoreEntitySet="tblTender_Material">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -2745,6 +2771,7 @@
           <EntitySetMapping Name="tblTender_Schedule">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Schedule">
               <MappingFragment StoreEntitySet="tblTender_Schedule">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
@@ -2761,6 +2788,9 @@
           <EntitySetMapping Name="tblTender_Status">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Status">
               <MappingFragment StoreEntitySet="tblTender_Status">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="StatusID" ColumnName="StatusID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
               </MappingFragment>
@@ -2769,6 +2799,9 @@
           <EntitySetMapping Name="tblTender_Step">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Step">
               <MappingFragment StoreEntitySet="tblTender_Step">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="StepID" ColumnName="StepID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -2779,6 +2812,7 @@
           <EntitySetMapping Name="tblTender_Supplier">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Supplier">
               <MappingFragment StoreEntitySet="tblTender_Supplier">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -2800,6 +2834,7 @@
           <EntitySetMapping Name="tblTender_UnitOfMeasure">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_UnitOfMeasure">
               <MappingFragment StoreEntitySet="tblTender_UnitOfMeasure">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UnitOfMeasureID" ColumnName="UnitOfMeasureID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -2812,6 +2847,7 @@
           <EntitySetMapping Name="tblTender_WorkGroup">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_WorkGroup">
               <MappingFragment StoreEntitySet="tblTender_WorkGroup">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="WorkGroupID" ColumnName="WorkGroupID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -2827,6 +2863,7 @@
           <EntitySetMapping Name="tblTender_WorkGroupHeader">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_WorkGroupHeader">
               <MappingFragment StoreEntitySet="tblTender_WorkGroupHeader">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="WorkGroupHeaderID" ColumnName="WorkGroupHeaderID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -2838,6 +2875,7 @@
           <EntitySetMapping Name="tblTender_WorkGroupItem">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_WorkGroupItem">
               <MappingFragment StoreEntitySet="tblTender_WorkGroupItem">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="WorkGroupItemID" ColumnName="WorkGroupItemID" />
                 <ScalarProperty Name="WorkGroupID" ColumnName="WorkGroupID" />
                 <ScalarProperty Name="WorkGroupHeaderID" ColumnName="WorkGroupHeaderID" />

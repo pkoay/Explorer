@@ -21,6 +21,9 @@ namespace WalzExplorer.Database
     
         public int StatusID { get; set; }
         public string Title { get; set; }
+        public string UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public byte[] RowVersion { get; set; }
     
         public virtual ICollection<tblTender> tblTenders { get; set; }
     }

@@ -24,6 +24,7 @@ namespace WalzExplorer.Database
         public string Comments { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public byte[] RowVersion { get; set; }
     
         public virtual tblTender_WorkGroup tblTender_WorkGroup { get; set; }
         public virtual tblTender_WorkGroupHeader tblTender_WorkGroupHeader { get; set; }

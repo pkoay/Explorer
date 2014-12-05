@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
 using Telerik.Windows.Controls;
+using WalzExplorer.Database;
 
 namespace WalzExplorer
 {
@@ -18,6 +19,17 @@ namespace WalzExplorer
         {
            VisualStudio2013Palette.LoadPreset(VisualStudio2013Palette.ColorVariation.Dark);
            this.InitializeComponent();
+
+#if DEBUG
+           Console.WriteLine("Mode=Debug    Fixing Concurrency Settings in Model file (EDMX)");
+           AutomaticXamalConcurrencyFix.Fix();
+#else
+           Console.WriteLine("Mode=Release"); 
+#endif
+           
+
+           
+
         }
         private void APP_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
