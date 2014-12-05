@@ -7,9 +7,19 @@
                     xmlns:MahApps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                     xmlns:Common="clr-namespace:WalzExplorer.Common"
                      Title="Walz Explorer" Height="350" Width="525" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="CanResizeWithGrip"
-          
+         
                      Loaded="MetroWindow_Loaded">
-    
+    <MahApps:MetroWindow.IconTemplate>
+        <ItemContainerTemplate>
+            <Rectangle Width="24" Height="12"  Margin="0,0,0,0" Fill="{DynamicResource TextBrush}" >
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Fill" Visual="{StaticResource WalzIcon}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
+        </ItemContainerTemplate>
+               
+           
+    </MahApps:MetroWindow.IconTemplate>
     <MahApps:MetroWindow.Resources>
         <Style TargetType="telerik:RadTabControl" BasedOn="{StaticResource RadTabControlStyle}"/>
         <Style TargetType="telerik:RadTreeView" BasedOn="{StaticResource RadTreeViewStyle}"/>
