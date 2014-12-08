@@ -15,7 +15,7 @@
        
         <telerik:RadGridView  x:Name="grd" VerticalAlignment="Top" AlternationCount="3" 
 			ClipboardCopyMode="All" SelectionMode="Extended"   ShowColumnFooters="True"  ShowGroupFooters="True" GridLinesVisibility="None"
-			RowEditEnded="grd_RowEditEnded" />
+			RowEditEnded="grd_RowEditEnded"  DataLoaded="grd_DataLoaded" />
 
         
 
