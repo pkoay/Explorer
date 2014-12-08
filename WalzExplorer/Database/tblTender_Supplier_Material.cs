@@ -17,6 +17,9 @@ namespace WalzExplorer.Database
         public int SupplierID { get; set; }
         public int MaterialID { get; set; }
         public double UnitOfMeasureRate { get; set; }
+        public string UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public byte[] RowVersion { get; set; }
     
         public virtual tblTender_Material tblTender_Material { get; set; }
         public virtual tblTender_Supplier tblTender_Supplier { get; set; }

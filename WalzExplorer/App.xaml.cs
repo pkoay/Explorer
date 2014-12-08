@@ -21,8 +21,13 @@ namespace WalzExplorer
            this.InitializeComponent();
 
 #if DEBUG
-           Console.WriteLine("Mode=Debug    Fixing Concurrency Settings in Model file (EDMX)");
-           AutomaticXamalConcurrencyFix.Fix();
+           WalzExplorerEntities e = new WalzExplorerEntities();
+           string s=e.Verification();
+           if (s!="")
+           {
+               MessageBox.Show(s,"Database Issues",  MessageBoxButton.OK,MessageBoxImage.Exclamation);
+               this.Shutdown();
+           }
 #else
            Console.WriteLine("Mode=Release"); 
 #endif

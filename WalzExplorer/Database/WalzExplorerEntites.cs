@@ -13,20 +13,55 @@ using System.Data.SqlClient;
 using System.Data.Entity.Core.EntityClient;
 using WalzExplorer.Controls.TreeView.ViewModel;
 using WalzExplorer.Controls.RHSTabs;
+using System.Data.Entity.Core.Metadata.Edm;
 
 namespace WalzExplorer.Database
 {
     public partial class WalzExplorerEntities
     {
+        private readonly static Dictionary<Type, EntitySetBase> _mappingCache
+         = new Dictionary<Type, EntitySetBase>();
 
+        private ObjectContext _ObjectContext
+        {
+            get { return (this as IObjectContextAdapter).ObjectContext; }
+        }
+        public string Verification ()
+        {
+            ObjectContext octx = _ObjectContext;
 
-        //Not usable in Database First.
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<tblTender>().Property(p => p.RowVersion).IsRowVersion();
-        //    modelBuilder.Entity<tblTender_Drawing>().Property(p => p.RowVersion).IsRowVersion();
-        //}
+            List<EntityType> el = new List<EntityType>();
+            string v="";
 
+            List<string> ColumnsToVerify = new List<string> () {"RowVersion","UpdatedBy","UpdatedDate"};
+            List<string> ExcludeTables = new List<string>() { "tblWEX_LHSTab", "tblWEX_NTSecurityGroup", "tblWEX_RHSTab", "tblWEX_RHSTab_Security", "tblWEX_Tree", "tblWEX_Tree_Security", "tblWEX_TreeNodeType", "tblWEX_TreeNodeType_RHSTab" };
+
+            el = octx.MetadataWorkspace.GetItemCollection(DataSpace.CSpace).OfType<EntityType>().ToList();
+            foreach (EntityType e in el)
+            {
+                if (!ExcludeTables.Contains(e.Name))
+                {
+                    //Verify columns exist
+                    foreach (string c in ColumnsToVerify)
+                    {
+                        int Count = e.DeclaredMembers.Count(m => m.Name == c);
+                        if (Count == 0) v = v + "Table:" + e.Name + " missing column " + c + Environment.NewLine;
+                    }
+                    //Verify timestamp has concurrecy=fixed
+                    EdmMember em = e.DeclaredMembers.Where(m => m.Name == "RowVersion").FirstOrDefault();
+                    if (em != null)
+                    {
+                        EdmProperty ep = (EdmProperty)em;
+                        if (ep.ConcurrencyMode != ConcurrencyMode.Fixed)
+                        {
+                            v = v + "Table:" + e.Name + " column RowVersion not set to ConcurrencyMode=Fixed " + Environment.NewLine;
+                        }
+                    }
+                }
+            }
+            return v;  
+        }
+     
 
         public override int SaveChanges()
         {

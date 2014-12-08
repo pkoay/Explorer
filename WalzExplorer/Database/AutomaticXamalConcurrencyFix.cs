@@ -7,43 +7,53 @@ using System.Threading.Tasks;
 
 namespace WalzExplorer.Database
 {
+    //AFTER LOOKING AT EDMX FILE NO LONGER CAN DO THIS VIA EF6.... as we need to add new lines.. therefore have o interperate XML etc...
+
+
     public static class AutomaticXamalConcurrencyFix
     {
         static Dictionary<string, string> replacements = new Dictionary<string, string>()
     {
-        { "<Property Type=\"Binary\" Name=\"RowVersion\" Nullable=\"false\" MaxLength=\"8\" FixedLength=\"true\" annotation:StoreGeneratedPattern=\"Computed\" />",
-          "<Property Type=\"Binary\" Name=\"RowVersion\" Nullable=\"false\" MaxLength=\"8\" FixedLength=\"true\" annotation:StoreGeneratedPattern=\"Computed\" ConcurrencyMode=\"Fixed\" />"},
-
-        { "<Property Type=\"Binary\" Name=\"rowversion\" Nullable=\"false\" MaxLength=\"8\" FixedLength=\"true\" annotation:StoreGeneratedPattern=\"Computed\" />",
-          "<Property Type=\"Binary\" Name=\"rowversion\" Nullable=\"false\" MaxLength=\"8\" FixedLength=\"true\" annotation:StoreGeneratedPattern=\"Computed\" ConcurrencyMode=\"Fixed\" />"},
-
-        { "<Property Type=\"Binary\" Name=\"RowVer\" Nullable=\"false\" MaxLength=\"8\" FixedLength=\"true\" annotation:StoreGeneratedPattern=\"Computed\" />",
-          "<Property Type=\"Binary\" Name=\"RowVer\" Nullable=\"false\" MaxLength=\"8\" FixedLength=\"true\" annotation:StoreGeneratedPattern=\"Computed\" ConcurrencyMode=\"Fixed\" />"},
-
-        { "<Property Type=\"Binary\" Name=\"rowver\" Nullable=\"false\" MaxLength=\"8\" FixedLength=\"true\" annotation:StoreGeneratedPattern=\"Computed\" />",
-          "<Property Type=\"Binary\" Name=\"rowver\" Nullable=\"false\" MaxLength=\"8\" FixedLength=\"true\" annotation:StoreGeneratedPattern=\"Computed\" ConcurrencyMode=\"Fixed\" />"},
+        { "<Property Name=\"Timestamp\" Type=\"Binary\" MaxLength=\"8\" FixedLength=\"true\" Nullable=\"false\" annotation:StoreGeneratedPattern=\"Computed\" />",
+          "<Property Name=\"Timestamp\" Type=\"Binary\" MaxLength=\"8\" FixedLength=\"true\" Nullable=\"false\" annotation:StoreGeneratedPattern=\"Computed\" ConcurrencyMode=\"Fixed\" />"},
     };
 
         public static void Fix()
         {
             // find all .edmx
-            string directoryPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            foreach (var file in Directory.GetFiles(directoryPath))
+            string modelFile = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName+ @"\Database\WorkExplorerModel.edmx";
+
+
+            if (System.IO.File.Exists(modelFile))
             {
-                // only edmx
-                if (!file.EndsWith(".edmx"))
-                    continue;
+                var fileContents = System.IO.File.ReadAllText(modelFile);
 
-                // read file
-                var fileContents = System.IO.File.ReadAllText(file);
+                bool RequiresChanges = false;
 
-                // replace lines
+                //Lines Require Replacing?
                 foreach (var item in replacements)
-                    fileContents = fileContents.Replace(item.Key, item.Value);
+                    if (fileContents.Contains(item.Key))
+                    {
+                        RequiresChanges = true;
+                        break;
+                    }
 
-                // overwite file
-                System.IO.File.WriteAllText(file, fileContents);
+                if (RequiresChanges)
+                {
+                    // replace lines
+                    foreach (var item in replacements)
+                        fileContents = fileContents.Replace(item.Key, item.Value);
+
+                    // overwite file
+                    System.IO.File.WriteAllText(modelFile, fileContents);
+                    new Exception("Updated EMDX file with new timestamps marked with Concurrecny Fixed. Please update EDMX from Database");
+                }
             }
+            else
+            {
+                new Exception("Can't find model file");
+            }
+     
         }
 
     }

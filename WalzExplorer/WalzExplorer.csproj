@@ -166,6 +166,7 @@
     <Compile Include="Database\spWEX_TreeRootList_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\VerifyTimestampMarkedConcurrenyFixed.cs" />
     <Compile Include="Model\WEXLHSTab.cs" />
     <Compile Include="Model\WEXTreeRoot.cs" />
     <Compile Include="Model\WEXNode.cs" />

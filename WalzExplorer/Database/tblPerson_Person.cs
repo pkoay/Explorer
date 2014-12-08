@@ -24,8 +24,8 @@ namespace WalzExplorer.Database
         public string LastName { get; set; }
         public string Login { get; set; }
         public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedOn { get; set; }
-        public byte[] Timestamp { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public byte[] RowVersion { get; set; }
     
         public virtual ICollection<tblProject_Project> tblProject_Project { get; set; }
     }

@@ -18,8 +18,8 @@ namespace WalzExplorer.Database
         public string Description { get; set; }
         public string ManagerID { get; set; }
         public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedOn { get; set; }
-        public byte[] Timestamp { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public byte[] RowVersion { get; set; }
     
         public virtual tblPerson_Person tblPerson_Person { get; set; }
     }
