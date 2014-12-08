@@ -114,7 +114,6 @@
     <Compile Include="Controls\TreeView\ViewModel\NodeViewModel.cs" />
     <Compile Include="Controls\TreeView\ViewModel\RootViewModel.cs" />
     <Compile Include="Controls\TreeView\ViewModel\TreeViewItemViewModel.cs" />
-    <Compile Include="Database\AutomaticXamalConcurrencyFix.cs" />
     <Compile Include="Database\fnTender_Schedule_List_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -166,7 +165,6 @@
     <Compile Include="Database\spWEX_TreeRootList_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\VerifyTimestampMarkedConcurrenyFixed.cs" />
     <Compile Include="Model\WEXLHSTab.cs" />
     <Compile Include="Model\WEXTreeRoot.cs" />
     <Compile Include="Model\WEXNode.cs" />
