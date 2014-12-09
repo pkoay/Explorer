@@ -82,18 +82,16 @@ namespace WalzExplorer.Controls.TreeView.ViewModel
                 {
                     _isExpanded = value;
                     this.OnPropertyChanged("IsExpanded");
-                }
 
-                // Expand all the way up to the root.
-                if (_isExpanded && _parent != null)
-                    _parent.IsExpanded = true;
+                    // Expand all the way up to the root.
+                    if (_isExpanded && _parent != null)
+                        _parent.IsExpanded = true;
 
-                // Lazy load the child items, if necessary.
-                if (this.HasDummyChild)
-                {
-                    this.Children.Remove(DummyChild);
+                    // Note: forcing clearing and re-loading of children to refresh children always 
+                    this.Children.Clear();
                     this.LoadChildren();
-                }
+                   
+                }   
             }
         }
 
