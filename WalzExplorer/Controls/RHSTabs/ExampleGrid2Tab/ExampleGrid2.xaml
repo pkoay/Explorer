@@ -9,13 +9,16 @@
              xmlns:Data="clr-namespace:WalzExplorer" 
              xmlns:WalzExplorer="clr-namespace:WalzExplorer" x:Class="WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab.ExampleGrid2"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+    LostFocus="RHSTabContentBase_LostFocus" 
+    PreviewGotKeyboardFocus="RHSTabContentBase_PreviewGotKeyboardFocus">
     
     <Grid>
        
         <telerik:RadGridView  x:Name="grd" VerticalAlignment="Top" AlternationCount="3" 
 			ClipboardCopyMode="All" SelectionMode="Extended"   ShowColumnFooters="True"  ShowGroupFooters="True" GridLinesVisibility="None"
-			RowEditEnded="grd_RowEditEnded"  DataLoaded="grd_DataLoaded" />
+			RowEditEnded="grd_RowEditEnded"  DataLoaded="grd_DataLoaded" 
+              ClipboardPasteMode="AllSelectedCells"   Pasted="grd_Pasted"             PreviewLostKeyboardFocus="grd_PreviewLostKeyboardFocus" RowValidating="grd_RowValidating"/>
 
         
 

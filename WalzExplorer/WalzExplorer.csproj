@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>x.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Walz.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>AD44209EC487ACE355535EDF76B1BEC2368B0AA7</ManifestCertificateThumbprint>
@@ -129,6 +129,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\Common\GridLibrary.cs" />
     <Compile Include="Controls\RHSTabs\ExampleGrid2Tab\ExampleGrid2.xaml.cs">
       <DependentUpon>ExampleGrid2.xaml</DependentUpon>
     </Compile>
@@ -419,7 +420,7 @@
     <Folder Include="Controls\RHSTabs\TenderDocumentTab\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="x.ico" />
+    <Resource Include="Resources\Walz.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

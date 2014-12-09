@@ -128,51 +128,49 @@ namespace WalzExplorer
 
 
             //if tab list the same
-            if (RHSTabsSame(_rhsTabs.RHSTabs, tcRHS.Items))
+            //NOT doing this as issue with clareaing RADGRID with dropdowns Itemssource=Null;rebind(); does not get rid of all columns
+            //if (RHSTabsSame(_rhsTabs.RHSTabs, tcRHS.Items))
+            //{
+            //    if (tcRHS.Items.Count != 0)
+            //    {
+            //        // should reload control content
+            //        WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
+            //        CurrentTab.SetNode(ntv.SelectedNode());
+            //        CurrentTab.Content.Update();
+            //    }
+            //}
+            //else
+            //{
+            //Recreate tabs and set current tab (current tab= original tab or first tab) 
+
+            //Store currently selected Tab ID (if tabs exist)
+            string SelectedTabID = "";
+            if (tcRHS.Items.Count != 0)
+                SelectedTabID = ((WEXRHSTab)tcRHS.SelectedItem).ID;
+
+            //apply new tab list
+            base.DataContext = _rhsTabs;
+
+            //set selected tab to the same as before if possible or first
+            if (tcRHS.Items.Count != 0)
             {
-                if (tcRHS.Items.Count != 0)
+                tcRHS.Visibility = System.Windows.Visibility.Visible;
+                for (int i = 0; i < tcRHS.Items.Count; i++)
                 {
-                    // should reload control content
-                    WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
-                    CurrentTab.SetNode(ntv.SelectedNode());
-                    CurrentTab.Content.Update();
+                    if (((WEXRHSTab)tcRHS.Items[i]).ID == SelectedTabID)
+                    {
+                        tcRHS.SelectedIndex = i;
+                        break;
+                    }
                 }
             }
             else
-            {
-                //Recreate tabs and set current tab (current tab= original tab or first tab) 
+                tcRHS.Visibility = System.Windows.Visibility.Hidden;
+            if (tcRHS.SelectedIndex == -1)
+                tcRHS.SelectedIndex = 0;
 
-                //Store currently selected Tab ID (if tabs exist)
-                string SelectedTabID = "";
-                if (tcRHS.Items.Count != 0)
-                    SelectedTabID = ((WEXRHSTab)tcRHS.SelectedItem).ID;
-
-                //apply new tab list
-                base.DataContext = _rhsTabs;
-
-                //set selected tab to the same as before if possible or first
-                if (tcRHS.Items.Count != 0)
-                {
-                    tcRHS.Visibility = System.Windows.Visibility.Visible;
-                    for (int i = 0; i < tcRHS.Items.Count; i++)
-                    {
-                        if (((WEXRHSTab)tcRHS.Items[i]).ID == SelectedTabID)
-                        {
-                            tcRHS.SelectedIndex = i;
-                            break;
-                        }
-                    }
-                }
-                else
-                    tcRHS.Visibility = System.Windows.Visibility.Hidden;
-                if (tcRHS.SelectedIndex == -1)
-                    tcRHS.SelectedIndex = 0;
-
-                //// should reload control content
-                //WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
-                //CurrentTab.SetNode(ntv.SelectedNode());
-                //CurrentTab.Content.Update();
-            }
+            //((WEXRHSTab)tcRHS.SelectedItem).Content.Update();
+            //}
 
         }
 
