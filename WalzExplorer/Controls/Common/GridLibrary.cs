@@ -16,9 +16,9 @@ namespace WalzExplorer.Controls.Common
             int id;
             GridViewComboBoxColumn gcb = new GridViewComboBoxColumn();
             RadGridView grd = (RadGridView)column.Parent;
-            //grd.Columns.Add(gcb);
+            grd.Columns.Add(gcb);
+            gcb.IsComboBoxEditable = true;
             gcb.DisplayIndex = column.DisplayIndex;
-           
             gcb.DataMemberBinding = new Binding(column.UniqueName);
             gcb.UniqueName = "cmb" + column.UniqueName;
             gcb.SelectedValueMemberPath = column.UniqueName;
@@ -26,7 +26,7 @@ namespace WalzExplorer.Controls.Common
             {
                 case "ContractorTypeID":
                     id = Convert.ToInt32(param[0]);
-                    ((GridViewComboBoxColumn)grd.Columns[column.UniqueName]).ItemsSource = context.tblTender_ContractorType.Where(d => d.TenderID == id).ToList();
+                    ((GridViewComboBoxColumn)grd.Columns[gcb.UniqueName]).ItemsSource = context.tblTender_ContractorType.Where(d => d.TenderID == id).ToList();
                     
                     gcb.Header = "Contractor Type";
                     gcb.DisplayMemberPath = "Title";

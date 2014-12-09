@@ -127,22 +127,22 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
                     {
                         if (c.UniqueName == "ContractorID") c.IsVisible = false;
                     }
-                    //GridLibrary.ReplaceColumnWithCombo(context, grd.Columns["ContractorTypeID"], new string[]{node.ID});
+                    GridLibrary.ReplaceColumnWithCombo(context, grd.Columns["ContractorTypeID"], new string[]{node.ID});
 
-                    GridViewComboBoxColumn contractorType = new GridViewComboBoxColumn();
-                    grd.Columns.Add(contractorType);
-                    contractorType.DisplayIndex = grd.Columns["ContractorTypeID"].DisplayIndex;
+                    //GridViewComboBoxColumn contractorType = new GridViewComboBoxColumn();
+                    //grd.Columns.Add(contractorType);
+                    //contractorType.DisplayIndex = grd.Columns["ContractorTypeID"].DisplayIndex;
                     
-                    contractorType.DataMemberBinding = new Binding("ContractorTypeID");
-                    contractorType.UniqueName = "cmbContractorType";
+                    //contractorType.DataMemberBinding = new Binding("ContractorTypeID");
+                    //contractorType.UniqueName = "cmbContractorType";
 
-                    contractorType.Header = "Contractor Type";
+                    //contractorType.Header = "Contractor Type";
 
 
-                    ((GridViewComboBoxColumn)grd.Columns["cmbContractorType"]).ItemsSource = this.context.tblTender_ContractorType.Where(d => d.TenderID == id).ToIList();
+                    //((GridViewComboBoxColumn)grd.Columns["cmbContractorType"]).ItemsSource = this.context.tblTender_ContractorType.Where(d => d.TenderID == id).ToIList();
                     
-                    contractorType.SelectedValueMemberPath = "ContractorTypeID";
-                    contractorType.DisplayMemberPath = "Title";
+                    //contractorType.SelectedValueMemberPath = "ContractorTypeID";
+                    //contractorType.DisplayMemberPath = "Title";
                     break;
 
             }
