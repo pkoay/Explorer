@@ -22,7 +22,7 @@ namespace WalzExplorer.Database
         public int ContractorID { get; set; }
         public int TenderID { get; set; }
         public string Title { get; set; }
-        public Nullable<int> ContractorTypeID { get; set; }
+        public int ContractorTypeID { get; set; }
         public string Comment { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }

@@ -7,8 +7,8 @@
                     xmlns:MahApps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                     xmlns:Common="clr-namespace:WalzExplorer.Common"
                      Title="Walz Explorer" Height="350" Width="525" WindowStartupLocation="CenterScreen" WindowState="Maximized" ResizeMode="CanResizeWithGrip"
-         
                      Loaded="MetroWindow_Loaded">
+    <!--WINDOW TITLEBAR ICON-->
     <MahApps:MetroWindow.IconTemplate>
         <ItemContainerTemplate>
             <Rectangle Width="24" Height="12"  Margin="0,0,0,0" Fill="{DynamicResource TextBrush}" >
@@ -17,14 +17,9 @@
                 </Rectangle.OpacityMask>
             </Rectangle>
         </ItemContainerTemplate>
-               
-           
     </MahApps:MetroWindow.IconTemplate>
-    <MahApps:MetroWindow.Resources>
-        <Style TargetType="telerik:RadTabControl" BasedOn="{StaticResource RadTabControlStyle}"/>
-        <Style TargetType="telerik:RadTreeView" BasedOn="{StaticResource RadTreeViewStyle}"/>
-       
-    </MahApps:MetroWindow.Resources>
+    
+    
     
     <!--WINDOW TITLEBAR BUTTONS-->
     <MahApps:MetroWindow.RightWindowCommands>
@@ -39,7 +34,7 @@
                     </Rectangle>
                 </Button>
             </StackPanel>
-            <Button>
+            <Button Name="btnConfigure" Click="btnConfigure_Click">
                 <Rectangle Width="16" Height="16"
                    Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                     <Rectangle.OpacityMask>
@@ -50,8 +45,19 @@
         </MahApps:WindowCommands>
     </MahApps:MetroWindow.RightWindowCommands>
 
+    
+    <MahApps:MetroWindow.Resources>
+        <!--CONFIGURATION CONTEXT MENU-->
+        <ContextMenu x:Key="cmConfiguration">
+            <MenuItem Header="About" Click="ConfigurationMenu_Click" />
+            <MenuItem Header="Menu item 2" />
+            <Separator />
+            <MenuItem Header="Menu item 3" />
+        </ContextMenu>
+    </MahApps:MetroWindow.Resources>
 
-
+    
+    
     <Grid>
         <DockPanel LastChildFill="True">
             

@@ -29,7 +29,7 @@ namespace WalzExplorer.Database
         public byte[] RowVersion { get; set; }
     
         public virtual tblTender_Activity tblTender_Activity { get; set; }
-        public virtual tblTender_Contractor tblTender_Contractor { get; set; }
         public virtual tblTender_Step tblTender_Step { get; set; }
+        public virtual tblTender_Contractor tblTender_Contractor { get; set; }
     }
 }

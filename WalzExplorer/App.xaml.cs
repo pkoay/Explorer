@@ -21,13 +21,15 @@ namespace WalzExplorer
            this.InitializeComponent();
 
 #if DEBUG
-           WalzExplorerEntities e = new WalzExplorerEntities();
-           string s=e.Verification();
-           if (s!="")
-           {
-               MessageBox.Show(s,"Database Issues",  MessageBoxButton.OK,MessageBoxImage.Exclamation);
-               this.Shutdown();
-           }
+           
+               WalzExplorerEntities e = new WalzExplorerEntities();
+               string s = e.Verification();
+               if (s != "")
+               {
+                   MessageBox.Show(s, "Database Issues", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                   this.Shutdown();
+               }
+           
 #else
            Console.WriteLine("Mode=Release"); 
 #endif

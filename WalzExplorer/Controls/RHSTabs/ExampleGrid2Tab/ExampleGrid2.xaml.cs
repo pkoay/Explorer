@@ -23,6 +23,7 @@ using System.Data.Entity.Infrastructure;
 using WalzExplorer.Database;
 using System.Text.RegularExpressions;
 using WalzExplorer.Controls.Common;
+using System.Data.Entity.Validation;
 
 namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
 {
@@ -70,7 +71,7 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
         }
         private void grd_Pasted(object sender, Telerik.Windows.RadRoutedEventArgs e)
         {
-            save();
+            
         }
         private void grd_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
         {
@@ -78,6 +79,7 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
         }
         private void save ()
         {
+            
                 try
             {
                 context.SaveChanges();
@@ -190,7 +192,29 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
 
         }
 
-       
+        private void grd_DataError(object sender, DataErrorEventArgs e)
+        {
+            MessageBox.Show("grid Dataerror");
+            e.Handled = true;
+        }
+
+        private void grd_Pasting(object sender, GridViewClipboardEventArgs e)
+        {
+            try
+            {
+                
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
+        private void grd_PastingCellClipboardContent(object sender, GridViewCellClipboardEventArgs e)
+        {
+
+        }
 
        
 

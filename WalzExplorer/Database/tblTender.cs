@@ -17,7 +17,6 @@ namespace WalzExplorer.Database
         public tblTender()
         {
             this.tblTender_Activity = new HashSet<tblTender_Activity>();
-            this.tblTender_Contractor = new HashSet<tblTender_Contractor>();
             this.tblTender_ContractorType = new HashSet<tblTender_ContractorType>();
             this.tblTender_Drawing = new HashSet<tblTender_Drawing>();
             this.tblTender_Item = new HashSet<tblTender_Item>();
@@ -26,6 +25,7 @@ namespace WalzExplorer.Database
             this.tblTender_Supplier = new HashSet<tblTender_Supplier>();
             this.tblTender_UnitOfMeasure = new HashSet<tblTender_UnitOfMeasure>();
             this.tblTender_WorkGroup = new HashSet<tblTender_WorkGroup>();
+            this.tblTender_Contractor = new HashSet<tblTender_Contractor>();
         }
     
         public int TenderID { get; set; }
@@ -39,7 +39,6 @@ namespace WalzExplorer.Database
         public byte[] RowVersion { get; set; }
     
         public virtual ICollection<tblTender_Activity> tblTender_Activity { get; set; }
-        public virtual ICollection<tblTender_Contractor> tblTender_Contractor { get; set; }
         public virtual ICollection<tblTender_ContractorType> tblTender_ContractorType { get; set; }
         public virtual ICollection<tblTender_Drawing> tblTender_Drawing { get; set; }
         public virtual ICollection<tblTender_Item> tblTender_Item { get; set; }
@@ -49,5 +48,6 @@ namespace WalzExplorer.Database
         public virtual tblTender_Status tblTender_Status { get; set; }
         public virtual ICollection<tblTender_UnitOfMeasure> tblTender_UnitOfMeasure { get; set; }
         public virtual ICollection<tblTender_WorkGroup> tblTender_WorkGroup { get; set; }
+        public virtual ICollection<tblTender_Contractor> tblTender_Contractor { get; set; }
     }
 }

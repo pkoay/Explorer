@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Data.Entity.Core.EntityClient;
 using WalzExplorer.Controls.TreeView.ViewModel;
@@ -65,8 +65,7 @@ namespace WalzExplorer.Database
 
         public override int SaveChanges()
         {
-
-
+            
             var modifiedEntries = ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
                 .ToList();

@@ -10,8 +10,8 @@
     <Grid>
 
 
-        <telerik:RadGridView  Name="grd" VerticalAlignment="Top" IsReadOnly="True" AlternationCount="3" 
-                              ClipboardCopyMode="All" SelectionMode="Extended"   ShowColumnFooters="True"  ShowGroupFooters="True" GridLinesVisibility="None">
+        <telerik:RadGridView  Name="grd" VerticalAlignment="Top" IsReadOnly="True" AlternationCount="3" GridLinesVisibility="None"  SelectionUnit="Mixed"
+                              ClipboardCopyMode="All" SelectionMode="Extended"   ShowColumnFooters="True"  ShowGroupFooters="True" >
 
         
 

@@ -138,7 +138,7 @@
           <Property Name="ContractorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenderID" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="ContractorTypeID" Type="int" />
+          <Property Name="ContractorTypeID" Type="int" Nullable="false" />
           <Property Name="Comment" Type="varchar(max)" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
@@ -610,7 +610,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblTender_Contractor_tblTender_ContractorType">
-          <End Role="tblTender_ContractorType" Type="Self.tblTender_ContractorType" Multiplicity="0..1" />
+          <End Role="tblTender_ContractorType" Type="Self.tblTender_ContractorType" Multiplicity="1" />
           <End Role="tblTender_Contractor" Type="Self.tblTender_Contractor" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblTender_ContractorType">
@@ -1235,7 +1235,6 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="tblTender_Activity" Relationship="Self.FK_tblTender_Component_tblTender" FromRole="tblTender" ToRole="tblTender_Activity" />
-          <NavigationProperty Name="tblTender_Contractor" Relationship="Self.FK_tblTender_Contractor_tblTender" FromRole="tblTender" ToRole="tblTender_Contractor" />
           <NavigationProperty Name="tblTender_ContractorType" Relationship="Self.FK_tblTender_ContractorType_tblTender" FromRole="tblTender" ToRole="tblTender_ContractorType" />
           <NavigationProperty Name="tblTender_Drawing" Relationship="Self.FK_tblTender_Drawing_tblTender" FromRole="tblTender" ToRole="tblTender_Drawing" />
           <NavigationProperty Name="tblTender_Item" Relationship="Self.FK_tblTender_Item_tblTender" FromRole="tblTender" ToRole="tblTender_Item" />
@@ -1245,6 +1244,7 @@
           <NavigationProperty Name="tblTender_Status" Relationship="Self.FK_tblTender_tblTender_Status" FromRole="tblTender" ToRole="tblTender_Status" />
           <NavigationProperty Name="tblTender_UnitOfMeasure" Relationship="Self.FK_tblTender_UnitOfMeasure_tblTender" FromRole="tblTender" ToRole="tblTender_UnitOfMeasure" />
           <NavigationProperty Name="tblTender_WorkGroup" Relationship="Self.FK_tblTender_WorkGroup_tblTender" FromRole="tblTender" ToRole="tblTender_WorkGroup" />
+          <NavigationProperty Name="tblTender_Contractor" Relationship="WalzExplorerModel.FK_tblTender_Contractor_tblTender" FromRole="tblTender" ToRole="tblTender_Contractor" />
         </EntityType>
         <EntityType Name="tblTender_Activity">
           <Key>
@@ -1304,9 +1304,9 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblTender_Activity" Relationship="Self.FK_tblTender_ComponentContractor_tblTender_Component" FromRole="tblTender_ActivityContractor" ToRole="tblTender_Activity" />
-          <NavigationProperty Name="tblTender_Contractor" Relationship="Self.FK_tblTender_ComponentContractor_tblTender_Contractor" FromRole="tblTender_ActivityContractor" ToRole="tblTender_Contractor" />
           <NavigationProperty Name="tblTender_Step" Relationship="Self.FK_tblTender_ComponentContractor_tblTender_Step" FromRole="tblTender_ActivityContractor" ToRole="tblTender_Step" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblTender_Contractor" Relationship="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Contractor" FromRole="tblTender_ActivityContractor" ToRole="tblTender_Contractor" />
         </EntityType>
         <EntityType Name="tblTender_ActivityLabour">
           <Key>
@@ -1357,22 +1357,6 @@
           <NavigationProperty Name="tblTender_Supplier" Relationship="Self.FK_tblTender_ComponentMaterial_tblTender_Supplier" FromRole="tblTender_ActivityMaterial" ToRole="tblTender_Supplier" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
         </EntityType>
-        <EntityType Name="tblTender_Contractor">
-          <Key>
-            <PropertyRef Name="ContractorID" />
-          </Key>
-          <Property Name="ContractorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TenderID" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ContractorTypeID" Type="Int32" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblTender" Relationship="Self.FK_tblTender_Contractor_tblTender" FromRole="tblTender_Contractor" ToRole="tblTender" />
-          <NavigationProperty Name="tblTender_ActivityContractor" Relationship="Self.FK_tblTender_ComponentContractor_tblTender_Contractor" FromRole="tblTender_Contractor" ToRole="tblTender_ActivityContractor" />
-          <NavigationProperty Name="tblTender_ContractorType" Relationship="Self.FK_tblTender_Contractor_tblTender_ContractorType" FromRole="tblTender_Contractor" ToRole="tblTender_ContractorType" />
-          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
-        </EntityType>
         <EntityType Name="tblTender_ContractorType">
           <Key>
             <PropertyRef Name="ContractorTypeID" />
@@ -1384,8 +1368,8 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblTender" Relationship="Self.FK_tblTender_ContractorType_tblTender" FromRole="tblTender_ContractorType" ToRole="tblTender" />
-          <NavigationProperty Name="tblTender_Contractor" Relationship="Self.FK_tblTender_Contractor_tblTender_ContractorType" FromRole="tblTender_ContractorType" ToRole="tblTender_Contractor" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblTender_Contractor" Relationship="WalzExplorerModel.FK_tblTender_Contractor_tblTender_ContractorType" FromRole="tblTender_ContractorType" ToRole="tblTender_Contractor" />
         </EntityType>
         <EntityType Name="tblTender_Drawing">
           <Key>
@@ -1668,18 +1652,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblTender_Contractor_tblTender">
-          <End Role="tblTender" Type="Self.tblTender" Multiplicity="1" />
-          <End Role="tblTender_Contractor" Type="Self.tblTender_Contractor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender">
-              <PropertyRef Name="TenderID" />
-            </Principal>
-            <Dependent Role="tblTender_Contractor">
-              <PropertyRef Name="TenderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblTender_ContractorType_tblTender">
           <End Role="tblTender" Type="Self.tblTender" Multiplicity="1" />
           <End Role="tblTender_ContractorType" Type="Self.tblTender_ContractorType" Multiplicity="*" />
@@ -1884,18 +1856,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblTender_ComponentContractor_tblTender_Contractor">
-          <End Role="tblTender_Contractor" Type="Self.tblTender_Contractor" Multiplicity="1" />
-          <End Role="tblTender_ActivityContractor" Type="Self.tblTender_ActivityContractor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_Contractor">
-              <PropertyRef Name="ContractorID" />
-            </Principal>
-            <Dependent Role="tblTender_ActivityContractor">
-              <PropertyRef Name="ContractorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblTender_ComponentContractor_tblTender_Step">
           <End Role="tblTender_Step" Type="Self.tblTender_Step" Multiplicity="1" />
           <End Role="tblTender_ActivityContractor" Type="Self.tblTender_ActivityContractor" Multiplicity="*" />
@@ -1977,18 +1937,6 @@
             </Principal>
             <Dependent Role="tblTender_ActivityMaterial">
               <PropertyRef Name="SupplierID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblTender_Contractor_tblTender_ContractorType">
-          <End Role="tblTender_ContractorType" Type="Self.tblTender_ContractorType" Multiplicity="0..1" />
-          <End Role="tblTender_Contractor" Type="Self.tblTender_Contractor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_ContractorType">
-              <PropertyRef Name="ContractorTypeID" />
-            </Principal>
-            <Dependent Role="tblTender_Contractor">
-              <PropertyRef Name="ContractorTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2133,7 +2081,6 @@
           <EntitySet Name="tblTender_ActivityContractor" EntityType="Self.tblTender_ActivityContractor" />
           <EntitySet Name="tblTender_ActivityLabour" EntityType="Self.tblTender_ActivityLabour" />
           <EntitySet Name="tblTender_ActivityMaterial" EntityType="Self.tblTender_ActivityMaterial" />
-          <EntitySet Name="tblTender_Contractor" EntityType="Self.tblTender_Contractor" />
           <EntitySet Name="tblTender_ContractorType" EntityType="Self.tblTender_ContractorType" />
           <EntitySet Name="tblTender_Drawing" EntityType="Self.tblTender_Drawing" />
           <EntitySet Name="tblTender_Item" EntityType="Self.tblTender_Item" />
@@ -2160,10 +2107,6 @@
           <AssociationSet Name="FK_tblTender_Component_tblTender" Association="Self.FK_tblTender_Component_tblTender">
             <End Role="tblTender" EntitySet="tblTenders" />
             <End Role="tblTender_Activity" EntitySet="tblTender_Activity" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblTender_Contractor_tblTender" Association="Self.FK_tblTender_Contractor_tblTender">
-            <End Role="tblTender" EntitySet="tblTenders" />
-            <End Role="tblTender_Contractor" EntitySet="tblTender_Contractor" />
           </AssociationSet>
           <AssociationSet Name="FK_tblTender_ContractorType_tblTender" Association="Self.FK_tblTender_ContractorType_tblTender">
             <End Role="tblTender" EntitySet="tblTenders" />
@@ -2233,10 +2176,6 @@
             <End Role="tblTender_Step" EntitySet="tblTender_Step" />
             <End Role="tblTender_ActivityChildActivity" EntitySet="tblTender_ActivityChildActivity" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblTender_ComponentContractor_tblTender_Contractor" Association="Self.FK_tblTender_ComponentContractor_tblTender_Contractor">
-            <End Role="tblTender_Contractor" EntitySet="tblTender_Contractor" />
-            <End Role="tblTender_ActivityContractor" EntitySet="tblTender_ActivityContractor" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblTender_ComponentContractor_tblTender_Step" Association="Self.FK_tblTender_ComponentContractor_tblTender_Step">
             <End Role="tblTender_Step" EntitySet="tblTender_Step" />
             <End Role="tblTender_ActivityContractor" EntitySet="tblTender_ActivityContractor" />
@@ -2264,10 +2203,6 @@
           <AssociationSet Name="FK_tblTender_ComponentMaterial_tblTender_Supplier" Association="Self.FK_tblTender_ComponentMaterial_tblTender_Supplier">
             <End Role="tblTender_Supplier" EntitySet="tblTender_Supplier" />
             <End Role="tblTender_ActivityMaterial" EntitySet="tblTender_ActivityMaterial" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblTender_Contractor_tblTender_ContractorType" Association="Self.FK_tblTender_Contractor_tblTender_ContractorType">
-            <End Role="tblTender_ContractorType" EntitySet="tblTender_ContractorType" />
-            <End Role="tblTender_Contractor" EntitySet="tblTender_Contractor" />
           </AssociationSet>
           <AssociationSet Name="FK_tblTender_Item_tblTender_Drawing" Association="Self.FK_tblTender_Item_tblTender_Drawing">
             <End Role="tblTender_Drawing" EntitySet="tblTender_Drawing" />
@@ -2415,6 +2350,19 @@
             <Parameter Name="NTSecurityGroups" Mode="In" Type="String" />
             <Parameter Name="NTSecurityGroupsSeperator" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="tblTender_Contractor" EntityType="WalzExplorerModel.tblTender_Contractor" />
+          <AssociationSet Name="FK_tblTender_Contractor_tblTender" Association="WalzExplorerModel.FK_tblTender_Contractor_tblTender">
+            <End Role="tblTender" EntitySet="tblTenders" />
+            <End Role="tblTender_Contractor" EntitySet="tblTender_Contractor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTender_ComponentContractor_tblTender_Contractor" Association="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Contractor">
+            <End Role="tblTender_Contractor" EntitySet="tblTender_Contractor" />
+            <End Role="tblTender_ActivityContractor" EntitySet="tblTender_ActivityContractor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTender_Contractor_tblTender_ContractorType" Association="WalzExplorerModel.FK_tblTender_Contractor_tblTender_ContractorType">
+            <End Role="tblTender_ContractorType" EntitySet="tblTender_ContractorType" />
+            <End Role="tblTender_Contractor" EntitySet="tblTender_Contractor" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -2543,6 +2491,58 @@
           <Property Type="String" Name="ID" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Header" Nullable="false" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="tblTender_Contractor">
+          <Key>
+            <PropertyRef Name="ContractorID" />
+          </Key>
+          <Property Name="ContractorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenderID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ContractorTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblTender" Relationship="WalzExplorerModel.FK_tblTender_Contractor_tblTender" FromRole="tblTender_Contractor" ToRole="tblTender" />
+          <NavigationProperty Name="tblTender_ActivityContractor" Relationship="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Contractor" FromRole="tblTender_Contractor" ToRole="tblTender_ActivityContractor" />
+          <NavigationProperty Name="tblTender_ContractorType" Relationship="WalzExplorerModel.FK_tblTender_Contractor_tblTender_ContractorType" FromRole="tblTender_Contractor" ToRole="tblTender_ContractorType" />
+        </EntityType>
+        <Association Name="FK_tblTender_Contractor_tblTender">
+          <End Type="WalzExplorerModel.tblTender" Role="tblTender" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_Contractor" Role="tblTender_Contractor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender">
+              <PropertyRef Name="TenderID" />
+            </Principal>
+            <Dependent Role="tblTender_Contractor">
+              <PropertyRef Name="TenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_ComponentContractor_tblTender_Contractor">
+          <End Type="WalzExplorerModel.tblTender_Contractor" Role="tblTender_Contractor" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_ActivityContractor" Role="tblTender_ActivityContractor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_Contractor">
+              <PropertyRef Name="ContractorID" />
+            </Principal>
+            <Dependent Role="tblTender_ActivityContractor">
+              <PropertyRef Name="ContractorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_Contractor_tblTender_ContractorType">
+          <End Type="WalzExplorerModel.tblTender_ContractorType" Role="tblTender_ContractorType" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_Contractor" Role="tblTender_Contractor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_ContractorType">
+              <PropertyRef Name="ContractorTypeID" />
+            </Principal>
+            <Dependent Role="tblTender_Contractor">
+              <PropertyRef Name="ContractorTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2678,20 +2678,6 @@
                 <ScalarProperty Name="Markup" ColumnName="Markup" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblTender_Contractor">
-            <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Contractor">
-              <MappingFragment StoreEntitySet="tblTender_Contractor">
-                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
-                <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
-                <ScalarProperty Name="TenderID" ColumnName="TenderID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ContractorTypeID" ColumnName="ContractorTypeID" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
@@ -3154,6 +3140,20 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblTender_Contractor">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Contractor">
+              <MappingFragment StoreEntitySet="tblTender_Contractor">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ContractorTypeID" ColumnName="ContractorTypeID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="TenderID" ColumnName="TenderID" />
+                <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

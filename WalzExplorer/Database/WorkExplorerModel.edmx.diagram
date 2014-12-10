@@ -13,7 +13,6 @@
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityContractor" Width="1.5" PointX="9.75" PointY="35.5" IsExpanded="true" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityLabour" Width="1.5" PointX="9.75" PointY="48" IsExpanded="true" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityMaterial" Width="1.5" PointX="12.75" PointY="46.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Contractor" Width="1.5" PointX="7.5" PointY="30" IsExpanded="true" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ContractorType" Width="1.5" PointX="5.25" PointY="27.625" IsExpanded="true" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Drawing" Width="1.5" PointX="5.25" PointY="31.125" IsExpanded="true" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Item" Width="1.5" PointX="12.75" PointY="34.75" IsExpanded="true" />
@@ -35,7 +34,6 @@
         <EntityTypeShape EntityType="WalzExplorerModel.tblWEX_TreeNodeType" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
         <AssociationConnector Association="WalzExplorerModel.FK_Project_Project_Person_Person" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Component_tblTender" ManuallyRouted="false" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Contractor_tblTender" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ContractorType_tblTender" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Drawing_tblTender" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender" ManuallyRouted="false" />
@@ -53,7 +51,6 @@
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentSubcomponent_tblTender_Component1" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender_Component" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentSubcomponent_tblTender_Step" ManuallyRouted="false" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Contractor" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Step" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_Step" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_UnitOfMeasure" ManuallyRouted="false" />
@@ -61,7 +58,6 @@
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Material" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Step" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Supplier" ManuallyRouted="false" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Contractor_tblTender_ContractorType" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender_Drawing" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender_Schedule" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_LabourStandard_tblTender_UnitOfMeasure" ManuallyRouted="false" />
@@ -75,6 +71,10 @@
         <AssociationConnector Association="WalzExplorerModel.tblWEX_RHSTab_Security" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.tblWEX_Tree_Security" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.tblWEX_TreeNodeType_RHSTab" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Contractor" Width="1.5" PointX="7.5" PointY="30" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Contractor_tblTender" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Contractor" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Contractor_tblTender_ContractorType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

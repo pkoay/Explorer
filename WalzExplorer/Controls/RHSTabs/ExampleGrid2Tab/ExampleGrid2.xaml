@@ -14,11 +14,11 @@
     PreviewGotKeyboardFocus="RHSTabContentBase_PreviewGotKeyboardFocus">
     
     <Grid>
-       
-        <telerik:RadGridView  x:Name="grd" VerticalAlignment="Top" AlternationCount="3" 
+
+        <telerik:RadGridView  x:Name="grd" VerticalAlignment="Top" AlternationCount="3"  CanUserFreezeColumns="True" DataError="grd_DataError" ClipboardPasteMode="AllSelectedRows"
 			ClipboardCopyMode="All" SelectionMode="Extended"   ShowColumnFooters="True"  ShowGroupFooters="True" GridLinesVisibility="None"
-			RowEditEnded="grd_RowEditEnded"  DataLoaded="grd_DataLoaded" 
-              ClipboardPasteMode="AllSelectedCells"   Pasted="grd_Pasted"             PreviewLostKeyboardFocus="grd_PreviewLostKeyboardFocus" RowValidating="grd_RowValidating"/>
+			RowEditEnded="grd_RowEditEnded"  DataLoaded="grd_DataLoaded" ValidatesOnDataErrors="None" SelectionUnit="Mixed" PastingCellClipboardContent="grd_PastingCellClipboardContent"
+                Pasted="grd_Pasted"      Pasting="grd_Pasting"       PreviewLostKeyboardFocus="grd_PreviewLostKeyboardFocus" RowValidating="grd_RowValidating"/>
 
         
 

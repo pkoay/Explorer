@@ -48,13 +48,13 @@ namespace WalzExplorer
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
-        {  
+        {
             user.LoginID = WindowsIdentity.GetCurrent().Name;
             sbUserName.Text = "User: " + user.LoginID;
 
 
             WalzExplorerEntities we = new WalzExplorerEntities();
-           
+
             sbDatabaseName.Text = "Database: " + we.Database.Connection.Database;
             sbServerName.Text = "Server: " + we.Database.Connection.DataSource;
 
@@ -65,6 +65,13 @@ namespace WalzExplorer
             tcLHS.DataContext = _LHSTabs;
             tcLHS.SelectedIndex = 0;
 
+
+            ContextMenu cm = new ContextMenu();
+            cm.Items.Add(new MenuItem { Header = "Item 1" });
+            //cm.VerticalOffset = -100;
+            btnConfigure.ContextMenu = cm;
+            cm.PlacementTarget = btnConfigure;
+            cm.Placement = System.Windows.Controls.Primitives.PlacementMode.AbsolutePoint;
         }
 
         private void tbSearch_KeyDown(object sender, KeyEventArgs e)
@@ -103,7 +110,7 @@ namespace WalzExplorer
                     tvLHS_NodeChanged(tv, null);
                 }
             }
-            
+
         }
 
         private void tcRHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -198,7 +205,7 @@ namespace WalzExplorer
                     WEXTreeView tv = (WEXTreeView)ti.Content;
                     if (tv.SelectedItem() != null)
                     {
-                        return (WEXNode) tv.SelectedNode();
+                        return (WEXNode)tv.SelectedNode();
                     }
                     return null;
                 }
@@ -206,5 +213,45 @@ namespace WalzExplorer
             }
             return null;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnConfigure_Click(object sender, RoutedEventArgs e)
+        {
+
+            //Calculate where to place menu
+            Button btnSender = (Button)sender;
+           
+            Point ptLowerLeft = new Point(0, 30);
+            ptLowerLeft = btnSender.PointToScreen(ptLowerLeft);
+
+            //Open menu
+            //ContextMenu cm = new ContextMenu();
+            //MenuItem item = new MenuItem { Header = "About", Name="miAbout" };
+            //item.Click += new RoutedEventHandler(ConfigurationMenu_Click);
+            //cm.Items.Add(item);
+            ContextMenu cm = this.FindResource("cmConfiguration") as ContextMenu;
+            cm.HorizontalOffset = ptLowerLeft.X;
+            cm.VerticalOffset = ptLowerLeft.Y;
+            cm.Placement = System.Windows.Controls.Primitives.PlacementMode.AbsolutePoint;
+            cm.IsOpen = true;
+        
+        }
+
+        private void ConfigurationMenu_Click (Object sender, RoutedEventArgs e)
+        {
+            MenuItem mi = (MenuItem)sender;
+            switch (mi.Name)
+            {
+                default:
+                    MessageBox.Show(mi.Header.ToString(), "Configuration menu", MessageBoxButton.OK, MessageBoxImage.Information);
+                    break;
+            }
+        }
+
+
     }
 }
