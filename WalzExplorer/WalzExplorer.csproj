@@ -146,6 +146,7 @@
     <Compile Include="Controls\TreeView\ViewModel\NodeViewModel.cs" />
     <Compile Include="Controls\TreeView\ViewModel\RootViewModel.cs" />
     <Compile Include="Controls\TreeView\ViewModel\TreeViewItemViewModel.cs" />
+    <Compile Include="Database\EfStatus.cs" />
     <Compile Include="Database\fnTender_Schedule_List_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>

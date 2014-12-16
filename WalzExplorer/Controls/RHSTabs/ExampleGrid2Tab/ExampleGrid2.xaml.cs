@@ -55,6 +55,12 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
 
             switch (node.TypeID)
             {
+
+                case "TenderScheduleFolder":
+                    item = "Schedule Line";
+                    grd.ItemsSource = this.context.tblTender_Schedule.Where(d => d.TenderID == id);
+                    break;
+
                 case "TenderDrawingFolder":
                     item = "drawing";
                     grd.ItemsSource = this.context.tblTender_Drawing.Where(d => d.TenderID == id);
@@ -69,18 +75,20 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
             }
 
         }
-        private void grd_Pasted(object sender, Telerik.Windows.RadRoutedEventArgs e)
-        {
-            
-        }
+      
         private void grd_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
         {
             save();
         }
-        private void save ()
+        private void save()
         {
-            
-                try
+            //EfStatus errors = context.SaveChangesWithValidation();
+            //foreach (System.ComponentModel.DataAnnotations.ValidationResult s in errors.EfErrors)
+            //{
+            //    MessageBox.Show(s.MemberNames.ToString()+':'+s.ErrorMessage);
+            //}
+
+            try
             {
                 context.SaveChanges();
             }
@@ -89,9 +97,59 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
                 // Update the values of the entity that failed to save from the store 
                 ex.Entries.Single().Reload();
                 grd.Rebind();
-                MessageBox.Show("This "+ item + " was changed by "+ ex.Entries.Single().CurrentValues.GetValue<string>("UpdatedBy")+". This change is now shown, and your change has been lost.","CHANGES LOST", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("This " + item + " was changed by " + ex.Entries.Single().CurrentValues.GetValue<string>("UpdatedBy") + ". This change is now shown, and your change has been lost.", "CHANGES LOST", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            catch
+            {
+                throw;
+            }
+
         }
+
+      
+        private void grd_PreviewLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            //MessageBox.Show("lost focus stopped");
+            //e.NewFocus
+            //e.Handled = true;
+            if (context.ChangeTracker.HasChanges())
+            {
+                MessageBoxResult r = MessageBox.Show("There are unsaved changes. Press OK to return to grid, or CANCEL to loose changes", "Unsaved chnages", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
+                switch (r)
+                {
+                    case MessageBoxResult.Cancel:
+                        context.RollBack();
+                        Update();
+                        break;
+                    case MessageBoxResult.OK:
+                         grd.Focus();
+                        e.Handled = true;
+                        break;
+                }
+                {
+                   
+
+                }
+
+            }
+
+        }
+        private void RHSTabContentBase_PreviewGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+
+            //if (FocusManager.(this) == null)
+            //{
+            //    MessageBox.Show("lost focus stopped");
+                //e.Handled = true;
+            //}
+        }
+        private void RHSTabContentBase_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //MessageBox.Show("Tab losing focus");
+            //e.Handled = true;
+        }
+
+
         private void grd_DataLoaded(object sender, EventArgs e)
         {
             //Set the name from PascalCase to Logical (e.g. 'UpdatedBy' to 'Updated By')
@@ -111,9 +169,13 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
             //set some fields readonly
             foreach (Telerik.Windows.Controls.GridViewColumn c in grd.Columns)
             {
+                if (c.UniqueName == "SortOrder") c.IsReadOnly = true;
                 if (c.UniqueName == "UpdatedBy") c.IsReadOnly = true;
                 if (c.UniqueName == "UpdatedDate") c.IsReadOnly = true;
             }
+
+            //Remove any existing Cmb (otherwise they will be added twice
+            GridLibrary.RemoveAllColumnWithCombo(grd);
 
             switch (node.TypeID)
             {
@@ -127,7 +189,7 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
                 case "TenderSetupFolder_Contractor":
                     foreach (Telerik.Windows.Controls.GridViewColumn c in grd.Columns)
                     {
-                        if (c.UniqueName == "ContractorID") c.IsVisible = false;
+                        if (c.UniqueName == "ContractorID") c.IsReadOnly = false;
                     }
                     GridLibrary.ReplaceColumnWithCombo(context, grd.Columns["ContractorTypeID"], new string[]{node.ID});
 
@@ -154,34 +216,21 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
 
         }
 
-       
 
-        private void grd_PreviewLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            //if (context.ChangeTracker.HasChanges())
-            //{
-            //   if (MessageBox.Show ("There are unsaved changes. Press OK to return to grid, or CANCEL to loose changes","Unsaved chnages" , MessageBoxButton.OKCancel, MessageBoxImage.Exclamation )  ==  MessageBoxResult.OK )
-            //   {
-            //    grd.Focus();
-            //    e.Handled = true;
-                
-            //   }
-              
-            //}
-            
-        }
+        //private bool ChildHasFocus(object parent)
+        //{
+        //    IInputElement focusedElement = 
 
-        private void RHSTabContentBase_LostFocus(object sender, RoutedEventArgs e)
-        {
-            //e.Handled = true;
-        }
+        
+        //}
+      
 
-        private void RHSTabContentBase_PreviewGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            //if (!ContainsFocus)
-            //e.Handled = true;
-        }
+        //private void RHSTabContentBase_LostFocus(object sender, RoutedEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
+   
         private void grd_RowValidating(object sender, GridViewRowValidatingEventArgs e)
         {
 
@@ -215,6 +264,12 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
         {
 
         }
+
+    
+
+      
+
+       
 
        
 

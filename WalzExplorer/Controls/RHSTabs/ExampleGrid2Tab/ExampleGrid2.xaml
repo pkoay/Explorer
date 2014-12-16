@@ -15,10 +15,10 @@
     
     <Grid>
 
-        <telerik:RadGridView  x:Name="grd" VerticalAlignment="Top" AlternationCount="3"  CanUserFreezeColumns="True" DataError="grd_DataError" ClipboardPasteMode="AllSelectedRows"
+        <telerik:RadGridView  x:Name="grd" VerticalAlignment="Top" AlternationCount="3"  CanUserFreezeColumns="True" DataError="grd_DataError" ClipboardPasteMode="None"
 			ClipboardCopyMode="All" SelectionMode="Extended"   ShowColumnFooters="True"  ShowGroupFooters="True" GridLinesVisibility="None"
-			RowEditEnded="grd_RowEditEnded"  DataLoaded="grd_DataLoaded" ValidatesOnDataErrors="None" SelectionUnit="Mixed" PastingCellClipboardContent="grd_PastingCellClipboardContent"
-                Pasted="grd_Pasted"      Pasting="grd_Pasting"       PreviewLostKeyboardFocus="grd_PreviewLostKeyboardFocus" RowValidating="grd_RowValidating"/>
+			RowEditEnded="grd_RowEditEnded"  DataLoaded="grd_DataLoaded" ValidatesOnDataErrors="InEditMode" SelectionUnit="Mixed" PastingCellClipboardContent="grd_PastingCellClipboardContent"
+                     PreviewLostKeyboardFocus="grd_PreviewLostKeyboardFocus" RowValidating="grd_RowValidating"/>
 
         
 

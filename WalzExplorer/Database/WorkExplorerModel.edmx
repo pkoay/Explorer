@@ -140,6 +140,7 @@
           <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="ContractorTypeID" Type="int" Nullable="false" />
           <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -2506,6 +2507,7 @@
           <NavigationProperty Name="tblTender" Relationship="WalzExplorerModel.FK_tblTender_Contractor_tblTender" FromRole="tblTender_Contractor" ToRole="tblTender" />
           <NavigationProperty Name="tblTender_ActivityContractor" Relationship="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Contractor" FromRole="tblTender_Contractor" ToRole="tblTender_ActivityContractor" />
           <NavigationProperty Name="tblTender_ContractorType" Relationship="WalzExplorerModel.FK_tblTender_Contractor_tblTender_ContractorType" FromRole="tblTender_Contractor" ToRole="tblTender_ContractorType" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_tblTender_Contractor_tblTender">
           <End Type="WalzExplorerModel.tblTender" Role="tblTender" Multiplicity="1" />
@@ -3143,6 +3145,7 @@
           <EntitySetMapping Name="tblTender_Contractor">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Contractor">
               <MappingFragment StoreEntitySet="tblTender_Contractor">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />

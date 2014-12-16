@@ -48,11 +48,12 @@
     
     <MahApps:MetroWindow.Resources>
         <!--CONFIGURATION CONTEXT MENU-->
-        <ContextMenu x:Key="cmConfiguration">
-            <MenuItem Header="About" Click="ConfigurationMenu_Click" />
-            <MenuItem Header="Menu item 2" />
+        <ContextMenu x:Key="cmConfiguration" FontSize="12"  >
+
+            <MenuItem Name="mi" Header="Menu item 2" Click="ConfigurationMenu_Click"/>
+            <MenuItem Name="miFeedback" Header="Feedback" Click="ConfigurationMenu_Click" />
             <Separator />
-            <MenuItem Header="Menu item 3" />
+            <MenuItem Name="miAbout"  Icon="{StaticResource appbar_cog}"  Header="About" Click="ConfigurationMenu_Click" />
         </ContextMenu>
     </MahApps:MetroWindow.Resources>
 

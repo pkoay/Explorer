@@ -14,6 +14,7 @@ using System.Data.Entity.Core.EntityClient;
 using WalzExplorer.Controls.TreeView.ViewModel;
 using WalzExplorer.Controls.RHSTabs;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.ComponentModel.DataAnnotations;
 
 namespace WalzExplorer.Database
 {
@@ -61,7 +62,41 @@ namespace WalzExplorer.Database
             }
             return v;  
         }
-     
+
+
+
+        private static readonly Dictionary<int, string> _sqlErrorTextDict = new Dictionary<int, string>
+{
+    {547,
+     "This operation failed because another data entry uses this entry."},        
+    {2601,
+     "One of the properties is marked as Unique index and there is already an entry with that value."}
+};
+
+        /// <summary>
+        /// This decodes the DbUpdateException. If there are any errors it can
+        /// handle then it returns a list of errors. Otherwise it returns null
+        /// which means rethrow the error as it has not been handled
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <returns>null if cannot handle errors, otherwise a list of errors</returns>
+        IEnumerable<ValidationResult> TryDecodeDbUpdateException(DbUpdateException ex)
+        {
+            if (!(ex.InnerException is System.Data.Entity.Core.UpdateException) ||
+                !(ex.InnerException.InnerException is System.Data.SqlClient.SqlException))
+                return null;
+            var sqlException =
+                (System.Data.SqlClient.SqlException)ex.InnerException.InnerException;
+            var result = new List<ValidationResult>();
+            for (int i = 0; i < sqlException.Errors.Count; i++)
+            {
+                var errorNum = sqlException.Errors[i].Number;
+                string errorText;
+                if (_sqlErrorTextDict.TryGetValue(errorNum, out errorText))
+                    result.Add(new ValidationResult(errorText));
+            }
+            return result.Any() ? result : null;
+        }
 
         public override int SaveChanges()
         {
@@ -86,8 +121,72 @@ namespace WalzExplorer.Database
                 }
             }
 
+            
             return base.SaveChanges();
         }
+
+        public void RollBack()
+        {
+            
+            var changedEntries = this.ChangeTracker.Entries().Where(x => x.State != EntityState.Unchanged).ToList();
+
+            foreach (var entry in changedEntries.Where(x => x.State == EntityState.Modified))
+            {
+                entry.CurrentValues.SetValues(entry.OriginalValues);
+                entry.State = EntityState.Unchanged;
+            }
+
+            foreach (var entry in changedEntries.Where(x => x.State == EntityState.Added))
+            {
+                entry.State = EntityState.Detached;
+            }
+
+            foreach (var entry in changedEntries.Where(x => x.State == EntityState.Deleted))
+            {
+                entry.State = EntityState.Unchanged;
+            }
+
+        }
+
+
+        public EfStatus SaveChangesWithValidation()
+        {
+            var status = new EfStatus();
+            try
+            {
+                SaveChanges(); //then update it
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                // Update the values of the entity that failed to save from the store 
+                //ex.Entries.Single().Reload();
+                //grd.Rebind();
+                status.SetErrors("This data was changed by " + ex.Entries.Single().CurrentValues.GetValue<string>("UpdatedBy") + ". This change is now shown, and your change has been lost.", "All");
+            }
+            catch (DbEntityValidationException ex)
+            {
+                status.SetErrors(ex.EntityValidationErrors);
+                return status;
+            }
+
+            catch (DbUpdateException ex)
+            {
+                var decodedErrors = TryDecodeDbUpdateException(ex);
+                if (decodedErrors == null)
+                    throw; //it isn't something we understand so rethrow
+                status.SetErrors(decodedErrors);
+                return status;
+            }
+            //else it isn't an exception we understand so it throws in the normal way
+            catch 
+            {
+                throw;
+            }
+            return status;
+        }
+
+
+
 
         public List<WEXNode> GetRootNodes(string strLHSTabID, WEXUser user, Dictionary<string, string> dicSQLSubsitutes)
         {

@@ -22,6 +22,7 @@ namespace WalzExplorer.Controls.Common
             gcb.DataMemberBinding = new Binding(column.UniqueName);
             gcb.UniqueName = "cmb" + column.UniqueName;
             gcb.SelectedValueMemberPath = column.UniqueName;
+            
             switch (column.UniqueName)
             {
                 case "ContractorTypeID":
@@ -34,6 +35,24 @@ namespace WalzExplorer.Controls.Common
             }
             column.IsVisible = false;
           
+        }
+        public static void RemoveAllColumnWithCombo(RadGridView grd)
+        {
+            List<GridViewColumn> l = new List<GridViewColumn>();
+
+            // get a list
+            foreach (GridViewColumn c in grd.Columns)
+            {
+                if (c.UniqueName.StartsWith("cmb"))
+                {
+                    l.Add(c);
+                }
+            }
+            // remove them (has to be done seperately because remove operation changes grd object, therefore can't foreach
+            foreach (GridViewColumn c in l)
+            {
+                grd.Columns.Remove(c);
+            }
         }
     }
 }
