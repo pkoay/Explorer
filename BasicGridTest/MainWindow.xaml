@@ -12,9 +12,9 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <telerik:RadGridView Name="grd" ItemsSource="{Binding MainView}"
+        <telerik:RadGridView Name="grd" ItemsSource="{Binding Main}"
                                  AutoGenerateColumns="True" 
-                                 CanUserInsertRows="True"/>
+                                 CanUserInsertRows="True" NewRowPosition="Top" GroupRenderMode="Flat"  RowEditEnded="grd_RowEditEnded" AddingNewDataItem="grd_AddingNewDataItem"/>
 
         <Button Name="Button1"
 		        Grid.Row="1"

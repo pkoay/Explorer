@@ -18,16 +18,51 @@ namespace BasicGridTest
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-      
     {
+        private readonly BASICGRIDDATAEntities context;
+
         public MainWindow()
         {
             InitializeComponent();
+            context=((MyViewModel)grd.DataContext).context;
+
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)
         {
-
+            tblMain m= new tblMain();
+            m.Title="BRAND NEW";
+            m.SortOrder = 99999;
+            m.TypeID = 1;
+            context.tblMains.Add(m);
+            context.SaveChanges();
+            grd.Rebind();
+            //((MyViewModel)grd.DataContext).refreshMainView();
         }
+
+        private void grd_RowEditEnded(object sender, Telerik.Windows.Controls.GridViewRowEditEndedEventArgs e)
+        {
+           
+            tblMain m = (tblMain)e.EditedItem;
+            if (!(context.tblMains.Local.Contains(m)))
+            {
+                m = context.tblMains.Add(m);
+            }
+
+
+
+            grd.CommitRowEdit(e.Row);
+            
+            context.SaveChanges();
+            //grd.new
+        }
+
+        private void grd_AddingNewDataItem(object sender, Telerik.Windows.Controls.GridView.GridViewAddingNewEventArgs e)
+        {
+            
+           
+            
+        }
+        
     }
 }

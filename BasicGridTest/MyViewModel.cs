@@ -2,29 +2,47 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BasicGridTest
 {
-    public class MyViewModel
+    public class MyViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<tblMain> mainView;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private ObservableCollection<tblMain> main;
         public readonly BASICGRIDDATAEntities context;
 
         public MyViewModel()
         {
             this.context = new BASICGRIDDATAEntities();
-            this.mainView = new ObservableCollection<tblMain>(context.tblMains);
+            this.main = new ObservableCollection<tblMain>(context.tblMains);
         }
 
-        public ObservableCollection<tblMain> MainView 
+        public ObservableCollection<tblMain> Main 
         {
             get 
             {
-                return this.mainView; 
+                return this.main; 
             }
+        }
+
+
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, args);
+            }
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            this.OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
         }
 
     }
