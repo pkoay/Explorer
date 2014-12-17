@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="67eea44e7de34f6782489440a99ac55f" Name="Diagram1">
+      <Diagram DiagramId="c0c42f5ce52d41908145114c14250e0a" Name="Diagram1">
         <EntityTypeShape EntityType="BASICGRIDDATAModel.tblMain" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="BASICGRIDDATAModel.tblType" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
         <AssociationConnector Association="BASICGRIDDATAModel.FK_tblMain_tblType" ManuallyRouted="false" />

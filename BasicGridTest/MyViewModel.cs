@@ -6,22 +6,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WalzExplorer.Database
+namespace BasicGridTest
 {
-    public class ViewModel
+    public class MyViewModel
     {
-        private readonly ObservableCollection<tblMain> mainView;
+        private ObservableCollection<tblMain> mainView;
         public readonly BASICGRIDDATAEntities context;
 
-        public ViewModel()
+        public MyViewModel()
         {
             this.context = new BASICGRIDDATAEntities();
             this.mainView = new ObservableCollection<tblMain>(context.tblMains);
         }
 
-        public ObservableCollection<tblMain> TenderContractorsView
+        public ObservableCollection<tblMain> MainView 
         {
-            get { return this.mainView; }
+            get 
+            {
+                return this.mainView; 
+            }
         }
 
     }
