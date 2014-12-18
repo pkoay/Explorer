@@ -49,11 +49,14 @@ namespace WalzExplorer
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            
+
             user.LoginID = WindowsIdentity.GetCurrent().Name;
             sbUserName.Text = "User: " + user.LoginID;
 
 
             WalzExplorerEntities we = new WalzExplorerEntities();
+            
 
             sbDatabaseName.Text = "Database: " + we.Database.Connection.Database;
             sbServerName.Text = "Server: " + we.Database.Connection.DataSource;
@@ -225,7 +228,7 @@ namespace WalzExplorer
             //Calculate where to place menu
             Button btnSender = (Button)sender;
            
-            Point ptLowerLeft = new Point(0, 30);
+            Point ptLowerLeft = new Point(35, 30);
             ptLowerLeft = btnSender.PointToScreen(ptLowerLeft);
 
             //Open menu

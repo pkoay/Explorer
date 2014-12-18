@@ -198,6 +198,7 @@
     <Compile Include="Database\spWEX_TreeRootList_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\WalzExplorerViewModel.cs" />
     <Compile Include="Model\WEXLHSTab.cs" />
     <Compile Include="Model\WEXTreeRoot.cs" />
     <Compile Include="Model\WEXNode.cs" />
@@ -410,9 +411,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\superbar.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

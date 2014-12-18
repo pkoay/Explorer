@@ -5,6 +5,14 @@
                 xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
                 Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
+        <!--CONFIGURATION CONTEXT MENU-->
+        <ContextMenu x:Key="cmGrid" FontSize="12"  >
+
+            <MenuItem Name="miInsert" Header="Insert new line" Click="cmGrid_Click"/>
+            <MenuItem Name="miInsertPaste" Header="Insert from paste" Click="cmGrid_Click" />
+            <Separator />
+            <MenuItem Name="miAbout"  Header="About" Click="cmGrid_Click" />
+        </ContextMenu>
         <local:MyViewModel x:Key="MyViewModel" />
     </Window.Resources>
     <Grid DataContext="{StaticResource MyViewModel}">
@@ -13,8 +21,9 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <telerik:RadGridView Name="grd" ItemsSource="{Binding Main}"
-                                 AutoGenerateColumns="True" 
-                                 CanUserInsertRows="True" NewRowPosition="Top" GroupRenderMode="Flat"  RowEditEnded="grd_RowEditEnded" AddingNewDataItem="grd_AddingNewDataItem"/>
+                             AutoGenerateColumns="True" 
+                             CanUserInsertRows="True" NewRowPosition="Top" GroupRenderMode="Flat"  RowEditEnded="grd_RowEditEnded"
+                             ContextMenu="{StaticResource cmGrid}"/>
 
         <Button Name="Button1"
 		        Grid.Row="1"

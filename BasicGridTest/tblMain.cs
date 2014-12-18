@@ -17,7 +17,7 @@ namespace BasicGridTest
         public int ID { get; set; }
         public string Title { get; set; }
         public int TypeID { get; set; }
-        public int SortOrder { get; set; }
+        public double SortOrder { get; set; }
     
         public virtual tblType tblType { get; set; }
     }

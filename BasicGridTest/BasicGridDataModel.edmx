@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BASICGRIDDATAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BASICGRIDDATAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tblMain">
           <Key>
             <PropertyRef Name="ID" />
@@ -12,7 +12,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TypeID" Type="int" Nullable="false" />
-          <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="SortOrder" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="tblType">
           <Key>
@@ -41,32 +41,39 @@
             <End Role="tblMain" EntitySet="tblMain" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BASICGRIDDATAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BASICGRIDDATAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblMains" EntityType="BASICGRIDDATAModel.tblMain" />
+          <EntitySet Name="tblTypes" EntityType="BASICGRIDDATAModel.tblType" />
+          <AssociationSet Name="FK_tblMain_tblType" Association="BASICGRIDDATAModel.FK_tblMain_tblType">
+            <End Role="tblType" EntitySet="tblTypes" />
+            <End Role="tblMain" EntitySet="tblMains" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="tblMain">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TypeID" Type="Int32" Nullable="false" />
-          <Property Name="SortOrder" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="tblType" Relationship="Self.FK_tblMain_tblType" FromRole="tblMain" ToRole="tblType" />
+          <Property Name="SortOrder" Type="Double" Nullable="false" />
+          <NavigationProperty Name="tblType" Relationship="BASICGRIDDATAModel.FK_tblMain_tblType" FromRole="tblMain" ToRole="tblType" />
         </EntityType>
         <EntityType Name="tblType">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblMains" Relationship="Self.FK_tblMain_tblType" FromRole="tblType" ToRole="tblMain" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblMains" Relationship="BASICGRIDDATAModel.FK_tblMain_tblType" FromRole="tblType" ToRole="tblMain" />
         </EntityType>
         <Association Name="FK_tblMain_tblType">
-          <End Role="tblType" Type="Self.tblType" Multiplicity="1" />
-          <End Role="tblMain" Type="Self.tblMain" Multiplicity="*" />
+          <End Type="BASICGRIDDATAModel.tblType" Role="tblType" Multiplicity="1" />
+          <End Type="BASICGRIDDATAModel.tblMain" Role="tblMain" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblType">
               <PropertyRef Name="ID" />
@@ -76,14 +83,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="BASICGRIDDATAEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tblMains" EntityType="Self.tblMain" />
-          <EntitySet Name="tblTypes" EntityType="Self.tblType" />
-          <AssociationSet Name="FK_tblMain_tblType" Association="Self.FK_tblMain_tblType">
-            <End Role="tblType" EntitySet="tblTypes" />
-            <End Role="tblMain" EntitySet="tblMains" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -93,18 +92,18 @@
           <EntitySetMapping Name="tblMains">
             <EntityTypeMapping TypeName="BASICGRIDDATAModel.tblMain">
               <MappingFragment StoreEntitySet="tblMain">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
                 <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tblTypes">
             <EntityTypeMapping TypeName="BASICGRIDDATAModel.tblType">
               <MappingFragment StoreEntitySet="tblType">
-                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

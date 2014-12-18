@@ -19,7 +19,29 @@ namespace BasicGridTest
         public MyViewModel()
         {
             this.context = new BASICGRIDDATAEntities();
-            this.main = new ObservableCollection<tblMain>(context.tblMains);
+            this.main = new ObservableCollection<tblMain>(context.tblMains.OrderBy(m => m.SortOrder));
+            
+        }
+
+        public tblMain Insert(tblMain NewItem, tblMain BeforeItem)
+        {
+            int index=this.main.IndexOf(BeforeItem);
+            this.main.Insert(index, NewItem);
+            
+            return this.main[index];
+        }
+
+        public double StortOrderNumber(tblMain InsertLocation)
+        {
+            //calculate the sortorder number
+            int index = this.main.IndexOf(InsertLocation);
+            if (index == 0)
+                // if first in list then halfway between given sort order number and zero
+                return InsertLocation.SortOrder / 2;
+            else
+            {
+                return (InsertLocation.SortOrder - this.main[index - 1].SortOrder) / 2 + this.main[index - 1].SortOrder;
+            }
         }
 
         public ObservableCollection<tblMain> Main 

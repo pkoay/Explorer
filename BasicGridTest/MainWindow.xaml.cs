@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Telerik.Windows.Controls;
+using Telerik.Windows.Controls.GridView;
 
 namespace BasicGridTest
 {
@@ -20,11 +22,13 @@ namespace BasicGridTest
     public partial class MainWindow : Window
     {
         private readonly BASICGRIDDATAEntities context;
-
+        private readonly MyViewModel viewModel;
         public MainWindow()
         {
             InitializeComponent();
-            context=((MyViewModel)grd.DataContext).context;
+            viewModel = ((MyViewModel)grd.DataContext);
+            context = viewModel.context;
+            
 
         }
 
@@ -42,26 +46,54 @@ namespace BasicGridTest
 
         private void grd_RowEditEnded(object sender, Telerik.Windows.Controls.GridViewRowEditEndedEventArgs e)
         {
-           
+            //this is the function that saves the data back to the database
+            //it should contain all error handling 
+
             tblMain m = (tblMain)e.EditedItem;
-            if (!(context.tblMains.Local.Contains(m)))
+
+            // If item not in database 
+            if (context.Entry(m).State == System.Data.Entity.EntityState.Detached)
             {
+                //Add item to dataabse 
                 m = context.tblMains.Add(m);
             }
-
-
-
-            grd.CommitRowEdit(e.Row);
-            
             context.SaveChanges();
-            //grd.new
+
+            //also update view model with database generated data e.g. Identity auto increment, Modified by, Modified date, etc.
+            if (context.Entry(m).State == System.Data.Entity.EntityState.Added)
+                context.Entry(m).Reload();
+
+            //redisplay new values such as ID
+            grd.Rebind();
         }
 
-        private void grd_AddingNewDataItem(object sender, Telerik.Windows.Controls.GridView.GridViewAddingNewEventArgs e)
+        private void cmGrid_Click(object sender, RoutedEventArgs e)
         {
-            
-           
-            
+            MenuItem mi = (MenuItem)sender;
+            switch (mi.Name)
+            {
+                case "miInsert":
+
+                    tblMain m = context.tblMains.Create();
+
+                    m.SortOrder = viewModel.StortOrderNumber((tblMain)grd.SelectedItem);
+                    m.TypeID = 1;
+
+                    // insert in the model and the "RowEditEnded" handles write to database
+                    m = viewModel.Insert(m, (tblMain)grd.SelectedItem);
+                    grd.CurrentItem = m;
+                    grd.BeginEdit();
+
+                    break;
+
+                case "miInsertPaste":
+                    
+
+                    break;
+                default:
+                    MessageBox.Show(mi.Header.ToString(), "Configuration menu", MessageBoxButton.OK, MessageBoxImage.Information);
+                    break;
+            }
         }
         
     }
