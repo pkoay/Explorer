@@ -21,6 +21,11 @@
             <Separator />
             <MenuItem Name="miAbout"  Header="About" Click="cmMenu_Click" />
         </ContextMenu>
+        
+
+        <!--CONFIGURATION ViewModel-->
+
+
         <data:WalzExplorerViewModel x:Key="WalzExplorerViewModel" />
     </base:RHSTabContentBase.Resources>
 

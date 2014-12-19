@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
+using Telerik.Windows.DragDrop;
 
 namespace BasicGridTest
 {
@@ -23,27 +24,27 @@ namespace BasicGridTest
     {
         private readonly BASICGRIDDATAEntities context;
         private readonly MyViewModel viewModel;
+        bool isGridEditing = false; 
+
         public MainWindow()
         {
             InitializeComponent();
             viewModel = ((MyViewModel)grd.DataContext);
             context = viewModel.context;
-            
 
+            this.grd.AddHandler(GridViewCell.MouseLeftButtonDownEvent, new MouseButtonEventHandler(grd_MouseLeftButtonDown), true);
         }
-
-        private void Button1_Click(object sender, RoutedEventArgs e)
+        private void grd_BeginningEdit(object sender, GridViewBeginningEditRoutedEventArgs e)
         {
-            tblMain m= new tblMain();
-            m.Title="BRAND NEW";
-            m.SortOrder = 99999;
-            m.TypeID = 1;
-            context.tblMains.Add(m);
-            context.SaveChanges();
-            grd.Rebind();
-            //((MyViewModel)grd.DataContext).refreshMainView();
+            this.isGridEditing = true;
         }
 
+        private void grd_CellEditEnded(object sender, GridViewCellEditEndedEventArgs e)
+        {
+            this.isGridEditing = false;
+        }
+      
+     
         private void grd_RowEditEnded(object sender, Telerik.Windows.Controls.GridViewRowEditEndedEventArgs e)
         {
             //this is the function that saves the data back to the database
@@ -65,6 +66,7 @@ namespace BasicGridTest
 
             //redisplay new values such as ID
             grd.Rebind();
+            this.isGridEditing = false;
         }
 
         private void cmGrid_Click(object sender, RoutedEventArgs e)
@@ -75,9 +77,7 @@ namespace BasicGridTest
                 case "miInsert":
 
                     tblMain m = context.tblMains.Create();
-
                     m.SortOrder = viewModel.StortOrderNumber((tblMain)grd.SelectedItem);
-                    m.TypeID = 1;
 
                     // insert in the model and the "RowEditEnded" handles write to database
                     m = viewModel.Insert(m, (tblMain)grd.SelectedItem);
@@ -95,6 +95,59 @@ namespace BasicGridTest
                     break;
             }
         }
-        
+
+        private void grd_DataLoaded(object sender, EventArgs e)
+        {
+            //Set some fields invisible
+            foreach (Telerik.Windows.Controls.GridViewColumn c in grd.Columns)
+            {
+                if (c.UniqueName.StartsWith("tbl")) c.IsVisible = false;
+                if (c.UniqueName == "RowVersion") c.IsVisible = false;
+                //if (c.UniqueName == "TenderID") c.IsVisible = false;
+            }
+            //set some fields readonly
+            foreach (Telerik.Windows.Controls.GridViewColumn c in grd.Columns)
+            {
+                if (c.UniqueName == "SortOrder") c.IsReadOnly = true;
+                if (c.UniqueName == "UpdatedBy") c.IsReadOnly = true;
+                if (c.UniqueName == "UpdatedDate") c.IsReadOnly = true;
+            }
+        }
+
+
+        public bool IsDragging { get; set; }
+
+
+        private void grd_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var s = e.OriginalSource as FrameworkElement;
+            if (s is TextBlock)
+            {
+                var parentRow = s.ParentOfType<GridViewRow>();
+
+                ////only drag selected rows
+                //if (parentRow.IsSelected)
+                //{
+                //    // determine Drag String
+                //    string drag = "";
+                //    foreach (GridViewRow r in (grd.ChildrenOfType<GridViewRow>()).Where(r=>r.IsSelected=true) )
+                //    {
+                //        foreach (GridViewCellBase c in r.Cells)
+                //        {
+                //            if (c.Visibility == System.Windows.Visibility.Visible)
+                //            {
+                //                TextBlock t = (TextBlock)c.Content;
+                //                drag = drag + c.Column.Header.ToString() + "=" + t.Text + ",";
+                //            }
+                //        }
+                //        drag = drag + Environment.NewLine;
+                //    }
+
+                //}
+
+            }
+        }
+
+       
     }
 }

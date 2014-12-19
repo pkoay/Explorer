@@ -3,17 +3,22 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 xmlns:local="clr-namespace:BasicGridTest"
                 xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+               
                 Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
+        
         <!--CONFIGURATION CONTEXT MENU-->
         <ContextMenu x:Key="cmGrid" FontSize="12"  >
-
             <MenuItem Name="miInsert" Header="Insert new line" Click="cmGrid_Click"/>
             <MenuItem Name="miInsertPaste" Header="Insert from paste" Click="cmGrid_Click" />
             <Separator />
             <MenuItem Name="miAbout"  Header="About" Click="cmGrid_Click" />
         </ContextMenu>
+      
+
+        <!--CONFIGURATION ViewModel-->
         <local:MyViewModel x:Key="MyViewModel" />
+        
     </Window.Resources>
     <Grid DataContext="{StaticResource MyViewModel}">
         <Grid.RowDefinitions>
@@ -22,14 +27,16 @@
         </Grid.RowDefinitions>
         <telerik:RadGridView Name="grd" ItemsSource="{Binding Main}"
                              AutoGenerateColumns="True" 
-                             CanUserInsertRows="True" NewRowPosition="Top" GroupRenderMode="Flat"  RowEditEnded="grd_RowEditEnded"
-                             ContextMenu="{StaticResource cmGrid}"/>
+                             CanUserInsertRows="True" NewRowPosition="Top" GroupRenderMode="Flat"  RowEditEnded="grd_RowEditEnded" BeginningEdit="grd_BeginningEdit" CellEditEnded="grd_CellEditEnded"
+                             ContextMenu="{StaticResource cmGrid}"
+                             DataLoaded="grd_DataLoaded"  SelectionMode="Multiple" SelectionUnit="FullRow">
 
+        </telerik:RadGridView>
         <Button Name="Button1"
 		        Grid.Row="1"
 		        Margin="5"
 		        HorizontalAlignment="Stretch"
-		        Click="Button1_Click"
+		        
 		        Content="Add a Club" />
     </Grid>
 </Window>
