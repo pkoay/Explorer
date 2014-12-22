@@ -124,6 +124,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BasicGridDataModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DropIndicatorDetails.cs" />
+    <Compile Include="RowReorderBehavior.cs" />
     <Compile Include="tblMain.cs">
       <DependentUpon>BasicGridDataModel.tt</DependentUpon>
     </Compile>

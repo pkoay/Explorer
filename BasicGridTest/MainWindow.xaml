@@ -3,7 +3,8 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 xmlns:local="clr-namespace:BasicGridTest"
                 xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
-               
+				xmlns:treeView="clr-namespace:Telerik.Windows.Controls.TreeView;assembly=Telerik.Windows.Controls.Navigation"
+				
                 Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
         
@@ -14,23 +15,67 @@
             <Separator />
             <MenuItem Name="miAbout"  Header="About" Click="cmGrid_Click" />
         </ContextMenu>
-      
+
 
         <!--CONFIGURATION ViewModel-->
         <local:MyViewModel x:Key="MyViewModel" />
         
+        
     </Window.Resources>
+    
     <Grid DataContext="{StaticResource MyViewModel}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
+        <Grid.Resources>
+            <Style TargetType="telerik:GridViewRow"
+				   x:Key="DraggedRowStyle"
+				   >
+                <Setter Property="telerik:DragDropManager.AllowDrag"
+						Value="True" />
+                <Setter Property="telerik:DragDropManager.TouchDragTrigger"
+                        Value="TapAndHold"/>
+            </Style>
+        </Grid.Resources>
+        
+        <!--GRID-->
+        <!--SelectionMode=Extended : This is to enable grid to have selection properties that are similar to excel (single select, multiple select via shi-f,ctrl and ctrl a-->
+        <!--SelectionUnit="FullRow" : Not interested in cell selection as it complicates drag drop/ cut paste etc -->
+        <!--Found Telerik drag drop way too complicated used this instead http://wpftutorial.net/DragAndDrop.html-->
+        
         <telerik:RadGridView Name="grd" ItemsSource="{Binding Main}"
                              AutoGenerateColumns="True" 
-                             CanUserInsertRows="True" NewRowPosition="Top" GroupRenderMode="Flat"  RowEditEnded="grd_RowEditEnded" BeginningEdit="grd_BeginningEdit" CellEditEnded="grd_CellEditEnded"
+                             CanUserInsertRows="True" NewRowPosition="Top" GroupRenderMode="Flat" ShowGroupPanel="False"
                              ContextMenu="{StaticResource cmGrid}"
-                             DataLoaded="grd_DataLoaded"  SelectionMode="Multiple" SelectionUnit="FullRow">
-
+                             SelectionMode="Extended" SelectionUnit="FullRow"
+                           
+                             RowEditEnded="grd_RowEditEnded" BeginningEdit="grd_BeginningEdit" CellEditEnded="grd_CellEditEnded"
+                             DataLoaded="grd_DataLoaded"
+                             
+                             RowStyle="{StaticResource DraggedRowStyle}" AllowDrop="True" local:RowReorderBehavior.IsEnabled="True">
+            <telerik:RadGridView.Resources>
+                <DataTemplate x:Key="DraggedItemTemplate">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Dragging:" />
+                            <TextBlock Text="{Binding CurrentDraggedItem}"
+									   FontWeight="Bold" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding CurrentDropPosition}"
+									   FontWeight="Bold"
+									   MinWidth="45" />
+                            <TextBlock Text=", ("
+									   Foreground="Gray" />
+                            <TextBlock Text="{Binding CurrentDraggedOverItem}" />
+                            <TextBlock Text=")"
+									   Foreground="Gray" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </telerik:RadGridView.Resources>
         </telerik:RadGridView>
         <Button Name="Button1"
 		        Grid.Row="1"

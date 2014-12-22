@@ -22,7 +22,16 @@ namespace BasicGridTest
             this.main = new ObservableCollection<tblMain>(context.tblMains.OrderBy(m => m.SortOrder));
             
         }
+        public tblMain Move(tblMain MoveItem, tblMain BeforeItem)
+        {
+            MoveItem.SortOrder = this.SortOrderNumber(MoveItem);
 
+            int oldIndex = this.main.IndexOf(MoveItem);
+            int newIndex = this.main.IndexOf(BeforeItem);
+            this.main.Move(oldIndex, newIndex);
+
+            return MoveItem;
+        }
         public tblMain Insert(tblMain NewItem, tblMain BeforeItem)
         {
             int index=this.main.IndexOf(BeforeItem);
@@ -31,7 +40,7 @@ namespace BasicGridTest
             return this.main[index];
         }
 
-        public double StortOrderNumber(tblMain InsertLocation)
+        public double SortOrderNumber(tblMain InsertLocation)
         {
             //calculate the sortorder number
             int index = this.main.IndexOf(InsertLocation);
