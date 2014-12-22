@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace BasicGridTest
 {
-    public class MyViewModel : INotifyPropertyChanged
+    public class MyViewModel : ViewModelBase<tblMain>,INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private ObservableCollection<tblMain> main;
-        public readonly BASICGRIDDATAEntities context;
+        //private ObservableCollection<tblMain> main;
+        //public readonly BASICGRIDDATAEntities context;
 
         public MyViewModel()
         {
@@ -22,23 +22,65 @@ namespace BasicGridTest
             this.main = new ObservableCollection<tblMain>(context.tblMains.OrderBy(m => m.SortOrder));
             
         }
-        public tblMain Move(tblMain MoveItem, tblMain BeforeItem)
-        {
-            MoveItem.SortOrder = this.SortOrderNumber(MoveItem);
+       
+        //public tblMain Insert(tblMain NewItem, tblMain BeforeItem)
+        //{
+        //    int index=this.main.IndexOf(BeforeItem);
+        //    return Insert( NewItem,  index);
+        //}
 
-            int oldIndex = this.main.IndexOf(MoveItem);
-            int newIndex = this.main.IndexOf(BeforeItem);
-            this.main.Move(oldIndex, newIndex);
+        //public  tblMain Insert(tblMain NewItem, int index)
+        //{
+        //    NewItem.SortOrder = this.SortOrderNumber(this.main[index]);
+        //    this.main.Insert(index, NewItem);
+        //    context.SaveChanges();
+           
+        //    return this.main[index];
+        //}
 
-            return MoveItem;
-        }
-        public tblMain Insert(tblMain NewItem, tblMain BeforeItem)
+        public tblMain Move(tblMain Item, int newIndex)
         {
-            int index=this.main.IndexOf(BeforeItem);
-            this.main.Insert(index, NewItem);
-            
-            return this.main[index];
+            Item.SortOrder = this.SortOrderNumber(this.main[newIndex]);
+            this.main.Move(this.main.IndexOf(Item), newIndex);
+            context.SaveChanges();
+            return this.main[newIndex];
         }
+
+        private int returnIndex(object o)
+        {
+            int i=this.main.IndexOf((tblMain)o);
+            return i;
+        }
+        public tblMain Move(ObservableCollection<object> Items, int newIndex)
+        {
+            List<object>items = Items.ToList();
+            //Remeber object to move to, as removed stuff up indexes
+            object MoveToItem = this.main[newIndex];
+       
+            //Change order to that of observable collection, not the oredr selected
+            var itemSorted = items.OrderBy(s => this.main.IndexOf((tblMain)s));
+
+            //Deletes then adds otherwise order get stuffed up
+            foreach (tblMain Item in itemSorted)
+            {
+                this.main.Remove(Item);
+            }
+
+            //remeber Newindex, as this has changed because of removes
+            newIndex = this.main.IndexOf((tblMain)MoveToItem);
+            foreach (tblMain Item in itemSorted.Reverse())
+            {    
+            Item.SortOrder = this.SortOrderNumber(this.main[newIndex]);
+            this.main.Insert(newIndex,Item);
+            }
+            context.SaveChanges();
+            return this.main[newIndex];
+        }
+        //public void Remove<T> (ObservableCollection<object> items)
+        //{
+        //    foreach (object i in items)
+        //        this.main.Remove(i);
+        //}
 
         public double SortOrderNumber(tblMain InsertLocation)
         {
@@ -61,6 +103,7 @@ namespace BasicGridTest
             }
         }
 
+        
 
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs args)
         {

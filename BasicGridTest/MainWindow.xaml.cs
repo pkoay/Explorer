@@ -77,7 +77,7 @@ namespace BasicGridTest
                 case "miInsert":
 
                     tblMain m = context.tblMains.Create();
-                    m.SortOrder = viewModel.SortOrderNumber((tblMain)grd.SelectedItem);
+                    
 
                     // insert in the model and the "RowEditEnded" handles write to database
                     m = viewModel.Insert(m, (tblMain)grd.SelectedItem);
@@ -114,104 +114,7 @@ namespace BasicGridTest
             }
         }
 
-        //#region DRAG DROP
-        //// Based off http://wpftutorial.net/DragAndDrop.html
-
-        //public bool IsDragging { get; set; }
-
-
-        //private void grd_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    var s = e.OriginalSource as FrameworkElement;
-        //    if (s is TextBlock)
-        //    {
-        //        var parentRow = s.ParentOfType<GridViewRow>();
-
-        //        //only drag selected rows while not edting grid
-        //        if (parentRow != null && parentRow.IsSelected && !this.isGridEditing)
-        //        {
-        //            // determine Drag String
-        //            string drag = "";
-        //            foreach (GridViewRow r in (grd.ChildrenOfType<GridViewRow>()).Where(r => r.IsSelected == true))
-        //            {
-        //                foreach (GridViewCellBase c in r.Cells)
-        //                {
-        //                    if (c.Visibility == System.Windows.Visibility.Visible)
-        //                    {
-        //                        TextBlock t = (TextBlock)c.Content;
-        //                        drag = drag + c.Column.Header.ToString() + "=" + t.Text + ",";
-        //                    }
-        //                }
-        //                drag.TrimEnd(',');
-        //                drag = drag + Environment.NewLine;
-        //            }
-
-        //        }
-
-        //    }
-
-        //}
-
-
       
-
-       
-
-        //private void grd_DragEnter(object sender, System.Windows.DragEventArgs e)
-        //{
-           
-        //    if (!e.Data.GetDataPresent("myFormat") ||sender == e.Source)
-        //    {
-        //        e.Effects = DragDropEffects.None;
-        //    }
-        //}
-
-        //private void grd_Drop(object sender, System.Windows.DragEventArgs e)
-        //{
-        //    if (e.Data.GetDataPresent("myFormat"))
-        //    {
-        //        //MessageBox.Show("DROP");
-        //    }
-        //}
-      
-
-      
-
-      
-        //#endregion
-        //private void grd_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    // Store the mouse position
-        //    startPoint = e.GetPosition(null);
-        //} 
-
-        //private void grd_PreviewMouseMove(object sender, MouseEventArgs e)
-        //{
-        //    if (startPoint != new Point())
-        //    {
-        //        // Get the current mouse position
-        //        Point mousePos = e.GetPosition(null);
-        //        Vector diff = startPoint - mousePos;
-
-        //        if (e.LeftButton == MouseButtonState.Pressed &&
-        //            Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
-        //            Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
-        //        {
-        //            //// Get the dragged ListViewItem
-        //            //ListView listView = sender as ListView;
-        //            //ListViewItem listViewItem =
-        //            //    FindAnchestor<ListViewItem>((DependencyObject)e.OriginalSource);
-
-        //            //// Find the data behind the ListViewItem
-        //            //Contact contact = (Contact)listView.ItemContainerGenerator.
-        //            //    ItemFromContainer(listViewItem);
-
-        //            // Initialize the drag & drop operation
-        //            DataObject dragData = new DataObject("myFormat", new object());
-        //            DragDrop.DoDragDrop(grd, dragData, DragDropEffects.Move);
-        //        }
-        //    }
-        //}
       
     }
 }

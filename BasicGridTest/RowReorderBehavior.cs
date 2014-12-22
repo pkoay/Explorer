@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -131,16 +132,16 @@ namespace BasicGridTest
 
         private void OnDragInitialize(object sender, DragInitializeEventArgs e)
         {
-            var sourceRow = e.OriginalSource as GridViewRow ?? (e.OriginalSource as FrameworkElement).ParentOfType<GridViewRow>();
-            if (sourceRow != null && sourceRow.Name != "PART_RowResizer")
+            RadGridView grd = (e.OriginalSource as FrameworkElement).ParentOfType<RadGridView>();
+            if (grd.SelectedItems!=null)
             {
                 DropIndicationDetails details = new DropIndicationDetails();
-                var item = sourceRow.Item;
-                details.CurrentDraggedItem = item;
+                var itemList = grd.SelectedItems;
+                details.CurrentDraggedItem = itemList;
 
                 IDragPayload dragPayload = DragDropPayloadManager.GeneratePayload(null);
 
-                dragPayload.SetData("DraggedItem", item);
+                dragPayload.SetData("DraggedItem", itemList);
                 dragPayload.SetData("DropDetails", details);
 
                 e.Data = dragPayload;
@@ -152,7 +153,36 @@ namespace BasicGridTest
                 };
                 e.DragVisualOffset = e.RelativeStartPoint;
                 e.AllowedEffects = DragDropEffects.All;
+                
+                //MyViewModel viewModel = (MyViewModel)((sender as RadGridView).DataContext);
+                ////foreach (var item in draggedItems)
+                //viewModel.Insert((tblMain)itemList[0], 0);
+
             }
+
+            ////ORIGINAL
+            //var sourceRow = e.OriginalSource as GridViewRow ?? (e.OriginalSource as FrameworkElement).ParentOfType<GridViewRow>();
+            //if (sourceRow != null && sourceRow.Name != "PART_RowResizer")
+            //{
+            //    DropIndicationDetails details = new DropIndicationDetails();
+            //    var item = sourceRow.Item;
+            //    details.CurrentDraggedItem = item;
+
+            //    IDragPayload dragPayload = DragDropPayloadManager.GeneratePayload(null);
+
+            //    dragPayload.SetData("DraggedItem", item);
+            //    dragPayload.SetData("DropDetails", details);
+
+            //    e.Data = dragPayload;
+
+            //    e.DragVisual = new DragVisual()
+            //    {
+            //        Content = details,
+            //        ContentTemplate = this.AssociatedObject.Resources["DraggedItemTemplate"] as DataTemplate
+            //    };
+            //    e.DragVisualOffset = e.RelativeStartPoint;
+            //    e.AllowedEffects = DragDropEffects.All;
+            //}
         }
 
         private void OnGiveFeedback(object sender, Telerik.Windows.DragDrop.GiveFeedbackEventArgs e)
@@ -163,17 +193,17 @@ namespace BasicGridTest
 
         private void OnDrop(object sender, Telerik.Windows.DragDrop.DragEventArgs e)
         {
-            var draggedItem = DragDropPayloadManager.GetDataFromObject(e.Data, "DraggedItem");
+            ObservableCollection<object> draggedItems = (ObservableCollection<object>)(DragDropPayloadManager.GetDataFromObject(e.Data, "DraggedItem"));
             var details = DragDropPayloadManager.GetDataFromObject(e.Data, "DropDetails") as DropIndicationDetails;
 
-            if (details == null || draggedItem == null)
+            if (details == null || draggedItems == null)
             {
                 return;
             }
 
             if (e.Effects == DragDropEffects.Move || e.Effects == DragDropEffects.All)
             {
-                ((sender as RadGridView).ItemsSource as IList).Remove(draggedItem);
+                //((sender as RadGridView).ItemsSource as IList).Remove(draggedItems);
             }
 
             if (e.Effects != DragDropEffects.None)
@@ -182,7 +212,15 @@ namespace BasicGridTest
                 int index = details.DropIndex < 0 ? 0 : details.DropIndex;
                 index = details.DropIndex > collection.Count - 1 ? collection.Count : index;
 
-                collection.Insert(index, draggedItem);
+                //collection.Insert(index, draggedItem);
+                RadGridView grd = (sender as RadGridView);
+                MyViewModel viewModel = (MyViewModel)((sender as RadGridView).DataContext);
+                //foreach (var item in grd.SelectedItems)
+                ObservableCollection<object> items = grd.SelectedItems;
+
+                viewModel.Move(grd.SelectedItems, index);
+                
+              
             }
         }
 

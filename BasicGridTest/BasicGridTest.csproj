@@ -109,6 +109,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BasicGridDataEntities.cs" />
     <Compile Include="BasicGridDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -133,7 +134,7 @@
       <DependentUpon>BasicGridDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="MyViewModel.cs" />
-    <Compile Include="UIHelpers.cs" />
+    <Compile Include="ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
