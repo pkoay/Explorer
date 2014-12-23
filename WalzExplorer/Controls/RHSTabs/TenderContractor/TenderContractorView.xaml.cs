@@ -32,17 +32,12 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
     /// <summary>
     /// Interaction logic for TenderViewer.xaml
     /// </summary>
-    public partial class TenderContractorView : RHSTabViewBase
+    public partial class TenderContractorView : RHSTabGridViewBase
     {
-        //WalzExplorerViewModel vm = new WalzExplorerViewModel();
-        ////private readonly WalzExplorerEntities context= new WalzExplorerEntities();
-        //private string item;
-        //int id;
-
+        
         public TenderContractorView()
         {
             InitializeComponent();
-
         }
 
 

@@ -1,4 +1,4 @@
-﻿<base:RHSTabViewBase
+﻿<base:RHSTabGridViewBase
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:base="clr-namespace:WalzExplorer.Controls.RHSTabs"
@@ -12,4 +12,4 @@
     <Grid>
         <telerik:RadGridView  x:Name="grd"/>
     </Grid>
-</base:RHSTabViewBase>
+</base:RHSTabGridViewBase>

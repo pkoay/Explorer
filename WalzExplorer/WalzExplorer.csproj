@@ -137,7 +137,8 @@
     <Compile Include="Controls\RHSTabs\ExampleGrid2Tab\ExampleGrid2.xaml.cs">
       <DependentUpon>ExampleGrid2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RHSTabs\RHSTabContentBase.cs" />
+    <Compile Include="Controls\RHSTabs\RHSTabGridViewBase.cs" />
+    <Compile Include="Controls\RHSTabs\RHSTabViewBase.cs" />
     <Compile Include="Controls\LHSTabs\LHSTabViewModel.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabGridViewModelBase.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabViewModel.cs" />
