@@ -56,7 +56,7 @@ namespace WalzExplorer.Controls.RHSTabs.TenderViewerTab
 
         }
 
-        public  override  void Load()
+        public  override  void TabLoad()
         {
             string CmdString = "";
             switch (node.TypeID)

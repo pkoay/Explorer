@@ -11,9 +11,6 @@ namespace WalzExplorer.Controls.RHSTabs
     {
         public WEXNode node { get; set; }
 
-        public abstract void Load();
-        
+        public abstract void TabLoad();
     }
-
-    
 }

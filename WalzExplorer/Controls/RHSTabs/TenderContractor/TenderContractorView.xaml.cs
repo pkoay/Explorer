@@ -27,6 +27,8 @@
 
 using System;
 using System.Windows;
+using System.Windows.Input;
+using WalzExplorer.Controls.Common;
 namespace WalzExplorer.Controls.RHSTabs.TenderContractor
 {
     /// <summary>
@@ -34,19 +36,40 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
     /// </summary>
     public partial class TenderContractorView : RHSTabGridViewBase
     {
-        
+        //private TenderContractorViewModel viewModel;
         public TenderContractorView()
         {
             InitializeComponent();
+            base.SetGrid(grd);
+            
         }
 
 
-        public override void Load()
+        public override void TabLoad()
         {
-            TenderContractorViewModel viewModel = new TenderContractorViewModel(Convert.ToInt32(node.ID));
-            this.DataContext = viewModel;
+            // set grid data
+            viewModel = new TenderContractorViewModel(Convert.ToInt32(node.ID));
+            grd.DataContext = viewModel;
             grd.ItemsSource = viewModel.data;
+            
+            base.TabLoad();
         }
+
+        public override void GridLoaded()
+        {
+  
+            foreach (Telerik.Windows.Controls.GridViewColumn c in grd.Columns)
+            {
+                if (c.UniqueName == "ContractorID") c.Header="ID"; //Change column header 
+                //if (c.UniqueName == "TenderID") c.IsVisible = false;
+            }
+         
+            //Add Combo
+            GridLibrary.ReplaceColumnWithCombo(viewModel.context, grd.Columns["ContractorTypeID"], new string[] { node.ID });
+            base.GridLoaded();
+        }
+
+        
     }
 
 }

@@ -44,7 +44,7 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
         }
 
 
-        public override void Load()
+        public override void TabLoad()
         {
             
            

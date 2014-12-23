@@ -8,10 +8,10 @@ using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.RHSTabs
 {
-   abstract public class RHSTabGridViewModelBase<T>
-        where T: class
+   abstract public class RHSTabGridViewModelBase
+        
     {
-        public ObservableCollection<T> data;
+        public ObservableCollection<object> data;
         public WalzExplorerEntities context;
         
 
@@ -20,19 +20,40 @@ namespace WalzExplorer.Controls.RHSTabs
             this.context = new WalzExplorerEntities();
         }
 
-
-        public T Insert(T NewItem, T BeforeItem)
+        public virtual object SetDefaultValues()
         {
-            int index = this.data.IndexOf(BeforeItem);
-            return Insert(NewItem, index);
+            return null;
         }
+        //public T Insert(T NewItem, T BeforeItem)
+        //{
+        //    int index = this.data.IndexOf(BeforeItem);
+        //    return Insert(NewItem, index);
+        //}
 
-        public T Insert(T NewItem, int index)
+        //public T Insert(T NewItem, int index)
+        //{
+        //    this.data.Insert(index, NewItem);
+        //    context.SaveChanges();
+
+        //    return this.data[index];
+        //}
+
+        public void ManualChange(object changedItem)
         {
-            this.data.Insert(index, NewItem);
+
+            // If item not in database 
+            if (context.Entry(changedItem).State == System.Data.Entity.EntityState.Detached)
+            {
+                //Add item to dataabse 
+                context.Entry(changedItem).State = System.Data.Entity.EntityState.Added;
+            }
+          
             context.SaveChanges();
 
-            return this.data[index];
+            //also update view model with database generated data e.g. Identity auto increment, Modified by, Modified date, etc.
+            // if (context.Entry(m).State == System.Data.Entity.EntityState.Added)
+            context.Entry(changedItem).Reload();
+            
         }
 
     }
