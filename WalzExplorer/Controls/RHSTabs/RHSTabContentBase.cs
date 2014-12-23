@@ -7,11 +7,11 @@ using System.Windows.Controls;
 
 namespace WalzExplorer.Controls.RHSTabs
 {
-    public abstract class RHSTabContentBase: UserControl
+    public abstract class RHSTabViewBase: UserControl
     {
         public WEXNode node { get; set; }
 
-        public abstract void Update();
+        public abstract void Load();
         
     }
 

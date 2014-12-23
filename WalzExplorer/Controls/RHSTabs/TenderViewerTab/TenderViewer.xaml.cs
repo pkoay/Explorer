@@ -24,7 +24,7 @@ namespace WalzExplorer.Controls.RHSTabs.TenderViewerTab
     /// <summary>
     /// Interaction logic for TenderViewer.xaml
     /// </summary>
-    public partial class TenderViewer : RHSTabContentBase
+    public partial class TenderViewer : RHSTabViewBase
     {
         DataSet ds = new DataSet();
 
@@ -56,7 +56,7 @@ namespace WalzExplorer.Controls.RHSTabs.TenderViewerTab
 
         }
 
-        public  override  void Update()
+        public  override  void Load()
         {
             string CmdString = "";
             switch (node.TypeID)

@@ -127,7 +127,7 @@ namespace WalzExplorer
             if (CurrentTab != null)
             {
                 CurrentTab.SetNode(SelectedNode());
-                CurrentTab.Content.Update();
+                CurrentTab.Content.Load();
             }
         }
 

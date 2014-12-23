@@ -88,8 +88,9 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Blend.Interctivity.WPF.v4.0.1.0.3\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -138,7 +139,12 @@
     </Compile>
     <Compile Include="Controls\RHSTabs\RHSTabContentBase.cs" />
     <Compile Include="Controls\LHSTabs\LHSTabViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\RHSTabGridViewModelBase.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\TenderContractor\TenderContractorView.xaml.cs">
+      <DependentUpon>TenderContractorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\TenderContractor\TenderContractorViewModel.cs" />
     <Compile Include="Controls\RHSTabs\TenderViewerTab\TenderViewer.xaml.cs">
       <DependentUpon>TenderViewer.xaml</DependentUpon>
     </Compile>
@@ -310,6 +316,10 @@
       <DependentUpon>WorkExplorerModel.edmx</DependentUpon>
     </Compile>
     <Page Include="Controls\RHSTabs\ExampleGrid2Tab\ExampleGrid2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\TenderContractor\TenderContractorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

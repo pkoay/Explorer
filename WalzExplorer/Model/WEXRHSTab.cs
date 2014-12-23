@@ -12,7 +12,7 @@ namespace WalzExplorer
     {
         public string ID { get; set; }
         public string Header { get; set; }
-        public RHSTabContentBase Content { get; set; }
+        public RHSTabViewBase Content { get; set; }
 
         public void SetNode(WEXNode n)
         {

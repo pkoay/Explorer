@@ -17,30 +17,31 @@ namespace BasicGridTest
 {
     public partial class BASICGRIDDATAEntities : DbContext
     {
+        
 
         public override int SaveChanges()
         {
+           
+                var modifiedEntries = ChangeTracker.Entries()
+                    .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
+                    .ToList();
 
-            var modifiedEntries = ChangeTracker.Entries()
-                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
-                .ToList();
-
-            foreach (var entry in modifiedEntries)
-            {
-                Type type = entry.Entity.GetType();
-                if (type.GetMethod("set_UpdatedBy") != null)
+                foreach (var entry in modifiedEntries)
                 {
-                    PropertyInfo prop = type.GetProperty("UpdatedBy");
-                    prop.SetValue(entry.Entity, WindowsIdentity.GetCurrent().Name, null);
-                }
+                    Type type = entry.Entity.GetType();
+                    if (type.GetMethod("set_UpdatedBy") != null)
+                    {
+                        PropertyInfo prop = type.GetProperty("UpdatedBy");
+                        prop.SetValue(entry.Entity, WindowsIdentity.GetCurrent().Name, null);
+                    }
 
-                if (type.GetMethod("set_UpdatedDate") != null)
-                {
-                    PropertyInfo prop = type.GetProperty("UpdatedDate");
-                    prop.SetValue(entry.Entity, DateTime.Now, null);
+                    if (type.GetMethod("set_UpdatedDate") != null)
+                    {
+                        PropertyInfo prop = type.GetProperty("UpdatedDate");
+                        prop.SetValue(entry.Entity, DateTime.Now, null);
+                    }
                 }
-            }
-
+            
             return base.SaveChanges();
         }
     }

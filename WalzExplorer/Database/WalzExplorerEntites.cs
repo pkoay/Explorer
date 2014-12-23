@@ -120,6 +120,7 @@ namespace WalzExplorer.Database
                     prop.SetValue(entry.Entity, DateTime.Now, null);
                 }
             }
+           
 
             
             return base.SaveChanges();

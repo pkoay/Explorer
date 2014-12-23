@@ -30,7 +30,7 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
     /// <summary>
     /// Interaction logic for TenderViewer.xaml
     /// </summary>
-    public partial class ExampleGrid2 : RHSTabContentBase
+    public partial class ExampleGrid2 : RHSTabViewBase
     {
         WalzExplorerViewModel vm = new WalzExplorerViewModel();
         //private readonly WalzExplorerEntities context= new WalzExplorerEntities();
@@ -44,7 +44,7 @@ namespace WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab
         }
 
 
-        public override void Update()
+        public override void Load()
         {
             
            
