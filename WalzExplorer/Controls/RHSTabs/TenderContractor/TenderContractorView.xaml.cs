@@ -44,13 +44,12 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
             base.SetGrid(grd);
 
             columnNotRequired.Add("RowVersion");
+            columnNotRequired.Add("TenderID");
             columnRename.Add("ContractorID", "ID");
+            columnReadOnly.Add("ContractorID");
             columnReadOnly.Add("SortOrder");
             columnReadOnly.Add("UpdatedBy");
             columnReadOnly.Add("UpdatedDate");
-
-            
-           
         }
 
 
@@ -69,15 +68,6 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
 
         public override void GridLoaded()
         {
-  
-            //foreach (Telerik.Windows.Controls.GridViewColumn c in grd.Columns)
-            //{
-            //    if (c.UniqueName == "ContractorID") c.Header="ID"; //Change column header 
-            //    //if (c.UniqueName == "TenderID") c.IsVisible = false;
-            //}
-         
-            //Add Combo
-            //GridLibrary.ReplaceColumnWithCombo(viewModel.context, grd.Columns["ContractorTypeID"], new string[] { node.ID });
             base.GridLoaded();
         }
 

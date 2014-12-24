@@ -24,10 +24,16 @@ namespace WalzExplorer.Controls.RHSTabs
         {
             return null;
         }
-        public object AddDefault()
+        public object InsertNew()
         {
             object i = DefaultItem();
             data.Insert(0, i );
+            return i;
+        }
+        public object InsertNew(object InsertAbove)
+        {
+            object i = DefaultItem();
+            data.Insert( this.data.IndexOf(InsertAbove), i);
             return i;
         }
         //public object Insert(T NewItem, T BeforeItem)
