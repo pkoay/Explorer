@@ -10,6 +10,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
              x:Class="WalzExplorer.Controls.RHSTabs.TenderContractor.TenderContractorView">
     <Grid>
-        <telerik:RadGridView  x:Name="grd"/>
+        <telerik:RadGridView  x:Name="grd" />
     </Grid>
 </base:RHSTabGridViewBase>

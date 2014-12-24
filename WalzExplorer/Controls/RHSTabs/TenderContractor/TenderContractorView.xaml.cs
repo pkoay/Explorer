@@ -36,40 +36,52 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
     /// </summary>
     public partial class TenderContractorView : RHSTabGridViewBase
     {
+        TenderContractorViewModel vm;
         //private TenderContractorViewModel viewModel;
         public TenderContractorView()
         {
             InitializeComponent();
             base.SetGrid(grd);
+
+            columnNotRequired.Add("RowVersion");
+            columnRename.Add("ContractorID", "ID");
+            columnReadOnly.Add("SortOrder");
+            columnReadOnly.Add("UpdatedBy");
+            columnReadOnly.Add("UpdatedDate");
+
             
+           
         }
 
 
         public override void TabLoad()
         {
             // set grid data
-            viewModel = new TenderContractorViewModel(Convert.ToInt32(node.ID));
+            vm = new TenderContractorViewModel(Convert.ToInt32(node.ID));
+            viewModel = vm;
             grd.DataContext = viewModel;
             grd.ItemsSource = viewModel.data;
-            
+            cmb = GridLibrary.CreateCombo("cmbContractorTypeID", "Contractor Type", vm.cmbContractTypeList(), "Title");
             base.TabLoad();
         }
 
         public override void GridLoaded()
         {
   
-            foreach (Telerik.Windows.Controls.GridViewColumn c in grd.Columns)
-            {
-                if (c.UniqueName == "ContractorID") c.Header="ID"; //Change column header 
-                //if (c.UniqueName == "TenderID") c.IsVisible = false;
-            }
+            //foreach (Telerik.Windows.Controls.GridViewColumn c in grd.Columns)
+            //{
+            //    if (c.UniqueName == "ContractorID") c.Header="ID"; //Change column header 
+            //    //if (c.UniqueName == "TenderID") c.IsVisible = false;
+            //}
          
             //Add Combo
-            GridLibrary.ReplaceColumnWithCombo(viewModel.context, grd.Columns["ContractorTypeID"], new string[] { node.ID });
+            //GridLibrary.ReplaceColumnWithCombo(viewModel.context, grd.Columns["ContractorTypeID"], new string[] { node.ID });
             base.GridLoaded();
         }
 
-        
+      
+
+      
     }
 
 }

@@ -11,6 +11,18 @@ namespace WalzExplorer.Controls.Common
 {
     public static class GridLibrary
     {
+        public static GridViewComboBoxColumn CreateCombo (string uniqueName,string header, List<object> list, string listDisplayColumn)
+        {
+            GridViewComboBoxColumn gcb = new GridViewComboBoxColumn();
+            gcb.IsComboBoxEditable = true;
+            gcb.UniqueName = uniqueName;
+            gcb.ItemsSource = list;
+            gcb.Header = header;
+            gcb.DisplayMemberPath = listDisplayColumn;
+            return gcb;
+        }
+
+
         public static void ReplaceColumnWithCombo(WalzExplorerEntities context, GridViewColumn column, string[] param)
         {
             int id;

@@ -24,12 +24,16 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
            
         }
 
-        public override object SetDefaultValues()
+        public override object DefaultItem()
         {
             tblTender_Contractor i= new tblTender_Contractor ();
             i.TenderID = _tenderId;
-            data.Insert(0,i);
+            //data.Insert(0,i);
             return i;
+        }
+        public List<object> cmbContractTypeList()
+        {
+            return context.tblTender_ContractorType.Where(d => d.TenderID == _tenderId).ToList<object>();
         }
     }
 }

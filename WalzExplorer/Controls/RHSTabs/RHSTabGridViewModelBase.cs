@@ -20,11 +20,17 @@ namespace WalzExplorer.Controls.RHSTabs
             this.context = new WalzExplorerEntities();
         }
 
-        public virtual object SetDefaultValues()
+        public virtual object DefaultItem()
         {
             return null;
         }
-        //public T Insert(T NewItem, T BeforeItem)
+        public object AddDefault()
+        {
+            object i = DefaultItem();
+            data.Insert(0, i );
+            return i;
+        }
+        //public object Insert(T NewItem, T BeforeItem)
         //{
         //    int index = this.data.IndexOf(BeforeItem);
         //    return Insert(NewItem, index);
