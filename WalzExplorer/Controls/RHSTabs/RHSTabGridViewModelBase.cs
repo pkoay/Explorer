@@ -58,7 +58,7 @@ namespace WalzExplorer.Controls.RHSTabs
 
             //also update view model with database generated data e.g. Identity auto increment, Modified by, Modified date, etc.
             // if (context.Entry(m).State == System.Data.Entity.EntityState.Added)
-            context.Entry(changedItem).Reload();
+            //context.Entry(changedItem).Reload();
             
         }
 

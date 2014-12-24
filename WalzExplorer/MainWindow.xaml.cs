@@ -90,6 +90,11 @@ namespace WalzExplorer
             //Search();
         }
 
+        private void btnFeedback_Click(object sender, RoutedEventArgs e)
+        {
+            //Search();
+        }
+
         private void tcLHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //If no treecontrol exits create it
