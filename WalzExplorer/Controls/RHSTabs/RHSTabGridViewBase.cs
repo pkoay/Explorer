@@ -19,7 +19,8 @@ using System.Drawing;
 using System.Windows.Media;
 using System.Dynamic;
 using WalzExplorer.Common;
-
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace WalzExplorer.Controls.RHSTabs
 {
@@ -70,18 +71,40 @@ namespace WalzExplorer.Controls.RHSTabs
             //g.MouseMove += new MouseEventHandler(g_MouseMove);
             g.ContextMenuOpening += new ContextMenuEventHandler(g_ContextMenuOpening);
 
+            //System.Windows.Controls.Image c = new System.Windows.Controls.Image
+            //{
+            //    Source = new BitmapImage(new Uri("/WalzExplorer;component/Resources/bmp/cut.bmp", UriKind.RelativeOrAbsolute))
+            //};
+            //System.Windows.Shapes.Rectangle r = new System.Windows.Shapes.Rectangle();
+            //r.Height = 16;
+            //r.Width = 16;
+            //r.Stretch = Stretch.Fill;
+            
+            //ResourceDictionary rdIcon = new ResourceDictionary();
+            //rdIcon.Source = new Uri("/WalzExplorer;component/Resources/Icons.xaml", UriKind.RelativeOrAbsolute);
+            //Canvas cc= rdIcon["appbar_adobe_acrobat"] as Canvas;
+            //VisualBrush x = new VisualBrush(cc);
+            //x.Stretch = Stretch.Fill;
+            ////r.OpacityMask = x;
+            //r.Fill = x;
+            //cc.ClipToBounds = true;
+            //cc.SnapsToDevicePixels = true;
+
+            //c.RenderSize = new UIElement.RenderSize;
+
             // add context menu
             ContextMenu cm = new ContextMenu();
             cm.FontSize = 12;
-            cm.Items.Add(new MenuItem() { Name = "miCopy", Header = "Copy" });
-            cm.Items.Add(new MenuItem() { Name = "miPaste", Header = "Paste <over selected rows>" });
+            cm.Items.Add(new MenuItem() { Name = "miCut", Header = "Cut", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_scissor", 16, 16) });
+            cm.Items.Add(new MenuItem() { Name = "miCopy", Header = "Copy", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_copy", 16, 16) });
+            cm.Items.Add(new MenuItem() { Name = "miPaste", Header = "Paste <over selected rows>", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_clipboard_paste", 16, 16) });
             cm.Items.Add(new Separator());
-            cm.Items.Add(new MenuItem() {Name="miInsert", Header="Insert"});
+            cm.Items.Add(new MenuItem() { Name = "miInsert", Header = "Insert <New line>", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_cell_insert_above", 16, 16) });
             cm.Items.Add(new MenuItem() {Name="miInsertPaste", Header="Insert <Paste>"});
             cm.Items.Add(new Separator());
-            cm.Items.Add(new MenuItem() {Name="miExportExcel", Header="Export to Excel"});
-            cm.Items.Add(new Separator());
-            MenuItem x= new MenuItem();
+            cm.Items.Add(new MenuItem() { Name = "miExportExcel", Header = "Export to Excel", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
+            
+            
             foreach (object o in cm.Items)
             {
                 if (!(o is  Separator))
@@ -123,6 +146,9 @@ namespace WalzExplorer.Controls.RHSTabs
             MenuItem mi = (MenuItem)sender;
             switch (mi.Name)
             {
+                case "miCut":
+                    ApplicationCommands.Cut.Execute(this, null);
+                    break;
                 case "miCopy":
                     ApplicationCommands.Copy.Execute(this, null);
                     break;

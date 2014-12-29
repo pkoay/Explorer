@@ -133,6 +133,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\GraphicsLibrary.cs" />
     <Compile Include="Controls\Common\GridLibrary.cs" />
     <Compile Include="Common\ObjectLibrary.cs" />
     <Compile Include="Controls\RHSTabs\ExampleGrid2Tab\ExampleGrid2.xaml.cs">
@@ -389,6 +390,7 @@
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Database\WalzExplorerDB.Bak" />
