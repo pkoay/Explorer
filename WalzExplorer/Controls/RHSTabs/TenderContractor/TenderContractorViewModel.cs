@@ -21,14 +21,14 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
                 .Where(c=>c.TenderID==tenderId)
                 .OrderBy(m => m.SortOrder)
                 );
-           
+            columnDefault.Clear();
+            columnDefault.Add("TenderID", tenderId);
         }
 
         public override object DefaultItem()
         {
             tblTender_Contractor i= new tblTender_Contractor ();
             i.TenderID = _tenderId;
-            //data.Insert(0,i);
             return i;
         }
         public List<object> cmbContractTypeList()

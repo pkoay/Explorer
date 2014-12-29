@@ -63,8 +63,7 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
             grd.ItemsSource = viewModel.data;
             columnCombo.Clear();
             columnCombo.Add("ContractorTypeID", GridLibrary.CreateCombo("cmbContractorTypeID", "Contractor Type", vm.cmbContractTypeList(), "Title"));
-            columnDefault.Clear();
-            columnDefault.Add("TenderID", Convert.ToInt32(node.ID));
+
 
             base.TabLoad();
 

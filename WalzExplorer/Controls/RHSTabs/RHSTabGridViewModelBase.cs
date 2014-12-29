@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using WalzExplorer.Common;
 using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.RHSTabs
@@ -14,6 +15,7 @@ namespace WalzExplorer.Controls.RHSTabs
     {
         public ObservableCollection<object> data;
         public WalzExplorerEntities context;
+        protected Dictionary<string, object> columnDefault = new Dictionary<string, object>();
         
 
         public RHSTabGridViewModelBase()
@@ -61,6 +63,42 @@ namespace WalzExplorer.Controls.RHSTabs
            {
                this.data.Move(this.data.IndexOf(i), this.data.IndexOf(MoveAbove));
            }
+        }
+        public void SavePaste(List<object> items)
+        {
+            foreach (object item in items)
+            {
+                // If item not in database 
+                if (context.Entry(item).State == System.Data.Entity.EntityState.Detached)
+                {
+                    //Add item to dataabse 
+                    context.Entry(item).State = System.Data.Entity.EntityState.Added;
+                }
+            }
+            context.SaveChanges();
+
+            //also update view model with database generated data e.g. Identity auto increment, Modified by, Modified date, etc.
+            // if (context.Entry(m).State == System.Data.Entity.EntityState.Added)
+            //context.Entry(changedItem).Reload();
+
+        }
+        //sets the defaults for an objects (defaults as specified in dictionary columnDefault
+        public void SetDefaultsForPaste(object o)
+        {
+
+            foreach (KeyValuePair<string, object> def in columnDefault.ToList())
+            {
+                string DefaultKey = def.Key.ToString();
+                object DefaultValue = def.Value;
+               
+                    //check to see if the property value in the object is the same as the property value  in a new instance
+                    object ni = ObjectLibrary.CreateNewInstanace(o);
+
+                    //this is dodgy..
+                    if (ObjectLibrary.GetValue(o, DefaultKey).ToString() == ObjectLibrary.GetValue(ni, DefaultKey).ToString())
+                        ObjectLibrary.SetValue(o, DefaultKey, DefaultValue);    //change to default value
+               
+            }
         }
         //public object Insert(T NewItem, T BeforeItem)
         //{

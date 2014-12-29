@@ -29,7 +29,7 @@ namespace WalzExplorer.Controls.RHSTabs
         protected RHSTabGridViewModelBase viewModel;
         bool isGridEditing = false;
         protected Dictionary<string, string> columnRename = new Dictionary<string, string>();
-        protected Dictionary<string, object> columnDefault = new Dictionary<string, object>();
+        
         protected Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
         protected List<string> columnNotRequired = new List<string>();
         protected List<string> columnReadOnly = new List<string>();
@@ -160,28 +160,32 @@ namespace WalzExplorer.Controls.RHSTabs
                     int rowsInserted = g.Items.Count - before;
                     g.ClipboardPasteMode = GridViewClipboardPasteMode.None;
 
+                    //put items in a list
+                     List<object> items = new List<object>();
+                        for (int i = before; i < g.Items.Count; i++)
+                        {
+                            items.Add(g.Items[i]);
+                        }
+
                     //set default values
                     // note: the paste creates the objects first and then this overwrites the "default" columns with default values
                     // this is the expected result for things like tenderID in the TenderContractorsTab
                     //this is why the SetDefaults function checks to see if the value is different from a new instance, if the values are different 
                     // (i.e. value has been manually changed) then the value will not be overwritten by the 'DEFAULT'
                    
-                    for (int i = before; i < g.Items.Count; i++)
+                    foreach(object item in items)
                     {
-                        SetDefaults(g.Items[i],true); 
+                        viewModel.SetDefaultsForPaste(item); 
                     }
                 
                     //Move new inserted rows to insert location (i.e. from context menu click)
                     if (ContextMenuRow != null)
                     {
-                        List<object> items = new List<object>();
-                        for (int i = before; i < g.Items.Count; i++)
-                        {
-                            items.Add(g.Items[i]);
-                        }
+                       
                         items.Reverse();
                         viewModel.Move(ContextMenuRow.Item, items);
                     }
+                    viewModel.SavePaste(items);
 
             //        char[] rowSplitter = { '\r', '\n' };
             //char[] columnSplitter = { '\t' };
@@ -259,26 +263,26 @@ namespace WalzExplorer.Controls.RHSTabs
         {
 
         }
-        private void SetDefaults(object o,bool checkHasChanged=false)
-        {
+        //private void SetDefaults(object o,bool checkHasChanged=false)
+        //{
            
-            foreach (KeyValuePair<string, object> def in columnDefault.ToList())
-            {
-                string DefaultKey = def.Key.ToString();
-                object DefaultValue = def.Value;
-                if (checkHasChanged)
-                {
-                    //check to see if the property value in the object is the same as the property value  in a new instance
-                    object ni = ObjectLibrary.CreateNewInstanace(o);
+        //    foreach (KeyValuePair<string, object> def in columnDefault.ToList())
+        //    {
+        //        string DefaultKey = def.Key.ToString();
+        //        object DefaultValue = def.Value;
+        //        if (checkHasChanged)
+        //        {
+        //            //check to see if the property value in the object is the same as the property value  in a new instance
+        //            object ni = ObjectLibrary.CreateNewInstanace(o);
                     
-                    //this is dodgy..
-                    if (ObjectLibrary.GetValue(o,DefaultKey).ToString()==ObjectLibrary.GetValue(ni,DefaultKey).ToString())
-                        ObjectLibrary.SetValue(o, DefaultKey, DefaultValue);    //change to default value
-                }
-                 else
-                ObjectLibrary.SetValue(o, DefaultKey, DefaultValue); // change to default value
-            }
-        }
+        //            //this is dodgy..
+        //            if (ObjectLibrary.GetValue(o,DefaultKey).ToString()==ObjectLibrary.GetValue(ni,DefaultKey).ToString())
+        //                ObjectLibrary.SetValue(o, DefaultKey, DefaultValue);    //change to default value
+        //        }
+        //         else
+        //        ObjectLibrary.SetValue(o, DefaultKey, DefaultValue); // change to default value
+        //    }
+        //}
 
         public void g_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
         {
