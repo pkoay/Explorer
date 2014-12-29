@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Media;
 using System.Dynamic;
+using WalzExplorer.Common;
 
 
 namespace WalzExplorer.Controls.RHSTabs
@@ -28,6 +29,7 @@ namespace WalzExplorer.Controls.RHSTabs
         protected RHSTabGridViewModelBase viewModel;
         bool isGridEditing = false;
         protected Dictionary<string, string> columnRename = new Dictionary<string, string>();
+        protected Dictionary<string, object> columnDefault = new Dictionary<string, object>();
         protected Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
         protected List<string> columnNotRequired = new List<string>();
         protected List<string> columnReadOnly = new List<string>();
@@ -63,7 +65,8 @@ namespace WalzExplorer.Controls.RHSTabs
             g.RowEditEnded += new EventHandler<GridViewRowEditEndedEventArgs>(g_RowEditEnded);
             g.AddingNewDataItem += new EventHandler<GridViewAddingNewEventArgs> (g_AddingNewDataItem);
             g.AutoGeneratingColumn += new EventHandler<GridViewAutoGeneratingColumnEventArgs>(g_AutoGeneratingColumn);
-            g.Pasting += new EventHandler<GridViewClipboardEventArgs>(g_Pasting);
+            //g.Pasting += new EventHandler<GridViewClipboardEventArgs>(g_Pasting);
+            //g.Pasted += new EventHandler<RadRoutedEventArgs>(g_Pasted);
             //g.MouseMove += new MouseEventHandler(g_MouseMove);
             g.ContextMenuOpening += new ContextMenuEventHandler(g_ContextMenuOpening);
 
@@ -99,12 +102,14 @@ namespace WalzExplorer.Controls.RHSTabs
                              //  local:RowReorderBehavior.IsEnabled="True">
 
         }
-        public void g_Pasting(object sender, GridViewClipboardEventArgs e)
-        {
-            // change paste to apply default object
+        
+        //public void g_Pasting(object sender, GridViewClipboardEventArgs e)
+        //{
+            
+        //    // change paste to apply default object
 
 
-        }
+        //}
         public void g_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             //store the row the contextmenu was open over
@@ -146,13 +151,26 @@ namespace WalzExplorer.Controls.RHSTabs
                     break;
 
                 case "miInsertPaste":
+                    //Note: paste does not invoke g_AddingNewDataItem so has to be treated seperatly
                    
+                    //insert rows using standard telerik methodology
                     g.ClipboardPasteMode = GridViewClipboardPasteMode.InsertNewRows;
                     int before = g.Items.Count;
                     ApplicationCommands.Paste.Execute(this, null);
                     int rowsInserted = g.Items.Count - before;
                     g.ClipboardPasteMode = GridViewClipboardPasteMode.None;
 
+                    //set default values
+                    // note: the paste creates the objects first and then this overwrites the "default" columns with default values
+                    // this is the expected result for things like tenderID in the TenderContractorsTab
+                    //this is why the SetDefaults function checks to see if the value is different from a new instance, if the values are different 
+                    // (i.e. value has been manually changed) then the value will not be overwritten by the 'DEFAULT'
+                   
+                    for (int i = before; i < g.Items.Count; i++)
+                    {
+                        SetDefaults(g.Items[i],true); 
+                    }
+                
                     //Move new inserted rows to insert location (i.e. from context menu click)
                     if (ContextMenuRow != null)
                     {
@@ -161,6 +179,7 @@ namespace WalzExplorer.Controls.RHSTabs
                         {
                             items.Add(g.Items[i]);
                         }
+                        items.Reverse();
                         viewModel.Move(ContextMenuRow.Item, items);
                     }
 
@@ -240,6 +259,27 @@ namespace WalzExplorer.Controls.RHSTabs
         {
 
         }
+        private void SetDefaults(object o,bool checkHasChanged=false)
+        {
+           
+            foreach (KeyValuePair<string, object> def in columnDefault.ToList())
+            {
+                string DefaultKey = def.Key.ToString();
+                object DefaultValue = def.Value;
+                if (checkHasChanged)
+                {
+                    //check to see if the property value in the object is the same as the property value  in a new instance
+                    object ni = ObjectLibrary.CreateNewInstanace(o);
+                    
+                    //this is dodgy..
+                    if (ObjectLibrary.GetValue(o,DefaultKey).ToString()==ObjectLibrary.GetValue(ni,DefaultKey).ToString())
+                        ObjectLibrary.SetValue(o, DefaultKey, DefaultValue);    //change to default value
+                }
+                 else
+                ObjectLibrary.SetValue(o, DefaultKey, DefaultValue); // change to default value
+            }
+        }
+
         public void g_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
         {
             Telerik.Windows.Controls.GridViewColumn c = e.Column;

@@ -134,6 +134,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\Common\GridLibrary.cs" />
+    <Compile Include="Common\ObjectLibrary.cs" />
     <Compile Include="Controls\RHSTabs\ExampleGrid2Tab\ExampleGrid2.xaml.cs">
       <DependentUpon>ExampleGrid2.xaml</DependentUpon>
     </Compile>

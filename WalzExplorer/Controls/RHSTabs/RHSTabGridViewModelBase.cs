@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using WalzExplorer.Database;
@@ -24,11 +25,7 @@ namespace WalzExplorer.Controls.RHSTabs
         {
             return null;
         }
-       public object Setvalue(object item,int index, object value)
-       {
-           i = data[data.IndexOf(item)];
-
-       }
+       
         public object InsertNew()
         {
             object i = DefaultItem();

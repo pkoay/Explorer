@@ -50,6 +50,7 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
             columnReadOnly.Add("SortOrder");
             columnReadOnly.Add("UpdatedBy");
             columnReadOnly.Add("UpdatedDate");
+           
         }
 
 
@@ -62,8 +63,11 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
             grd.ItemsSource = viewModel.data;
             columnCombo.Clear();
             columnCombo.Add("ContractorTypeID", GridLibrary.CreateCombo("cmbContractorTypeID", "Contractor Type", vm.cmbContractTypeList(), "Title"));
-            
+            columnDefault.Clear();
+            columnDefault.Add("TenderID", Convert.ToInt32(node.ID));
+
             base.TabLoad();
+
         }
 
         public override void GridLoaded()
