@@ -137,13 +137,11 @@
     <Compile Include="Common\GraphicsLibrary.cs" />
     <Compile Include="Common\GridLibrary.cs" />
     <Compile Include="Common\ObjectLibrary.cs" />
-    <Compile Include="Controls\RHSTabs\RHSTabGridDropIndicatorDetails.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabGridViewBase.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabViewBase.cs" />
     <Compile Include="Controls\LHSTabs\LHSTabViewModel.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabGridViewModelBase.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\RHSTabGridRowReorderBehavior.cs" />
     <Compile Include="Controls\RHSTabs\TenderContractor\TenderContractorView.xaml.cs">
       <DependentUpon>TenderContractorView.xaml</DependentUpon>
     </Compile>

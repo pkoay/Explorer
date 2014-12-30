@@ -27,16 +27,16 @@ namespace WalzExplorer.Controls.RHSTabs
     {
         private RadGridView g;  // Standard grid
         protected RHSTabGridViewModelBase viewModel;
-        //bool isGridEditing = false;
         protected Dictionary<string, string> columnRename = new Dictionary<string, string>();
-        
         protected Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
         protected List<string> columnNotRequired = new List<string>();
         protected List<string> columnReadOnly = new List<string>();
         protected GridViewRow ContextMenuRow;
+
+        //DragDrop
+        const string GridDragData = "GridDragData";
+        System.Windows.Point startPoint;
         
-        
-        //protected GridViewComboBoxColumn cmb;
         public RHSTabGridViewBase()
         { 
         }
@@ -53,7 +53,6 @@ namespace WalzExplorer.Controls.RHSTabs
             g.GroupRenderMode= GroupRenderMode.Flat;
             g.SelectionMode = System.Windows.Controls.SelectionMode.Extended;
             g.SelectionUnit= GridViewSelectionUnit.FullRow;
-            g.AllowDrop= true;
             g.AlternationCount=3;
             g.CanUserFreezeColumns=true;
             g.GridLinesVisibility= GridLinesVisibility.None;
@@ -66,9 +65,14 @@ namespace WalzExplorer.Controls.RHSTabs
             g.AutoGeneratingColumn += new EventHandler<GridViewAutoGeneratingColumnEventArgs>(g_AutoGeneratingColumn);
             g.ContextMenuOpening += new ContextMenuEventHandler(g_ContextMenuOpening);
             g.Deleted += new EventHandler<GridViewDeletedEventArgs>(g_Deleted);
-
-
-
+           
+            //Drag Drop
+            g.AllowDrop = true;
+            g.PreviewMouseLeftButtonDown +=g_PreviewMouseLeftButtonDown;
+            g.PreviewMouseMove+=g_PreviewMouseMove;
+            g.Drop +=g_Drop;            
+            g.DragEnter +=g_DragEnter;                
+                            
             // add context menu
             ContextMenu cm = new ContextMenu();
             cm.FontSize = 12;
@@ -93,16 +97,79 @@ namespace WalzExplorer.Controls.RHSTabs
           
             g.ContextMenu = cm;
 
-            //add drag row style
-            //RowStyle="{StaticResource DraggedRowStyle}"
-                           
-                             //RowEditEnded="grd_RowEditEnded" BeginningEdit="grd_BeginningEdit" CellEditEnded="grd_CellEditEnded"
-                             //DataLoaded="grd_DataLoaded"
-                             
-                             //  local:RowReorderBehavior.IsEnabled="True">
-
         }
 
+        //Drag Drop
+        void g_DragEnter(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(GridDragData))
+            {
+                e.Effects = DragDropEffects.Move;
+            }
+        }
+
+        void g_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(GridDragData))
+            {
+                
+                GridViewRow row = FindAnchestor<GridViewRow>((DependencyObject)e.OriginalSource);
+                if (row != null)
+                {
+                    if (!g.SelectedItems.Contains(row.Item))
+                    {
+                        List<object> moveItems = new List<object>();
+                        // note can't uses g.SelectedItems as it is in ithe order of the selection. not grid order
+                        foreach (object item in g.Items)
+                        {
+                            if (g.SelectedItems.Contains(item)) moveItems.Add(item);
+                        }
+                        viewModel.MoveItemsToItem(moveItems, row.Item);
+                        g.Rebind(); //redisplay new values such as ID, sort order
+                    }
+                    else
+                        MessageBox.Show("Can't drop rows on selected rows to move", "Drag Drop", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        void g_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            // Get the current mouse position
+            System.Windows.Point mousePos = e.GetPosition(null);
+            Vector diff = startPoint - mousePos;
+
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance) && g.SelectedItem!=null)
+            {
+                // Initialize the drag & drop operation
+                DataObject dragData = new DataObject(GridDragData, g.SelectedItem);
+                DragDrop.DoDragDrop(g, dragData, DragDropEffects.Move);
+            } 
+        }
+
+        void g_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // Store the mouse position
+            startPoint = e.GetPosition(null);
+        }
+
+        // Helper to search up the VisualTree
+        private static T FindAnchestor<T>(DependencyObject current)
+            where T : DependencyObject
+        {
+            do
+            {
+                if (current is T)
+                {
+                    return (T)current;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            }
+            while (current != null);
+            return null;
+        }
 
         public void g_Deleted(object sender, GridViewDeletedEventArgs e)
         {
@@ -213,8 +280,6 @@ namespace WalzExplorer.Controls.RHSTabs
             }
         }
        
-        
-
         public void g_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
         {
             Telerik.Windows.Controls.GridViewColumn c = e.Column;

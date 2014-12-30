@@ -45,26 +45,11 @@ namespace WalzExplorer.Controls.RHSTabs
             data.Insert( this.data.IndexOf(InsertAbove), i);
             return i;
         }
-        //public object InsertNewBelow(object InsertBelow)
-        //{
-        //    object i = DefaultItem();
-
-        //    if (this.data.IndexOf(InsertBelow) < this.data.Count - 1)
-        //    {
-        //        //not last entry
-        //        data.Insert(this.data.IndexOf(InsertBelow) + 1, i);
-        //    }
-        //    else
-        //    {
-        //        //Last entry add (not insert)
-        //        data.Add(i);
-        //    }
-        //    return i;
-        //}
+      
       
        public void MoveItemsToIndex( List<object> items,int index)
        {
-           items.Reverse();
+           if (this.data.IndexOf(items[0])>index) items.Reverse();
            foreach(object i in items)
            {
                this.data.Move(this.data.IndexOf(i), index);
