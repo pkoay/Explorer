@@ -62,35 +62,13 @@ namespace WalzExplorer.Controls.RHSTabs
             g.ClipboardCopyMode = GridViewClipboardCopyMode.Cells;
 
             //Events
-            g.Loaded += new RoutedEventHandler(g_Loaded);
             g.RowEditEnded += new EventHandler<GridViewRowEditEndedEventArgs>(g_RowEditEnded);
             g.AddingNewDataItem += new EventHandler<GridViewAddingNewEventArgs> (g_AddingNewDataItem);
             g.AutoGeneratingColumn += new EventHandler<GridViewAutoGeneratingColumnEventArgs>(g_AutoGeneratingColumn);
-            //g.Pasting += new EventHandler<GridViewClipboardEventArgs>(g_Pasting);
-            //g.Pasted += new EventHandler<RadRoutedEventArgs>(g_Pasted);
-            //g.MouseMove += new MouseEventHandler(g_MouseMove);
             g.ContextMenuOpening += new ContextMenuEventHandler(g_ContextMenuOpening);
+            g.Deleted += new EventHandler<GridViewDeletedEventArgs>(g_Deleted);
 
-            //System.Windows.Controls.Image c = new System.Windows.Controls.Image
-            //{
-            //    Source = new BitmapImage(new Uri("/WalzExplorer;component/Resources/bmp/cut.bmp", UriKind.RelativeOrAbsolute))
-            //};
-            //System.Windows.Shapes.Rectangle r = new System.Windows.Shapes.Rectangle();
-            //r.Height = 16;
-            //r.Width = 16;
-            //r.Stretch = Stretch.Fill;
-            
-            //ResourceDictionary rdIcon = new ResourceDictionary();
-            //rdIcon.Source = new Uri("/WalzExplorer;component/Resources/Icons.xaml", UriKind.RelativeOrAbsolute);
-            //Canvas cc= rdIcon["appbar_adobe_acrobat"] as Canvas;
-            //VisualBrush x = new VisualBrush(cc);
-            //x.Stretch = Stretch.Fill;
-            ////r.OpacityMask = x;
-            //r.Fill = x;
-            //cc.ClipToBounds = true;
-            //cc.SnapsToDevicePixels = true;
 
-            //c.RenderSize = new UIElement.RenderSize;
 
             // add context menu
             ContextMenu cm = new ContextMenu();
@@ -125,22 +103,22 @@ namespace WalzExplorer.Controls.RHSTabs
                              //  local:RowReorderBehavior.IsEnabled="True">
 
         }
+
+
+        public void g_Deleted(object sender, GridViewDeletedEventArgs e)
+        {
+            viewModel.Delete(e.Items.ToList());
+
+        }
         
-        //public void g_Pasting(object sender, GridViewClipboardEventArgs e)
-        //{
-            
-        //    // change paste to apply default object
-
-
-        //}
         public void g_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            //store the row the contextmenu was open over
+            //store the grid row the contextmenu was open over
             var element = e.OriginalSource;
             ContextMenuRow = (element as FrameworkElement).ParentOfType<GridViewRow>();
         }
        
-        
+        // context menu actions
         public void cm_ItemClick(object sender, RoutedEventArgs e)
         {
             MenuItem mi = (MenuItem)sender;
@@ -160,6 +138,7 @@ namespace WalzExplorer.Controls.RHSTabs
                 case "miInsert":
                     if (ContextMenuRow!= null)
                     {
+                        //insert where contextmenu was opened (as was over row)
                         g.CurrentItem = viewModel.InsertNew(ContextMenuRow.Item);
                         g.BeginEdit();
                     }
@@ -169,11 +148,7 @@ namespace WalzExplorer.Controls.RHSTabs
                         g.CurrentItem = viewModel.InsertNew();
                         g.BeginEdit();
                     }
-                    //// insert in the model and the "RowEditEnded" handles write to database
-                    //m = viewModel.Insert(m, (tblMain)grd.SelectedItem);
-                    //grd.CurrentItem = m;
-                    //grd.BeginEdit();
-
+                    
                     break;
 
                 case "miInsertPaste":
@@ -212,56 +187,8 @@ namespace WalzExplorer.Controls.RHSTabs
                         viewModel.Move(ContextMenuRow.Item, items);
                     }
                     viewModel.SavePaste(items);
-
-            //        char[] rowSplitter = { '\r', '\n' };
-            //char[] columnSplitter = { '\t' };
-            //// Get the text from clipboard
-            //IDataObject dataInClipboard = Clipboard.GetDataObject();
-            //string stringInClipboard = (string)dataInClipboard.GetData(DataFormats.Text);
-
-            //// Split it into lines
-            //string[] rowsInClipboard = stringInClipboard.Split(rowSplitter, StringSplitOptions.RemoveEmptyEntries);
-
-            //     g.Items[2].
-
-
-
-
-
-            //object currentitem=null;
-            //// Loop through the lines, split them into cells and place the values in the corresponding cell.
-            //foreach (string ClipboardRow in rowsInClipboard)
-            //{
-            //    //create a new row 
-            //    if (currentitem==null)
-            //        currentitem= viewModel.InsertNew(ContextMenuRow.Item);
-            //    else
-            //        currentitem= viewModel.InsertNewBelow(currentitem);
-            //   g.CurrentItem=currentitem;
-            //   GridViewRowItem GridRow = g.CurrentCell.ParentRow;
-            //    GridViewCell c =g.CurrentCell;
-                
-            //   DynamicObject d = GridRow.Cells[1].SetCurrentValue 
-
-            //    string[] valuesInRow = row.Split(columnSplitter);
-            //    foreach (GridViewCell c in g.CurrentCell.ParentRow.Cells)
-            //    {
-            //        c.ParentRow.Cells[1].Value = valuesInRow[1];
-            //    }
-            //    // Cycle through cell values
-            //    foreach (string value in valuesInRow)
-            //    {
-                    
-            //        g.CurrentCell.Value=value;
-                    
-            //    }
-                   
-            //}
-           
-           
-                   
-
                     break;
+
                 case "miExportExcel":
                     string fileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".xml";
                     using (Stream stream = File.Create(fileName))
@@ -278,37 +205,14 @@ namespace WalzExplorer.Controls.RHSTabs
                     Process excel = new Process();
                     excel.StartInfo.FileName = fileName;
                     excel.Start();
-
                     break;
                 default:
                     MessageBox.Show(mi.Header.ToString(), "Configuration menu", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;
             }
         }
-        public virtual void GridLoaded()
-        {
-
-        }
-        //private void SetDefaults(object o,bool checkHasChanged=false)
-        //{
-           
-        //    foreach (KeyValuePair<string, object> def in columnDefault.ToList())
-        //    {
-        //        string DefaultKey = def.Key.ToString();
-        //        object DefaultValue = def.Value;
-        //        if (checkHasChanged)
-        //        {
-        //            //check to see if the property value in the object is the same as the property value  in a new instance
-        //            object ni = ObjectLibrary.CreateNewInstanace(o);
-                    
-        //            //this is dodgy..
-        //            if (ObjectLibrary.GetValue(o,DefaultKey).ToString()==ObjectLibrary.GetValue(ni,DefaultKey).ToString())
-        //                ObjectLibrary.SetValue(o, DefaultKey, DefaultValue);    //change to default value
-        //        }
-        //         else
-        //        ObjectLibrary.SetValue(o, DefaultKey, DefaultValue); // change to default value
-        //    }
-        //}
+       
+        
 
         public void g_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
         {
@@ -355,14 +259,10 @@ namespace WalzExplorer.Controls.RHSTabs
             }
            
         }
-        public void g_Loaded (object sender, RoutedEventArgs e)
-        {
-      
-            GridLoaded();
-        }
+       
         public override void TabLoad()
         {
-            
+            // this is required to be overridden by each RHSTabView
         }
 
         private void g_AddingNewDataItem (object sender, GridViewAddingNewEventArgs e)

@@ -32,12 +32,15 @@ namespace WalzExplorer.Controls.RHSTabs
         {
             object i = DefaultItem();
             data.Insert(0, i );
+            SaveAndUpdateSortOrder();
             return i;
+            
         }
         public object InsertNew(object InsertAbove)
         {
             object i = DefaultItem();
             data.Insert( this.data.IndexOf(InsertAbove), i);
+            SaveAndUpdateSortOrder();
             return i;
         }
         public object InsertNewBelow(object InsertBelow)
@@ -54,6 +57,7 @@ namespace WalzExplorer.Controls.RHSTabs
                 //Last entry add (not insert)
                 data.Add(i);
             }
+            SaveAndUpdateSortOrder();
             return i;
         }
         public void Move(object MoveAbove, List<object> items)
@@ -63,7 +67,18 @@ namespace WalzExplorer.Controls.RHSTabs
            {
                this.data.Move(this.data.IndexOf(i), this.data.IndexOf(MoveAbove));
            }
+           SaveAndUpdateSortOrder();
         }
+
+        public void Delete(List<object> items)
+        {
+            foreach (object item in items)
+            {
+                context.Entry(item).State = System.Data.Entity.EntityState.Deleted;
+            }
+            SaveAndUpdateSortOrder();
+        }
+
         public void SavePaste(List<object> items)
         {
             foreach (object item in items)
@@ -75,13 +90,10 @@ namespace WalzExplorer.Controls.RHSTabs
                     context.Entry(item).State = System.Data.Entity.EntityState.Added;
                 }
             }
-            context.SaveChanges();
-
-            //also update view model with database generated data e.g. Identity auto increment, Modified by, Modified date, etc.
-            // if (context.Entry(m).State == System.Data.Entity.EntityState.Added)
-            //context.Entry(changedItem).Reload();
+            SaveAndUpdateSortOrder();
 
         }
+
         //sets the defaults for an objects (defaults as specified in dictionary columnDefault
         public void SetDefaultsForPaste(object o)
         {
@@ -100,19 +112,18 @@ namespace WalzExplorer.Controls.RHSTabs
                
             }
         }
-        //public object Insert(T NewItem, T BeforeItem)
-        //{
-        //    int index = this.data.IndexOf(BeforeItem);
-        //    return Insert(NewItem, index);
-        //}
+       
 
-        //public T Insert(T NewItem, int index)
-        //{
-        //    this.data.Insert(index, NewItem);
-        //    context.SaveChanges();
-
-        //    return this.data[index];
-        //}
+        private void SaveAndUpdateSortOrder()
+        {
+            int i = 0;
+            foreach (object item in this.data)
+            {
+                ObjectLibrary.SetValue(item, "SortOrder", i);
+                i++;
+            }   
+            context.SaveChanges();
+        }
 
         public void ManualChange(object changedItem)
         {
@@ -123,12 +134,8 @@ namespace WalzExplorer.Controls.RHSTabs
                 //Add item to dataabse 
                 context.Entry(changedItem).State = System.Data.Entity.EntityState.Added;
             }
-          
-            context.SaveChanges();
-
-            //also update view model with database generated data e.g. Identity auto increment, Modified by, Modified date, etc.
-            // if (context.Entry(m).State == System.Data.Entity.EntityState.Added)
-            //context.Entry(changedItem).Reload();
+            SaveAndUpdateSortOrder();
+            
             
         }
 

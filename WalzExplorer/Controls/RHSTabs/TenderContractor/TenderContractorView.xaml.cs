@@ -69,13 +69,6 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
 
         }
 
-        public override void GridLoaded()
-        {
-            base.GridLoaded();
-        }
-
-      
-
       
     }
 
