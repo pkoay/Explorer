@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace BasicGridTest
 {
-    public class MyViewModel : ViewModelBase<tblMain>,INotifyPropertyChanged
+    public class MyViewModel : ViewModelBase<tblMain>
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
         //private ObservableCollection<tblMain> main;
         //public readonly BASICGRIDDATAEntities context;
@@ -105,19 +105,19 @@ namespace BasicGridTest
 
         
 
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs args)
-        {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, args);
-            }
-        }
+        //protected virtual void OnPropertyChanged(PropertyChangedEventArgs args)
+        //{
+        //    PropertyChangedEventHandler handler = this.PropertyChanged;
+        //    if (handler != null)
+        //    {
+        //        handler(this, args);
+        //    }
+        //}
 
-        private void OnPropertyChanged(string propertyName)
-        {
-            this.OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
-        }
+        //private void OnPropertyChanged(string propertyName)
+        //{
+        //    this.OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+        //}
 
     }
 }

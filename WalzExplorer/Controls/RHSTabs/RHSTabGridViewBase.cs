@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Telerik.Windows.Controls;
-using WalzExplorer.Controls.Common;
+using WalzExplorer.Common;
 using Telerik.Windows.Controls.GridView;
 using WalzExplorer.Database;
 using System.Windows.Data;
@@ -18,7 +18,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Media;
 using System.Dynamic;
-using WalzExplorer.Common;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -28,7 +27,7 @@ namespace WalzExplorer.Controls.RHSTabs
     {
         private RadGridView g;  // Standard grid
         protected RHSTabGridViewModelBase viewModel;
-        bool isGridEditing = false;
+        //bool isGridEditing = false;
         protected Dictionary<string, string> columnRename = new Dictionary<string, string>();
         
         protected Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
@@ -108,6 +107,7 @@ namespace WalzExplorer.Controls.RHSTabs
         public void g_Deleted(object sender, GridViewDeletedEventArgs e)
         {
             viewModel.Delete(e.Items.ToList());
+            g.Rebind();         //redisplay new values such as ID, sort order
 
         }
         
@@ -183,10 +183,11 @@ namespace WalzExplorer.Controls.RHSTabs
                     if (ContextMenuRow != null)
                     {
                        
-                        items.Reverse();
-                        viewModel.Move(ContextMenuRow.Item, items);
+                        //items.Reverse();
+                        viewModel.MoveItemsToItem(items,ContextMenuRow.Item);
                     }
                     viewModel.SavePaste(items);
+                    g.Rebind();         //redisplay new values such as ID, sort order
                     break;
 
                 case "miExportExcel":
@@ -269,7 +270,7 @@ namespace WalzExplorer.Controls.RHSTabs
         {
             e.Cancel = true;
             e.NewObject = viewModel.InsertNew();
-          
+            g.Rebind();         //redisplay new values such as ID, sort order
             g.ScrollIntoViewAsync(e.NewObject, (f) =>
             {
                 GridViewRow row = f as GridViewRow;
@@ -283,10 +284,8 @@ namespace WalzExplorer.Controls.RHSTabs
         private void g_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
         {
             viewModel.ManualChange(e.EditedItem);
-            
-            //redisplay new values such as ID
-            g.Rebind();
-            this.isGridEditing = false;
+            g.Rebind();         //redisplay new values such as ID, sort order
+            //this.isGridEditing = false;
         }
     }
 

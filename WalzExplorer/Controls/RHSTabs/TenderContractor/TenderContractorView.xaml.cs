@@ -26,16 +26,24 @@
 //using System.Data.Entity.Validation;
 
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-using WalzExplorer.Controls.Common;
+using System.Windows.Media;
+using Telerik.Windows.Controls;
+using Telerik.Windows.Controls.GridView;
+using WalzExplorer.Common;
 namespace WalzExplorer.Controls.RHSTabs.TenderContractor
 {
     /// <summary>
     /// Interaction logic for TenderViewer.xaml
     /// </summary>
+    
+     
     public partial class TenderContractorView : RHSTabGridViewBase
     {
+        const string GridDragData="GridDragData";
+        Point startPoint;
         TenderContractorViewModel vm;
         //private TenderContractorViewModel viewModel;
         public TenderContractorView()
@@ -67,6 +75,68 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
 
             base.TabLoad();
 
+        }
+
+        private void grd_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // Store the mouse position
+            startPoint = e.GetPosition(null);
+        }
+
+        private void grd_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            // Get the current mouse position
+            Point mousePos = e.GetPosition(null);
+            Vector diff = startPoint - mousePos;
+
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            {
+                // Initialize the drag & drop operation
+                DataObject dragData = new DataObject(GridDragData, grd.SelectedItems);
+                DragDrop.DoDragDrop(grd, dragData, DragDropEffects.Move);
+            } 
+        }
+
+        private void grd_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(GridDragData))
+            {
+                
+                GridViewRow row = FindAnchestor<GridViewRow>((DependencyObject)e.OriginalSource);
+                if (row != null)
+                {
+                     List<object> moveItems= new List<object> ();
+                     foreach (object item in grd.SelectedItems)
+                         moveItems.Add(item);
+                     viewModel.MoveItemsToItem(moveItems, row.Item);
+                }
+            }
+        }
+
+        // Helper to search up the VisualTree
+        private static T FindAnchestor<T>(DependencyObject current)
+            where T : DependencyObject
+        {
+            do
+            {
+                if (current is T)
+                {
+                    return (T)current;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            }
+            while (current != null);
+            return null;
+        }
+
+        private void grd_DragEnter(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(GridDragData))
+            {
+                e.Effects = DragDropEffects.Move;
+            }
         }
 
       

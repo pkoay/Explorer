@@ -24,7 +24,6 @@ using WalzExplorer.Controls.TreeView;
 using WalzExplorer.Controls.TreeView.ViewModel;
 using WalzExplorer.Controls.RHSTabs;
 using System.Collections.ObjectModel;
-using WalzExplorer.Controls.RHSTabs.ExampleGrid2Tab;
 using WalzExplorer.Controls.LHSTabs;
 
 using Telerik.Windows.Controls;

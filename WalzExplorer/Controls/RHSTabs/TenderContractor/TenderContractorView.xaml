@@ -5,11 +5,49 @@
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              
              xmlns:WalzExplorer="clr-namespace:WalzExplorer"
-             xmlns:tab="clr-namespace:WalzExplorer.Controls.RHSTabs.TenderContractor"
+             xmlns:tab="clr-namespace:WalzExplorer.Controls.RHSTabs"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="402.09" d:DesignHeight="143.881"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
              x:Class="WalzExplorer.Controls.RHSTabs.TenderContractor.TenderContractorView">
     <Grid>
-        <telerik:RadGridView  x:Name="grd" />
+        <!--<Grid.Resources>
+            <Style TargetType="telerik:GridViewRow" x:Key="DraggedRowStyle">
+                <Setter Property="telerik:DragDropManager.AllowDrag" Value="True" />
+                <Setter Property="telerik:DragDropManager.TouchDragTrigger" Value="TapAndHold"/>
+            </Style>
+        </Grid.Resources>-->
+        <telerik:RadGridView  x:Name="grd" AllowDrop="True"  
+                              PreviewMouseMove="grd_PreviewMouseMove"
+                              PreviewMouseLeftButtonDown="grd_PreviewMouseLeftButtonDown" 
+                              Drop="grd_Drop"
+                              DragEnter="grd_DragEnter"><!--tab:RHSTabGridRowReorderBehavior.IsEnabled="True"-->
+            <!--<telerik:RadGridView.RowStyle>
+                <Style TargetType="telerik:GridViewRow">
+                    <Setter Property="telerik:DragDropManager.AllowDrag" Value="True" />
+                    <Setter Property="telerik:DragDropManager.TouchDragTrigger" Value="TapAndHold"/>
+                </Style>
+            </telerik:RadGridView.RowStyle>
+                <telerik:RadGridView.Resources>
+                <DataTemplate x:Key="DraggedItemTemplate">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Dragging:" />
+                            <TextBlock Text="{Binding CurrentDraggedItem}"
+									       FontWeight="Bold" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding CurrentDropPosition}"
+									       FontWeight="Bold"
+									       MinWidth="45" />
+                            <TextBlock Text=", ("
+									       Foreground="Gray" />
+                            <TextBlock Text="{Binding CurrentDraggedOverItem}" />
+                            <TextBlock Text=")"
+									       Foreground="Gray" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>-->
+            <!--</telerik:RadGridView.Resources>-->
+        </telerik:RadGridView>
     </Grid>
 </base:RHSTabGridViewBase>

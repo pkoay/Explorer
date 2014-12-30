@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Telerik.Windows.Controls;
 using WalzExplorer.Common;
 using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.RHSTabs
 {
-   abstract public class RHSTabGridViewModelBase
+    abstract public class RHSTabGridViewModelBase : ViewModelBase
         
     {
+        
+
         public ObservableCollection<object> data;
         public WalzExplorerEntities context;
         protected Dictionary<string, object> columnDefault = new Dictionary<string, object>();
@@ -32,7 +36,6 @@ namespace WalzExplorer.Controls.RHSTabs
         {
             object i = DefaultItem();
             data.Insert(0, i );
-            SaveAndUpdateSortOrder();
             return i;
             
         }
@@ -40,34 +43,38 @@ namespace WalzExplorer.Controls.RHSTabs
         {
             object i = DefaultItem();
             data.Insert( this.data.IndexOf(InsertAbove), i);
-            SaveAndUpdateSortOrder();
             return i;
         }
-        public object InsertNewBelow(object InsertBelow)
-        {
-            object i = DefaultItem();
+        //public object InsertNewBelow(object InsertBelow)
+        //{
+        //    object i = DefaultItem();
 
-            if (this.data.IndexOf(InsertBelow) < this.data.Count - 1)
-            {
-                //not last entry
-                data.Insert(this.data.IndexOf(InsertBelow) + 1, i);
-            }
-            else
-            {
-                //Last entry add (not insert)
-                data.Add(i);
-            }
-            SaveAndUpdateSortOrder();
-            return i;
-        }
-        public void Move(object MoveAbove, List<object> items)
-        {
-            items.Reverse();
+        //    if (this.data.IndexOf(InsertBelow) < this.data.Count - 1)
+        //    {
+        //        //not last entry
+        //        data.Insert(this.data.IndexOf(InsertBelow) + 1, i);
+        //    }
+        //    else
+        //    {
+        //        //Last entry add (not insert)
+        //        data.Add(i);
+        //    }
+        //    return i;
+        //}
+      
+       public void MoveItemsToIndex( List<object> items,int index)
+       {
+           items.Reverse();
            foreach(object i in items)
            {
-               this.data.Move(this.data.IndexOf(i), this.data.IndexOf(MoveAbove));
+               this.data.Move(this.data.IndexOf(i), index);
            }
            SaveAndUpdateSortOrder();
+       }
+
+       public void MoveItemsToItem( List<object> items,object MoveAbove)
+        {
+            MoveItemsToIndex(items, this.data.IndexOf(MoveAbove));
         }
 
         public void Delete(List<object> items)
@@ -94,7 +101,7 @@ namespace WalzExplorer.Controls.RHSTabs
 
         }
 
-        //sets the defaults for an objects (defaults as specified in dictionary columnDefault
+        //sets the defaults for an objects (defaults as specified in dictionary columnDefault)
         public void SetDefaultsForPaste(object o)
         {
 
@@ -138,6 +145,8 @@ namespace WalzExplorer.Controls.RHSTabs
             
             
         }
+
+      
 
     }
 }

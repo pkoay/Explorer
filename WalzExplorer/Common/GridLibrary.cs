@@ -7,7 +7,7 @@ using System.Windows.Data;
 using Telerik.Windows.Controls;
 using WalzExplorer.Database;
 
-namespace WalzExplorer.Controls.Common
+namespace WalzExplorer.Common
 {
     public static class GridLibrary
     {

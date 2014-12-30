@@ -24,8 +24,8 @@ namespace BasicGridTest
     {
         private readonly BASICGRIDDATAEntities context;
         private readonly MyViewModel viewModel;
-        private Point startPoint;
-        bool isGridEditing = false; 
+        //private Point startPoint;
+        //bool isGridEditing = false; 
 
         public MainWindow()
         {
@@ -36,12 +36,12 @@ namespace BasicGridTest
         }
         private void grd_BeginningEdit(object sender, GridViewBeginningEditRoutedEventArgs e)
         {
-            this.isGridEditing = true;
+            //this.isGridEditing = true;
         }
 
         private void grd_CellEditEnded(object sender, GridViewCellEditEndedEventArgs e)
         {
-            this.isGridEditing = false;
+            //this.isGridEditing = false;
         }
       
      
@@ -66,7 +66,7 @@ namespace BasicGridTest
 
             //redisplay new values such as ID
             grd.Rebind();
-            this.isGridEditing = false;
+            //this.isGridEditing = false;
         }
 
         private void cmGrid_Click(object sender, RoutedEventArgs e)

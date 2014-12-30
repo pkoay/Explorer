@@ -29,7 +29,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid.Resources>
+        <!--<Grid.Resources>
             <Style TargetType="telerik:GridViewRow"
 				   x:Key="DraggedRowStyle"
 				   >
@@ -38,7 +38,7 @@
                 <Setter Property="telerik:DragDropManager.TouchDragTrigger"
                         Value="TapAndHold"/>
             </Style>
-        </Grid.Resources>
+        </Grid.Resources>-->
         
         <!--GRID-->
         <!--SelectionMode=Extended : This is to enable grid to have selection properties that are similar to excel (single select, multiple select via shi-f,ctrl and ctrl a-->
@@ -54,8 +54,17 @@
                              RowEditEnded="grd_RowEditEnded" BeginningEdit="grd_BeginningEdit" CellEditEnded="grd_CellEditEnded"
                              DataLoaded="grd_DataLoaded"
                              
-                             RowStyle="{StaticResource DraggedRowStyle}" AllowDrop="True" local:RowReorderBehavior.IsEnabled="True">
+                              AllowDrop="True" local:RowReorderBehavior.IsEnabled="True">
+            <telerik:RadGridView.RowStyle>
+                <Style TargetType="telerik:GridViewRow">
+                    <Setter Property="telerik:DragDropManager.AllowDrag"
+						Value="True" />
+                    <Setter Property="telerik:DragDropManager.TouchDragTrigger"
+                        Value="TapAndHold"/>
+                </Style>
+            </telerik:RadGridView.RowStyle>
             <telerik:RadGridView.Resources>
+                <!--RowStyle="{StaticResource DraggedRowStyle}"-->
                 <DataTemplate x:Key="DraggedItemTemplate">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">

@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Telerik.Windows.Controls;
 using WalzExplorer.Database;
+using WalzExplorer.Common;
 
 namespace WalzExplorer
 {
@@ -17,6 +18,8 @@ namespace WalzExplorer
     {
         public App()
         {
+            //UtilityTest ut = new UtilityTest();
+            //ut.FindConflictingReferences();
            VisualStudio2013Palette.LoadPreset(VisualStudio2013Palette.ColorVariation.Dark);
            this.InitializeComponent();
 
