@@ -114,7 +114,7 @@ namespace WalzExplorer.Controls.RHSTabs
                 ObjectLibrary.SetValue(item, "SortOrder", i);
                 i++;
             }   
-            context.SaveChanges();
+            context.SaveChangesWithValidation();
         }
 
         public void ManualChange(object changedItem)

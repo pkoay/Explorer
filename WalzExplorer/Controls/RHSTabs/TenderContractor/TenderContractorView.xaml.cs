@@ -45,6 +45,27 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
             base.TabLoad();
 
         }
+
+        protected override void g_CellValidating(object sender, GridViewCellValidatingEventArgs e)
+        {
+            if (e.Cell.Column.UniqueName == "Title")
+            {
+                string newValue = e.NewValue.ToString();
+                if (newValue=="")
+                {
+                    e.IsValid = false;
+                    e.ErrorMessage = "Title must not be blank.";
+                }
+            }
+            if (e.Cell.Column.UniqueName == "cmbContractorTypeID")
+            {
+                if (e.NewValue==null)
+                {
+                    e.IsValid = false;
+                    e.ErrorMessage = "Contractior Type required.";
+                }
+            }
+        }
       
     }
 

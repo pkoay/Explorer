@@ -53,7 +53,7 @@ namespace WalzExplorer.Controls.RHSTabs
             g.GroupRenderMode= GroupRenderMode.Flat;
             g.SelectionMode = System.Windows.Controls.SelectionMode.Extended;
             g.SelectionUnit= GridViewSelectionUnit.FullRow;
-            g.AlternationCount=3;
+            g.AlternationCount=4;
             g.CanUserFreezeColumns=true;
             g.GridLinesVisibility= GridLinesVisibility.None;
             g.ClipboardPasteMode = GridViewClipboardPasteMode.None;
@@ -65,6 +65,9 @@ namespace WalzExplorer.Controls.RHSTabs
             g.AutoGeneratingColumn += new EventHandler<GridViewAutoGeneratingColumnEventArgs>(g_AutoGeneratingColumn);
             g.ContextMenuOpening += new ContextMenuEventHandler(g_ContextMenuOpening);
             g.Deleted += new EventHandler<GridViewDeletedEventArgs>(g_Deleted);
+
+            //Validation
+            g.CellValidating += g_CellValidating;
            
             //Drag Drop
             g.AllowDrop = true;
@@ -97,6 +100,11 @@ namespace WalzExplorer.Controls.RHSTabs
           
             g.ContextMenu = cm;
 
+        }
+
+        protected  virtual void g_CellValidating(object sender, GridViewCellValidatingEventArgs e)
+        {
+            // this is required to be overridden by each RHSTabView
         }
 
         //Drag Drop
@@ -253,6 +261,7 @@ namespace WalzExplorer.Controls.RHSTabs
                         //items.Reverse();
                         viewModel.MoveItemsToItem(items,ContextMenuRow.Item);
                     }
+
                     viewModel.SavePaste(items);
                     g.Rebind();         //redisplay new values such as ID, sort order
                     break;

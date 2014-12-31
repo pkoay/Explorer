@@ -20,6 +20,33 @@ namespace WalzExplorer.Database
 {
     public partial class WalzExplorerEntities
     {
+
+        protected override DbEntityValidationResult ValidateEntity(System.Data.Entity.Infrastructure.DbEntityEntry entityEntry, IDictionary<object, object> items)
+        {
+            var result = new DbEntityValidationResult(entityEntry, new List<DbValidationError>());
+            if (entityEntry.Entity is tblTender_Contractor && entityEntry.State == EntityState.Added)
+            {
+                tblTender_Contractor contractor = entityEntry.Entity as tblTender_Contractor;
+                //check for uniqueness of post title 
+                if (contractor.ContractorTypeID<1)
+                {
+                    result.ValidationErrors.Add(new System.Data.Entity.Validation.DbValidationError("cmbContractorTypeID", "Must not be blank."));
+                }
+                if (contractor.Title=="")
+                {
+                    result.ValidationErrors.Add(new System.Data.Entity.Validation.DbValidationError("Title", "Must not be blank."));
+                }
+            }
+
+            if (result.ValidationErrors.Count > 0)
+            {
+                return result;
+            }
+            else
+            {
+                return base.ValidateEntity(entityEntry, items);
+            }
+        }
         private readonly static Dictionary<Type, EntitySetBase> _mappingCache
          = new Dictionary<Type, EntitySetBase>();
 
