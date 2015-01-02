@@ -247,7 +247,7 @@ namespace WalzExplorer.Controls.RHSTabs
                     // note: the paste creates the objects first and then this overwrites the "default" columns with default values
                     // this is the expected result for things like tenderID in the TenderContractorsTab
                     //this is why the SetDefaults function checks to see if the value is different from a new instance, if the values are different 
-                    // (i.e. value has been manually changed) then the value will not be overwritten by the 'DEFAULT'
+                    // (i.e. value has been manually changed) then the value will not be overwritten by the 'DEFAULT'  f
                    
                     foreach(object item in items)
                     {
