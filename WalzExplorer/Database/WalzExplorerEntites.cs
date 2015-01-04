@@ -148,8 +148,6 @@ namespace WalzExplorer.Database
                 }
             }
            
-
-            
             return base.SaveChanges();
         }
 
