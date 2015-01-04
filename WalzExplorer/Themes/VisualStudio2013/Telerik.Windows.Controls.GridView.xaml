@@ -2958,9 +2958,9 @@
                 <grid:GridViewGroupPanel x:Name="PART_GroupPanel"
                         Grid.Row="0"
                         Grid.ColumnSpan="3"
-                        Background="{TemplateBinding GroupPanelBackground}"
                         Margin="0,0,0,-1"
-                        Foreground="{TemplateBinding GroupPanelForeground}"/>
+                        Background="{Binding GroupPanelBackground,RelativeSource={RelativeSource TemplatedParent}}"
+                        Foreground="{Binding GroupPanelForeground,RelativeSource={RelativeSource TemplatedParent}}"/>
                 <Border BorderBrush="{telerik:VisualStudio2013Resource ResourceKey=BasicBrush}" Margin="0,0,0,-1" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Grid.ColumnSpan="3"/>
                 <ItemsControl
                         Name="PART_ControlPanelItemsControl"
@@ -3243,11 +3243,13 @@
                         Width="5"
                         Fill="{telerik:VisualStudio2013Resource ResourceKey=MainBrush}"
                         Stroke="{telerik:VisualStudio2013Resource ResourceKey=MarkerBrush}"
-                        SnapsToDevicePixels="True"/>
+                        SnapsToDevicePixels="True"
+                        Margin="0,1,0,0"/>
                 <Path x:Name="minus"
                         Opacity="0"
                         Data="M6,0 L6,6 L0,6 z"
                         Fill="{telerik:VisualStudio2013Resource ResourceKey=MarkerBrush}"
+                        Margin="{TemplateBinding Padding}"
                         HorizontalAlignment="Center"
                         Height="7"
                         Stretch="Fill"
@@ -3265,7 +3267,6 @@
         <Setter Property="Background" Value="{telerik:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="0"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
     <Style TargetType="controls:GridViewToggleButton" BasedOn="{StaticResource GridViewToggleButtonStyle}"/>
@@ -3876,9 +3877,9 @@
                 <grid:GridViewGroupPanel x:Name="PART_GroupPanel"
                         Grid.Row="0"
                         Grid.ColumnSpan="3"
-                        Background="{TemplateBinding GroupPanelBackground}"
                         Margin="0,0,0,-1"
-                        Foreground="{TemplateBinding GroupPanelForeground}"/>
+                        Background="{Binding GroupPanelBackground,RelativeSource={RelativeSource TemplatedParent}}"
+                        Foreground="{Binding GroupPanelForeground,RelativeSource={RelativeSource TemplatedParent}}"/>
                 <Border BorderBrush="{telerik:VisualStudio2013Resource ResourceKey=BasicBrush}" Margin="0,0,0,-1" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Grid.ColumnSpan="3"/>
                 <ItemsControl
                         Name="PART_ControlPanelItemsControl"
@@ -4954,7 +4955,7 @@
                 <ToolTipService.ToolTip>
                     <ToolTip x:Name="validationTooltip" Placement="Right" Content="{TemplateBinding Errors}" Template="{StaticResource GridViewCellCore_ValidationToolTipTemplate}"/>
                 </ToolTipService.ToolTip>
-                <Grid Background="Transparent" HorizontalAlignment="Right" Height="18" VerticalAlignment="Top" Width="18">
+                <Grid x:Name="validationPath" Background="Transparent" HorizontalAlignment="Right" Height="18" VerticalAlignment="Top" Width="18">
                     <Path Data="M0,0 L8,0 8,8 z" Fill="{telerik:VisualStudio2013Resource ResourceKey=ValidationBrush}" Width="8" Height="8" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                 </Grid>
             </Border>
@@ -4997,6 +4998,16 @@
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_CellBorder" Property="Background" Value="{telerik:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
                 <Setter TargetName="PART_ContentPresenter" Property="Foreground" Value="{telerik:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="DisplayVisualCues" Value="True"/>
+                    <Condition Property="ParentRowValid" Value="false"/>
+                    <Condition Property="IsValid" Value="True"/>
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_CellBorder" Property="BorderBrush" Value="{telerik:Office2013Resource ResourceKey=ValidationBrush}"/>
+                <Setter TargetName="PART_CellBorder" Property="BorderThickness" Value="1"/>
+                <Setter TargetName="PART_CellBorder" Property="Margin" Value="-1,0,0,0"/>
             </MultiTrigger>
             <Trigger Property="IsCurrent" Value="True">
                 <Setter TargetName="Background_Current" Property="Visibility" Value="Visible"/>
@@ -5308,11 +5319,13 @@
                 <Setter TargetName="Layer" Property="Background" Value="{telerik:VisualStudio2013Resource ResourceKey=MainBrush}"/>
                 <Setter TargetName="Layer" Property="BorderThickness" Value="1"/>
                 <Setter TargetName="NavigatorIndicator" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="ErrorIndicator" Property="Visibility" Value="Collapsed"/>
                 <Setter TargetName="InvalidEditableIndicator" Property="Visibility" Value="Visible"/>
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsValid" Value="False"/>
+                    <Condition Property="IsInEditMode" Value="False"/>
                     <Condition Property="DisplayVisualCues" Value="True"/>
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_IndicatorPresenter" Property="BorderThickness" Value="0,0,1,0"/>
@@ -5670,11 +5683,13 @@
                 <Setter TargetName="Layer" Property="Background" Value="{telerik:VisualStudio2013Resource ResourceKey=MainBrush}"/>
                 <Setter TargetName="Layer" Property="BorderThickness" Value="1"/>
                 <Setter TargetName="NavigatorIndicator" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="ErrorIndicator" Property="Visibility" Value="Collapsed"/>
                 <Setter TargetName="InvalidEditableIndicator" Property="Visibility" Value="Visible"/>
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsValid" Value="False"/>
+                    <Condition Property="IsInEditMode" Value="False"/>
                     <Condition Property="DisplayVisualCues" Value="True"/>
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_IndicatorPresenter" Property="BorderThickness" Value="0,0,1,0"/>

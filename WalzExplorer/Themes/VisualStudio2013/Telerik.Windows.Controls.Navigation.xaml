@@ -16,6 +16,7 @@
         xmlns:animation="clr-namespace:Telerik.Windows.Controls.Animation;assembly=Telerik.Windows.Controls"
         xmlns:telerikRadialMenu="clr-namespace:Telerik.Windows.Controls.RadialMenu;assembly=Telerik.Windows.Controls.Navigation"
         xmlns:navigation="clr-namespace:Telerik.Windows.Controls.Navigation;assembly=Telerik.Windows.Controls.Navigation"
+        xmlns:localization="clr-namespace:Telerik.Windows.Controls.Localization;assembly=Telerik.Windows.Controls"
         xmlns:treeView="clr-namespace:Telerik.Windows.Controls.TreeView;assembly=Telerik.Windows.Controls.Navigation"
         xmlns:animationNavigation="clr-namespace:Telerik.Windows.Controls.Animation;assembly=Telerik.Windows.Controls.Navigation"
         xmlns:outlookBarPrimitives="clr-namespace:Telerik.Windows.Controls.OutlookBar;assembly=Telerik.Windows.Controls.Navigation"
@@ -443,7 +444,6 @@
                                 <VisualState x:Name="Unfocused"/>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Disabled"/>
                                 <VisualState x:Name="Normal"/>
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
@@ -467,6 +467,26 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CollapseIconWrapper" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{telerik:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
                                         </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RestoreIcon" Storyboard.TargetProperty="Visibility">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CollapseIcon" Storyboard.TargetProperty="Visibility">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Collapsed</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -916,7 +936,7 @@
                                 <ItemsPresenter/>
                             </ScrollViewer>
                         </Border>
-                        <Rectangle x:Name="DisabledVisual" Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Collapsed"/>
+                        <Rectangle x:Name="DisabledVisual" Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Collapsed" Opacity="0.2"/>
                         <Border x:Name="MaximizeAreaTop" Grid.ColumnSpan="2" Grid.Row="0" Visibility="Collapsed" Background="{telerik1:VisualStudio2013Resource ResourceKey=SemiBasicBrush}"/>
                         <Border x:Name="MaximizeAreaBottom" Grid.ColumnSpan="2" Grid.Row="1" Visibility="Collapsed" Background="{telerik1:VisualStudio2013Resource ResourceKey=SemiBasicBrush}"/>
                         <Border x:Name="MaximizeAreaLeft" Grid.RowSpan="2" Grid.Column="0" Visibility="Collapsed" Background="{telerik1:VisualStudio2013Resource ResourceKey=SemiBasicBrush}"/>
@@ -5421,7 +5441,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="telerikNavigation:RadRadialMenu">
                     <telerikRadialMenu:RadialPanel x:Name="PART_RadialPanel">
-                        <telerikRadialMenu:RadialMenuButton x:Name="PART_RadialButton" Focusable="False"/>
+                        <telerikRadialMenu:RadialMenuButton x:Name="PART_RadialButton" AutomationProperties.Name="Center button" Focusable="False"/>
                     </telerikRadialMenu:RadialPanel>
                 </ControlTemplate>
             </Setter.Value>
@@ -5448,7 +5468,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="RadialMenuItemContainerStyle" TargetType="telerikNavigation:RadRadialMenuItem">
+    <Style x:Key="RadRadialMenuItemStyle" TargetType="telerikNavigation:RadRadialMenuItem">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Foreground" Value="{telerik:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
@@ -5644,7 +5664,7 @@
     <Style TargetType="telerikRadialMenu:NavigationItemButton" BasedOn="{StaticResource NavigationItemButtonStyle}"/>
     <Style TargetType="telerikRadialMenu:VisualStatesItemPresenter" BasedOn="{StaticResource VisualStatesItemPresenterStyle}"/>
     <Style TargetType="telerikNavigation:RadRadialMenu" BasedOn="{StaticResource RadRadialMenuStyle}"/>
-    <Style TargetType="telerikNavigation:RadRadialMenuItem" BasedOn="{StaticResource RadialMenuItemContainerStyle}"/>
+    <Style TargetType="telerikNavigation:RadRadialMenuItem" BasedOn="{StaticResource RadRadialMenuItemStyle}"/>
     <Style TargetType="telerikRadialMenu:RadialMenuButton" BasedOn="{StaticResource RadialMenuButtonStyle}"/>
 
     <!-- RadWindow Styles -->
@@ -6097,6 +6117,8 @@
     </Style>
     <Style TargetType="telerikNavigation:RadAlert" BasedOn="{StaticResource RadAlertStyle}"/>
     <Style TargetType="telerik:RadWindow" BasedOn="{StaticResource RadWindowStyle}"/>
+    <localization:CultureToLocalizationStringConverter x:Key="cultureToStringConverter"/>
+    <telerik:LocalizationManager x:Key="localizationManagerProvider"/>
     <Style x:Key="TreeviewFocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -6363,10 +6385,10 @@
         <Setter Property="IsDragTooltipEnabled" Value="True"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="IsEnabled" Value="True"/>
-        <Setter Property="TextDropAfter" Value="{telerik:LocalizableResource Key=TreeViewDropAfter}"/>
-        <Setter Property="TextDropBefore" Value="{telerik:LocalizableResource Key=TreeViewDropBefore}"/>
-        <Setter Property="TextDropIn" Value="{telerik:LocalizableResource Key=TreeViewDropIn}"/>
-        <Setter Property="TextDropRoot" Value="{telerik:LocalizableResource Key=TreeViewDropRoot}"/>
+        <Setter Property="TextDropAfter" Value="{Binding Manager.Culture, Source={StaticResource localizationManagerProvider}, Converter={StaticResource cultureToStringConverter}, ConverterParameter=TreeViewDropAfter}"/>
+        <Setter Property="TextDropBefore" Value="{Binding Manager.Culture, Source={StaticResource localizationManagerProvider}, Converter={StaticResource cultureToStringConverter}, ConverterParameter=TreeViewDropBefore}"/>
+        <Setter Property="TextDropIn" Value="{Binding Manager.Culture, Source={StaticResource localizationManagerProvider}, Converter={StaticResource cultureToStringConverter}, ConverterParameter=TreeViewDropIn}"/>
+        <Setter Property="TextDropRoot" Value="{Binding Manager.Culture, Source={StaticResource localizationManagerProvider}, Converter={StaticResource cultureToStringConverter}, ConverterParameter=TreeViewDropRoot}"/>
         <Setter Property="IsDropPreviewLineEnabled" Value="True"/>
         <Setter Property="IsRootLinesEnabled" Value="True"/>
         <Setter Property="IsExpandOnDblClickEnabled" Value="True"/>

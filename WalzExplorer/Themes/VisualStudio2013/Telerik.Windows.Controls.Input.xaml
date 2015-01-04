@@ -12,6 +12,7 @@
         xmlns:calendar="clr-namespace:Telerik.Windows.Controls.Calendar;assembly=Telerik.Windows.Controls.Input"
         xmlns:primitives="clr-namespace:Telerik.Windows.Controls.Primitives;assembly=Telerik.Windows.Controls"
         xmlns:calculator="clr-namespace:Telerik.Windows.Controls.Calculator;assembly=Telerik.Windows.Controls.Input"
+        xmlns:localization="clr-namespace:Telerik.Windows.Controls.Localization;assembly=Telerik.Windows.Controls"
         xmlns:colorPaletteConverters="clr-namespace:Telerik.Windows.Controls.ColorPicker.Converters;assembly=Telerik.Windows.Controls.Input"
         xmlns:colorPickerConverters="clr-namespace:Telerik.Windows.Controls.ColorEditor.Converters;assembly=Telerik.Windows.Controls.Input"
         xmlns:colorMode="clr-namespace:Telerik.Windows.Controls.ColorEditor.Mode;assembly=Telerik.Windows.Controls.Input"
@@ -4516,6 +4517,8 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
     </Style>
     <Style TargetType="telerikInput:RadCalculatorPicker" BasedOn="{StaticResource RadCalculatorPickerStyle}"/>
+    <localization:CultureToLocalizationStringConverter x:Key="cultureConverter"/>
+    <telerik1:LocalizationManager x:Key="localizationManager"/>
     <Style TargetType="telerik1:RadButton" x:Key="RadColorPicker_HeaderButtonStyle">
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="FontSize" Value="12"/>
@@ -4533,12 +4536,12 @@
                                 <VisualState x:Name="Normal"/>
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="MouseOverVisual" Storyboard.TargetProperty="Opacity" To="1"/>
+                                        <DoubleAnimation Storyboard.TargetName="MouseOverVisual" Storyboard.TargetProperty="Opacity" Duration="0" To="1"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="MouseOverVisual" Storyboard.TargetProperty="Opacity" To="1"/>
+                                        <DoubleAnimation Storyboard.TargetName="MouseOverVisual" Storyboard.TargetProperty="Opacity" Duration="0" To="1"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled"/>
@@ -4677,10 +4680,10 @@
     <Style x:Key="RadColorSelectorStyle" TargetType="telerikInput:RadColorSelector">
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=MainBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
-        <Setter Property="MainPaletteHeaderText" Value="{telerik1:LocalizableResource Key=ColorSelectorMainPaletteHeaderText}"/>
-        <Setter Property="NoColorText" Value="{telerik1:LocalizableResource Key=ColorSelectorAutomaticColorText}"/>
-        <Setter Property="RecentColorsHeaderText" Value="{telerik1:LocalizableResource Key=ColorSelectorRecentColorsHeaderText}"/>
-        <Setter Property="StandardPaletteHeaderText" Value="{telerik1:LocalizableResource Key=ColorSelectorStandardPaletteHeaderText}"/>
+        <Setter Property="MainPaletteHeaderText" Value="{Binding Manager.Culture, Source={StaticResource localizationManager}, Converter={StaticResource cultureConverter}, ConverterParameter=ColorSelectorMainPaletteHeaderText}"/>
+        <Setter Property="NoColorText" Value="{Binding Manager.Culture, Source={StaticResource localizationManager}, Converter={StaticResource cultureConverter}, ConverterParameter=ColorSelectorAutomaticColorText}"/>
+        <Setter Property="RecentColorsHeaderText" Value="{Binding Manager.Culture, Source={StaticResource localizationManager}, Converter={StaticResource cultureConverter}, ConverterParameter=ColorSelectorRecentColorsHeaderText}"/>
+        <Setter Property="StandardPaletteHeaderText" Value="{Binding Manager.Culture, Source={StaticResource localizationManager}, Converter={StaticResource cultureConverter}, ConverterParameter=ColorSelectorStandardPaletteHeaderText}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="12"/>
@@ -4814,10 +4817,10 @@
         <Setter Property="MainPaletteOrientation" Value="Vertical"/>
         <Setter Property="MainPalette" Value="Office"/>
         <Setter Property="HeaderPaletteVisibility" Value="Visible"/>
-        <Setter Property="MainPaletteHeaderText" Value="{telerik1:LocalizableResource Key=ColorSelectorMainPaletteHeaderText}"/>
-        <Setter Property="NoColorText" Value="{telerik1:LocalizableResource Key=ColorSelectorAutomaticColorText}"/>
-        <Setter Property="RecentColorsHeaderText" Value="{telerik1:LocalizableResource Key=ColorSelectorRecentColorsHeaderText}"/>
-        <Setter Property="StandardPaletteHeaderText" Value="{telerik1:LocalizableResource Key=ColorSelectorStandardPaletteHeaderText}"/>
+        <Setter Property="MainPaletteHeaderText" Value="{Binding Manager.Culture, Source={StaticResource localizationManager}, Converter={StaticResource cultureConverter}, ConverterParameter=ColorSelectorMainPaletteHeaderText}"/>
+        <Setter Property="NoColorText" Value="{Binding Manager.Culture, Source={StaticResource localizationManager}, Converter={StaticResource cultureConverter}, ConverterParameter=ColorSelectorAutomaticColorText}"/>
+        <Setter Property="RecentColorsHeaderText" Value="{Binding Manager.Culture, Source={StaticResource localizationManager}, Converter={StaticResource cultureConverter}, ConverterParameter=ColorSelectorRecentColorsHeaderText}"/>
+        <Setter Property="StandardPaletteHeaderText" Value="{Binding Manager.Culture, Source={StaticResource localizationManager}, Converter={StaticResource cultureConverter}, ConverterParameter=ColorSelectorStandardPaletteHeaderText}"/>
         <Setter Property="StandardPaletteVisibility" Value="Visible"/>
         <Setter Property="NoColorVisibility" Value="Visible"/>
         <Setter Property="SelectedColor" Value="Black"/>
@@ -5851,7 +5854,6 @@
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                         <DoubleAnimation Duration="0" Storyboard.TargetName="DisplayText" Storyboard.TargetProperty="Opacity" To="0.4"/>
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="EditorSite" Storyboard.TargetProperty="Opacity" To="0.4"/>
                                         <DoubleAnimation Duration="0" Storyboard.TargetName="Content" Storyboard.TargetProperty="Opacity" To="0.4"/>
                                     </Storyboard>
                                 </VisualState>
