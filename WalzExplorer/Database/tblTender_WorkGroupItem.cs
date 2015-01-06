@@ -12,19 +12,85 @@ namespace WalzExplorer.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tblTender_WorkGroupItem
+    public partial class tblTender_WorkGroupItem : BaseModel
     {
-        public int WorkGroupItemID { get; set; }
-        public int WorkGroupID { get; set; }
-        public int WorkGroupHeaderID { get; set; }
-        public string Title { get; set; }
-        public double Count { get; set; }
-        public double Duration { get; set; }
-        public double Rate { get; set; }
-        public string Comments { get; set; }
-        public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public byte[] RowVersion { get; set; }
+        private int _workGroupItemID;
+    	public int WorkGroupItemID 
+    	{ 
+    		get { return _workGroupItemID; } 
+    		set { SetProperty(ref _workGroupItemID, value); } 
+    	}
+    
+        private int _workGroupID;
+    	public int WorkGroupID 
+    	{ 
+    		get { return _workGroupID; } 
+    		set { SetProperty(ref _workGroupID, value); } 
+    	}
+    
+        private int _workGroupHeaderID;
+    	public int WorkGroupHeaderID 
+    	{ 
+    		get { return _workGroupHeaderID; } 
+    		set { SetProperty(ref _workGroupHeaderID, value); } 
+    	}
+    
+        private string _title;
+    	public string Title 
+    	{ 
+    		get { return _title; } 
+    		set { SetProperty(ref _title, value); } 
+    	}
+    
+        private double _count;
+    	public double Count 
+    	{ 
+    		get { return _count; } 
+    		set { SetProperty(ref _count, value); } 
+    	}
+    
+        private double _duration;
+    	public double Duration 
+    	{ 
+    		get { return _duration; } 
+    		set { SetProperty(ref _duration, value); } 
+    	}
+    
+        private double _rate;
+    	public double Rate 
+    	{ 
+    		get { return _rate; } 
+    		set { SetProperty(ref _rate, value); } 
+    	}
+    
+        private string _comments;
+    	public string Comments 
+    	{ 
+    		get { return _comments; } 
+    		set { SetProperty(ref _comments, value); } 
+    	}
+    
+        private string _updatedBy;
+    	public string UpdatedBy 
+    	{ 
+    		get { return _updatedBy; } 
+    		set { SetProperty(ref _updatedBy, value); } 
+    	}
+    
+        private Nullable<System.DateTime> _updatedDate;
+    	public Nullable<System.DateTime> UpdatedDate 
+    	{ 
+    		get { return _updatedDate; } 
+    		set { SetProperty(ref _updatedDate, value); } 
+    	}
+    
+        private byte[] _rowVersion;
+    	public byte[] RowVersion 
+    	{ 
+    		get { return _rowVersion; } 
+    		set { SetProperty(ref _rowVersion, value); } 
+    	}
+    
     
         public virtual tblTender_WorkGroup tblTender_WorkGroup { get; set; }
         public virtual tblTender_WorkGroupHeader tblTender_WorkGroupHeader { get; set; }

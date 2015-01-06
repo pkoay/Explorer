@@ -12,16 +12,34 @@ namespace WalzExplorer.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tblWEX_LHSTab
+    public partial class tblWEX_LHSTab : BaseModel
     {
         public tblWEX_LHSTab()
         {
             this.tblWEX_Tree = new HashSet<tblWEX_Tree>();
         }
     
-        public string LHSTabID { get; set; }
-        public string Icon { get; set; }
-        public int SortOrder { get; set; }
+        private string _lHSTabID;
+    	public string LHSTabID 
+    	{ 
+    		get { return _lHSTabID; } 
+    		set { SetProperty(ref _lHSTabID, value); } 
+    	}
+    
+        private string _icon;
+    	public string Icon 
+    	{ 
+    		get { return _icon; } 
+    		set { SetProperty(ref _icon, value); } 
+    	}
+    
+        private int _sortOrder;
+    	public int SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
+    	}
+    
     
         public virtual ICollection<tblWEX_Tree> tblWEX_Tree { get; set; }
     }

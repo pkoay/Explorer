@@ -12,20 +12,62 @@ namespace WalzExplorer.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tblPerson_Person
+    public partial class tblPerson_Person : BaseModel
     {
         public tblPerson_Person()
         {
             this.tblProject_Project = new HashSet<tblProject_Project>();
         }
     
-        public string PersonID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Login { get; set; }
-        public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public byte[] RowVersion { get; set; }
+        private string _personID;
+    	public string PersonID 
+    	{ 
+    		get { return _personID; } 
+    		set { SetProperty(ref _personID, value); } 
+    	}
+    
+        private string _firstName;
+    	public string FirstName 
+    	{ 
+    		get { return _firstName; } 
+    		set { SetProperty(ref _firstName, value); } 
+    	}
+    
+        private string _lastName;
+    	public string LastName 
+    	{ 
+    		get { return _lastName; } 
+    		set { SetProperty(ref _lastName, value); } 
+    	}
+    
+        private string _login;
+    	public string Login 
+    	{ 
+    		get { return _login; } 
+    		set { SetProperty(ref _login, value); } 
+    	}
+    
+        private string _updatedBy;
+    	public string UpdatedBy 
+    	{ 
+    		get { return _updatedBy; } 
+    		set { SetProperty(ref _updatedBy, value); } 
+    	}
+    
+        private Nullable<System.DateTime> _updatedDate;
+    	public Nullable<System.DateTime> UpdatedDate 
+    	{ 
+    		get { return _updatedDate; } 
+    		set { SetProperty(ref _updatedDate, value); } 
+    	}
+    
+        private byte[] _rowVersion;
+    	public byte[] RowVersion 
+    	{ 
+    		get { return _rowVersion; } 
+    		set { SetProperty(ref _rowVersion, value); } 
+    	}
+    
     
         public virtual ICollection<tblProject_Project> tblProject_Project { get; set; }
     }

@@ -42,19 +42,20 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
             grd.ItemsSource = viewModel.data;
             columnCombo.Clear();
             columnCombo.Add("ContractorTypeID", GridLibrary.CreateCombo("cmbContractorTypeID", "Contractor Type", vm.cmbContractTypeList(), "Title"));
+            
             base.TabLoad();
 
         }
 
         protected override void g_CellValidating(object sender, GridViewCellValidatingEventArgs e)
         {
+
             if (e.Cell.Column.UniqueName == "Title")
             {
-                string newValue = e.NewValue.ToString();
-                if (newValue=="")
+                if (e.NewValue.ToString().Length ==0)
                 {
                     e.IsValid = false;
-                    e.ErrorMessage = "Title must not be blank.";
+                    e.ErrorMessage = "Title is required!";
                 }
             }
             if (e.Cell.Column.UniqueName == "cmbContractorTypeID")
@@ -62,7 +63,7 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
                 if (e.NewValue==null)
                 {
                     e.IsValid = false;
-                    e.ErrorMessage = "Contractior Type required.";
+                    e.ErrorMessage = "Contractor Type is required!";
                 }
             }
         }

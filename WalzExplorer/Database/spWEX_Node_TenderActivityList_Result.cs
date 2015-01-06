@@ -11,13 +11,49 @@ namespace WalzExplorer.Database
 {
     using System;
     
-    public partial class spWEX_Node_TenderActivityList_Result
+    public partial class spWEX_Node_TenderActivityList_Result : BaseModel
     {
-        public string TypeID { get; set; }
-        public string Name { get; set; }
-        public string ID { get; set; }
-        public string IconOpen { get; set; }
-        public string IconClosed { get; set; }
-        public string ChildSQL { get; set; }
+        private string _typeID;
+    	public string TypeID 
+    	{ 
+    		get { return _typeID; } 
+    		set { SetProperty(ref _typeID, value); } 
+    	}
+    
+        private string _name;
+    	public string Name 
+    	{ 
+    		get { return _name; } 
+    		set { SetProperty(ref _name, value); } 
+    	}
+    
+        private string _iD;
+    	public string ID 
+    	{ 
+    		get { return _iD; } 
+    		set { SetProperty(ref _iD, value); } 
+    	}
+    
+        private string _iconOpen;
+    	public string IconOpen 
+    	{ 
+    		get { return _iconOpen; } 
+    		set { SetProperty(ref _iconOpen, value); } 
+    	}
+    
+        private string _iconClosed;
+    	public string IconClosed 
+    	{ 
+    		get { return _iconClosed; } 
+    		set { SetProperty(ref _iconClosed, value); } 
+    	}
+    
+        private string _childSQL;
+    	public string ChildSQL 
+    	{ 
+    		get { return _childSQL; } 
+    		set { SetProperty(ref _childSQL, value); } 
+    	}
+    
     }
 }

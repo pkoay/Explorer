@@ -11,26 +11,105 @@ namespace WalzExplorer.Database
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class tblTender_Contractor
+    using System.ComponentModel;
+
+    public partial class tblTender_Contractor : BaseModel, IDataErrorInfo
     {
         public tblTender_Contractor()
         {
             this.tblTender_ActivityContractor = new HashSet<tblTender_ActivityContractor>();
         }
     
-        public int ContractorID { get; set; }
-        public int TenderID { get; set; }
-        public string Title { get; set; }
-        public int ContractorTypeID { get; set; }
-        public string Comment { get; set; }
-        public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public byte[] RowVersion { get; set; }
-        public int SortOrder { get; set; }
+        private int _contractorID;
+    	public int ContractorID 
+    	{ 
+    		get { return _contractorID; } 
+    		set { SetProperty(ref _contractorID, value); } 
+    	}
+    
+        private int _tenderID;
+    	public int TenderID 
+    	{ 
+    		get { return _tenderID; } 
+    		set { SetProperty(ref _tenderID, value); } 
+    	}
+    
+        private string _title;
+    	public string Title 
+    	{ 
+    		get { return _title; } 
+    		set { SetProperty(ref _title, value); } 
+    	}
+    
+        private int _contractorTypeID;
+    	public int ContractorTypeID 
+    	{ 
+    		get { return _contractorTypeID; } 
+    		set { SetProperty(ref _contractorTypeID, value); } 
+    	}
+    
+        private string _comment;
+    	public string Comment 
+    	{ 
+    		get { return _comment; } 
+    		set { SetProperty(ref _comment, value); } 
+    	}
+    
+        private string _updatedBy;
+    	public string UpdatedBy 
+    	{ 
+    		get { return _updatedBy; } 
+    		set { SetProperty(ref _updatedBy, value); } 
+    	}
+    
+        private Nullable<System.DateTime> _updatedDate;
+    	public Nullable<System.DateTime> UpdatedDate 
+    	{ 
+    		get { return _updatedDate; } 
+    		set { SetProperty(ref _updatedDate, value); } 
+    	}
+    
+        private byte[] _rowVersion;
+    	public byte[] RowVersion 
+    	{ 
+    		get { return _rowVersion; } 
+    		set { SetProperty(ref _rowVersion, value); } 
+    	}
+    
+        private int _sortOrder;
+    	public int SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
+    	}
+    
     
         public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_ActivityContractor> tblTender_ActivityContractor { get; set; }
         public virtual tblTender_ContractorType tblTender_ContractorType { get; set; }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == "Title")
+                {
+                    if (this.Title.Length <2)
+                    {
+                        return "Title cannot be blank!!!";
+                    }
+                }
+                
+
+                if (columnName == "ContractorTypeID")
+                {
+                    if (this.ContractorTypeID<1)
+                    {
+                        return "Contractor Type cannot be blank!!!";
+                    }
+                }
+                return null;
+            }
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tblTender_UnitOfMeasure
+    public partial class tblTender_UnitOfMeasure : BaseModel
     {
         public tblTender_UnitOfMeasure()
         {
@@ -22,13 +22,55 @@ namespace WalzExplorer.Database
             this.tblTender_Material = new HashSet<tblTender_Material>();
         }
     
-        public int UnitOfMeasureID { get; set; }
-        public int TenderID { get; set; }
-        public string Title { get; set; }
-        public string ShortTitle { get; set; }
-        public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public byte[] RowVersion { get; set; }
+        private int _unitOfMeasureID;
+    	public int UnitOfMeasureID 
+    	{ 
+    		get { return _unitOfMeasureID; } 
+    		set { SetProperty(ref _unitOfMeasureID, value); } 
+    	}
+    
+        private int _tenderID;
+    	public int TenderID 
+    	{ 
+    		get { return _tenderID; } 
+    		set { SetProperty(ref _tenderID, value); } 
+    	}
+    
+        private string _title;
+    	public string Title 
+    	{ 
+    		get { return _title; } 
+    		set { SetProperty(ref _title, value); } 
+    	}
+    
+        private string _shortTitle;
+    	public string ShortTitle 
+    	{ 
+    		get { return _shortTitle; } 
+    		set { SetProperty(ref _shortTitle, value); } 
+    	}
+    
+        private string _updatedBy;
+    	public string UpdatedBy 
+    	{ 
+    		get { return _updatedBy; } 
+    		set { SetProperty(ref _updatedBy, value); } 
+    	}
+    
+        private Nullable<System.DateTime> _updatedDate;
+    	public Nullable<System.DateTime> UpdatedDate 
+    	{ 
+    		get { return _updatedDate; } 
+    		set { SetProperty(ref _updatedDate, value); } 
+    	}
+    
+        private byte[] _rowVersion;
+    	public byte[] RowVersion 
+    	{ 
+    		get { return _rowVersion; } 
+    		set { SetProperty(ref _rowVersion, value); } 
+    	}
+    
     
         public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_Activity> tblTender_Activity { get; set; }

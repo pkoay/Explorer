@@ -11,13 +11,49 @@ namespace WalzExplorer.Database
 {
     using System;
     
-    public partial class spWEX_Node_TendersOpenList_Result
+    public partial class spWEX_Node_TendersOpenList_Result : BaseModel
     {
-        public string NodeType { get; set; }
-        public string NodeDescription { get; set; }
-        public int NodeID { get; set; }
-        public string NodeIconOpen { get; set; }
-        public string NodeIconClosed { get; set; }
-        public string NodeChildSQL { get; set; }
+        private string _nodeType;
+    	public string NodeType 
+    	{ 
+    		get { return _nodeType; } 
+    		set { SetProperty(ref _nodeType, value); } 
+    	}
+    
+        private string _nodeDescription;
+    	public string NodeDescription 
+    	{ 
+    		get { return _nodeDescription; } 
+    		set { SetProperty(ref _nodeDescription, value); } 
+    	}
+    
+        private int _nodeID;
+    	public int NodeID 
+    	{ 
+    		get { return _nodeID; } 
+    		set { SetProperty(ref _nodeID, value); } 
+    	}
+    
+        private string _nodeIconOpen;
+    	public string NodeIconOpen 
+    	{ 
+    		get { return _nodeIconOpen; } 
+    		set { SetProperty(ref _nodeIconOpen, value); } 
+    	}
+    
+        private string _nodeIconClosed;
+    	public string NodeIconClosed 
+    	{ 
+    		get { return _nodeIconClosed; } 
+    		set { SetProperty(ref _nodeIconClosed, value); } 
+    	}
+    
+        private string _nodeChildSQL;
+    	public string NodeChildSQL 
+    	{ 
+    		get { return _nodeChildSQL; } 
+    		set { SetProperty(ref _nodeChildSQL, value); } 
+    	}
+    
     }
 }

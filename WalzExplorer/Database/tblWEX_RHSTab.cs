@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tblWEX_RHSTab
+    public partial class tblWEX_RHSTab : BaseModel
     {
         public tblWEX_RHSTab()
         {
@@ -20,9 +20,27 @@ namespace WalzExplorer.Database
             this.tblWEX_TreeNodeType = new HashSet<tblWEX_TreeNodeType>();
         }
     
-        public string RHSTabID { get; set; }
-        public string Name { get; set; }
-        public int Order { get; set; }
+        private string _rHSTabID;
+    	public string RHSTabID 
+    	{ 
+    		get { return _rHSTabID; } 
+    		set { SetProperty(ref _rHSTabID, value); } 
+    	}
+    
+        private string _name;
+    	public string Name 
+    	{ 
+    		get { return _name; } 
+    		set { SetProperty(ref _name, value); } 
+    	}
+    
+        private int _order;
+    	public int Order 
+    	{ 
+    		get { return _order; } 
+    		set { SetProperty(ref _order, value); } 
+    	}
+    
     
         public virtual ICollection<tblWEX_NTSecurityGroup> tblWEX_NTSecurityGroup { get; set; }
         public virtual ICollection<tblWEX_TreeNodeType> tblWEX_TreeNodeType { get; set; }

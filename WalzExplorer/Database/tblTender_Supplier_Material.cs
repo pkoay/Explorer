@@ -12,14 +12,50 @@ namespace WalzExplorer.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tblTender_Supplier_Material
+    public partial class tblTender_Supplier_Material : BaseModel
     {
-        public int SupplierID { get; set; }
-        public int MaterialID { get; set; }
-        public double UnitOfMeasureRate { get; set; }
-        public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public byte[] RowVersion { get; set; }
+        private int _supplierID;
+    	public int SupplierID 
+    	{ 
+    		get { return _supplierID; } 
+    		set { SetProperty(ref _supplierID, value); } 
+    	}
+    
+        private int _materialID;
+    	public int MaterialID 
+    	{ 
+    		get { return _materialID; } 
+    		set { SetProperty(ref _materialID, value); } 
+    	}
+    
+        private double _unitOfMeasureRate;
+    	public double UnitOfMeasureRate 
+    	{ 
+    		get { return _unitOfMeasureRate; } 
+    		set { SetProperty(ref _unitOfMeasureRate, value); } 
+    	}
+    
+        private string _updatedBy;
+    	public string UpdatedBy 
+    	{ 
+    		get { return _updatedBy; } 
+    		set { SetProperty(ref _updatedBy, value); } 
+    	}
+    
+        private Nullable<System.DateTime> _updatedDate;
+    	public Nullable<System.DateTime> UpdatedDate 
+    	{ 
+    		get { return _updatedDate; } 
+    		set { SetProperty(ref _updatedDate, value); } 
+    	}
+    
+        private byte[] _rowVersion;
+    	public byte[] RowVersion 
+    	{ 
+    		get { return _rowVersion; } 
+    		set { SetProperty(ref _rowVersion, value); } 
+    	}
+    
     
         public virtual tblTender_Material tblTender_Material { get; set; }
         public virtual tblTender_Supplier tblTender_Supplier { get; set; }

@@ -19,6 +19,7 @@ namespace WalzExplorer.Common
             gcb.ItemsSource = list;
             gcb.Header = header;
             gcb.DisplayMemberPath = listDisplayColumn;
+            gcb.ValidatesOnDataErrors = GridViewValidationMode.Default;
             return gcb;
         }
 

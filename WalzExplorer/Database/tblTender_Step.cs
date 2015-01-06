@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tblTender_Step
+    public partial class tblTender_Step : BaseModel
     {
         public tblTender_Step()
         {
@@ -22,13 +22,55 @@ namespace WalzExplorer.Database
             this.tblTender_ActivityMaterial = new HashSet<tblTender_ActivityMaterial>();
         }
     
-        public int StepID { get; set; }
-        public int TenderID { get; set; }
-        public string Title { get; set; }
-        public int SortOrder { get; set; }
-        public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public byte[] RowVersion { get; set; }
+        private int _stepID;
+    	public int StepID 
+    	{ 
+    		get { return _stepID; } 
+    		set { SetProperty(ref _stepID, value); } 
+    	}
+    
+        private int _tenderID;
+    	public int TenderID 
+    	{ 
+    		get { return _tenderID; } 
+    		set { SetProperty(ref _tenderID, value); } 
+    	}
+    
+        private string _title;
+    	public string Title 
+    	{ 
+    		get { return _title; } 
+    		set { SetProperty(ref _title, value); } 
+    	}
+    
+        private int _sortOrder;
+    	public int SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
+    	}
+    
+        private string _updatedBy;
+    	public string UpdatedBy 
+    	{ 
+    		get { return _updatedBy; } 
+    		set { SetProperty(ref _updatedBy, value); } 
+    	}
+    
+        private Nullable<System.DateTime> _updatedDate;
+    	public Nullable<System.DateTime> UpdatedDate 
+    	{ 
+    		get { return _updatedDate; } 
+    		set { SetProperty(ref _updatedDate, value); } 
+    	}
+    
+        private byte[] _rowVersion;
+    	public byte[] RowVersion 
+    	{ 
+    		get { return _rowVersion; } 
+    		set { SetProperty(ref _rowVersion, value); } 
+    	}
+    
     
         public virtual ICollection<tblTender_ActivityChildActivity> tblTender_ActivityChildActivity { get; set; }
         public virtual ICollection<tblTender_ActivityContractor> tblTender_ActivityContractor { get; set; }

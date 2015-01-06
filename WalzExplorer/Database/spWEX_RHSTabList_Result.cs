@@ -11,9 +11,21 @@ namespace WalzExplorer.Database
 {
     using System;
     
-    public partial class spWEX_RHSTabList_Result
+    public partial class spWEX_RHSTabList_Result : BaseModel
     {
-        public string ID { get; set; }
-        public string Header { get; set; }
+        private string _iD;
+    	public string ID 
+    	{ 
+    		get { return _iD; } 
+    		set { SetProperty(ref _iD, value); } 
+    	}
+    
+        private string _header;
+    	public string Header 
+    	{ 
+    		get { return _header; } 
+    		set { SetProperty(ref _header, value); } 
+    	}
+    
     }
 }

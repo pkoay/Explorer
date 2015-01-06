@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tblTender_Activity
+    public partial class tblTender_Activity : BaseModel
     {
         public tblTender_Activity()
         {
@@ -24,14 +24,62 @@ namespace WalzExplorer.Database
             this.tblTender_Item = new HashSet<tblTender_Item>();
         }
     
-        public int ActivityID { get; set; }
-        public int TenderID { get; set; }
-        public string Title { get; set; }
-        public int UnitOfMeasureID { get; set; }
-        public string Comment { get; set; }
-        public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public byte[] RowVersion { get; set; }
+        private int _activityID;
+    	public int ActivityID 
+    	{ 
+    		get { return _activityID; } 
+    		set { SetProperty(ref _activityID, value); } 
+    	}
+    
+        private int _tenderID;
+    	public int TenderID 
+    	{ 
+    		get { return _tenderID; } 
+    		set { SetProperty(ref _tenderID, value); } 
+    	}
+    
+        private string _title;
+    	public string Title 
+    	{ 
+    		get { return _title; } 
+    		set { SetProperty(ref _title, value); } 
+    	}
+    
+        private int _unitOfMeasureID;
+    	public int UnitOfMeasureID 
+    	{ 
+    		get { return _unitOfMeasureID; } 
+    		set { SetProperty(ref _unitOfMeasureID, value); } 
+    	}
+    
+        private string _comment;
+    	public string Comment 
+    	{ 
+    		get { return _comment; } 
+    		set { SetProperty(ref _comment, value); } 
+    	}
+    
+        private string _updatedBy;
+    	public string UpdatedBy 
+    	{ 
+    		get { return _updatedBy; } 
+    		set { SetProperty(ref _updatedBy, value); } 
+    	}
+    
+        private Nullable<System.DateTime> _updatedDate;
+    	public Nullable<System.DateTime> UpdatedDate 
+    	{ 
+    		get { return _updatedDate; } 
+    		set { SetProperty(ref _updatedDate, value); } 
+    	}
+    
+        private byte[] _rowVersion;
+    	public byte[] RowVersion 
+    	{ 
+    		get { return _rowVersion; } 
+    		set { SetProperty(ref _rowVersion, value); } 
+    	}
+    
     
         public virtual tblTender tblTender { get; set; }
         public virtual tblTender_UnitOfMeasure tblTender_UnitOfMeasure { get; set; }

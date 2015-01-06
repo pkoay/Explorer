@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tblTender_WorkGroup
+    public partial class tblTender_WorkGroup : BaseModel
     {
         public tblTender_WorkGroup()
         {
@@ -21,16 +21,76 @@ namespace WalzExplorer.Database
             this.tblTender_WorkGroupItem = new HashSet<tblTender_WorkGroupItem>();
         }
     
-        public int WorkGroupID { get; set; }
-        public int TenderID { get; set; }
-        public string Title { get; set; }
-        public double OnsiteLabourRate { get; set; }
-        public double LabourMarkup { get; set; }
-        public int Rate { get; set; }
-        public string Comment { get; set; }
-        public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public byte[] RowVersion { get; set; }
+        private int _workGroupID;
+    	public int WorkGroupID 
+    	{ 
+    		get { return _workGroupID; } 
+    		set { SetProperty(ref _workGroupID, value); } 
+    	}
+    
+        private int _tenderID;
+    	public int TenderID 
+    	{ 
+    		get { return _tenderID; } 
+    		set { SetProperty(ref _tenderID, value); } 
+    	}
+    
+        private string _title;
+    	public string Title 
+    	{ 
+    		get { return _title; } 
+    		set { SetProperty(ref _title, value); } 
+    	}
+    
+        private double _onsiteLabourRate;
+    	public double OnsiteLabourRate 
+    	{ 
+    		get { return _onsiteLabourRate; } 
+    		set { SetProperty(ref _onsiteLabourRate, value); } 
+    	}
+    
+        private double _labourMarkup;
+    	public double LabourMarkup 
+    	{ 
+    		get { return _labourMarkup; } 
+    		set { SetProperty(ref _labourMarkup, value); } 
+    	}
+    
+        private int _rate;
+    	public int Rate 
+    	{ 
+    		get { return _rate; } 
+    		set { SetProperty(ref _rate, value); } 
+    	}
+    
+        private string _comment;
+    	public string Comment 
+    	{ 
+    		get { return _comment; } 
+    		set { SetProperty(ref _comment, value); } 
+    	}
+    
+        private string _updatedBy;
+    	public string UpdatedBy 
+    	{ 
+    		get { return _updatedBy; } 
+    		set { SetProperty(ref _updatedBy, value); } 
+    	}
+    
+        private Nullable<System.DateTime> _updatedDate;
+    	public Nullable<System.DateTime> UpdatedDate 
+    	{ 
+    		get { return _updatedDate; } 
+    		set { SetProperty(ref _updatedDate, value); } 
+    	}
+    
+        private byte[] _rowVersion;
+    	public byte[] RowVersion 
+    	{ 
+    		get { return _rowVersion; } 
+    		set { SetProperty(ref _rowVersion, value); } 
+    	}
+    
     
         public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_ActivityLabour> tblTender_ActivityLabour { get; set; }

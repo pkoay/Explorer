@@ -11,12 +11,42 @@ namespace WalzExplorer.Database
 {
     using System;
     
-    public partial class fnTender_Schedule_List_Result
+    public partial class fnTender_Schedule_List_Result : BaseModel
     {
-        public int TopParentID { get; set; }
-        public int ScheduleID { get; set; }
-        public string Structure { get; set; }
-        public int Level { get; set; }
-        public double SortOrder { get; set; }
+        private int _topParentID;
+    	public int TopParentID 
+    	{ 
+    		get { return _topParentID; } 
+    		set { SetProperty(ref _topParentID, value); } 
+    	}
+    
+        private int _scheduleID;
+    	public int ScheduleID 
+    	{ 
+    		get { return _scheduleID; } 
+    		set { SetProperty(ref _scheduleID, value); } 
+    	}
+    
+        private string _structure;
+    	public string Structure 
+    	{ 
+    		get { return _structure; } 
+    		set { SetProperty(ref _structure, value); } 
+    	}
+    
+        private int _level;
+    	public int Level 
+    	{ 
+    		get { return _level; } 
+    		set { SetProperty(ref _level, value); } 
+    	}
+    
+        private double _sortOrder;
+    	public double SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
+    	}
+    
     }
 }

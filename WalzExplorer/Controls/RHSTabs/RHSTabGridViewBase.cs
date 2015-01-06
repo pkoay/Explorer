@@ -32,6 +32,7 @@ namespace WalzExplorer.Controls.RHSTabs
         protected List<string> columnNotRequired = new List<string>();
         protected List<string> columnReadOnly = new List<string>();
         protected GridViewRow ContextMenuRow;
+        private bool isEditing = false;
 
         //DragDrop
         const string GridDragData = "GridDragData";
@@ -58,8 +59,14 @@ namespace WalzExplorer.Controls.RHSTabs
             g.GridLinesVisibility= GridLinesVisibility.None;
             g.ClipboardPasteMode = GridViewClipboardPasteMode.None;
             g.ClipboardCopyMode = GridViewClipboardCopyMode.Cells;
+           
+            
+            g.ValidatesOnDataErrors = GridViewValidationMode.Default;
 
             //Events
+            g.PastingCellClipboardContent += g_PastingCellClipboardContent;
+            g.BeginningEdit += g_BeginningEdit; 
+                //+= new EventHandler<GridViewBeginningEditRoutedEventArgs>(g_BeginningEdit);
             g.RowEditEnded += new EventHandler<GridViewRowEditEndedEventArgs>(g_RowEditEnded);
             g.AddingNewDataItem += new EventHandler<GridViewAddingNewEventArgs> (g_AddingNewDataItem);
             g.AutoGeneratingColumn += new EventHandler<GridViewAutoGeneratingColumnEventArgs>(g_AutoGeneratingColumn);
@@ -102,6 +109,17 @@ namespace WalzExplorer.Controls.RHSTabs
 
         }
 
+        void g_PastingCellClipboardContent(object sender, GridViewCellClipboardEventArgs e)
+        {
+           
+             
+        }
+
+        void g_BeginningEdit(object sender, GridViewBeginningEditRoutedEventArgs e)
+        {
+            isEditing = true;
+        }
+
         protected  virtual void g_CellValidating(object sender, GridViewCellValidatingEventArgs e)
         {
             // this is required to be overridden by each RHSTabView
@@ -110,7 +128,7 @@ namespace WalzExplorer.Controls.RHSTabs
         //Drag Drop
         void g_DragEnter(object sender, DragEventArgs e)
         {
-            if (!e.Data.GetDataPresent(GridDragData))
+            if (!isEditing && !e.Data.GetDataPresent(GridDragData))
             {
                 e.Effects = DragDropEffects.Move;
             }
@@ -230,40 +248,45 @@ namespace WalzExplorer.Controls.RHSTabs
                     //Note: paste does not invoke g_AddingNewDataItem so has to be treated seperatly
                    
                     //insert rows using standard telerik methodology
-                    g.ClipboardPasteMode = GridViewClipboardPasteMode.InsertNewRows;
+                    g.ClipboardPasteMode = GridViewClipboardPasteMode.InsertNewRows| GridViewClipboardPasteMode.OverwriteWithEmptyValues;                    //Note OverwriteWithEmptyValues allows pasting of blank cells otherwise as if cell does not exist (e.g. copy 4 columns with one blank cell, will be like copying 3 columns)
+
                     int before = g.Items.Count;
                     ApplicationCommands.Paste.Execute(this, null);
                     int rowsInserted = g.Items.Count - before;
                     g.ClipboardPasteMode = GridViewClipboardPasteMode.None;
-
-                    //put items in a list
-                     List<object> items = new List<object>();
+                    if (rowsInserted != 0)
+                    {
+                        //put items in a list
+                        List<object> items = new List<object>();
                         for (int i = before; i < g.Items.Count; i++)
                         {
                             items.Add(g.Items[i]);
                         }
 
-                    //set default values
-                    // note: the paste creates the objects first and then this overwrites the "default" columns with default values
-                    // this is the expected result for things like tenderID in the TenderContractorsTab
-                    //this is why the SetDefaults function checks to see if the value is different from a new instance, if the values are different 
-                    // (i.e. value has been manually changed) then the value will not be overwritten by the 'DEFAULT'  f
-                   
-                    foreach(object item in items)
-                    {
-                        viewModel.SetDefaultsForPaste(item); 
-                    }
-                
-                    //Move new inserted rows to insert location (i.e. from context menu click)
-                    if (ContextMenuRow != null)
-                    {
-                       
-                        //items.Reverse();
-                        viewModel.MoveItemsToItem(items,ContextMenuRow.Item);
-                    }
+                        //set default values
+                        // note: the paste creates the objects first and then this overwrites the "default" columns with default values
+                        // this is the expected result for things like tenderID in the TenderContractorsTab
+                        //this is why the SetDefaults function checks to see if the value is different from a new instance, if the values are different 
+                        // (i.e. value has been manually changed) then the value will not be overwritten by the 'DEFAULT'  f
 
-                    viewModel.SavePaste(items);
-                    g.Rebind();         //redisplay new values such as ID, sort order
+                        foreach (object item in items)
+                        {
+                            viewModel.SetDefaultsForPaste(item);
+                        }
+
+                        //Move new inserted rows to insert location (i.e. from context menu click)
+                        if (ContextMenuRow != null)
+                        {
+                            viewModel.MoveItemsToItem(items, ContextMenuRow.Item);
+                        }
+
+                        //viewModel.SavePaste(items);
+                        g.Rebind();         //redisplay new values such as ID, sort order
+                    }
+                    else
+                    {
+                        MessageBox.Show("No data in clipboard to paste", "Paste failed", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    }
                     break;
 
                 case "miExportExcel":
@@ -357,7 +380,9 @@ namespace WalzExplorer.Controls.RHSTabs
         }
         private void g_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
         {
-            viewModel.ManualChange(e.EditedItem);
+            isEditing = false;
+            //REMEMBER!!!!
+            //viewModel.ManualChange(e.EditedItem);
             g.Rebind();         //redisplay new values such as ID, sort order
             //this.isGridEditing = false;
         }

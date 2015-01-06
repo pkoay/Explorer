@@ -49,6 +49,7 @@ namespace WalzExplorer.Controls.RHSTabs
       
        public void MoveItemsToIndex( List<object> items,int index)
        {
+           
            if (this.data.IndexOf(items[0])>index) items.Reverse();
            foreach(object i in items)
            {

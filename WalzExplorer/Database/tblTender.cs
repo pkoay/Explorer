@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tblTender
+    public partial class tblTender : BaseModel
     {
         public tblTender()
         {
@@ -28,15 +28,69 @@ namespace WalzExplorer.Database
             this.tblTender_Contractor = new HashSet<tblTender_Contractor>();
         }
     
-        public int TenderID { get; set; }
-        public string TenderNo { get; set; }
-        public string Revision { get; set; }
-        public string Title { get; set; }
-        public string Comment { get; set; }
-        public int StatusID { get; set; }
-        public string UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public byte[] RowVersion { get; set; }
+        private int _tenderID;
+    	public int TenderID 
+    	{ 
+    		get { return _tenderID; } 
+    		set { SetProperty(ref _tenderID, value); } 
+    	}
+    
+        private string _tenderNo;
+    	public string TenderNo 
+    	{ 
+    		get { return _tenderNo; } 
+    		set { SetProperty(ref _tenderNo, value); } 
+    	}
+    
+        private string _revision;
+    	public string Revision 
+    	{ 
+    		get { return _revision; } 
+    		set { SetProperty(ref _revision, value); } 
+    	}
+    
+        private string _title;
+    	public string Title 
+    	{ 
+    		get { return _title; } 
+    		set { SetProperty(ref _title, value); } 
+    	}
+    
+        private string _comment;
+    	public string Comment 
+    	{ 
+    		get { return _comment; } 
+    		set { SetProperty(ref _comment, value); } 
+    	}
+    
+        private int _statusID;
+    	public int StatusID 
+    	{ 
+    		get { return _statusID; } 
+    		set { SetProperty(ref _statusID, value); } 
+    	}
+    
+        private string _updatedBy;
+    	public string UpdatedBy 
+    	{ 
+    		get { return _updatedBy; } 
+    		set { SetProperty(ref _updatedBy, value); } 
+    	}
+    
+        private Nullable<System.DateTime> _updatedDate;
+    	public Nullable<System.DateTime> UpdatedDate 
+    	{ 
+    		get { return _updatedDate; } 
+    		set { SetProperty(ref _updatedDate, value); } 
+    	}
+    
+        private byte[] _rowVersion;
+    	public byte[] RowVersion 
+    	{ 
+    		get { return _rowVersion; } 
+    		set { SetProperty(ref _rowVersion, value); } 
+    	}
+    
     
         public virtual ICollection<tblTender_Activity> tblTender_Activity { get; set; }
         public virtual ICollection<tblTender_ContractorType> tblTender_ContractorType { get; set; }

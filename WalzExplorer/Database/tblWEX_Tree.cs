@@ -12,17 +12,41 @@ namespace WalzExplorer.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tblWEX_Tree
+    public partial class tblWEX_Tree : BaseModel
     {
         public tblWEX_Tree()
         {
             this.tblWEX_NTSecurityGroup = new HashSet<tblWEX_NTSecurityGroup>();
         }
     
-        public string TreeID { get; set; }
-        public string LHSTabID { get; set; }
-        public int Order { get; set; }
-        public string RootSQL { get; set; }
+        private string _treeID;
+    	public string TreeID 
+    	{ 
+    		get { return _treeID; } 
+    		set { SetProperty(ref _treeID, value); } 
+    	}
+    
+        private string _lHSTabID;
+    	public string LHSTabID 
+    	{ 
+    		get { return _lHSTabID; } 
+    		set { SetProperty(ref _lHSTabID, value); } 
+    	}
+    
+        private int _order;
+    	public int Order 
+    	{ 
+    		get { return _order; } 
+    		set { SetProperty(ref _order, value); } 
+    	}
+    
+        private string _rootSQL;
+    	public string RootSQL 
+    	{ 
+    		get { return _rootSQL; } 
+    		set { SetProperty(ref _rootSQL, value); } 
+    	}
+    
     
         public virtual tblWEX_LHSTab tblWEX_LHSTab { get; set; }
         public virtual ICollection<tblWEX_NTSecurityGroup> tblWEX_NTSecurityGroup { get; set; }

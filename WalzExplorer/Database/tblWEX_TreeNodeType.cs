@@ -12,14 +12,20 @@ namespace WalzExplorer.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tblWEX_TreeNodeType
+    public partial class tblWEX_TreeNodeType : BaseModel
     {
         public tblWEX_TreeNodeType()
         {
             this.tblWEX_RHSTab = new HashSet<tblWEX_RHSTab>();
         }
     
-        public string TreeNodeTypeID { get; set; }
+        private string _treeNodeTypeID;
+    	public string TreeNodeTypeID 
+    	{ 
+    		get { return _treeNodeTypeID; } 
+    		set { SetProperty(ref _treeNodeTypeID, value); } 
+    	}
+    
     
         public virtual ICollection<tblWEX_RHSTab> tblWEX_RHSTab { get; set; }
     }

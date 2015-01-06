@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tblWEX_NTSecurityGroup
+    public partial class tblWEX_NTSecurityGroup : BaseModel
     {
         public tblWEX_NTSecurityGroup()
         {
@@ -20,7 +20,13 @@ namespace WalzExplorer.Database
             this.tblWEX_Tree = new HashSet<tblWEX_Tree>();
         }
     
-        public string NTSecurityGroup { get; set; }
+        private string _nTSecurityGroup;
+    	public string NTSecurityGroup 
+    	{ 
+    		get { return _nTSecurityGroup; } 
+    		set { SetProperty(ref _nTSecurityGroup, value); } 
+    	}
+    
     
         public virtual ICollection<tblWEX_RHSTab> tblWEX_RHSTab { get; set; }
         public virtual ICollection<tblWEX_Tree> tblWEX_Tree { get; set; }
