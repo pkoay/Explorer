@@ -10,8 +10,8 @@
 namespace WalzExplorer.Database
 {
     using System;
-    
-    public partial class spWEX_Node_TenderScheduleAndActivityList_Result : BaseModel
+    using System.Collections.Generic;
+    public partial class spWEX_Node_TenderScheduleAndActivityList_Result : ModelBase
     {
         private string _nodeType;
     	public string NodeType 

@@ -10,9 +10,9 @@
 namespace WalzExplorer.Database
 {
     using System;
+    using System.ComponentModel;
     using System.Collections.Generic;
-    
-    public partial class tblTender_Status : BaseModel
+    public partial class tblTender_Status : ModelBase,IDataErrorInfo
     {
         public tblTender_Status()
         {

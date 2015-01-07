@@ -10,9 +10,9 @@
 namespace WalzExplorer.Database
 {
     using System;
+    using System.ComponentModel;
     using System.Collections.Generic;
-    
-    public partial class tblTender_ActivityLabour : BaseModel
+    public partial class tblTender_ActivityLabour : ModelBase,IDataErrorInfo
     {
         private int _activityLabourID;
     	public int ActivityLabourID 

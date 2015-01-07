@@ -10,10 +10,9 @@
 namespace WalzExplorer.Database
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-
-    public partial class tblTender_Contractor : BaseModel, IDataErrorInfo
+    using System.Collections.Generic;
+    public partial class tblTender_Contractor : ModelBase,IDataErrorInfo
     {
         public tblTender_Contractor()
         {
@@ -87,29 +86,5 @@ namespace WalzExplorer.Database
         public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_ActivityContractor> tblTender_ActivityContractor { get; set; }
         public virtual tblTender_ContractorType tblTender_ContractorType { get; set; }
-
-        public string this[string columnName]
-        {
-            get
-            {
-                if (columnName == "Title")
-                {
-                    if (this.Title.Length <2)
-                    {
-                        return "Title cannot be blank!!!";
-                    }
-                }
-                
-
-                if (columnName == "ContractorTypeID")
-                {
-                    if (this.ContractorTypeID<1)
-                    {
-                        return "Contractor Type cannot be blank!!!";
-                    }
-                }
-                return null;
-            }
-        }
     }
 }

@@ -10,9 +10,9 @@
 namespace WalzExplorer.Database
 {
     using System;
+    using System.ComponentModel;
     using System.Collections.Generic;
-    
-    public partial class tblTender_Supplier_Material : BaseModel
+    public partial class tblTender_Supplier_Material : ModelBase,IDataErrorInfo
     {
         private int _supplierID;
     	public int SupplierID 

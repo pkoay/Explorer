@@ -10,9 +10,9 @@
 namespace WalzExplorer.Database
 {
     using System;
+    using System.ComponentModel;
     using System.Collections.Generic;
-    
-    public partial class tblWEX_TreeNodeType : BaseModel
+    public partial class tblWEX_TreeNodeType : ModelBase,IDataErrorInfo
     {
         public tblWEX_TreeNodeType()
         {

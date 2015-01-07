@@ -10,8 +10,8 @@
 namespace WalzExplorer.Database
 {
     using System;
-    
-    public partial class spWEX_RHSTabList_Result : BaseModel
+    using System.Collections.Generic;
+    public partial class spWEX_RHSTabList_Result : ModelBase
     {
         private string _iD;
     	public string ID 

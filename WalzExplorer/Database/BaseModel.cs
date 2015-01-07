@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace WalzExplorer.Database
 {
-    public abstract class BaseModel : INotifyPropertyChanged
+    public abstract class ModelBase : INotifyPropertyChanged
     {
+        protected bool hasError=false;
+
         protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
         {
             if (object.Equals(storage, value)) return false;
@@ -32,6 +34,18 @@ namespace WalzExplorer.Database
             {
                 return null;
             }
+        }
+        public bool HasError
+        {
+            get
+            {
+                return hasError;
+            } 
+        }
+
+        public string this[string columnName]
+        {
+            get { hasError = false; return null; }
         }
     }
 }

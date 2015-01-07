@@ -17,7 +17,7 @@ namespace WalzExplorer.Controls.RHSTabs
     {
         
 
-        public ObservableCollection<object> data;
+        public ObservableCollection<ModelBase> data;
         public WalzExplorerEntities context;
         protected Dictionary<string, object> columnDefault = new Dictionary<string, object>();
         
@@ -27,54 +27,54 @@ namespace WalzExplorer.Controls.RHSTabs
             this.context = new WalzExplorerEntities();
         }
 
-        public virtual object DefaultItem()
+        public virtual ModelBase DefaultItem()
         {
             return null;
         }
        
-        public object InsertNew()
+        public ModelBase InsertNew()
         {
-            object i = DefaultItem();
+            ModelBase i = DefaultItem();
             data.Insert(0, i );
             return i;
             
         }
-        public object InsertNew(object InsertAbove)
+        public ModelBase InsertNew(ModelBase InsertAbove)
         {
-            object i = DefaultItem();
+            ModelBase i = DefaultItem();
             data.Insert( this.data.IndexOf(InsertAbove), i);
             return i;
         }
       
       
-       public void MoveItemsToIndex( List<object> items,int index)
+       public void MoveItemsToIndex( List<ModelBase> items,int index)
        {
            
            if (this.data.IndexOf(items[0])>index) items.Reverse();
-           foreach(object i in items)
+           foreach(ModelBase i in items)
            {
                this.data.Move(this.data.IndexOf(i), index);
            }
            SaveAndUpdateSortOrder();
        }
 
-       public void MoveItemsToItem( List<object> items,object MoveAbove)
+       public void MoveItemsToItem( List<ModelBase> items,ModelBase MoveAbove)
         {
             MoveItemsToIndex(items, this.data.IndexOf(MoveAbove));
         }
 
-        public void Delete(List<object> items)
+        public void Delete(IEnumerable<object> items)
         {
-            foreach (object item in items)
+            foreach (ModelBase item in items)
             {
                 context.Entry(item).State = System.Data.Entity.EntityState.Deleted;
             }
             SaveAndUpdateSortOrder();
         }
 
-        public void SavePaste(List<object> items)
+        public void SavePaste(List<ModelBase> items)
         {
-            foreach (object item in items)
+            foreach (ModelBase item in items)
             {
                 // If item not in database 
                 if (context.Entry(item).State == System.Data.Entity.EntityState.Detached)
@@ -87,7 +87,7 @@ namespace WalzExplorer.Controls.RHSTabs
 
         }
 
-        //sets the defaults for an objects (defaults as specified in dictionary columnDefault)
+        //sets the defaults for a ModelBases (defaults as specified in dictionary columnDefault)
         public void SetDefaultsForPaste(object o)
         {
 
@@ -96,7 +96,7 @@ namespace WalzExplorer.Controls.RHSTabs
                 string DefaultKey = def.Key.ToString();
                 object DefaultValue = def.Value;
                
-                    //check to see if the property value in the object is the same as the property value  in a new instance
+                    //check to see if the property value in the ModelBase is the same as the property value  in a new instance
                     object ni = ObjectLibrary.CreateNewInstanace(o);
 
                     //this is dodgy..
@@ -110,7 +110,7 @@ namespace WalzExplorer.Controls.RHSTabs
         private void SaveAndUpdateSortOrder()
         {
             int i = 0;
-            foreach (object item in this.data)
+            foreach (ModelBase item in this.data)
             {
                 ObjectLibrary.SetValue(item, "SortOrder", i);
                 i++;
@@ -118,7 +118,7 @@ namespace WalzExplorer.Controls.RHSTabs
             context.SaveChangesWithValidation();
         }
 
-        public void ManualChange(object changedItem)
+        public void ManualChange(ModelBase changedItem)
         {
 
             // If item not in database 

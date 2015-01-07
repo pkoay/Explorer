@@ -318,7 +318,7 @@ public class CodeStringGenerator
         Accessibility.ForType(entity),
         _code.SpaceAfter(_code.AbstractOption(entity)),
         _code.Escape(entity),
-        _code.StringBefore(" : ", string.IsNullOrEmpty(_typeMapper.GetTypeName(entity.BaseType)) ? "BaseModel" : _typeMapper.GetTypeName(entity.BaseType)));
+        _code.StringBefore(" : ", string.IsNullOrEmpty(_typeMapper.GetTypeName(entity.BaseType)) ? "BaseModel,IDataErrorInfo" : _typeMapper.GetTypeName(entity.BaseType)));
 }
     
     public string EnumOpening(SimpleType enumType)
@@ -425,9 +425,10 @@ public class CodeStringGenerator
             ? string.Format(
                 CultureInfo.InvariantCulture,
                 "{0}using System;{1}" +
-                "{2}",
+                "{2}"+
+				"using System.Collections.Generic;{0}",
                 inHeader ? Environment.NewLine : "",
-                includeCollections ? (Environment.NewLine + "using System.Collections.Generic;") : "",
+                includeCollections ? (Environment.NewLine + "using System.ComponentModel;") : "",
                 inHeader ? "" : Environment.NewLine)
             : "";
     }

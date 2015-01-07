@@ -10,9 +10,9 @@
 namespace WalzExplorer.Database
 {
     using System;
+    using System.ComponentModel;
     using System.Collections.Generic;
-    
-    public partial class tblPerson_Person : BaseModel
+    public partial class tblPerson_Person : ModelBase,IDataErrorInfo
     {
         public tblPerson_Person()
         {

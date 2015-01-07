@@ -10,9 +10,9 @@
 namespace WalzExplorer.Database
 {
     using System;
+    using System.ComponentModel;
     using System.Collections.Generic;
-    
-    public partial class tblTender_WorkGroupItem : BaseModel
+    public partial class tblTender_WorkGroupItem : ModelBase,IDataErrorInfo
     {
         private int _workGroupItemID;
     	public int WorkGroupItemID 

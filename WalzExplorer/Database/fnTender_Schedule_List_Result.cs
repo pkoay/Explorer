@@ -10,8 +10,8 @@
 namespace WalzExplorer.Database
 {
     using System;
-    
-    public partial class fnTender_Schedule_List_Result : BaseModel
+    using System.Collections.Generic;
+    public partial class fnTender_Schedule_List_Result : ModelBase
     {
         private int _topParentID;
     	public int TopParentID 

@@ -27,12 +27,17 @@ namespace WalzExplorer.Controls.RHSTabs
     {
         private RadGridView g;  // Standard grid
         protected RHSTabGridViewModelBase viewModel;
+
+        //Grid Formatting
         protected Dictionary<string, string> columnRename = new Dictionary<string, string>();
         protected Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
         protected List<string> columnNotRequired = new List<string>();
         protected List<string> columnReadOnly = new List<string>();
         protected GridViewRow ContextMenuRow;
+
+
         private bool isEditing = false;
+        public Style style;
 
         //DragDrop
         const string GridDragData = "GridDragData";
@@ -45,18 +50,19 @@ namespace WalzExplorer.Controls.RHSTabs
         public void SetGrid (RadGridView grd )
         {
             g = grd;
+            //set font color
+
             
-                            
             //set basic grid properties
             g.AutoGenerateColumns=true;
             g.CanUserInsertRows=true;
             g.NewRowPosition= GridViewNewRowPosition.Top;
-            g.GroupRenderMode= GroupRenderMode.Flat;
+            g.GroupRenderMode = GroupRenderMode.Flat;
             g.SelectionMode = System.Windows.Controls.SelectionMode.Extended;
-            g.SelectionUnit= GridViewSelectionUnit.FullRow;
-            g.AlternationCount=4;
-            g.CanUserFreezeColumns=true;
-            g.GridLinesVisibility= GridLinesVisibility.None;
+            g.SelectionUnit = GridViewSelectionUnit.FullRow;
+            g.AlternationCount = 4;
+            g.CanUserFreezeColumns = true;
+            g.GridLinesVisibility = GridLinesVisibility.None;
             g.ClipboardPasteMode = GridViewClipboardPasteMode.None;
             g.ClipboardCopyMode = GridViewClipboardCopyMode.Cells;
            
@@ -64,11 +70,11 @@ namespace WalzExplorer.Controls.RHSTabs
             g.ValidatesOnDataErrors = GridViewValidationMode.Default;
 
             //Events
+            g.PreviewLostKeyboardFocus += g_PreviewLostKeyboardFocus;
             g.PastingCellClipboardContent += g_PastingCellClipboardContent;
-            g.BeginningEdit += g_BeginningEdit; 
-                //+= new EventHandler<GridViewBeginningEditRoutedEventArgs>(g_BeginningEdit);
+            g.BeginningEdit += g_BeginningEdit;
             g.RowEditEnded += new EventHandler<GridViewRowEditEndedEventArgs>(g_RowEditEnded);
-            g.AddingNewDataItem += new EventHandler<GridViewAddingNewEventArgs> (g_AddingNewDataItem);
+            g.AddingNewDataItem += new EventHandler<GridViewAddingNewEventArgs>(g_AddingNewDataItem);
             g.AutoGeneratingColumn += new EventHandler<GridViewAutoGeneratingColumnEventArgs>(g_AutoGeneratingColumn);
             g.ContextMenuOpening += new ContextMenuEventHandler(g_ContextMenuOpening);
             g.Deleted += new EventHandler<GridViewDeletedEventArgs>(g_Deleted);
@@ -109,6 +115,12 @@ namespace WalzExplorer.Controls.RHSTabs
 
         }
 
+        void g_PreviewLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            //viewModel.data.
+            //g.er
+        }
+
         void g_PastingCellClipboardContent(object sender, GridViewCellClipboardEventArgs e)
         {
            
@@ -144,13 +156,13 @@ namespace WalzExplorer.Controls.RHSTabs
                 {
                     if (!g.SelectedItems.Contains(row.Item))
                     {
-                        List<object> moveItems = new List<object>();
+                        List<ModelBase> moveItems = new List<ModelBase>();
                         // note can't uses g.SelectedItems as it is in ithe order of the selection. not grid order
-                        foreach (object item in g.Items)
+                        foreach (ModelBase item in g.Items)
                         {
                             if (g.SelectedItems.Contains(item)) moveItems.Add(item);
                         }
-                        viewModel.MoveItemsToItem(moveItems, row.Item);
+                        viewModel.MoveItemsToItem(moveItems, (ModelBase) row.Item);
                         g.Rebind(); //redisplay new values such as ID, sort order
                     }
                     else
@@ -199,7 +211,7 @@ namespace WalzExplorer.Controls.RHSTabs
 
         public void g_Deleted(object sender, GridViewDeletedEventArgs e)
         {
-            viewModel.Delete(e.Items.ToList());
+            viewModel.Delete(e.Items);
             g.Rebind();         //redisplay new values such as ID, sort order
 
         }
@@ -232,7 +244,7 @@ namespace WalzExplorer.Controls.RHSTabs
                     if (ContextMenuRow!= null)
                     {
                         //insert where contextmenu was opened (as was over row)
-                        g.CurrentItem = viewModel.InsertNew(ContextMenuRow.Item);
+                        g.CurrentItem = viewModel.InsertNew((ModelBase)ContextMenuRow.Item);
                         g.BeginEdit();
                     }
                     else
@@ -257,10 +269,10 @@ namespace WalzExplorer.Controls.RHSTabs
                     if (rowsInserted != 0)
                     {
                         //put items in a list
-                        List<object> items = new List<object>();
+                        List<ModelBase> items = new List<ModelBase>();
                         for (int i = before; i < g.Items.Count; i++)
                         {
-                            items.Add(g.Items[i]);
+                            items.Add((ModelBase)g.Items[i]);
                         }
 
                         //set default values
@@ -269,7 +281,7 @@ namespace WalzExplorer.Controls.RHSTabs
                         //this is why the SetDefaults function checks to see if the value is different from a new instance, if the values are different 
                         // (i.e. value has been manually changed) then the value will not be overwritten by the 'DEFAULT'  f
 
-                        foreach (object item in items)
+                        foreach (ModelBase item in items)
                         {
                             viewModel.SetDefaultsForPaste(item);
                         }
@@ -277,7 +289,7 @@ namespace WalzExplorer.Controls.RHSTabs
                         //Move new inserted rows to insert location (i.e. from context menu click)
                         if (ContextMenuRow != null)
                         {
-                            viewModel.MoveItemsToItem(items, ContextMenuRow.Item);
+                            viewModel.MoveItemsToItem(items, (ModelBase)ContextMenuRow.Item);
                         }
 
                         //viewModel.SavePaste(items);
@@ -316,6 +328,9 @@ namespace WalzExplorer.Controls.RHSTabs
         {
             Telerik.Windows.Controls.GridViewColumn c = e.Column;
 
+            //Ignore Error Columns
+            if (c.UniqueName == "Error" || c.UniqueName == "HasError") { e.Cancel = true; return; }
+
             //Ignore foreign key all columns
             if (c.UniqueName.StartsWith("tbl")) { e.Cancel = true; return; }
 
@@ -338,10 +353,19 @@ namespace WalzExplorer.Controls.RHSTabs
             //Read Only
             if (columnReadOnly.Contains(c.UniqueName))
             {
-                
+                e.Column.CellStyle = style;
                 e.Column.IsReadOnly = true;
-                e.Column.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF3F3F46");
+
+                // changing foregound makes the text invisible!?!?
+                //style = new Style(typeof(GridViewCell));
+                //style.Setters.Add(new Setter(GridViewCell.BackgroundProperty, (SolidColorBrush)new BrushConverter().ConvertFromString("#FF3E3E40")));
+                //c.CellStyle = style;
+                e.Column.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
+                    
+               
+
             }
+
             //Add combos
             if (columnCombo.ContainsKey(c.UniqueName))
             {
@@ -355,6 +379,7 @@ namespace WalzExplorer.Controls.RHSTabs
                 cmb.DataMemberBinding = new Binding(c.UniqueName);
                 cmb.SelectedValueMemberPath = c.UniqueName;
             }
+            g.Rebind();
            
         }
        
@@ -365,6 +390,9 @@ namespace WalzExplorer.Controls.RHSTabs
 
         private void g_AddingNewDataItem (object sender, GridViewAddingNewEventArgs e)
         {
+
+      
+            g.Rebind();
             e.Cancel = true;
             e.NewObject = viewModel.InsertNew();
             g.Rebind();         //redisplay new values such as ID, sort order
@@ -381,10 +409,9 @@ namespace WalzExplorer.Controls.RHSTabs
         private void g_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
         {
             isEditing = false;
-            //REMEMBER!!!!
-            //viewModel.ManualChange(e.EditedItem);
+            viewModel.ManualChange((ModelBase)e.EditedItem);
             g.Rebind();         //redisplay new values such as ID, sort order
-            //this.isGridEditing = false;
+           
         }
     }
 

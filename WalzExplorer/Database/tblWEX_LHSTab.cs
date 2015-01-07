@@ -10,9 +10,9 @@
 namespace WalzExplorer.Database
 {
     using System;
+    using System.ComponentModel;
     using System.Collections.Generic;
-    
-    public partial class tblWEX_LHSTab : BaseModel
+    public partial class tblWEX_LHSTab : ModelBase,IDataErrorInfo
     {
         public tblWEX_LHSTab()
         {

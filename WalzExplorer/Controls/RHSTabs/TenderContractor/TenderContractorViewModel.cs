@@ -17,7 +17,7 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
         public TenderContractorViewModel(int tenderId)
         {
             _tenderId = tenderId;
-            data = new ObservableCollection<object>(context.tblTender_Contractor
+            data = new ObservableCollection<ModelBase>(context.tblTender_Contractor
                 .Where(c=>c.TenderID==tenderId)
                 .OrderBy(m => m.SortOrder)
                 );
@@ -25,7 +25,7 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
             columnDefault.Add("TenderID", tenderId);
         }
 
-        public override object DefaultItem()
+        public override ModelBase DefaultItem()
         {
             tblTender_Contractor i= new tblTender_Contractor ();
             i.TenderID = _tenderId;
@@ -34,6 +34,11 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
         public List<object> cmbContractTypeList()
         {
             return context.tblTender_ContractorType.Where(d => d.TenderID == _tenderId).ToList<object>();
+        }
+
+        public void test()
+        {
+          
         }
     }
 }

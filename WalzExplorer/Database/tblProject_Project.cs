@@ -10,9 +10,9 @@
 namespace WalzExplorer.Database
 {
     using System;
+    using System.ComponentModel;
     using System.Collections.Generic;
-    
-    public partial class tblProject_Project : BaseModel
+    public partial class tblProject_Project : ModelBase,IDataErrorInfo
     {
         private string _projectID;
     	public string ProjectID 

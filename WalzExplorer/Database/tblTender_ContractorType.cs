@@ -10,9 +10,9 @@
 namespace WalzExplorer.Database
 {
     using System;
+    using System.ComponentModel;
     using System.Collections.Generic;
-    
-    public partial class tblTender_ContractorType : BaseModel
+    public partial class tblTender_ContractorType : ModelBase,IDataErrorInfo
     {
         public tblTender_ContractorType()
         {
