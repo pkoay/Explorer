@@ -38,8 +38,8 @@ namespace WalzExplorer.Controls.RHSTabs
 
         private bool isEditing = false;
         public Style style;
-        private bool IgnoreFocusChange = false;
-        private bool isNewMouseDown = true;
+        //private bool IgnoreFocusChange = false;
+        //private bool isNewMouseDown = true;
 
         //DragDrop
         const string GridDragData = "GridDragData";
@@ -74,7 +74,7 @@ namespace WalzExplorer.Controls.RHSTabs
 
             //Events
             //g.LostFocus += g_LostFocus;
-            g.MouseDown += g_MouseDown;
+            //g.MouseDown += g_MouseDown;
             //g.PreviewMouseDown += g_PreviewMouseDown;
             //g.PreviewLostKeyboardFocus += g_PreviewLostKeyboardFocus;
             //g.PastingCellClipboardContent += g_PastingCellClipboardContent;
@@ -188,17 +188,13 @@ namespace WalzExplorer.Controls.RHSTabs
         }
 
 
-        void g_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            isNewMouseDown = true;
+        //void g_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    isNewMouseDown = true;
 
-        }
+        //}
         
-        void g_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            // Store the mouse position
-            startPoint = e.GetPosition(null);
-        }
+       
 
      
 
@@ -213,6 +209,32 @@ namespace WalzExplorer.Controls.RHSTabs
         }
 
         //Drag Drop
+        void g_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // Store the mouse position
+            startPoint = e.GetPosition(null);
+        }
+        void g_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            // Get the current mouse position
+            System.Windows.Point mousePos = e.GetPosition(null);
+            Vector diff = startPoint - mousePos;
+
+            var element = e.OriginalSource;
+            GridViewRow GrabStartRow = (element as FrameworkElement).ParentOfType<GridViewRow>();
+            if (GrabStartRow == null || GrabStartRow.IsSelected == false) return;
+
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                ((Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance) ||(Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)) 
+                && g.SelectedItem != null
+                
+                )
+            {
+                // Initialize the drag & drop operation
+                DataObject dragData = new DataObject(GridDragData, g.SelectedItem);
+                DragDrop.DoDragDrop(g, dragData, DragDropEffects.Move);
+            }
+        }
         void g_DragEnter(object sender, DragEventArgs e)
         {
             if (!isEditing && !e.Data.GetDataPresent(GridDragData))
@@ -246,21 +268,7 @@ namespace WalzExplorer.Controls.RHSTabs
             }
         }
 
-        void g_PreviewMouseMove(object sender, MouseEventArgs e)
-        {
-            // Get the current mouse position
-            System.Windows.Point mousePos = e.GetPosition(null);
-            Vector diff = startPoint - mousePos;
-
-            if (e.LeftButton == MouseButtonState.Pressed &&
-                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
-                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance) && g.SelectedItem!=null)
-            {
-                // Initialize the drag & drop operation
-                DataObject dragData = new DataObject(GridDragData, g.SelectedItem);
-                DragDrop.DoDragDrop(g, dragData, DragDropEffects.Move);
-            } 
-        }
+      
 
       
 
