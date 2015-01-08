@@ -44,6 +44,26 @@ namespace WalzExplorer
         public MainWindow()
         {
             InitializeComponent();
+            this.PreviewMouseLeftButtonDown += MainWindow_PreviewMouseLeftButtonDown;
+        }
+
+        void MainWindow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //Sometimes a RHS tab will not want to loose focus (e.g. there are errors in it that need to be fixed)
+            //This routine stops the tab from losing focus 
+            if (tcRHS.SelectedItem != null)
+            {
+                WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
+                UserControl CurrentControl = (UserControl)CurrentTab.Content;
+                // mouse over tab then no need to worry about losing focus
+                if (!CurrentControl.IsMouseOver)
+                {
+                    if (!CurrentTab.AllowLossFocus())
+                    {
+                        e.Handled = true;
+                    }
+                }
+            }
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)

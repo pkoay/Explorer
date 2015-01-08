@@ -21,7 +21,7 @@ namespace WalzExplorer.Database
                 hasError = true;
                 if (columnName == "Title")
                 {
-                    if (this.Title.Length <2)
+                    if (this.Title==null ||this.Title.Length < 2)
                     {
                         
                         return "Title cannot be blank!!!";

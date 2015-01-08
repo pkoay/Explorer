@@ -51,8 +51,11 @@ namespace WalzExplorer.Controls.TreeView.ViewModel
 
         protected override void LoadChildren()
         {
-            foreach (WEXNode node in context.GetNodes(_node.ChildSQL,_dicSQLSubsitutes))
-                base.Children.Add(new NodeViewModel(this,node, _dicSQLSubsitutes));
+            if (_node.ChildSQL != "")
+            {
+                foreach (WEXNode node in context.GetNodes(_node.ChildSQL, _dicSQLSubsitutes))
+                    base.Children.Add(new NodeViewModel(this, node, _dicSQLSubsitutes));
+            }
         }
     }
 }

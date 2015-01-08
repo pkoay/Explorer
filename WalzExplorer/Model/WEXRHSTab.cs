@@ -19,6 +19,10 @@ namespace WalzExplorer
             Content.node = n;
         }
 
+        public bool AllowLossFocus()
+        {
+            return Content.AllowLossFocus();
+        }
     }
     
 }

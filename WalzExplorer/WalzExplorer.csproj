@@ -133,6 +133,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\ControlLibrary.cs" />
     <Compile Include="Common\FindConflictingReferences.cs" />
     <Compile Include="Common\GraphicsLibrary.cs" />
     <Compile Include="Common\GridLibrary.cs" />

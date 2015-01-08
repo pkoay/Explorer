@@ -38,6 +38,8 @@ namespace WalzExplorer.Controls.RHSTabs
 
         private bool isEditing = false;
         public Style style;
+        private bool IgnoreFocusChange = false;
+        private bool isNewMouseDown = true;
 
         //DragDrop
         const string GridDragData = "GridDragData";
@@ -47,6 +49,7 @@ namespace WalzExplorer.Controls.RHSTabs
         { 
         }
       
+
         public void SetGrid (RadGridView grd )
         {
             g = grd;
@@ -70,6 +73,9 @@ namespace WalzExplorer.Controls.RHSTabs
             g.ValidatesOnDataErrors = GridViewValidationMode.Default;
 
             //Events
+            g.LostFocus += g_LostFocus;
+            g.MouseDown += g_MouseDown;
+            g.PreviewMouseDown += g_PreviewMouseDown;
             g.PreviewLostKeyboardFocus += g_PreviewLostKeyboardFocus;
             g.PastingCellClipboardContent += g_PastingCellClipboardContent;
             g.BeginningEdit += g_BeginningEdit;
@@ -115,11 +121,87 @@ namespace WalzExplorer.Controls.RHSTabs
 
         }
 
+        void g_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            // stop focus leaving if grid has errors
+
+            //if (IsValid())
+            //{ return; } // grid no errors therfore ok to lose focus
+
+            //if (g.IsMouseOver)
+            //{ return; } // click is within grid therefore  won't lose focus
+
+            //MessageBox.Show("Grid has errors", "test");
+            //e.Handled = true;
+        }
+
+        void g_LostFocus(object sender, RoutedEventArgs e)
+        {
+          
+        }
+
+        bool IsValid()
+        {
+            
+            foreach (GridViewRow r in g.ChildrenOfType<GridViewRow>())
+            {
+                if (!r.IsValid)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+        void g_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            isNewMouseDown = true;
+
+
+        }
+        
+        void g_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // Store the mouse position
+            startPoint = e.GetPosition(null);
+
+
+           
+            
+
+        }
+
         void g_PreviewLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            //viewModel.data.
-            //g.er
+    //        if (!isNewMouseDown)
+    //        { return; } //for some reason the event g_PreviewLostKeyboardFocus fires about 8 times.. this ignores it unless a new mouse down
+    //        isNewMouseDown = false;
+
+    //        if (IgnoreFocusChange)
+    //        { return; }
+            
+    //            object  position = e.OriginalSource;
+    //Dim hit = VisualTreeHelper.HitTest(MyGrid, position)
+            
+    //        Visual v=(Visual)e.NewFocus;
+    //        if (v.IsDescendantOf(g))
+            //{ return; } // if new focus is within grid then ok to lose focus
+
+            //GridView rr =ControlLibrary.TryFindParent<GridView>((object)e.NewFocus);
+            //if  (g==)
+
+            
+            //IsDescendantOf
+            ////
+            //IgnoreFocusChange = true;
+            
+            //e.OldFocus.Focus();
+            
+            //IgnoreFocusChange = false;
+
         }
+       
 
         void g_PastingCellClipboardContent(object sender, GridViewCellClipboardEventArgs e)
         {
@@ -187,11 +269,7 @@ namespace WalzExplorer.Controls.RHSTabs
             } 
         }
 
-        void g_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            // Store the mouse position
-            startPoint = e.GetPosition(null);
-        }
+      
 
         // Helper to search up the VisualTree
         private static T FindAnchestor<T>(DependencyObject current)
@@ -382,7 +460,20 @@ namespace WalzExplorer.Controls.RHSTabs
             g.Rebind();
            
         }
-       
+
+        public override bool AllowLossFocus()
+        {
+            bool isvalid = IsValid();
+            if (!isvalid)
+            {
+                if (MessageBox.Show("Not all data in the tab is saved (data in error not saved). Press ok to fix the errors, or press cancel to lose changes in error", "Errors in Grid", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+                {
+                    isvalid = true; // forget errors
+                }
+            }
+            return isvalid ;
+        }
+
         public override void TabLoad()
         {
             // this is required to be overridden by each RHSTabView

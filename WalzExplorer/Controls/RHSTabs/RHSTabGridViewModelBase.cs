@@ -131,7 +131,14 @@ namespace WalzExplorer.Controls.RHSTabs
             
             
         }
-
+        public bool HasErrors()
+        {
+            foreach (ModelBase item in this.data)
+            {
+                if (item.HasError) return true;
+            }
+            return false;
+        }
       
 
     }

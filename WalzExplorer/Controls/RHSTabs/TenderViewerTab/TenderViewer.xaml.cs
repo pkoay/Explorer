@@ -56,6 +56,11 @@ namespace WalzExplorer.Controls.RHSTabs.TenderViewerTab
 
         }
 
+        public override bool AllowLossFocus()
+        {
+            return true;
+        }
+
         public  override  void TabLoad()
         {
             string CmdString = "";
