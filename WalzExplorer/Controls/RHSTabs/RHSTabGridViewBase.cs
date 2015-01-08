@@ -84,7 +84,7 @@ namespace WalzExplorer.Controls.RHSTabs
             g.AutoGeneratingColumn += new EventHandler<GridViewAutoGeneratingColumnEventArgs>(g_AutoGeneratingColumn);
             g.ContextMenuOpening += new ContextMenuEventHandler(g_ContextMenuOpening);
             g.Deleted += new EventHandler<GridViewDeletedEventArgs>(g_Deleted);
-
+            g.Deleting += g_Deleting;
             //Validation
             g.CellValidating += g_CellValidating;
            
@@ -105,11 +105,14 @@ namespace WalzExplorer.Controls.RHSTabs
             cm.Items.Add(new MenuItem() { Name = "miInsert", Header = "Insert <New line>", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_cell_insert_above", 16, 16) });
             cm.Items.Add(new MenuItem() { Name="miInsertPaste", Header="Insert <Paste>"});
             cm.Items.Add(new Separator());
+            cm.Items.Add(new MenuItem() { Name = "miDelete", Header = "Delete", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_close", 16, 16) });
+
+            cm.Items.Add(new Separator());
             cm.Items.Add(new MenuItem() { Name = "miExportExcel", Header = "Export to Excel", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
             cm.Items.Add(new Separator());
             cm.Items.Add(new MenuItem() { Name = "miRelatedData", Header = "Related data", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
 
-            
+             
             foreach (object o in cm.Items)
             {
                 if (!(o is  Separator))
@@ -121,6 +124,52 @@ namespace WalzExplorer.Controls.RHSTabs
           
             g.ContextMenu = cm;
 
+        }
+
+        void g_Deleting(object sender, GridViewDeletingEventArgs e)
+        {
+            string m = "";
+            List<ModelBase> deletable = new List<ModelBase>();
+            
+            foreach (ModelBase i in e.Items)
+            {
+                bool ri = ((i.RelatedInformation(this.viewModel.context)).Count > 0);
+                if (ri)
+                    m = m + "    " + i.Identification() + Environment.NewLine; //build message string
+                else
+                    deletable.Add(i); // items that can be deleted
+            }
+            //if related info found
+            if (m != "")
+            {
+                if (MessageBox.Show("The following '" + ((ModelBase)e.Items.First()).ClassName() + "(s)' have related information and therefore cannot be deleted:" + Environment.NewLine + m + Environment.NewLine + "Press OK to delete those without related information, or" + Environment.NewLine + "Press CANCEL to cancel the delete", "Delete", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation) == MessageBoxResult.Cancel)
+                {
+                    //CANCEL Delete
+                    e.Cancel = true;
+                    return;
+                }
+                else
+                {
+                    e.Cancel=true;
+                    // unselect all items
+                    g.SelectedItem = null;
+                    //select items that are deleteable
+                    foreach (object i in deletable)
+                        g.SelectedItems.Add(i);
+                    //execute delete key
+                    RadGridViewCommands.Delete.Execute(null);
+                    return;   
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("Are you sure you want to delete " + e.Items.Count().ToString()+" '"+ ((ModelBase)e.Items.First()).ClassName() + "(s)'?","Delete", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation) == MessageBoxResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return; 
+                }
+
+            }
         }
 
       
@@ -233,9 +282,12 @@ namespace WalzExplorer.Controls.RHSTabs
 
         public void g_Deleted(object sender, GridViewDeletedEventArgs e)
         {
-            viewModel.Delete(e.Items);
-            g.Rebind();         //redisplay new values such as ID, sort order
-
+           
+            //Delete all items
+            {
+                viewModel.Delete(e.Items);
+                g.Rebind();         //redisplay new values such as ID, sort order
+            }
         }
         
         public void g_ContextMenuOpening(object sender, ContextMenuEventArgs e)
@@ -261,6 +313,9 @@ namespace WalzExplorer.Controls.RHSTabs
                     g.ClipboardPasteMode = GridViewClipboardPasteMode.AllSelectedRows;
                     ApplicationCommands.Paste.Execute(this, null);
                     g.ClipboardPasteMode = GridViewClipboardPasteMode.None;
+                    break;
+                case "miDelete":
+                    RadGridViewCommands.Delete.Execute(null);
                     break;
                 case "miInsert":
                     if (ContextMenuRow!= null)

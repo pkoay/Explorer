@@ -162,6 +162,8 @@
     <Compile Include="Database\fnTender_Schedule_List_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\ClassName.cs" />
+    <Compile Include="Database\Identification.cs" />
     <Compile Include="Database\Related.cs" />
     <Compile Include="Database\Validation.cs" />
     <Compile Include="Database\spWEX_Node_AllProjects_Result.cs">

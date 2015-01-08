@@ -53,7 +53,17 @@ namespace WalzExplorer.Database
             
             Dictionary<string, int> rel = new Dictionary<string, int>();
             return rel;
-            
         }
+
+        public virtual string Identification()
+        {
+            // string to identify this record
+            return "";
+        }
+        public virtual string ClassName()
+        {
+            return "";
+        }
+
     }
 }
