@@ -19,9 +19,9 @@ namespace WalzExplorer
             Content.node = n;
         }
 
-        public bool AllowLossFocus()
+        public string IssueIfClosed()
         {
-            return Content.AllowLossFocus();
+            return Content.IssueIfClosed();
         }
     }
     

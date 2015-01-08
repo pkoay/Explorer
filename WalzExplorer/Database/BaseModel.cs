@@ -47,5 +47,13 @@ namespace WalzExplorer.Database
         {
             get { hasError = false; return null; }
         }
+
+        public virtual Dictionary<string, int> RelatedInformation(WalzExplorerEntities context)
+        {
+            
+            Dictionary<string, int> rel = new Dictionary<string, int>();
+            return rel;
+            
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace WalzExplorer.Controls.RHSTabs
 
         public abstract void TabLoad();
 
-        public abstract bool AllowLossFocus();
+        public abstract string IssueIfClosed();
 
 
     }

@@ -58,9 +58,22 @@ namespace WalzExplorer
                 // mouse over tab then no need to worry about losing focus
                 if (!CurrentControl.IsMouseOver)
                 {
-                    if (!CurrentTab.AllowLossFocus())
+                    string issue =CurrentTab.IssueIfClosed();
+                    if (issue != "")
                     {
-                        e.Handled = true;
+                        e.Handled = true; // this handled= true is not really required as the messagebox does this
+                        if (MessageBox.Show(issue, "Errors in Grid", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+                        {
+                            //mimic the click
+                            e.Handled = false;
+                            UIElement OriginalClickItem = (UIElement)e.OriginalSource;
+                            MouseDevice mouseDevice = Mouse.PrimaryDevice;
+                            MouseButtonEventArgs mouseButtonEventArgs = new MouseButtonEventArgs(mouseDevice, 0, MouseButton.Left);
+                            mouseButtonEventArgs.RoutedEvent = Mouse.MouseDownEvent;
+                            mouseButtonEventArgs.Source = OriginalClickItem;
+                            OriginalClickItem.RaiseEvent(mouseButtonEventArgs);
+                            
+                        }
                     }
                 }
             }

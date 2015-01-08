@@ -73,11 +73,11 @@ namespace WalzExplorer.Controls.RHSTabs
             g.ValidatesOnDataErrors = GridViewValidationMode.Default;
 
             //Events
-            g.LostFocus += g_LostFocus;
+            //g.LostFocus += g_LostFocus;
             g.MouseDown += g_MouseDown;
-            g.PreviewMouseDown += g_PreviewMouseDown;
-            g.PreviewLostKeyboardFocus += g_PreviewLostKeyboardFocus;
-            g.PastingCellClipboardContent += g_PastingCellClipboardContent;
+            //g.PreviewMouseDown += g_PreviewMouseDown;
+            //g.PreviewLostKeyboardFocus += g_PreviewLostKeyboardFocus;
+            //g.PastingCellClipboardContent += g_PastingCellClipboardContent;
             g.BeginningEdit += g_BeginningEdit;
             g.RowEditEnded += new EventHandler<GridViewRowEditEndedEventArgs>(g_RowEditEnded);
             g.AddingNewDataItem += new EventHandler<GridViewAddingNewEventArgs>(g_AddingNewDataItem);
@@ -103,10 +103,12 @@ namespace WalzExplorer.Controls.RHSTabs
             cm.Items.Add(new MenuItem() { Name = "miPaste", Header = "Paste <over selected rows>", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_clipboard_paste", 16, 16) });
             cm.Items.Add(new Separator());
             cm.Items.Add(new MenuItem() { Name = "miInsert", Header = "Insert <New line>", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_cell_insert_above", 16, 16) });
-            cm.Items.Add(new MenuItem() {Name="miInsertPaste", Header="Insert <Paste>"});
+            cm.Items.Add(new MenuItem() { Name="miInsertPaste", Header="Insert <Paste>"});
             cm.Items.Add(new Separator());
             cm.Items.Add(new MenuItem() { Name = "miExportExcel", Header = "Export to Excel", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
-            
+            cm.Items.Add(new Separator());
+            cm.Items.Add(new MenuItem() { Name = "miRelatedData", Header = "Related data", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
+
             
             foreach (object o in cm.Items)
             {
@@ -121,24 +123,7 @@ namespace WalzExplorer.Controls.RHSTabs
 
         }
 
-        void g_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            // stop focus leaving if grid has errors
-
-            //if (IsValid())
-            //{ return; } // grid no errors therfore ok to lose focus
-
-            //if (g.IsMouseOver)
-            //{ return; } // click is within grid therefore  won't lose focus
-
-            //MessageBox.Show("Grid has errors", "test");
-            //e.Handled = true;
-        }
-
-        void g_LostFocus(object sender, RoutedEventArgs e)
-        {
-          
-        }
+      
 
         bool IsValid()
         {
@@ -158,56 +143,15 @@ namespace WalzExplorer.Controls.RHSTabs
         {
             isNewMouseDown = true;
 
-
         }
         
         void g_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             // Store the mouse position
             startPoint = e.GetPosition(null);
-
-
-           
-            
-
         }
 
-        void g_PreviewLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-    //        if (!isNewMouseDown)
-    //        { return; } //for some reason the event g_PreviewLostKeyboardFocus fires about 8 times.. this ignores it unless a new mouse down
-    //        isNewMouseDown = false;
-
-    //        if (IgnoreFocusChange)
-    //        { return; }
-            
-    //            object  position = e.OriginalSource;
-    //Dim hit = VisualTreeHelper.HitTest(MyGrid, position)
-            
-    //        Visual v=(Visual)e.NewFocus;
-    //        if (v.IsDescendantOf(g))
-            //{ return; } // if new focus is within grid then ok to lose focus
-
-            //GridView rr =ControlLibrary.TryFindParent<GridView>((object)e.NewFocus);
-            //if  (g==)
-
-            
-            //IsDescendantOf
-            ////
-            //IgnoreFocusChange = true;
-            
-            //e.OldFocus.Focus();
-            
-            //IgnoreFocusChange = false;
-
-        }
-       
-
-        void g_PastingCellClipboardContent(object sender, GridViewCellClipboardEventArgs e)
-        {
-           
-             
-        }
+     
 
         void g_BeginningEdit(object sender, GridViewBeginningEditRoutedEventArgs e)
         {
@@ -396,6 +340,23 @@ namespace WalzExplorer.Controls.RHSTabs
                     excel.StartInfo.FileName = fileName;
                     excel.Start();
                     break;
+                case "miRelatedData":
+                    Dictionary<string, int> info = ((ModelBase)ContextMenuRow.Item).RelatedInformation(viewModel.context);
+                    string display = "";
+                    if (info.Count == 0)
+                    {
+                        display = "That row has no related information.";
+                    }
+                    else
+                    {
+                        display = display + "This row has the following related data:" + Environment.NewLine;
+                        foreach (KeyValuePair<string, int> entry in info)
+                        {
+                            display = display + "   has " + entry.Value + "  " + entry.Key + "(s) ." + Environment.NewLine;
+                        }
+                    }
+                    MessageBox.Show(display, "Related Information ", MessageBoxButton.OK, MessageBoxImage.Information);
+                    break;
                 default:
                     MessageBox.Show(mi.Header.ToString(), "Configuration menu", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;
@@ -461,17 +422,14 @@ namespace WalzExplorer.Controls.RHSTabs
            
         }
 
-        public override bool AllowLossFocus()
+        public override string IssueIfClosed()
         {
             bool isvalid = IsValid();
             if (!isvalid)
             {
-                if (MessageBox.Show("Not all data in the tab is saved (data in error not saved). Press ok to fix the errors, or press cancel to lose changes in error", "Errors in Grid", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
-                {
-                    isvalid = true; // forget errors
-                }
+                return "Not all data in the tab is saved (data in error not saved). Press ok to fix the errors, or press cancel to lose changes in error";
             }
-            return isvalid ;
+            return "" ;
         }
 
         public override void TabLoad()
