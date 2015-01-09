@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_LabourStandard : ModelBase,IDataErrorInfo
+    public partial class tblTender_LabourStandard : ModelBase
     {
         private int _labourStandardID;
     	public int LabourStandardID 

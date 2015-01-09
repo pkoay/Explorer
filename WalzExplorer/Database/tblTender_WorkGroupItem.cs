@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_WorkGroupItem : ModelBase,IDataErrorInfo
+    public partial class tblTender_WorkGroupItem : ModelBase
     {
         private int _workGroupItemID;
     	public int WorkGroupItemID 

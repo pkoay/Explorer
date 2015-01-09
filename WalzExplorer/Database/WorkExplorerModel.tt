@@ -112,7 +112,7 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
     BeginNamespace(code);
 #>
 <#=codeStringGenerator.UsingDirectives(inHeader: false, includeCollections: false)#>
-<#=Accessibility.ForType(complex)#> partial class <#=code.Escape(complex)#> : BaseModel
+<#=Accessibility.ForType(complex)#> partial class <#=code.Escape(complex)#> : ModelBase
 {
 <#
     var complexProperties = typeMapper.GetComplexProperties(complex);
@@ -318,7 +318,7 @@ public class CodeStringGenerator
         Accessibility.ForType(entity),
         _code.SpaceAfter(_code.AbstractOption(entity)),
         _code.Escape(entity),
-        _code.StringBefore(" : ", string.IsNullOrEmpty(_typeMapper.GetTypeName(entity.BaseType)) ? "BaseModel,IDataErrorInfo" : _typeMapper.GetTypeName(entity.BaseType)));
+        _code.StringBefore(" : ", string.IsNullOrEmpty(_typeMapper.GetTypeName(entity.BaseType)) ? "ModelBase" : _typeMapper.GetTypeName(entity.BaseType)));
 }
     
     public string EnumOpening(SimpleType enumType)

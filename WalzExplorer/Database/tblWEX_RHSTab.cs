@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblWEX_RHSTab : ModelBase,IDataErrorInfo
+    public partial class tblWEX_RHSTab : ModelBase
     {
         public tblWEX_RHSTab()
         {

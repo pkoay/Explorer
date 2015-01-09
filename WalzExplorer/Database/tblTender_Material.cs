@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_Material : ModelBase,IDataErrorInfo
+    public partial class tblTender_Material : ModelBase
     {
         public tblTender_Material()
         {

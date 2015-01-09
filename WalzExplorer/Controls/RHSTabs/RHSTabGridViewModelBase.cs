@@ -13,7 +13,8 @@ using WalzExplorer.Database;
 namespace WalzExplorer.Controls.RHSTabs
 {
     abstract public class RHSTabGridViewModelBase : ViewModelBase
-        
+    // important to consider when writing new routines that they are an attomic commit. i.e. all changes commit or don't commit
+    // note commit is completed on 
     {
         
 

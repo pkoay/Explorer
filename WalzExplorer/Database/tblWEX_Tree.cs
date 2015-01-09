@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblWEX_Tree : ModelBase,IDataErrorInfo
+    public partial class tblWEX_Tree : ModelBase
     {
         public tblWEX_Tree()
         {

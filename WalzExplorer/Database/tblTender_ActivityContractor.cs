@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_ActivityContractor : ModelBase,IDataErrorInfo
+    public partial class tblTender_ActivityContractor : ModelBase
     {
         private int _activityContractorID;
     	public int ActivityContractorID 

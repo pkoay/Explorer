@@ -14,7 +14,7 @@ namespace WalzExplorer.Database
 
     public partial class tblTender_Contractor
     {
-       public string this[string columnName]
+       public override string this[string columnName]
         {
             get
             {

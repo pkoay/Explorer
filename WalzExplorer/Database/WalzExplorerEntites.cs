@@ -167,26 +167,32 @@ namespace WalzExplorer.Database
                 // Throw a new DbEntityValidationException with the improved exception message.
                 throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
             }
+            //else it isn't an exception we understand so it throws in the normal way
+            catch
+            {
+                throw;
+            }
             
         }
 
-        public void RollBack()
+        
+        public void RollBackUncommitedChanges(IEnumerable <DbEntityEntry> changes)
         {
-            
-            var changedEntries = this.ChangeTracker.Entries().Where(x => x.State != EntityState.Unchanged).ToList();
 
-            foreach (var entry in changedEntries.Where(x => x.State == EntityState.Modified))
+            if (changes == null) changes = this.ChangeTracker.Entries().Where(x => x.State != EntityState.Unchanged).ToList();
+
+            foreach (var entry in changes.Where(x => x.State == EntityState.Modified))
             {
                 entry.CurrentValues.SetValues(entry.OriginalValues);
                 entry.State = EntityState.Unchanged;
             }
 
-            foreach (var entry in changedEntries.Where(x => x.State == EntityState.Added))
+            foreach (var entry in changes.Where(x => x.State == EntityState.Added))
             {
                 entry.State = EntityState.Detached;
             }
 
-            foreach (var entry in changedEntries.Where(x => x.State == EntityState.Deleted))
+            foreach (var entry in changes.Where(x => x.State == EntityState.Deleted))
             {
                 entry.State = EntityState.Unchanged;
             }
@@ -206,7 +212,11 @@ namespace WalzExplorer.Database
                 // Update the values of the entity that failed to save from the store 
                 //ex.Entries.Single().Reload();
                 //grd.Rebind();
-                status.SetErrors("This data was changed by " + ex.Entries.Single().CurrentValues.GetValue<string>("UpdatedBy") + ". This change is now shown, and your change has been lost.", "All");
+                DbEntityEntry x = ex.Entries.First<DbEntityEntry>();
+                ModelBase m = (ModelBase)x.Entity;
+               // m.
+                status.SetErrors("This data was changed by " + ex.Entries.Single().CurrentValues.GetValue<string>("UpdatedBy") + ". This change is now shown, and your change has been lost.","ContractorID");
+                RollBackUncommitedChanges(ex.Entries);
             }
             catch (DbEntityValidationException ex)
             {

@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblPerson_Person : ModelBase,IDataErrorInfo
+    public partial class tblPerson_Person : ModelBase
     {
         public tblPerson_Person()
         {
