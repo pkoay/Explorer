@@ -12,39 +12,27 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblPerson_Person : ModelBase
+    public partial class tblProject : ModelBase
     {
-        public tblPerson_Person()
-        {
-            this.tblProject_Project = new HashSet<tblProject_Project>();
-        }
-    
-        private string _personID;
-    	public string PersonID 
+        private string _projectID;
+    	public string ProjectID 
     	{ 
-    		get { return _personID; } 
-    		set { SetProperty(ref _personID, value); } 
+    		get { return _projectID; } 
+    		set { SetProperty(ref _projectID, value); } 
     	}
     
-        private string _firstName;
-    	public string FirstName 
+        private string _description;
+    	public string Description 
     	{ 
-    		get { return _firstName; } 
-    		set { SetProperty(ref _firstName, value); } 
+    		get { return _description; } 
+    		set { SetProperty(ref _description, value); } 
     	}
     
-        private string _lastName;
-    	public string LastName 
+        private string _managerID;
+    	public string ManagerID 
     	{ 
-    		get { return _lastName; } 
-    		set { SetProperty(ref _lastName, value); } 
-    	}
-    
-        private string _login;
-    	public string Login 
-    	{ 
-    		get { return _login; } 
-    		set { SetProperty(ref _login, value); } 
+    		get { return _managerID; } 
+    		set { SetProperty(ref _managerID, value); } 
     	}
     
         private string _updatedBy;
@@ -69,6 +57,6 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual ICollection<tblProject_Project> tblProject_Project { get; set; }
+        public virtual tblPerson tblPerson { get; set; }
     }
 }

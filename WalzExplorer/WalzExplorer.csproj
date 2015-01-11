@@ -143,13 +143,14 @@
     <Compile Include="Controls\LHSTabs\LHSTabViewModel.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabGridViewModelBase.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\TenderView.xaml.cs">
+      <DependentUpon>TenderView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RHSTabs\TenderContractor\TenderContractorView.xaml.cs">
       <DependentUpon>TenderContractorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\TenderViewModel.cs" />
     <Compile Include="Controls\RHSTabs\TenderContractor\TenderContractorViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\TenderViewerTab\TenderViewer.xaml.cs">
-      <DependentUpon>TenderViewer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\TreeView\WEXTreeView.xaml.cs">
       <DependentUpon>WEXTreeView.xaml</DependentUpon>
     </Compile>
@@ -162,9 +163,13 @@
     <Compile Include="Database\fnTender_Schedule_List_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\ClassName.cs" />
-    <Compile Include="Database\Identification.cs" />
     <Compile Include="Database\Related.cs" />
+    <Compile Include="Database\tblPerson.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblProject.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\Validation.cs" />
     <Compile Include="Database\spWEX_Node_AllProjects_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
@@ -222,12 +227,6 @@
     <Compile Include="Model\WEXRHSTab.cs" />
     <Compile Include="Model\WEXConnection.cs" />
     <Compile Include="Model\WEXUser.cs" />
-    <Compile Include="Database\tblPerson_Person.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblProject_Project.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Database\tblTender.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -322,11 +321,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WorkExplorerModel.edmx</DependentUpon>
     </Compile>
-    <Page Include="Controls\RHSTabs\TenderContractor\TenderContractorView.xaml">
+    <Page Include="Controls\RHSTabs\Tender\TenderView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\RHSTabs\TenderViewerTab\TenderViewer.xaml">
+    <Page Include="Controls\RHSTabs\TenderContractor\TenderContractorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -434,6 +433,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\RHSTabs\TenderDocumentTab\" />
+    <Folder Include="Controls\RHSTabs\TenderItems\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Walz.ico" />

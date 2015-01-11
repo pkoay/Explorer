@@ -27,8 +27,6 @@ namespace WalzExplorer.Database
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<tblPerson_Person> tblPerson_Person { get; set; }
-        public virtual DbSet<tblProject_Project> tblProject_Project { get; set; }
         public virtual DbSet<tblTender> tblTenders { get; set; }
         public virtual DbSet<tblTender_Activity> tblTender_Activity { get; set; }
         public virtual DbSet<tblTender_ActivityChildActivity> tblTender_ActivityChildActivity { get; set; }
@@ -55,6 +53,8 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblWEX_Tree> tblWEX_Tree { get; set; }
         public virtual DbSet<tblWEX_TreeNodeType> tblWEX_TreeNodeType { get; set; }
         public virtual DbSet<tblTender_Contractor> tblTender_Contractor { get; set; }
+        public virtual DbSet<tblPerson> tblPersons { get; set; }
+        public virtual DbSet<tblProject> tblProjects { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)

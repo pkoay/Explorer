@@ -11,7 +11,7 @@ namespace WalzExplorer.Common
 {
     public static class GridLibrary
     {
-        public static GridViewComboBoxColumn CreateCombo (string uniqueName,string header, List<object> list, string listDisplayColumn)
+        public static GridViewComboBoxColumn CreateCombo(string uniqueName, string header, List<object> list, string listIDColumn,  string listDisplayColumn)
         {
             GridViewComboBoxColumn gcb = new GridViewComboBoxColumn();
             gcb.IsComboBoxEditable = true;
@@ -20,6 +20,7 @@ namespace WalzExplorer.Common
             gcb.Header = header;
             gcb.DisplayMemberPath = listDisplayColumn;
             gcb.ValidatesOnDataErrors = GridViewValidationMode.Default;
+            gcb.Tag = listIDColumn;
             return gcb;
         }
 

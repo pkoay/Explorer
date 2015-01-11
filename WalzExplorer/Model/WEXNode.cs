@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace WalzExplorer
 {
@@ -24,6 +25,12 @@ namespace WalzExplorer
                 return false;
             else return ChildSQL.Trim() != "";
              
+        }
+        public int IDAsInt()
+        {
+            int i;
+            Int32.TryParse(this.ID, out i);
+            return i;
         }
     }
 }

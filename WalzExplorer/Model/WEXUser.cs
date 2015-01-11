@@ -20,7 +20,7 @@ namespace WalzExplorer
         {
             get { return _securityGroups; }
         }
-        public tblPerson_Person Person { get; set; }  //derived from Person table via lookup of LoginID
+        public tblPerson Person { get; set; }  //derived from Person table via lookup of LoginID
 
 
         public string LoginID // derived from windows
@@ -40,7 +40,7 @@ namespace WalzExplorer
 
                 using (WalzExplorerEntities db = new WalzExplorerEntities())
                 {
-                    Person = db.tblPerson_Person.Where(x => x.Login == _loginID).FirstOrDefault();
+                    Person = db.tblPersons.Where(x => x.Login == _loginID).FirstOrDefault();
                 }
                                      
             }

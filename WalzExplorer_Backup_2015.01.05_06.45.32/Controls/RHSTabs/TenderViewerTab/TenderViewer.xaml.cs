@@ -56,11 +56,6 @@ namespace WalzExplorer.Controls.RHSTabs.TenderViewerTab
 
         }
 
-        public override string IssueIfClosed()
-        {
-            return "";
-        }
-
         public  override  void TabLoad()
         {
             string CmdString = "";

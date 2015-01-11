@@ -5,19 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="WalzExplorerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="tblPerson_Person">
+        <EntityType Name="tblPerson">
           <Key>
             <PropertyRef Name="PersonID" />
           </Key>
           <Property Name="PersonID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
-        <EntityType Name="tblProject_Project">
+        <EntityType Name="tblProject">
           <Key>
             <PropertyRef Name="ProjectID" />
           </Key>
@@ -36,8 +35,10 @@
           <Property Name="TenderNo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Revision" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ManagerID" Type="varchar" MaxLength="50" />
           <Property Name="Comment" Type="varchar(max)" />
           <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -395,13 +396,13 @@
           <Property Name="RHSTabID" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_Project_Project_Person_Person">
-          <End Role="tblPerson_Person" Type="Self.tblPerson_Person" Multiplicity="1" />
-          <End Role="tblProject_Project" Type="Self.tblProject_Project" Multiplicity="*" />
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="1" />
+          <End Role="tblProject" Type="Self.tblProject" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblPerson_Person">
+            <Principal Role="tblPerson">
               <PropertyRef Name="PersonID" />
             </Principal>
-            <Dependent Role="tblProject_Project">
+            <Dependent Role="tblProject">
               <PropertyRef Name="ManagerID" />
             </Dependent>
           </ReferentialConstraint>
@@ -766,6 +767,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblTender_tblPerson">
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="0..1" />
+          <End Role="tblTender" Type="Self.tblTender" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblTender">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblTender_tblTender_Status">
           <End Role="tblTender_Status" Type="Self.tblTender_Status" Multiplicity="1" />
           <End Role="tblTender" Type="Self.tblTender" Multiplicity="*" />
@@ -945,16 +958,6 @@
         <Function Name="spTender_Schedule_ComboList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spTender.Schedule_ComboList">
           <Parameter Name="TenderID" Type="int" Mode="In" />
         </Function>
-        <Function Name="spWEX_Node_AllProjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_AllProjects" />
-        <Function Name="spWEX_Node_AllProjectsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_AllProjectsList" />
-        <Function Name="spWEX_Node_FoundProjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_FoundProjects" />
-        <Function Name="spWEX_Node_FoundProjectsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_FoundProjectsList">
-          <Parameter Name="SearchString" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="spWEX_Node_MyProjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_MyProjects" />
-        <Function Name="spWEX_Node_MyProjectsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_MyProjectsList">
-          <Parameter Name="UserPersonID" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="spWEX_Node_TenderActivityList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderActivityList">
           <Parameter Name="TenderID" Type="int" Mode="In" />
         </Function>
@@ -973,8 +976,6 @@
         <Function Name="spWEX_Node_TenderSetupList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderSetupList">
           <Parameter Name="TenderID" Type="int" Mode="In" />
         </Function>
-        <Function Name="spWEX_Node_TendersOpen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TendersOpen" />
-        <Function Name="spWEX_Node_TendersOpenList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TendersOpenList" />
         <Function Name="spWEX_Node_TendersWorkGroupList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TendersWorkGroupList">
           <Parameter Name="TenderID" Type="int" Mode="In" />
         </Function>
@@ -989,8 +990,8 @@
           <Parameter Name="NTSecurityGroupsSeperator" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="WalzExplorerModelStoreContainer">
-          <EntitySet Name="tblPerson_Person" EntityType="Self.tblPerson_Person" Schema="dbo" Table="tblPerson.Person" store:Type="Tables" />
-          <EntitySet Name="tblProject_Project" EntityType="Self.tblProject_Project" Schema="dbo" Table="tblProject.Project" store:Type="Tables" />
+          <EntitySet Name="tblPerson" EntityType="Self.tblPerson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProject" EntityType="Self.tblProject" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblTender" EntityType="Self.tblTender" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblTender_Activity" EntityType="Self.tblTender_Activity" Schema="dbo" Table="tblTender.Activity" store:Type="Tables" />
           <EntitySet Name="tblTender_ActivityChildActivity" EntityType="Self.tblTender_ActivityChildActivity" Schema="dbo" Table="tblTender.ActivityChildActivity" store:Type="Tables" />
@@ -1021,8 +1022,8 @@
           <EntitySet Name="tblWEX_TreeNodeType" EntityType="Self.tblWEX_TreeNodeType" Schema="dbo" Table="tblWEX.TreeNodeType" store:Type="Tables" />
           <EntitySet Name="tblWEX_TreeNodeType_RHSTab" EntityType="Self.tblWEX_TreeNodeType_RHSTab" Schema="dbo" Table="tblWEX.TreeNodeType_RHSTab" store:Type="Tables" />
           <AssociationSet Name="FK_Project_Project_Person_Person" Association="Self.FK_Project_Project_Person_Person">
-            <End Role="tblPerson_Person" EntitySet="tblPerson_Person" />
-            <End Role="tblProject_Project" EntitySet="tblProject_Project" />
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblProject" EntitySet="tblProject" />
           </AssociationSet>
           <AssociationSet Name="FK_tblTender_Component_tblTender" Association="Self.FK_tblTender_Component_tblTender">
             <End Role="tblTender" EntitySet="tblTender" />
@@ -1144,6 +1145,10 @@
             <End Role="tblTender" EntitySet="tblTender" />
             <End Role="tblTender_Supplier" EntitySet="tblTender_Supplier" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblTender_tblPerson" Association="Self.FK_tblTender_tblPerson">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblTender" EntitySet="tblTender" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblTender_tblTender_Status" Association="Self.FK_tblTender_tblTender_Status">
             <End Role="tblTender_Status" EntitySet="tblTender_Status" />
             <End Role="tblTender" EntitySet="tblTender" />
@@ -1197,31 +1202,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WalzExplorerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="tblPerson_Person">
-          <Key>
-            <PropertyRef Name="PersonID" />
-          </Key>
-          <Property Name="PersonID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblProject_Project" Relationship="Self.FK_Project_Project_Person_Person" FromRole="tblPerson_Person" ToRole="tblProject_Project" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
-        </EntityType>
-        <EntityType Name="tblProject_Project">
-          <Key>
-            <PropertyRef Name="ProjectID" />
-          </Key>
-          <Property Name="ProjectID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ManagerID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblPerson_Person" Relationship="Self.FK_Project_Project_Person_Person" FromRole="tblProject_Project" ToRole="tblPerson_Person" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
-        </EntityType>
         <EntityType Name="tblTender">
           <Key>
             <PropertyRef Name="TenderID" />
@@ -1246,6 +1226,9 @@
           <NavigationProperty Name="tblTender_UnitOfMeasure" Relationship="Self.FK_tblTender_UnitOfMeasure_tblTender" FromRole="tblTender" ToRole="tblTender_UnitOfMeasure" />
           <NavigationProperty Name="tblTender_WorkGroup" Relationship="Self.FK_tblTender_WorkGroup_tblTender" FromRole="tblTender" ToRole="tblTender_WorkGroup" />
           <NavigationProperty Name="tblTender_Contractor" Relationship="WalzExplorerModel.FK_tblTender_Contractor_tblTender" FromRole="tblTender" ToRole="tblTender_Contractor" />
+          <Property Name="ManagerID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblPerson" Relationship="WalzExplorerModel.FK_tblTender_tblPerson" FromRole="tblTender" ToRole="tblPerson" />
         </EntityType>
         <EntityType Name="tblTender_Activity">
           <Key>
@@ -1629,18 +1612,6 @@
           <Property Name="TreeNodeTypeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="tblWEX_RHSTab" Relationship="Self.tblWEX_TreeNodeType_RHSTab" FromRole="tblWEX_TreeNodeType" ToRole="tblWEX_RHSTab" />
         </EntityType>
-        <Association Name="FK_Project_Project_Person_Person">
-          <End Role="tblPerson_Person" Type="Self.tblPerson_Person" Multiplicity="1" />
-          <End Role="tblProject_Project" Type="Self.tblProject_Project" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblPerson_Person">
-              <PropertyRef Name="PersonID" />
-            </Principal>
-            <Dependent Role="tblProject_Project">
-              <PropertyRef Name="ManagerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblTender_Component_tblTender">
           <End Role="tblTender" Type="Self.tblTender" Multiplicity="1" />
           <End Role="tblTender_Activity" Type="Self.tblTender_Activity" Multiplicity="*" />
@@ -2074,8 +2045,6 @@
           <End Role="tblWEX_TreeNodeType" Type="Self.tblWEX_TreeNodeType" Multiplicity="*" />
         </Association>
         <EntityContainer Name="WalzExplorerEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tblPerson_Person" EntityType="Self.tblPerson_Person" />
-          <EntitySet Name="tblProject_Project" EntityType="Self.tblProject_Project" />
           <EntitySet Name="tblTenders" EntityType="Self.tblTender" />
           <EntitySet Name="tblTender_Activity" EntityType="Self.tblTender_Activity" />
           <EntitySet Name="tblTender_ActivityChildActivity" EntityType="Self.tblTender_ActivityChildActivity" />
@@ -2101,10 +2070,6 @@
           <EntitySet Name="tblWEX_RHSTab" EntityType="Self.tblWEX_RHSTab" />
           <EntitySet Name="tblWEX_Tree" EntityType="Self.tblWEX_Tree" />
           <EntitySet Name="tblWEX_TreeNodeType" EntityType="Self.tblWEX_TreeNodeType" />
-          <AssociationSet Name="FK_Project_Project_Person_Person" Association="Self.FK_Project_Project_Person_Person">
-            <End Role="tblPerson_Person" EntitySet="tblPerson_Person" />
-            <End Role="tblProject_Project" EntitySet="tblProject_Project" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblTender_Component_tblTender" Association="Self.FK_tblTender_Component_tblTender">
             <End Role="tblTender" EntitySet="tblTenders" />
             <End Role="tblTender_Activity" EntitySet="tblTender_Activity" />
@@ -2364,6 +2329,16 @@
             <End Role="tblTender_ContractorType" EntitySet="tblTender_ContractorType" />
             <End Role="tblTender_Contractor" EntitySet="tblTender_Contractor" />
           </AssociationSet>
+          <EntitySet Name="tblPersons" EntityType="WalzExplorerModel.tblPerson" />
+          <EntitySet Name="tblProjects" EntityType="WalzExplorerModel.tblProject" />
+          <AssociationSet Name="FK_Project_Project_Person_Person1" Association="WalzExplorerModel.FK_Project_Project_Person_Person1">
+            <End Role="tblPerson" EntitySet="tblPersons" />
+            <End Role="tblProject" EntitySet="tblProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTender_tblPerson" Association="WalzExplorerModel.FK_tblTender_tblPerson">
+            <End Role="tblPerson" EntitySet="tblPersons" />
+            <End Role="tblTender" EntitySet="tblTenders" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -2545,40 +2520,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tblPerson">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblProjects" Relationship="WalzExplorerModel.FK_Project_Project_Person_Person1" FromRole="tblPerson" ToRole="tblProject" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblTenders" Relationship="WalzExplorerModel.FK_tblTender_tblPerson" FromRole="tblPerson" ToRole="tblTender" />
+        </EntityType>
+        <EntityType Name="tblProject">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ManagerID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblPerson" Relationship="WalzExplorerModel.FK_Project_Project_Person_Person1" FromRole="tblProject" ToRole="tblPerson" />
+        </EntityType>
+        <Association Name="FK_Project_Project_Person_Person1">
+          <End Type="WalzExplorerModel.tblPerson" Role="tblPerson" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblProject" Role="tblProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblProject">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_tblPerson">
+          <End Type="WalzExplorerModel.tblPerson" Role="tblPerson" Multiplicity="0..1" />
+          <End Type="WalzExplorerModel.tblTender" Role="tblTender" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblTender">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="WalzExplorerModelStoreContainer" CdmEntityContainer="WalzExplorerEntities">
-          <EntitySetMapping Name="tblPerson_Person">
-            <EntityTypeMapping TypeName="WalzExplorerModel.tblPerson_Person">
-              <MappingFragment StoreEntitySet="tblPerson_Person">
-                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblProject_Project">
-            <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_Project">
-              <MappingFragment StoreEntitySet="tblProject_Project">
-                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblTenders">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender">
               <MappingFragment StoreEntitySet="tblTender">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="TenderNo" ColumnName="TenderNo" />
                 <ScalarProperty Name="Revision" ColumnName="Revision" />
@@ -2967,45 +2968,6 @@
           <FunctionImportMapping FunctionImportName="spTender_CloneActivity" FunctionName="WalzExplorerModel.Store.spTender_CloneActivity" />
           <FunctionImportMapping FunctionImportName="spTender_Drawing_ComboList" FunctionName="WalzExplorerModel.Store.spTender_Drawing_ComboList" />
           <FunctionImportMapping FunctionImportName="spTender_Schedule_ComboList" FunctionName="WalzExplorerModel.Store.spTender_Schedule_ComboList" />
-          <FunctionImportMapping FunctionImportName="spWEX_Node_AllProjects" FunctionName="WalzExplorerModel.Store.spWEX_Node_AllProjects">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_AllProjects_Result">
-                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
-                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
-                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
-                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
-                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
-                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spWEX_Node_AllProjectsList" FunctionName="WalzExplorerModel.Store.spWEX_Node_AllProjectsList" />
-          <FunctionImportMapping FunctionImportName="spWEX_Node_FoundProjects" FunctionName="WalzExplorerModel.Store.spWEX_Node_FoundProjects">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_FoundProjects_Result">
-                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
-                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
-                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
-                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
-                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
-                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spWEX_Node_FoundProjectsList" FunctionName="WalzExplorerModel.Store.spWEX_Node_FoundProjectsList" />
-          <FunctionImportMapping FunctionImportName="spWEX_Node_MyProjects" FunctionName="WalzExplorerModel.Store.spWEX_Node_MyProjects">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_MyProjects_Result">
-                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
-                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
-                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
-                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
-                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
-                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spWEX_Node_MyProjectsList" FunctionName="WalzExplorerModel.Store.spWEX_Node_MyProjectsList" />
           <FunctionImportMapping FunctionImportName="spWEX_Node_TenderDrawingList" FunctionName="WalzExplorerModel.Store.spWEX_Node_TenderDrawingList">
             <ResultMapping>
               <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TenderDrawingList_Result">
@@ -3078,30 +3040,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spWEX_Node_TendersOpen" FunctionName="WalzExplorerModel.Store.spWEX_Node_TendersOpen">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TendersOpen_Result">
-                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
-                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
-                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
-                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
-                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
-                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spWEX_Node_TendersOpenList" FunctionName="WalzExplorerModel.Store.spWEX_Node_TendersOpenList">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TendersOpenList_Result">
-                <ScalarProperty Name="NodeType" ColumnName="NodeType" />
-                <ScalarProperty Name="NodeDescription" ColumnName="NodeDescription" />
-                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
-                <ScalarProperty Name="NodeIconOpen" ColumnName="NodeIconOpen" />
-                <ScalarProperty Name="NodeIconClosed" ColumnName="NodeIconClosed" />
-                <ScalarProperty Name="NodeChildSQL" ColumnName="NodeChildSQL" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spWEX_Node_TendersWorkGroupList" FunctionName="WalzExplorerModel.Store.spWEX_Node_TendersWorkGroupList">
             <ResultMapping>
               <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_Node_TendersWorkGroupList_Result">
@@ -3154,6 +3092,30 @@
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPersons">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblPerson">
+              <MappingFragment StoreEntitySet="tblPerson">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProjects">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblProject">
+              <MappingFragment StoreEntitySet="tblProject">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

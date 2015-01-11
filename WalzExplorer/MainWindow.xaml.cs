@@ -163,7 +163,7 @@ namespace WalzExplorer
             WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
             if (CurrentTab != null)
             {
-                CurrentTab.SetNode(SelectedNode());
+                CurrentTab.SetNode(SelectedNode(),user);
                 CurrentTab.Content.TabLoad();
             }
         }

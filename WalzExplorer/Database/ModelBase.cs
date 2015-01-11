@@ -43,7 +43,7 @@ namespace WalzExplorer.Database
             } 
         }
 
-        public string this[string columnName]
+        public virtual string this[string columnName]
         {
             get { hasError = false; return null; }
         }

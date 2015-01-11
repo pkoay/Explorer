@@ -91,6 +91,20 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
+        private string _managerID;
+    	public string ManagerID 
+    	{ 
+    		get { return _managerID; } 
+    		set { SetProperty(ref _managerID, value); } 
+    	}
+    
+        private int _sortOrder;
+    	public int SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
+    	}
+    
     
         public virtual ICollection<tblTender_Activity> tblTender_Activity { get; set; }
         public virtual ICollection<tblTender_ContractorType> tblTender_ContractorType { get; set; }
@@ -103,5 +117,6 @@ namespace WalzExplorer.Database
         public virtual ICollection<tblTender_UnitOfMeasure> tblTender_UnitOfMeasure { get; set; }
         public virtual ICollection<tblTender_WorkGroup> tblTender_WorkGroup { get; set; }
         public virtual ICollection<tblTender_Contractor> tblTender_Contractor { get; set; }
+        public virtual tblPerson tblPerson { get; set; }
     }
 }

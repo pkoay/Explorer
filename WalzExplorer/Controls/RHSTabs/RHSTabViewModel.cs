@@ -22,7 +22,8 @@ namespace WalzExplorer.Controls.RHSTabs
             {
                
                 string strTabClass = t.ID.Substring(3); // remove tab prefix
-                t.Content = (RHSTabViewBase)Activator.CreateInstance(Type.GetType("WalzExplorer.Controls.RHSTabs." + strTabClass + "." + strTabClass+"View"));
+                RHSTabViewBase tab = (RHSTabViewBase)Activator.CreateInstance(Type.GetType("WalzExplorer.Controls.RHSTabs." + strTabClass + "." + strTabClass + "View"));
+                t.Content=tab;
                 RHSTabs.Add(t);
             }
         }

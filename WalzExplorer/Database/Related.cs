@@ -17,10 +17,9 @@ namespace WalzExplorer.Database
           
             
             Dictionary<string, int> rel = new Dictionary<string, int>();
-            int c;
+            int c = context.Entry(this).Collection(b => b.tblTender_ActivityContractor).Query().Count();
 
-            c = context.Entry(this).Collection(b => b.tblTender_ActivityContractor).Query().Count();
-            if (c>0)rel.Add("Activity Contractors", c);
+            if (c!=0) rel.Add("Activity Contractors", c);
 
             return rel;
   

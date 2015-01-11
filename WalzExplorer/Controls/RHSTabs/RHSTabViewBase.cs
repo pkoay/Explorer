@@ -11,6 +11,8 @@ namespace WalzExplorer.Controls.RHSTabs
     {
         public WEXNode node { get; set; }
 
+        public WEXUser user { get; set; }
+
         public abstract void TabLoad();
 
         public abstract string IssueIfClosed();
