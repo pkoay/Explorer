@@ -143,9 +143,13 @@
     <Compile Include="Controls\LHSTabs\LHSTabViewModel.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabGridViewModelBase.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\TenderActivityLabourView.xaml.cs">
+      <DependentUpon>TenderActivityLabourView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RHSTabs\Tender\TenderActivityView.xaml.cs">
       <DependentUpon>TenderActivityView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\TenderActivityLabourViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\TenderActivityViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\TenderView.xaml.cs">
       <DependentUpon>TenderView.xaml</DependentUpon>
@@ -325,6 +329,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WorkExplorerModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="Controls\RHSTabs\Tender\TenderActivityLabourView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\RHSTabs\Tender\TenderActivityView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
