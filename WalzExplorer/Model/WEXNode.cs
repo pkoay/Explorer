@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WalzExplorer.Common;
 
 namespace WalzExplorer
 {
@@ -28,9 +29,10 @@ namespace WalzExplorer
         }
         public int IDAsInt()
         {
-            int i;
-            Int32.TryParse(this.ID, out i);
-            return i;
+            return ConvertLibrary.StringToInt(this.ID,-1);
+            //int i;
+            //Int32.TryParse(, out i);
+            //return i;
         }
     }
 }

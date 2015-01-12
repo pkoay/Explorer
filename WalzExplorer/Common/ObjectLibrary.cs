@@ -42,5 +42,7 @@ namespace WalzExplorer.Common
         {
             return Activator.CreateInstance(type);
         }
+
+        
     }
 }

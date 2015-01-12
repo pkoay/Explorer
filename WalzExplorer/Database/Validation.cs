@@ -142,14 +142,14 @@ namespace WalzExplorer.Database
             get { return null; }
         }
     }
-    public partial class tblTender_WorkGroup
+    public partial class tblTender_Workgroup
     {
         public string this[string columnName]
         {
             get { return null; }
         }
     }
-    public partial class tblTender_WorkGroupHeader
+    public partial class tblTender_WorkgroupHeader
     {
         public string this[string columnName]
         {
@@ -233,7 +233,7 @@ namespace WalzExplorer.Database
             get { return null; }
         }
     }
-    public partial class tblTender_WorkGroupItem
+    public partial class tblTender_WorkgroupItem
     {
         public string this[string columnName]
         {

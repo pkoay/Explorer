@@ -123,6 +123,6 @@ namespace WalzExplorer.Database
         public virtual tblTender_Activity tblTender_Activity { get; set; }
         public virtual tblTender_Step tblTender_Step { get; set; }
         public virtual tblTender_UnitOfMeasure tblTender_UnitOfMeasure { get; set; }
-        public virtual tblTender_WorkGroup tblTender_WorkGroup { get; set; }
+        public virtual tblTender_Workgroup tblTender_Workgroup { get; set; }
     }
 }

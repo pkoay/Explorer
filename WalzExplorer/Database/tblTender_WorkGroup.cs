@@ -12,20 +12,19 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_WorkGroup : ModelBase
+    public partial class tblTender_Workgroup : ModelBase
     {
-        public tblTender_WorkGroup()
+        public tblTender_Workgroup()
         {
             this.tblTender_ActivityLabour = new HashSet<tblTender_ActivityLabour>();
-            this.tblTender_LabourStandard = new HashSet<tblTender_LabourStandard>();
-            this.tblTender_WorkGroupItem = new HashSet<tblTender_WorkGroupItem>();
+            this.tblTender_WorkgroupItem = new HashSet<tblTender_WorkgroupItem>();
         }
     
-        private int _workGroupID;
-    	public int WorkGroupID 
+        private int _workgroupID;
+    	public int WorkgroupID 
     	{ 
-    		get { return _workGroupID; } 
-    		set { SetProperty(ref _workGroupID, value); } 
+    		get { return _workgroupID; } 
+    		set { SetProperty(ref _workgroupID, value); } 
     	}
     
         private int _tenderID;
@@ -94,7 +93,6 @@ namespace WalzExplorer.Database
     
         public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_ActivityLabour> tblTender_ActivityLabour { get; set; }
-        public virtual ICollection<tblTender_LabourStandard> tblTender_LabourStandard { get; set; }
-        public virtual ICollection<tblTender_WorkGroupItem> tblTender_WorkGroupItem { get; set; }
+        public virtual ICollection<tblTender_WorkgroupItem> tblTender_WorkgroupItem { get; set; }
     }
 }

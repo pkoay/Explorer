@@ -9,23 +9,24 @@ using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.RHSTabs.Tender
 {
-    public class TenderActivityLabourViewModel : RHSTabGridViewModelBase
+    public class TenderActivityMaterialViewModel : RHSTabGridViewModelBase
     {
 
-        public TenderActivityLabourViewModel(string NodeType, string PersonID, int Id)
+        public TenderActivityMaterialViewModel(WEXSettings settings)
         {
-            switch (NodeType)
+            int ActivityID = settings.node.IDAsInt();
+            switch (settings.node.TypeID)
             {
                 case "TenderActivity":
-                    data = new ObservableCollection<ModelBase>(context.tblTender_ActivityLabour
+                    data = new ObservableCollection<ModelBase>(context.tblTender_ActivityMaterial
                         .Join(context.tblTender_Step, l => l.StepID, s => s.StepID, (l, s) => new { labour = l, step = s }) //join required so we can order by step order
                         .OrderBy(a => a.step.SortOrder) 
                         .Select(a => a.labour)
-                        .Where(a => a.ActivityID == Id)
+                        .Where(a => a.ActivityID == ActivityID)
                         );
                         
                     columnDefault.Clear();
-                    columnDefault.Add("Activity", Id);
+                    columnDefault.Add("Activity", ActivityID);
                     break;
                 default: throw new NotImplementedException();
             }
@@ -34,25 +35,22 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
         public override ModelBase DefaultItem()
         {
-            tblTender_ActivityLabour i = new tblTender_ActivityLabour();
+            tblTender_ActivityMaterial i = new tblTender_ActivityMaterial();
           
             return i;
         }
-        public List<object> cmbLabourStandardList()
-        {
-            return context.tblTender_LabourStandard.ToList<object>();
-        }
+     
         public List<object> cmbStepList()
         {
             return context.tblTender_Step.ToList<object>();
         }
-        public List<object> cmbWorkgroupList()
+        public List<object> cmbMaterialList()
         {
-            return context.tblTender_Workgroup.ToList<object>();
+            return context.tblTender_Material.ToList<object>();
         }
-        public List<object> cmbUnitOfMeasureList()
+        public List<object> cmbSupplierList()
         {
-            return context.tblTender_UnitOfMeasure.ToList<object>();
+            return context.tblTender_Supplier.ToList<object>();
         }
        
     }

@@ -12,27 +12,27 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_WorkGroupItem : ModelBase
+    public partial class tblTender_WorkgroupItem : ModelBase
     {
-        private int _workGroupItemID;
-    	public int WorkGroupItemID 
+        private int _workgroupItemID;
+    	public int WorkgroupItemID 
     	{ 
-    		get { return _workGroupItemID; } 
-    		set { SetProperty(ref _workGroupItemID, value); } 
+    		get { return _workgroupItemID; } 
+    		set { SetProperty(ref _workgroupItemID, value); } 
     	}
     
-        private int _workGroupID;
-    	public int WorkGroupID 
+        private int _workgroupID;
+    	public int WorkgroupID 
     	{ 
-    		get { return _workGroupID; } 
-    		set { SetProperty(ref _workGroupID, value); } 
+    		get { return _workgroupID; } 
+    		set { SetProperty(ref _workgroupID, value); } 
     	}
     
-        private int _workGroupHeaderID;
-    	public int WorkGroupHeaderID 
+        private int _workgroupHeaderID;
+    	public int WorkgroupHeaderID 
     	{ 
-    		get { return _workGroupHeaderID; } 
-    		set { SetProperty(ref _workGroupHeaderID, value); } 
+    		get { return _workgroupHeaderID; } 
+    		set { SetProperty(ref _workgroupHeaderID, value); } 
     	}
     
         private string _title;
@@ -92,7 +92,7 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual tblTender_WorkGroup tblTender_WorkGroup { get; set; }
-        public virtual tblTender_WorkGroupHeader tblTender_WorkGroupHeader { get; set; }
+        public virtual tblTender_Workgroup tblTender_Workgroup { get; set; }
+        public virtual tblTender_WorkgroupHeader tblTender_WorkgroupHeader { get; set; }
     }
 }

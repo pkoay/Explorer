@@ -5,23 +5,22 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="2fb347df5c3d4e0c93f4192576989bc7" Name="All">
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender" Width="1.5" PointX="3" PointY="30.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Activity" Width="1.5" PointX="7.5" PointY="40.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityChildActivity" Width="1.5" PointX="12.75" PointY="41" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityContractor" Width="1.5" PointX="9.75" PointY="35.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityLabour" Width="1.5" PointX="9.75" PointY="48" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityMaterial" Width="1.5" PointX="12.75" PointY="46.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ContractorType" Width="1.5" PointX="5.25" PointY="27.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Drawing" Width="1.5" PointX="5.25" PointY="31.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Item" Width="1.5" PointX="12.75" PointY="34.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_LabourStandard" Width="1.5" PointX="7.5" PointY="46.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Material" Width="1.5" PointX="10.5" PointY="41.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Schedule" Width="1.5" PointX="10.5" PointY="31.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Status" Width="1.5" PointX="0.75" PointY="32" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Step" Width="1.5" PointX="7.5" PointY="36" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Supplier" Width="1.5" PointX="5.25" PointY="48.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Supplier_Material" Width="1.5" PointX="15.75" PointY="44.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_UnitOfMeasure" Width="1.5" PointX="5.25" PointY="51.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender" Width="1.5" PointX="6" PointY="29.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Activity" Width="2.125" PointX="14.25" PointY="39.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityChildActivity" Width="2.625" PointX="17.125" PointY="39.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityContractor" Width="2.5" PointX="20.125" PointY="33.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityLabour" Width="2.375" PointX="21.125" PointY="38.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityMaterial" Width="2.375" PointX="17.125" PointY="44.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ContractorType" Width="2.75" PointX="8.25" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Drawing" Width="2" PointX="8.25" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Item" Width="1.5" PointX="17.125" PointY="32.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Material" Width="2" PointX="11.25" PointY="39.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Schedule" Width="1.5" PointX="14.875" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Status" Width="2" PointX="3.25" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Step" Width="1.5" PointX="17.875" PointY="27.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Supplier" Width="2.25" PointX="8.25" PointY="46.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Supplier_Material" Width="2.5" PointX="21" PointY="44.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_UnitOfMeasure" Width="2.25" PointX="8.25" PointY="50" IsExpanded="true" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkGroup" Width="1.5" PointX="5.25" PointY="56" IsExpanded="true" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkGroupHeader" Width="1.5" PointX="5.25" PointY="60.625" IsExpanded="true" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkGroupItem" Width="1.5" PointX="7.5" PointY="56.125" IsExpanded="true" />
@@ -34,7 +33,6 @@
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ContractorType_tblTender" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Drawing_tblTender" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender" ManuallyRouted="false" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_LabourStandard_tblTender" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Material_tblTender" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Supplier_tblTender" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_tblTender_Status" ManuallyRouted="false" />
@@ -57,7 +55,6 @@
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Supplier" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender_Drawing" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender_Schedule" ManuallyRouted="false" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_LabourStandard_tblTender_UnitOfMeasure" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_LabourStandard_tblTender_WorkGroup" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Material_tblTender_UnitOfMeasure" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Supplier_Material_tblTender_Material" ManuallyRouted="false" />
@@ -68,14 +65,23 @@
         <AssociationConnector Association="WalzExplorerModel.tblWEX_RHSTab_Security" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.tblWEX_Tree_Security" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.tblWEX_TreeNodeType_RHSTab" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Contractor" Width="1.5" PointX="7.5" PointY="30" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Contractor" Width="1.5" PointX="11.75" PointY="26.75" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Contractor_tblTender" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Contractor" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Contractor_tblTender_ContractorType" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblPerson" Width="1.5" PointX="7.75" PointY="6" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblProject" Width="1.5" PointX="10" PointY="6" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblPerson" Width="1.5" PointX="0.75" PointY="31.25" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject" Width="1.5" PointX="3" PointY="31.375" />
         <AssociationConnector Association="WalzExplorerModel.FK_Project_Project_Person_Person1" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_tblPerson" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Workgroup" Width="2" PointX="8.25" PointY="28.75" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkgroupHeader" Width="2" PointX="8.25" PointY="37.375" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkgroupItem" Width="2" PointX="11" PointY="31.75" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroup_tblTender" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_WorkGroup" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_LabourStandard" Width="1.5" PointX="8.25" PointY="33" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_LabourStandard_tblTender" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

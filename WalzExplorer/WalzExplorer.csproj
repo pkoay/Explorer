@@ -137,15 +137,20 @@
     <Compile Include="Common\FindConflictingReferences.cs" />
     <Compile Include="Common\GraphicsLibrary.cs" />
     <Compile Include="Common\GridLibrary.cs" />
+    <Compile Include="Common\ConvertLibrary.cs" />
     <Compile Include="Common\ObjectLibrary.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabGridViewBase.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabViewBase.cs" />
     <Compile Include="Controls\LHSTabs\LHSTabViewModel.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabGridViewModelBase.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\TenderActivityMaterialView.xaml.cs">
+      <DependentUpon>TenderActivityMaterialView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RHSTabs\Tender\TenderActivityLabourView.xaml.cs">
       <DependentUpon>TenderActivityLabourView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\TenderActivityMaterialViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\TenderActivityView.xaml.cs">
       <DependentUpon>TenderActivityView.xaml</DependentUpon>
     </Compile>
@@ -176,6 +181,18 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblProject.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_LabourStandard.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_Workgroup.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_WorkgroupHeader.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_WorkgroupItem.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Validation.cs" />
@@ -216,9 +233,6 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\spWEX_Node_TendersOpen_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\spWEX_Node_TendersWorkGroupList_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\spWEX_RHSTabList_Result.cs">
@@ -266,9 +280,6 @@
     <Compile Include="Database\tblTender_Item.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\tblTender_LabourStandard.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Database\tblTender_Material.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -288,15 +299,6 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblTender_UnitOfMeasure.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_WorkGroup.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_WorkGroupHeader.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_WorkGroupItem.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblWEX_LHSTab.cs">
@@ -330,6 +332,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WorkExplorerModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="Controls\RHSTabs\Tender\TenderActivityMaterialView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\RHSTabs\Tender\TenderActivityLabourView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

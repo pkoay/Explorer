@@ -14,12 +14,12 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
     /// </summary>
     
      
-    public partial class TenderActivityLabourView : RHSTabGridViewBase
+    public partial class TenderActivityMaterialView : RHSTabGridViewBase
     {
-      
-        TenderActivityLabourViewModel vm;
 
-        public TenderActivityLabourView()
+        TenderActivityMaterialViewModel vm;
+
+        public TenderActivityMaterialView()
         {
             InitializeComponent();
             
@@ -34,7 +34,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             columnReadOnlyDeveloper.Add("RowVersion");
             columnReadOnlyDeveloper.Add("TenderID");
             columnReadOnlyDeveloper.Add("ActivityID");
-            columnReadOnlyDeveloper.Add("ActivityLabourID");
+            columnReadOnlyDeveloper.Add("ActivityMaterialID");
 
             columnReadOnlyDeveloper.Add("SortOrder");
             columnReadOnlyDeveloper.Add("UpdatedBy");
@@ -46,14 +46,13 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             gridAdd = true;
             
             // set grid data
-            vm = new TenderActivityLabourViewModel(settings.node.TypeID, settings.user.Person.PersonID, settings.node.IDAsInt());
+            vm = new TenderActivityMaterialViewModel(settings);
             viewModel = vm;
             grd.DataContext = viewModel;
             grd.ItemsSource = viewModel.data;
-            columnCombo.Add("LabourStandardID", GridLibrary.CreateCombo("cmbLabourStandradID", "LabourStandard", vm.cmbLabourStandardList(), "LabourStandardID", "Title"));
             columnCombo.Add("StepID", GridLibrary.CreateCombo("cmbStepID", "Step", vm.cmbStepList(), "StepID", "Title"));
-            columnCombo.Add("WorkgroupID", GridLibrary.CreateCombo("cmbWorkgroupID", "Workgroup", vm.cmbWorkgroupList(), "WorkgroupID", "Title"));
-            columnCombo.Add("UnitOfMeasureID", GridLibrary.CreateCombo("cmbUnitOfMeasureID", "Unit Of Measure", vm.cmbUnitOfMeasureList(), "UnitOfMeasureID", "ShortTitle"));
+            columnCombo.Add("MaterialID", GridLibrary.CreateCombo("cmbMaterialID", "Material", vm.cmbMaterialList(), "MaterialID", "Title"));
+            columnCombo.Add("SupplierID", GridLibrary.CreateCombo("cmbSupplierID", "Supplier", vm.cmbSupplierList(), "SupplierID", "Title"));
             base.TabLoad();
 
         }

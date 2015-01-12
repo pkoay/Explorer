@@ -20,12 +20,12 @@ namespace WalzExplorer.Database
             this.tblTender_ContractorType = new HashSet<tblTender_ContractorType>();
             this.tblTender_Drawing = new HashSet<tblTender_Drawing>();
             this.tblTender_Item = new HashSet<tblTender_Item>();
-            this.tblTender_LabourStandard = new HashSet<tblTender_LabourStandard>();
             this.tblTender_Material = new HashSet<tblTender_Material>();
             this.tblTender_Supplier = new HashSet<tblTender_Supplier>();
             this.tblTender_UnitOfMeasure = new HashSet<tblTender_UnitOfMeasure>();
-            this.tblTender_WorkGroup = new HashSet<tblTender_WorkGroup>();
             this.tblTender_Contractor = new HashSet<tblTender_Contractor>();
+            this.tblTender_Workgroup = new HashSet<tblTender_Workgroup>();
+            this.tblTender_LabourStandard = new HashSet<tblTender_LabourStandard>();
         }
     
         private int _tenderID;
@@ -110,13 +110,13 @@ namespace WalzExplorer.Database
         public virtual ICollection<tblTender_ContractorType> tblTender_ContractorType { get; set; }
         public virtual ICollection<tblTender_Drawing> tblTender_Drawing { get; set; }
         public virtual ICollection<tblTender_Item> tblTender_Item { get; set; }
-        public virtual ICollection<tblTender_LabourStandard> tblTender_LabourStandard { get; set; }
         public virtual ICollection<tblTender_Material> tblTender_Material { get; set; }
         public virtual ICollection<tblTender_Supplier> tblTender_Supplier { get; set; }
         public virtual tblTender_Status tblTender_Status { get; set; }
         public virtual ICollection<tblTender_UnitOfMeasure> tblTender_UnitOfMeasure { get; set; }
-        public virtual ICollection<tblTender_WorkGroup> tblTender_WorkGroup { get; set; }
         public virtual ICollection<tblTender_Contractor> tblTender_Contractor { get; set; }
         public virtual tblPerson tblPerson { get; set; }
+        public virtual ICollection<tblTender_Workgroup> tblTender_Workgroup { get; set; }
+        public virtual ICollection<tblTender_LabourStandard> tblTender_LabourStandard { get; set; }
     }
 }

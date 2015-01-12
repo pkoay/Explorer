@@ -36,7 +36,6 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblTender_ContractorType> tblTender_ContractorType { get; set; }
         public virtual DbSet<tblTender_Drawing> tblTender_Drawing { get; set; }
         public virtual DbSet<tblTender_Item> tblTender_Item { get; set; }
-        public virtual DbSet<tblTender_LabourStandard> tblTender_LabourStandard { get; set; }
         public virtual DbSet<tblTender_Material> tblTender_Material { get; set; }
         public virtual DbSet<tblTender_Schedule> tblTender_Schedule { get; set; }
         public virtual DbSet<tblTender_Status> tblTender_Status { get; set; }
@@ -44,9 +43,6 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblTender_Supplier> tblTender_Supplier { get; set; }
         public virtual DbSet<tblTender_Supplier_Material> tblTender_Supplier_Material { get; set; }
         public virtual DbSet<tblTender_UnitOfMeasure> tblTender_UnitOfMeasure { get; set; }
-        public virtual DbSet<tblTender_WorkGroup> tblTender_WorkGroup { get; set; }
-        public virtual DbSet<tblTender_WorkGroupHeader> tblTender_WorkGroupHeader { get; set; }
-        public virtual DbSet<tblTender_WorkGroupItem> tblTender_WorkGroupItem { get; set; }
         public virtual DbSet<tblWEX_LHSTab> tblWEX_LHSTab { get; set; }
         public virtual DbSet<tblWEX_NTSecurityGroup> tblWEX_NTSecurityGroup { get; set; }
         public virtual DbSet<tblWEX_RHSTab> tblWEX_RHSTab { get; set; }
@@ -55,6 +51,10 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblTender_Contractor> tblTender_Contractor { get; set; }
         public virtual DbSet<tblPerson> tblPersons { get; set; }
         public virtual DbSet<tblProject> tblProjects { get; set; }
+        public virtual DbSet<tblTender_Workgroup> tblTender_Workgroup { get; set; }
+        public virtual DbSet<tblTender_WorkgroupHeader> tblTender_WorkgroupHeader { get; set; }
+        public virtual DbSet<tblTender_WorkgroupItem> tblTender_WorkgroupItem { get; set; }
+        public virtual DbSet<tblTender_LabourStandard> tblTender_LabourStandard { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)
@@ -323,15 +323,6 @@ namespace WalzExplorer.Database
         public virtual ObjectResult<spWEX_Node_TendersOpenList_Result> spWEX_Node_TendersOpenList()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_Node_TendersOpenList_Result>("spWEX_Node_TendersOpenList");
-        }
-    
-        public virtual ObjectResult<spWEX_Node_TendersWorkGroupList_Result> spWEX_Node_TendersWorkGroupList(Nullable<int> tenderID)
-        {
-            var tenderIDParameter = tenderID.HasValue ?
-                new ObjectParameter("TenderID", tenderID) :
-                new ObjectParameter("TenderID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_Node_TendersWorkGroupList_Result>("spWEX_Node_TendersWorkGroupList", tenderIDParameter);
         }
     
         public virtual ObjectResult<spWEX_TreeRootList_Result> spWEX_TreeRootList(string lHSTabID, string nTSecurityGroups, string nTSecurityGroupsSeperator)
