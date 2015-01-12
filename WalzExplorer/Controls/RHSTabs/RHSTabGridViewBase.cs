@@ -62,12 +62,29 @@ namespace WalzExplorer.Controls.RHSTabs
             columnReadOnly.Clear();
         }
 
+        //public  GridViewComboBoxColumn CreateCombo(string uniqueName, string header, List<object> list, string listIDColumn, string listDisplayColumn)
+        //{
+        //    GridViewComboBoxColumn gcb = Common.GridLibrary.CreateCombo(uniqueName, header, list, listIDColumn, listDisplayColumn);
+           
+         
+        //    return gcb;
+        //}
+
+        void gcb_LostFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+            isEditing = true;
+        }
+
+        void gcb_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+            isEditing = false;
+        }
 
         public override void TabLoad()
         {
             g.CanUserInsertRows = gridAdd;
             g.CanUserDeleteRows = gridDelete;
-        
+            
             if (gridAdd)
             {
                 
@@ -174,6 +191,8 @@ namespace WalzExplorer.Controls.RHSTabs
             isEditing = true;
         }
 
+       
+
         protected  virtual void g_CellValidating(object sender, GridViewCellValidatingEventArgs e)
         {
             // this is required to be overridden by each RHSTabView
@@ -187,23 +206,27 @@ namespace WalzExplorer.Controls.RHSTabs
         }
         void g_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            // Get the current mouse position
-            System.Windows.Point mousePos = e.GetPosition(null);
-            Vector diff = startPoint - mousePos;
-
-            var element = e.OriginalSource;
-            GridViewRow GrabStartRow = (element as FrameworkElement).ParentOfType<GridViewRow>();
-            if (GrabStartRow == null || GrabStartRow.IsSelected == false) return;
-
-            if (e.LeftButton == MouseButtonState.Pressed &&
-                ((Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance) ||(Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)) 
-                && g.SelectedItem != null
-                
-                )
+            if (!isEditing)
             {
-                // Initialize the drag & drop operation
-                DataObject dragData = new DataObject(GridDragData, g.SelectedItem);
-                DragDrop.DoDragDrop(g, dragData, DragDropEffects.Move);
+
+                // Get the current mouse position
+                System.Windows.Point mousePos = e.GetPosition(null);
+                Vector diff = startPoint - mousePos;
+
+                var element = e.OriginalSource;
+                GridViewRow GrabStartRow = (element as FrameworkElement).ParentOfType<GridViewRow>();
+                if (GrabStartRow == null || GrabStartRow.IsSelected == false) return;
+
+                if (e.LeftButton == MouseButtonState.Pressed &&
+                    ((Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance) || (Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+                    && g.SelectedItem != null
+
+                    )
+                {
+                    // Initialize the drag & drop operation
+                    DataObject dragData = new DataObject(GridDragData, g.SelectedItem);
+                    DragDrop.DoDragDrop(g, dragData, DragDropEffects.Move);
+                }
             }
         }
         void g_DragEnter(object sender, DragEventArgs e)
@@ -440,12 +463,22 @@ namespace WalzExplorer.Controls.RHSTabs
                 g.Columns.Add(cmb);
                 cmb.DataMemberBinding = new Binding(c.UniqueName);
                 cmb.SelectedValueMemberPath = cmb.Tag.ToString();
+                cmb.Initialized += cmb_Initialized;
+                cmb.GotFocus += gcb_GotFocus;
+                cmb.LostFocus += gcb_LostFocus;
+
+
                 cmb.IsReadOnly = c.IsReadOnly; // make cmb readonly if column is readonly
                 if (cmb.IsReadOnly) cmb.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
                
             }
             g.Rebind();
            
+        }
+
+        void cmb_Initialized(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public override string IssueIfClosed()

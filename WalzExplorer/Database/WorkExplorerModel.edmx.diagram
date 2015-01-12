@@ -76,10 +76,6 @@
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Workgroup" Width="2" PointX="8.25" PointY="28.75" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkgroupHeader" Width="2" PointX="8.25" PointY="37.375" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkgroupItem" Width="2" PointX="11" PointY="31.75" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroup_tblTender" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_WorkGroup" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_LabourStandard" Width="1.5" PointX="8.25" PointY="33" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_LabourStandard_tblTender" />
       </Diagram>

@@ -75,6 +75,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
+        private int _sortOrder;
+    	public int SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
+    	}
+    
     
         public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_Item> tblTender_Item { get; set; }

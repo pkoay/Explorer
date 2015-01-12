@@ -10,13 +10,16 @@ namespace WalzExplorer
     public class WEXNode
     {
         readonly List<WEXNode> _children = new List<WEXNode>();
+
         public IList<WEXNode> Children
         {
             get { return _children; }
         }
+        public WEXNode Parent { get; set; }
         public string ID { get; set; }
+        public string IDType { get; set; } //Type of id e.g. tender,activity etc
         public string Name { get; set; }
-        public string TypeID { get; set; }
+        public string TypeID { get; set; } // type of node 'Workgroup List header'
         public string IconOpen { get; set; }
         public string IconClosed { get; set; }
         public string ChildSQL { get; set; }
@@ -30,9 +33,21 @@ namespace WalzExplorer
         public int IDAsInt()
         {
             return ConvertLibrary.StringToInt(this.ID,-1);
-            //int i;
-            //Int32.TryParse(, out i);
-            //return i;
+        }
+
+        public string FindID (string searchForTypeID,string NotFound)
+        {
+            WEXNode node = this;
+
+            while (node != null && node.IDType != searchForTypeID)
+            {
+                node = Parent;
+            }
+            if (node == null)
+                return NotFound;
+            else
+                return node.ID;
+
         }
     }
 }

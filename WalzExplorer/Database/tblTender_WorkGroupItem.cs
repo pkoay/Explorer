@@ -91,6 +91,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
+        private int _sortOrder;
+    	public int SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
+    	}
+    
     
         public virtual tblTender_Workgroup tblTender_Workgroup { get; set; }
         public virtual tblTender_WorkgroupHeader tblTender_WorkgroupHeader { get; set; }

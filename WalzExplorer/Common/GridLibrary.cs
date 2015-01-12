@@ -21,7 +21,20 @@ namespace WalzExplorer.Common
             gcb.DisplayMemberPath = listDisplayColumn;
             gcb.ValidatesOnDataErrors = GridViewValidationMode.Default;
             gcb.Tag = listIDColumn;
+
+            gcb.GotFocus += gcb_GotFocus;
+            gcb.LostFocus += gcb_LostFocus;
             return gcb;
+        }
+
+        static void gcb_LostFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        static void gcb_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
 

@@ -5,25 +5,29 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WalzExplorer.Common;
 using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.RHSTabs.Tender
 {
     public class TenderActivityViewModel : RHSTabGridViewModelBase
     {
-
-        public TenderActivityViewModel(string NodeType, string PersonID, int Id)
+        int tenderID;
+        int activityID;
+        public TenderActivityViewModel (WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
+            tenderID = ConvertLibrary.StringToInt(settings.node.FindID("TENDER", "-2"), -1);
+            activityID = ConvertLibrary.StringToInt(settings.node.FindID("ACTIVITY", "-2"), -1);
 
-            switch (NodeType)
+            switch (settings.node.TypeID)
             {
                 case "TenderActivityFolder":
-                    data = new ObservableCollection<ModelBase>(context.tblTender_Activity.Where(m => m.TenderID == Id).OrderBy(m => m.SortOrder));
+                    data = new ObservableCollection<ModelBase>(context.tblTender_Activity.Where(m => m.TenderID == tenderID).OrderBy(m => m.SortOrder));
                     columnDefault.Clear();
-                    columnDefault.Add("TenderID", Id);
+                    columnDefault.Add("TenderID", tenderID);
                     break;
                 case "TenderActivity":
-                    data = new ObservableCollection<ModelBase>(context.tblTender_Activity.Where(m => m.ActivityID == Id));
+                    data = new ObservableCollection<ModelBase>(context.tblTender_Activity.Where(m => m.ActivityID == activityID));
                     break;
                 default: throw new NotImplementedException();
             }
@@ -38,15 +42,8 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         }
         public List<object> cmbUnitOfMeasureList()
         {
-            return context.tblTender_UnitOfMeasure.ToList<object>();
+            return context.tblTender_UnitOfMeasure.Where(a => a.TenderID == tenderID).OrderBy(a => a.SortOrder).ToList<object>();
         }
-        //public List<object> cmbStatusList()
-        //{
-        //    return context.tblTender_Status.ToList<object>();
-        //}
-        //public void test()
-        //{
-          
-        //}
+       
     }
 }

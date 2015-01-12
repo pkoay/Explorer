@@ -155,6 +155,7 @@
           <Property Name="TenderID" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -168,6 +169,7 @@
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="RevisionNo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Comments" Type="varchar(max)" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -186,6 +188,7 @@
           <Property Name="Quantity" Type="float" Nullable="false" />
           <Property Name="Factor" Type="float" Nullable="false" />
           <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -200,6 +203,7 @@
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UnitOfMeasureID" Type="int" Nullable="false" />
           <Property Name="StandardHours" Type="float" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -215,6 +219,7 @@
           <Property Name="KG" Type="float" Nullable="false" />
           <Property Name="UnitOfMeasureID" Type="int" Nullable="false" />
           <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -228,9 +233,9 @@
           <Property Name="ClientCode" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ClientDescription" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="ParentID" Type="int" />
-          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="CanAllocate" Type="bit" Nullable="false" />
           <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -241,6 +246,7 @@
           </Key>
           <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -265,6 +271,7 @@
           <Property Name="TenderID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -277,6 +284,7 @@
           <Property Name="SupplierID" Type="int" Nullable="false" />
           <Property Name="MaterialID" Type="int" Nullable="false" />
           <Property Name="UnitOfMeasureRate" Type="float" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -289,6 +297,7 @@
           <Property Name="TenderID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ShortTitle" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -304,6 +313,7 @@
           <Property Name="LabourMarkup" Type="float" Nullable="false" />
           <Property Name="Rate" Type="int" Nullable="false" />
           <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -315,6 +325,7 @@
           <Property Name="WorkgroupHeaderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenderID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -331,6 +342,7 @@
           <Property Name="Duration" Type="float" Nullable="false" />
           <Property Name="Rate" Type="float" Nullable="false" />
           <Property Name="Comments" Type="varchar(max)" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -1353,6 +1365,7 @@
           <NavigationProperty Name="tblTender" Relationship="Self.FK_tblTender_ContractorType_tblTender" FromRole="tblTender_ContractorType" ToRole="tblTender" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="tblTender_Contractor" Relationship="WalzExplorerModel.FK_tblTender_Contractor_tblTender_ContractorType" FromRole="tblTender_ContractorType" ToRole="tblTender_Contractor" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_Drawing">
           <Key>
@@ -1368,6 +1381,7 @@
           <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="tblTender" Relationship="Self.FK_tblTender_Drawing_tblTender" FromRole="tblTender_Drawing" ToRole="tblTender" />
           <NavigationProperty Name="tblTender_Item" Relationship="Self.FK_tblTender_Item_tblTender_Drawing" FromRole="tblTender_Drawing" ToRole="tblTender_Item" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_Item">
           <Key>
@@ -1390,6 +1404,7 @@
           <NavigationProperty Name="tblTender_Drawing" Relationship="Self.FK_tblTender_Item_tblTender_Drawing" FromRole="tblTender_Item" ToRole="tblTender_Drawing" />
           <NavigationProperty Name="tblTender_Schedule" Relationship="Self.FK_tblTender_Item_tblTender_Schedule" FromRole="tblTender_Item" ToRole="tblTender_Schedule" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_Material">
           <Key>
@@ -1409,6 +1424,7 @@
           <NavigationProperty Name="tblTender_UnitOfMeasure" Relationship="Self.FK_tblTender_Material_tblTender_UnitOfMeasure" FromRole="tblTender_Material" ToRole="tblTender_UnitOfMeasure" />
           <NavigationProperty Name="tblTender_Supplier_Material" Relationship="Self.FK_tblTender_Supplier_Material_tblTender_Material" FromRole="tblTender_Material" ToRole="tblTender_Supplier_Material" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_Schedule">
           <Key>
@@ -1437,6 +1453,7 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_Step">
           <Key>
@@ -1468,6 +1485,7 @@
           <NavigationProperty Name="tblTender_ActivityMaterial" Relationship="Self.FK_tblTender_ComponentMaterial_tblTender_Supplier" FromRole="tblTender_Supplier" ToRole="tblTender_ActivityMaterial" />
           <NavigationProperty Name="tblTender_Supplier_Material" Relationship="Self.FK_tblTender_Supplier_Material_tblTender_Supplier" FromRole="tblTender_Supplier" ToRole="tblTender_Supplier_Material" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_Supplier_Material">
           <Key>
@@ -1482,6 +1500,7 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_UnitOfMeasure">
           <Key>
@@ -1498,6 +1517,7 @@
           <NavigationProperty Name="tblTender_ActivityLabour" Relationship="Self.FK_tblTender_ComponentLabour_tblTender_UnitOfMeasure" FromRole="tblTender_UnitOfMeasure" ToRole="tblTender_ActivityLabour" />
           <NavigationProperty Name="tblTender_Material" Relationship="Self.FK_tblTender_Material_tblTender_UnitOfMeasure" FromRole="tblTender_UnitOfMeasure" ToRole="tblTender_Material" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblWEX_LHSTab">
           <Key>
@@ -2415,6 +2435,7 @@
           <NavigationProperty Name="tblTender" Relationship="WalzExplorerModel.FK_tblTender_WorkGroup_tblTender" FromRole="tblTender_Workgroup" ToRole="tblTender" />
           <NavigationProperty Name="tblTender_ActivityLabour" Relationship="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_WorkGroup" FromRole="tblTender_Workgroup" ToRole="tblTender_ActivityLabour" />
           <NavigationProperty Name="tblTender_WorkgroupItem" Relationship="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" FromRole="tblTender_Workgroup" ToRole="tblTender_WorkgroupItem" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_WorkgroupHeader">
           <Key>
@@ -2427,6 +2448,7 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="tblTender_WorkgroupItem" Relationship="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader" FromRole="tblTender_WorkgroupHeader" ToRole="tblTender_WorkgroupItem" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_WorkgroupItem">
           <Key>
@@ -2445,6 +2467,7 @@
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="tblTender_Workgroup" Relationship="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" FromRole="tblTender_WorkgroupItem" ToRole="tblTender_Workgroup" />
           <NavigationProperty Name="tblTender_WorkgroupHeader" Relationship="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader" FromRole="tblTender_WorkgroupItem" ToRole="tblTender_WorkgroupHeader" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_tblTender_WorkGroup_tblTender">
           <End Type="WalzExplorerModel.tblTender" Role="tblTender" Multiplicity="1" />
@@ -2508,6 +2531,7 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="tblTender" Relationship="WalzExplorerModel.FK_tblTender_LabourStandard_tblTender" FromRole="tblTender_LabourStandard" ToRole="tblTender" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_tblTender_LabourStandard_tblTender">
           <End Type="WalzExplorerModel.tblTender" Role="tblTender" Multiplicity="1" />
@@ -2642,6 +2666,7 @@
           <EntitySetMapping Name="tblTender_ContractorType">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_ContractorType">
               <MappingFragment StoreEntitySet="tblTender_ContractorType">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="ContractorTypeID" ColumnName="ContractorTypeID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
@@ -2655,6 +2680,7 @@
           <EntitySetMapping Name="tblTender_Drawing">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Drawing">
               <MappingFragment StoreEntitySet="tblTender_Drawing">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="DrawingID" ColumnName="DrawingID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -2669,6 +2695,7 @@
           <EntitySetMapping Name="tblTender_Item">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Item">
               <MappingFragment StoreEntitySet="tblTender_Item">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
@@ -2688,6 +2715,7 @@
           <EntitySetMapping Name="tblTender_Material">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Material">
               <MappingFragment StoreEntitySet="tblTender_Material">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
@@ -2721,6 +2749,7 @@
           <EntitySetMapping Name="tblTender_Status">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Status">
               <MappingFragment StoreEntitySet="tblTender_Status">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
@@ -2745,6 +2774,7 @@
           <EntitySetMapping Name="tblTender_Supplier">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Supplier">
               <MappingFragment StoreEntitySet="tblTender_Supplier">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
@@ -2758,6 +2788,7 @@
           <EntitySetMapping Name="tblTender_Supplier_Material">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Supplier_Material">
               <MappingFragment StoreEntitySet="tblTender_Supplier_Material">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
@@ -2770,6 +2801,7 @@
           <EntitySetMapping Name="tblTender_UnitOfMeasure">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_UnitOfMeasure">
               <MappingFragment StoreEntitySet="tblTender_UnitOfMeasure">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UnitOfMeasureID" ColumnName="UnitOfMeasureID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
@@ -3003,6 +3035,7 @@
           <EntitySetMapping Name="tblTender_Workgroup">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Workgroup">
               <MappingFragment StoreEntitySet="tblTender_Workgroup">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
@@ -3019,6 +3052,7 @@
           <EntitySetMapping Name="tblTender_WorkgroupHeader">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_WorkgroupHeader">
               <MappingFragment StoreEntitySet="tblTender_WorkgroupHeader">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
@@ -3031,6 +3065,7 @@
           <EntitySetMapping Name="tblTender_WorkgroupItem">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_WorkgroupItem">
               <MappingFragment StoreEntitySet="tblTender_WorkgroupItem">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
@@ -3048,6 +3083,7 @@
           <EntitySetMapping Name="tblTender_LabourStandard">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_LabourStandard">
               <MappingFragment StoreEntitySet="tblTender_LabourStandard">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />

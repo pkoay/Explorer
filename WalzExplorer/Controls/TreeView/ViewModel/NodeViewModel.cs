@@ -53,7 +53,7 @@ namespace WalzExplorer.Controls.TreeView.ViewModel
         {
             if (_node.ChildSQL != "")
             {
-                foreach (WEXNode node in context.GetNodes(_node.ChildSQL, _dicSQLSubsitutes))
+                foreach (WEXNode node in context.GetNodes(_node,_node.ChildSQL, _dicSQLSubsitutes))
                     base.Children.Add(new NodeViewModel(this, node, _dicSQLSubsitutes));
             }
         }

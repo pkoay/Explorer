@@ -250,7 +250,7 @@ namespace WalzExplorer.Database
 
             foreach (spWEX_TreeRootList_Result tr in spWEX_TreeRootList(strLHSTabID, user.SecurityGroupAsString(), "|"))
             {
-                foreach (WEXNode n in (GetNodes(tr.RootSQL, dicSQLSubsitutes)))
+                foreach (WEXNode n in (GetNodes(null,tr.RootSQL, dicSQLSubsitutes)))
                 {
                     nodes.Add(n);
                 }
@@ -258,17 +258,23 @@ namespace WalzExplorer.Database
             return nodes;
         }
 
-        public List<WEXNode> GetNodes(string strNodeSQL, Dictionary<string, string> dicSQLSubsitutes)
+        public List<WEXNode> GetNodes(WEXNode parent,string  strNodeSQL ,Dictionary<string, string> dicSQLSubsitutes)
         {
-
-            List<WEXNode> nodes = new List<WEXNode>();
+            
+            List<WEXNode> nodes;
 
             //Subsitute parameters
             foreach (KeyValuePair<string, string> entry in dicSQLSubsitutes)
             {
                 strNodeSQL = strNodeSQL.Replace(entry.Key, entry.Value);
             }
-            return this.Database.SqlQuery<WEXNode>(strNodeSQL).ToList();
+            nodes=this.Database.SqlQuery<WEXNode>(strNodeSQL).ToList();
+
+            //Maybe this should be done in linq?
+            foreach (WEXNode node in nodes)
+                node.Parent = parent;
+
+            return nodes;
         }
 
         public List<WEXRHSTab> GetRHSTabs(NodeViewModel LHSNode, WEXUser user)

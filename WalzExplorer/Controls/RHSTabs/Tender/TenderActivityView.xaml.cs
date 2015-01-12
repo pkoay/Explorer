@@ -44,7 +44,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             gridAdd = (settings.node.TypeID == "TenderActivityFolder");
             
             // set grid data
-            vm = new TenderActivityViewModel(settings.node.TypeID, settings.user.Person.PersonID, settings.node.IDAsInt());
+            vm = new TenderActivityViewModel(settings);
             viewModel = vm;
             grd.DataContext = viewModel;
             grd.ItemsSource = viewModel.data;
