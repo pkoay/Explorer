@@ -143,14 +143,18 @@
     <Compile Include="Controls\LHSTabs\LHSTabViewModel.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabGridViewModelBase.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\TenderActivityView.xaml.cs">
+      <DependentUpon>TenderActivityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\TenderActivityViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\TenderView.xaml.cs">
       <DependentUpon>TenderView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RHSTabs\TenderContractor\TenderContractorView.xaml.cs">
+    <Compile Include="Controls\RHSTabs\Tender\TenderContractorView.xaml.cs">
       <DependentUpon>TenderContractorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Tender\TenderViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\TenderContractor\TenderContractorViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\TenderContractorViewModel.cs" />
     <Compile Include="Controls\TreeView\WEXTreeView.xaml.cs">
       <DependentUpon>WEXTreeView.xaml</DependentUpon>
     </Compile>
@@ -321,11 +325,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WorkExplorerModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="Controls\RHSTabs\Tender\TenderActivityView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\RHSTabs\Tender\TenderView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\RHSTabs\TenderContractor\TenderContractorView.xaml">
+    <Page Include="Controls\RHSTabs\Tender\TenderContractorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -431,10 +439,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\RHSTabs\TenderDocumentTab\" />
-    <Folder Include="Controls\RHSTabs\TenderItems\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Walz.ico" />
   </ItemGroup>

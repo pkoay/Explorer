@@ -52,6 +52,7 @@
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UnitOfMeasureID" Type="int" Nullable="false" />
           <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -1250,6 +1251,7 @@
           <NavigationProperty Name="tblTender_ActivityChildActivity1" Relationship="Self.FK_tblTender_ComponentSubcomponent_tblTender_Component1" FromRole="tblTender_Activity" ToRole="tblTender_ActivityChildActivity" />
           <NavigationProperty Name="tblTender_Item" Relationship="Self.FK_tblTender_Item_tblTender_Component" FromRole="tblTender_Activity" ToRole="tblTender_Item" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender_ActivityChildActivity">
           <Key>
@@ -2595,6 +2597,7 @@
           <EntitySetMapping Name="tblTender_Activity">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Activity">
               <MappingFragment StoreEntitySet="tblTender_Activity">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />

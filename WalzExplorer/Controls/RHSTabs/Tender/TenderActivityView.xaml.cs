@@ -14,20 +14,19 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
     /// </summary>
     
      
-    public partial class TenderView : RHSTabGridViewBase
+    public partial class TenderActivityView : RHSTabGridViewBase
     {
       
-        TenderViewModel vm;
-        
-        public TenderView()
+        TenderActivityViewModel vm;
+
+        public TenderActivityView()
         {
             InitializeComponent();
             base.SetGrid(grd);
 
             columnNotRequired.Add("RowVersion");
             columnNotRequired.Add("TenderID");
-            columnNotRequired.Add("Comments");
-            columnRename.Add("TenderID", "ID");
+            columnRename.Add("ActivityID", "ID");
 
             columnNotRequired.Add("SortOrder");
             columnNotRequired.Add("UpdatedBy");
@@ -37,31 +36,18 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
         public override void TabLoad()
         {
-            switch (node.TypeID)
-            {
-                case "TendersMy":
-                    gridAdd = true;
-                    gridEdit = true;
-                    gridDelete = true;
-                    break;
-                default:
-                    gridAdd = false;
-                    gridEdit = false;
-                    gridDelete = false;
-                    break;
-            }
-
-
-
+            gridEdit = true;
+            gridDelete = true;
+            gridAdd= (node.TypeID=="TenderActivityFolder") ;
+            
             // set grid data
-
-            vm = new TenderViewModel(node.TypeID, user.Person.PersonID, node.IDAsInt());
+            vm = new TenderActivityViewModel(node.TypeID, user.Person.PersonID, node.IDAsInt());
             viewModel = vm;
             grd.DataContext = viewModel;
             grd.ItemsSource = viewModel.data;
             //columnCombo.Clear();
-            columnCombo.Add("ManagerID", GridLibrary.CreateCombo("cmbManagerID", "Manager", vm.cmbManagerList(),"PersonID", "Name"));
-            columnCombo.Add("StatusID", GridLibrary.CreateCombo("cmbStatusID", "Status", vm.cmbStatusList(),"StatusID", "Title"));
+            columnCombo.Add("UnitOfMeasureID", GridLibrary.CreateCombo("cmbUnitOfMeasureID", "Unit Of Measure", vm.cmbUnitOfMeasureList(), "UnitOfMeasureID", "Title"));
+            //columnCombo.Add("StatusID", GridLibrary.CreateCombo("cmbStatusID", "Status", vm.cmbStatusList(),"StatusID", "Title"));
             base.TabLoad();
 
         }

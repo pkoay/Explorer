@@ -29,6 +29,10 @@ namespace WalzExplorer.Controls.RHSTabs
         protected RHSTabGridViewModelBase viewModel;
 
         //Grid Formatting
+        protected bool gridAdd = false;
+        protected bool gridEdit = false;
+        protected bool gridDelete = false;
+
         protected Dictionary<string, string> columnRename = new Dictionary<string, string>();
         protected Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
         protected List<string> columnNotRequired = new List<string>();
@@ -48,7 +52,77 @@ namespace WalzExplorer.Controls.RHSTabs
         public RHSTabGridViewBase()
         { 
         }
-      
+
+        public override void TabLoad()
+        {
+            g.CanUserInsertRows = gridAdd;
+            g.CanUserDeleteRows = gridDelete;
+        
+            if (gridAdd)
+            {
+                
+                g.NewRowPosition = GridViewNewRowPosition.Top;
+                g.AddingNewDataItem += g_AddingNewDataItem;
+            }
+            if (gridEdit)
+            {
+                // Cell edit
+                g.BeginningEdit += g_BeginningEdit;
+                g.RowEditEnded += g_RowEditEnded;
+
+                //Validation
+                g.CellValidating += g_CellValidating;
+
+                //Drag Drop
+                g.AllowDrop = true;
+                g.PreviewMouseLeftButtonDown += g_PreviewMouseLeftButtonDown;
+                g.PreviewMouseMove += g_PreviewMouseMove;
+                g.Drop += g_Drop;
+                g.DragEnter += g_DragEnter;
+            }
+            if (gridDelete)
+            {
+                g.Deleted += g_Deleted;
+            }
+
+
+            // add context menu
+            ContextMenu cm = new ContextMenu();
+            cm.FontSize = 12;
+            MenuItem mi;
+
+            mi = new MenuItem() { Name = "miCopy", Header = "Copy", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_copy", 16, 16) };
+            cm.Items.Add(mi);
+            mi = new MenuItem() { Name = "miPaste", Header = "Paste <over selected rows>", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_clipboard_paste", 16, 16) };
+            if (!gridEdit) mi.IsEnabled = false;
+            cm.Items.Add(mi);
+            cm.Items.Add(new Separator());
+            mi = new MenuItem() { Name = "miDelete", Header = "Delete", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_scissor", 16, 16) };
+            if (!gridDelete) mi.IsEnabled = false;
+            cm.Items.Add(mi);
+            cm.Items.Add(new Separator());
+            mi = new MenuItem() { Name = "miInsert", Header = "Insert <New line>", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_cell_insert_above", 16, 16) };
+            if (!gridAdd) mi.IsEnabled = false;
+            cm.Items.Add(mi);
+            mi = new MenuItem() { Name = "miInsertPaste", Header = "Insert <Paste>" };
+            if (!gridAdd) mi.IsEnabled = false;
+            cm.Items.Add(mi);
+            cm.Items.Add(new Separator());
+            cm.Items.Add(new MenuItem() { Name = "miExportExcel", Header = "Export to Excel", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
+            cm.Items.Add(new Separator());
+            cm.Items.Add(new MenuItem() { Name = "miRelatedData", Header = "Related data", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
+
+            foreach (object o in cm.Items)
+            {
+                if (!(o is Separator))
+                {
+                    mi = (MenuItem)o;
+                    mi.Click += new RoutedEventHandler(cm_ItemClick);
+                }
+            }
+
+            g.ContextMenu = cm;
+        }
 
         public void SetGrid (RadGridView grd )
         {
@@ -58,8 +132,6 @@ namespace WalzExplorer.Controls.RHSTabs
             
             //set basic grid properties
             g.AutoGenerateColumns=true;
-            g.CanUserInsertRows=true;
-            g.NewRowPosition= GridViewNewRowPosition.Top;
             g.GroupRenderMode = GroupRenderMode.Flat;
             g.SelectionMode = System.Windows.Controls.SelectionMode.Extended;
             g.SelectionUnit = GridViewSelectionUnit.FullRow;
@@ -68,58 +140,11 @@ namespace WalzExplorer.Controls.RHSTabs
             g.GridLinesVisibility = GridLinesVisibility.None;
             g.ClipboardPasteMode = GridViewClipboardPasteMode.None;
             g.ClipboardCopyMode = GridViewClipboardCopyMode.Cells;
-           
-            
             g.ValidatesOnDataErrors = GridViewValidationMode.Default;
+            g.AutoGeneratingColumn += g_AutoGeneratingColumn;
+            g.ContextMenuOpening += g_ContextMenuOpening;
 
-            //Events
-            //g.LostFocus += g_LostFocus;
-            //g.MouseDown += g_MouseDown;
-            //g.PreviewMouseDown += g_PreviewMouseDown;
-            //g.PreviewLostKeyboardFocus += g_PreviewLostKeyboardFocus;
-            //g.PastingCellClipboardContent += g_PastingCellClipboardContent;
-            g.BeginningEdit += g_BeginningEdit;
-            g.RowEditEnded += new EventHandler<GridViewRowEditEndedEventArgs>(g_RowEditEnded);
-            g.AddingNewDataItem += new EventHandler<GridViewAddingNewEventArgs>(g_AddingNewDataItem);
-            g.AutoGeneratingColumn += new EventHandler<GridViewAutoGeneratingColumnEventArgs>(g_AutoGeneratingColumn);
-            g.ContextMenuOpening += new ContextMenuEventHandler(g_ContextMenuOpening);
-            g.Deleted += new EventHandler<GridViewDeletedEventArgs>(g_Deleted);
-
-            //Validation
-            g.CellValidating += g_CellValidating;
-           
-            //Drag Drop
-            g.AllowDrop = true;
-            g.PreviewMouseLeftButtonDown +=g_PreviewMouseLeftButtonDown;
-            g.PreviewMouseMove+=g_PreviewMouseMove;
-            g.Drop +=g_Drop;            
-            g.DragEnter +=g_DragEnter;                
-                            
-            // add context menu
-            ContextMenu cm = new ContextMenu();
-            cm.FontSize = 12;
-            cm.Items.Add(new MenuItem() { Name = "miCut", Header = "Cut", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_scissor", 16, 16) });
-            cm.Items.Add(new MenuItem() { Name = "miCopy", Header = "Copy", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_copy", 16, 16) });
-            cm.Items.Add(new MenuItem() { Name = "miPaste", Header = "Paste <over selected rows>", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_clipboard_paste", 16, 16) });
-            cm.Items.Add(new Separator());
-            cm.Items.Add(new MenuItem() { Name = "miInsert", Header = "Insert <New line>", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_cell_insert_above", 16, 16) });
-            cm.Items.Add(new MenuItem() { Name="miInsertPaste", Header="Insert <Paste>"});
-            cm.Items.Add(new Separator());
-            cm.Items.Add(new MenuItem() { Name = "miExportExcel", Header = "Export to Excel", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
-            cm.Items.Add(new Separator());
-            cm.Items.Add(new MenuItem() { Name = "miRelatedData", Header = "Related data", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
-
-            
-            foreach (object o in cm.Items)
-            {
-                if (!(o is  Separator))
-                {
-                    MenuItem mi = (MenuItem)o;
-                    mi.Click += new RoutedEventHandler(cm_ItemClick);
-                }
-            }
-          
-            g.ContextMenu = cm;
+         
 
         }
 
@@ -138,16 +163,6 @@ namespace WalzExplorer.Controls.RHSTabs
             return true;
         }
 
-
-        //void g_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    isNewMouseDown = true;
-
-        //}
-        
-       
-
-     
 
         void g_BeginningEdit(object sender, GridViewBeginningEditRoutedEventArgs e)
         {
@@ -259,8 +274,8 @@ namespace WalzExplorer.Controls.RHSTabs
             MenuItem mi = (MenuItem)sender;
             switch (mi.Name)
             {
-                case "miCut":
-                    ApplicationCommands.Cut.Execute(this, null);
+                case "miDelete":
+                    RadGridViewCommands.Delete.Execute(null);
                     break;
                 case "miCopy":
                     ApplicationCommands.Copy.Execute(this, null);
@@ -398,7 +413,7 @@ namespace WalzExplorer.Controls.RHSTabs
             }
 
             //Read Only
-            if (columnReadOnly.Contains(c.UniqueName))
+            if (columnReadOnly.Contains(c.UniqueName) || !gridEdit)
             {
                 e.Column.CellStyle = style;
                 e.Column.IsReadOnly = true;
@@ -409,8 +424,6 @@ namespace WalzExplorer.Controls.RHSTabs
                 //c.CellStyle = style;
                 e.Column.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
                     
-               
-
             }
 
             //Add combos
@@ -424,15 +437,10 @@ namespace WalzExplorer.Controls.RHSTabs
                 }
                 g.Columns.Add(cmb);
                 cmb.DataMemberBinding = new Binding(c.UniqueName);
-                //if (c.UniqueName=="ManagerID")
-                //{
-                //    cmb.SelectedValueMemberPath = "PersonID";
-                //}
-                //else
-                //{
-                    cmb.SelectedValueMemberPath = cmb.Tag.ToString();
-                //}
-                
+                cmb.SelectedValueMemberPath = cmb.Tag.ToString();
+                cmb.IsReadOnly = c.IsReadOnly; // make cmb readonly if column is readonly
+                if (cmb.IsReadOnly) cmb.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
+               
             }
             g.Rebind();
            
@@ -448,10 +456,7 @@ namespace WalzExplorer.Controls.RHSTabs
             return "" ;
         }
 
-        public override void TabLoad()
-        {
-            // this is required to be overridden by each RHSTabView
-        }
+      
 
         private void g_AddingNewDataItem (object sender, GridViewAddingNewEventArgs e)
         {

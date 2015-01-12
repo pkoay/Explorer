@@ -7,7 +7,7 @@ using System.Windows.Media;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
 using WalzExplorer.Common;
-namespace WalzExplorer.Controls.RHSTabs.TenderContractor
+namespace WalzExplorer.Controls.RHSTabs.Tender
 {
     /// <summary>
     /// Interaction logic for TenderViewer.xaml
@@ -35,6 +35,11 @@ namespace WalzExplorer.Controls.RHSTabs.TenderContractor
 
         public override void TabLoad()
         {
+            gridAdd = true;
+            gridEdit = true;
+            gridDelete = true;
+
+
             // set grid data
             vm = new TenderContractorViewModel(Convert.ToInt32(node.ID));
             viewModel = vm;

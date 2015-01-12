@@ -48,48 +48,17 @@ namespace WalzExplorer.Database
             get { hasError = false; return null; }
         }
 
-
-        //public void SetModelError(string e)
-        //{
-        //    hasError = true;
-        //    modelError = e;
-        //}
-        //public void ClearModelError(string e)
-        //{
-        //    hasError = true;
-        //    modelError = e;
-        //}
-
-
         public virtual Dictionary<string, int> RelatedInformation(WalzExplorerEntities context)
         {
             
             Dictionary<string, int> rel = new Dictionary<string, int>();
             return rel;
-        }
 
-        public virtual string Identification()
-        {
-            // string to identify this record
-            return "";
         }
         public virtual string ClassName()
         {
             return "";
         }
 
-        // Adds the specified error to the errors collection if it is not already 
-        // present, inserting it in the first position if isWarning is false. 
-        //public void AddError(string propertyName, string error, bool isWarning)
-        //{
-        //    if (!errors.ContainsKey(propertyName))
-        //        errors[propertyName] = new List<string>();
-
-        //    if (!errors[propertyName].Contains(error))
-        //    {
-        //        if (isWarning) errors[propertyName].Add(error);
-        //        else errors[propertyName].Insert(0, error);
-        //    }
-        //}
     }
 }

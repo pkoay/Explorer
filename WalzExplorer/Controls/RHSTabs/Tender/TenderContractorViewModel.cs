@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WalzExplorer.Database;
 
-namespace WalzExplorer.Controls.RHSTabs.TenderContractor
+namespace WalzExplorer.Controls.RHSTabs.Tender
 {
     public class TenderContractorViewModel : RHSTabGridViewModelBase
     {

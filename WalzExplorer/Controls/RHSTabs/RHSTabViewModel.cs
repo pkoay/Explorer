@@ -21,8 +21,8 @@ namespace WalzExplorer.Controls.RHSTabs
             foreach (WEXRHSTab t in context.GetRHSTabs(LHSNode, user))
             {
                
-                string strTabClass = t.ID.Substring(3); // remove tab prefix
-                RHSTabViewBase tab = (RHSTabViewBase)Activator.CreateInstance(Type.GetType("WalzExplorer.Controls.RHSTabs." + strTabClass + "." + strTabClass + "View"));
+                //string strTabClass = t.ID.Substring(3); // remove tab prefix
+                RHSTabViewBase tab = (RHSTabViewBase)Activator.CreateInstance(Type.GetType("WalzExplorer.Controls.RHSTabs." + t.ID + "View"));
                 t.Content=tab;
                 RHSTabs.Add(t);
             }

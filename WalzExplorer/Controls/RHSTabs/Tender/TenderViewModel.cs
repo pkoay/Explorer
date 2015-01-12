@@ -16,10 +16,14 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
         public TenderViewModel(string NodeType, string PersonID, int tenderId)
         {
+           
             switch (NodeType)
             {
                 case "TendersMyOpen": data = new ObservableCollection<ModelBase>(context.tblTenders.Where(m => m.StatusID == 1 && m.ManagerID==PersonID).OrderBy(m => m.TenderNo)); break;
-                case "TendersMy": data = new ObservableCollection<ModelBase>(context.tblTenders.Where(m => m.ManagerID == PersonID).OrderBy(m => m.TenderNo)); break;
+                case "TendersMy": 
+                    data = new ObservableCollection<ModelBase>(context.tblTenders.Where(m => m.ManagerID == PersonID).OrderBy(m => m.TenderNo)); 
+                    
+                    break;
                 case "TendersAllOpen": data = new ObservableCollection<ModelBase>(context.tblTenders.Where(m => m.StatusID == 1).OrderBy(m => m.TenderNo)); break;
                 case "TendersAll": data = new ObservableCollection<ModelBase>(context.tblTenders.OrderBy(m => m.TenderNo)); break;
                
