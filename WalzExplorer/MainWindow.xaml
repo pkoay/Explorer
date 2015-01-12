@@ -57,8 +57,8 @@
     <MahApps:MetroWindow.Resources>
         <!--CONFIGURATION CONTEXT MENU-->
         <ContextMenu x:Key="cmConfiguration" FontSize="12"   >
-
-            <MenuItem Name="mi" Header="Menu item 2" Click="ConfigurationMenu_Click"  />
+            <MenuItem Name="miMimic" Header="Mimic User" Click="ConfigurationMenu_Click"  />
+            <MenuItem Name="miDeveloper" Header="Developer Mode" IsCheckable="True" Click="ConfigurationMenu_Click"  />
             <MenuItem Name="miAbout"  Header="About" Click="ConfigurationMenu_Click" />
         </ContextMenu>
     </MahApps:MetroWindow.Resources>

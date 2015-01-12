@@ -56,6 +56,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _title, value); } 
     	}
     
+        private string _managerID;
+    	public string ManagerID 
+    	{ 
+    		get { return _managerID; } 
+    		set { SetProperty(ref _managerID, value); } 
+    	}
+    
         private string _comment;
     	public string Comment 
     	{ 
@@ -89,13 +96,6 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _rowVersion; } 
     		set { SetProperty(ref _rowVersion, value); } 
-    	}
-    
-        private string _managerID;
-    	public string ManagerID 
-    	{ 
-    		get { return _managerID; } 
-    		set { SetProperty(ref _managerID, value); } 
     	}
     
         private int _sortOrder;

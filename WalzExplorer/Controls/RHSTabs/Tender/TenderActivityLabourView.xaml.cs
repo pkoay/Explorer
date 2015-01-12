@@ -22,27 +22,31 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         public TenderActivityLabourView()
         {
             InitializeComponent();
-            base.SetGrid(grd);
-
-            columnNotRequired.Add("RowVersion");
-            columnNotRequired.Add("TenderID");
-            columnNotRequired.Add("ActivityID");
-            columnNotRequired.Add("ActivityLabourID");
-
-            columnNotRequired.Add("SortOrder");
-            columnNotRequired.Add("UpdatedBy");
-            columnNotRequired.Add("UpdatedDate");
+            
            
         }
 
         public override void TabLoad()
         {
+            base.SetGrid(grd);
+            base.Reset();
+
+            columnReadOnlyDeveloper.Add("RowVersion");
+            columnReadOnlyDeveloper.Add("TenderID");
+            columnReadOnlyDeveloper.Add("ActivityID");
+            columnReadOnlyDeveloper.Add("ActivityLabourID");
+
+            columnReadOnlyDeveloper.Add("SortOrder");
+            columnReadOnlyDeveloper.Add("UpdatedBy");
+            columnReadOnlyDeveloper.Add("UpdatedDate");
+
+
             gridEdit = true;
             gridDelete = true;
             gridAdd = true;
             
             // set grid data
-            vm = new TenderActivityLabourViewModel(node.TypeID, user.Person.PersonID, node.IDAsInt());
+            vm = new TenderActivityLabourViewModel(settings.node.TypeID, settings.user.Person.PersonID, settings.node.IDAsInt());
             viewModel = vm;
             grd.DataContext = viewModel;
             grd.ItemsSource = viewModel.data;

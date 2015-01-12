@@ -29,21 +29,19 @@ namespace WalzExplorer.Controls.RHSTabs
         protected RHSTabGridViewModelBase viewModel;
 
         //Grid Formatting
-        protected bool gridAdd = false;
-        protected bool gridEdit = false;
-        protected bool gridDelete = false;
+        protected bool gridAdd;
+        protected bool gridEdit;
+        protected bool gridDelete;
 
         protected Dictionary<string, string> columnRename = new Dictionary<string, string>();
         protected Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
-        protected List<string> columnNotRequired = new List<string>();
         protected List<string> columnReadOnly = new List<string>();
+        protected List<string> columnReadOnlyDeveloper = new List<string>();
         protected GridViewRow ContextMenuRow;
 
 
         private bool isEditing = false;
         public Style style;
-        //private bool IgnoreFocusChange = false;
-        //private bool isNewMouseDown = true;
 
         //DragDrop
         const string GridDragData = "GridDragData";
@@ -52,6 +50,18 @@ namespace WalzExplorer.Controls.RHSTabs
         public RHSTabGridViewBase()
         { 
         }
+
+        public void Reset()
+        {
+            gridAdd = false;
+            gridEdit = false;
+            gridDelete = false;
+
+            columnRename.Clear();
+            columnCombo.Clear();
+            columnReadOnly.Clear();
+        }
+
 
         public override void TabLoad()
         {
@@ -120,7 +130,6 @@ namespace WalzExplorer.Controls.RHSTabs
                     mi.Click += new RoutedEventHandler(cm_ItemClick);
                 }
             }
-
             g.ContextMenu = cm;
         }
 
@@ -143,16 +152,12 @@ namespace WalzExplorer.Controls.RHSTabs
             g.ValidatesOnDataErrors = GridViewValidationMode.Default;
             g.AutoGeneratingColumn += g_AutoGeneratingColumn;
             g.ContextMenuOpening += g_ContextMenuOpening;
-
-         
-
         }
 
       
 
         bool IsValid()
         {
-            
             foreach (GridViewRow r in g.ChildrenOfType<GridViewRow>())
             {
                 if (!r.IsValid)
@@ -234,10 +239,7 @@ namespace WalzExplorer.Controls.RHSTabs
             }
         }
 
-      
-
-      
-
+     
         // Helper to search up the VisualTree
         private static T FindAnchestor<T>(DependencyObject current)
             where T : DependencyObject
@@ -396,8 +398,8 @@ namespace WalzExplorer.Controls.RHSTabs
             //Ignore foreign key all columns
             if (c.UniqueName.StartsWith("tbl")) { e.Cancel = true; return; }
 
-            //Ignore Columns not required
-            if (columnNotRequired.Contains(c.UniqueName)) { e.Cancel = true; return; }
+            //Ignore Columns for developers only while not in development mode
+            if (columnReadOnlyDeveloper.Contains(c.UniqueName) && !settings.DeveloperMode) { e.Cancel = true; return; }
 
             //Rename 
             if (columnRename.ContainsKey(c.UniqueName))
@@ -413,7 +415,7 @@ namespace WalzExplorer.Controls.RHSTabs
             }
 
             //Read Only
-            if (columnReadOnly.Contains(c.UniqueName) || !gridEdit)
+            if (columnReadOnly.Contains(c.UniqueName) || !gridEdit || (columnReadOnlyDeveloper.Contains(c.UniqueName) && settings.DeveloperMode))
             {
                 e.Column.CellStyle = style;
                 e.Column.IsReadOnly = true;

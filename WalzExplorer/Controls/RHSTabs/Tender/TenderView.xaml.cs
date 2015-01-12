@@ -22,22 +22,25 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         public TenderView()
         {
             InitializeComponent();
-            base.SetGrid(grd);
-
-            columnNotRequired.Add("RowVersion");
-            columnNotRequired.Add("TenderID");
-            columnNotRequired.Add("Comments");
-            columnRename.Add("TenderID", "ID");
-
-            columnNotRequired.Add("SortOrder");
-            columnNotRequired.Add("UpdatedBy");
-            columnNotRequired.Add("UpdatedDate");
+          
            
         }
 
         public override void TabLoad()
         {
-            switch (node.TypeID)
+            base.Reset();
+            base.SetGrid(grd);
+
+            columnReadOnlyDeveloper.Add("RowVersion");
+            columnReadOnlyDeveloper.Add("TenderID");
+            columnReadOnlyDeveloper.Add("Comments");
+            columnRename.Add("TenderID", "ID");
+
+            columnReadOnlyDeveloper.Add("SortOrder");
+            columnReadOnlyDeveloper.Add("UpdatedBy");
+            columnReadOnlyDeveloper.Add("UpdatedDate");
+
+            switch (settings.node.TypeID)
             {
                 case "TendersMy":
                     gridAdd = true;
@@ -52,10 +55,9 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             }
 
 
-
             // set grid data
 
-            vm = new TenderViewModel(node.TypeID, user.Person.PersonID, node.IDAsInt());
+            vm = new TenderViewModel(settings.node.TypeID, settings.user.Person.PersonID, settings.node.IDAsInt());
             viewModel = vm;
             grd.DataContext = viewModel;
             grd.ItemsSource = viewModel.data;

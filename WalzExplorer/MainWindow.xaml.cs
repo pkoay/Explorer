@@ -38,8 +38,9 @@ namespace WalzExplorer
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        public WEXUser user = new WEXUser();
-        public Dictionary<string, string> dicSQLSubsitutes = new Dictionary<string, string>();
+        private WEXSettings settings=new WEXSettings ();
+        //private WEXUser user = new WEXUser();
+        private Dictionary<string, string> dicSQLSubsitutes = new Dictionary<string, string>();
 
         public MainWindow()
         {
@@ -81,10 +82,10 @@ namespace WalzExplorer
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            
 
-            user.LoginID = WindowsIdentity.GetCurrent().Name;
-            sbUserName.Text = "User: " + user.LoginID;
+
+            settings.user.LoginID = WindowsIdentity.GetCurrent().Name;
+            sbUserName.Text = "User: " + settings.user.LoginID;
 
 
             WalzExplorerEntities we = new WalzExplorerEntities();
@@ -94,7 +95,7 @@ namespace WalzExplorer
             sbServerName.Text = "Server: " + we.Database.Connection.DataSource;
 
             //Build dictionary of SQL subsitutions 
-            dicSQLSubsitutes.Add("@@UserPersonID", "'" + user.Person.PersonID + "'");
+            dicSQLSubsitutes.Add("@@UserPersonID", "'" + settings.user.Person.PersonID + "'");
 
             LHSTabViewModel _LHSTabs = new LHSTabViewModel();
             tcLHS.DataContext = _LHSTabs;
@@ -129,7 +130,7 @@ namespace WalzExplorer
 
         private void tcLHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //If no treecontrol exits create it
+            
             RadTabControl tc = (RadTabControl)sender;
             if (tc.SelectedItem != null)
             {
@@ -139,7 +140,7 @@ namespace WalzExplorer
                 {
                     //Create Treeview if not created
                     WEXTreeView tv = new WEXTreeView() { Name = ti.TreeviewName(), Tag = ti.ID };
-                    tv.PopulateRoot(user, dicSQLSubsitutes);
+                    tv.PopulateRoot(settings.user, dicSQLSubsitutes);
                     tv.NodeChanged += new EventHandler(tvLHS_NodeChanged);
                     ti.Content = tv;
                 }
@@ -159,19 +160,27 @@ namespace WalzExplorer
             //TabItem ti = (TabItem) tcRHS.Items[tcRHS.SelectedIndex];
             //ti.Content = new ProjectDetail ();
 
+            SelectedRHSTabRefresh();
+           
+        }
 
-            WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
+        private void SelectedRHSTabRefresh()
+        {
+             WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
             if (CurrentTab != null)
             {
-                CurrentTab.SetNode(SelectedNode(),user);
+                settings.node=SelectedNode();
+                CurrentTab.Settings(settings);
                 CurrentTab.Content.TabLoad();
             }
         }
 
+
+
         private void tvLHS_NodeChanged(object sender, EventArgs e)
         {
             WEXTreeView ntv = (WEXTreeView)sender;
-            RHSTabViewModel _rhsTabs = new RHSTabViewModel(ntv.SelectedItem(), user);
+            RHSTabViewModel _rhsTabs = new RHSTabViewModel(ntv.SelectedItem(), settings.user);
 
 
             //if tab list the same
@@ -286,6 +295,15 @@ namespace WalzExplorer
             MenuItem mi = (MenuItem)sender;
             switch (mi.Name)
             {
+                case "miDeveloper":
+                    MessageBox.Show("Developer mode " + ((mi.IsChecked) ? "enabled":"disabled") +".", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+                       settings.DeveloperMode=  mi.IsChecked;
+                       //rereate tab with additional columns
+                       tcLHS_SelectionChanged(tcLHS, null);
+                       break;
+                case "miAbout":
+                    MessageBox.Show("This appliaction was developed for the Walz Group."+Environment.NewLine +"Developed by Phil Koay (0419233605).", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+                    break;
                 default:
                     MessageBox.Show(mi.Header.ToString(), "Configuration menu", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;

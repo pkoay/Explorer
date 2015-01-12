@@ -9,10 +9,8 @@ namespace WalzExplorer.Controls.RHSTabs
 {
     public abstract class RHSTabViewBase: UserControl
     {
-        public WEXNode node { get; set; }
-
-        public WEXUser user { get; set; }
-
+        public WEXSettings settings { get; set; }
+       
         public abstract void TabLoad();
 
         public abstract string IssueIfClosed();

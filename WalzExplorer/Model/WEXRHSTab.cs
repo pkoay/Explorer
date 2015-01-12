@@ -14,10 +14,9 @@ namespace WalzExplorer
         public string Header { get; set; }
         public RHSTabViewBase Content { get; set; }
 
-        public void SetNode(WEXNode n, WEXUser u)
+        public void Settings(WEXSettings s)
         {
-            Content.node = n;
-            Content.user =u;
+            Content.settings = s;
         }
 
         public string IssueIfClosed()

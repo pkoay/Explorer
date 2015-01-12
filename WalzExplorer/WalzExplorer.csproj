@@ -234,6 +234,7 @@
     <Compile Include="Model\Person.cs" />
     <Compile Include="Model\WEXRHSTab.cs" />
     <Compile Include="Model\WEXConnection.cs" />
+    <Compile Include="Model\WEXSetting.cs" />
     <Compile Include="Model\WEXUser.cs" />
     <Compile Include="Database\tblTender.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>

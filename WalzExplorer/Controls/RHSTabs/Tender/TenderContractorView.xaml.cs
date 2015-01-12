@@ -22,26 +22,30 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         public TenderContractorView()
         {
             InitializeComponent();
-            base.SetGrid(grd);
-
-            columnNotRequired.Add("RowVersion");
-            columnNotRequired.Add("TenderID");
-            columnRename.Add("ContractorID", "ID");
-            columnReadOnly.Add("ContractorID");
-            columnReadOnly.Add("SortOrder");
-            columnReadOnly.Add("UpdatedBy");
-            columnReadOnly.Add("UpdatedDate");
+           
         }
 
         public override void TabLoad()
         {
+            base.Reset();
+            base.SetGrid(grd);
+
+            columnReadOnlyDeveloper.Add("RowVersion");
+            columnReadOnlyDeveloper.Add("TenderID");
+            columnRename.Add("ContractorID", "ID");
+            columnReadOnly.Add("ContractorID");
+            columnReadOnlyDeveloper.Add("SortOrder");
+            columnReadOnlyDeveloper.Add("UpdatedBy");
+            columnReadOnlyDeveloper.Add("UpdatedDate");
+
+
             gridAdd = true;
             gridEdit = true;
             gridDelete = true;
 
 
             // set grid data
-            vm = new TenderContractorViewModel(Convert.ToInt32(node.ID));
+            vm = new TenderContractorViewModel(Convert.ToInt32(settings.node.ID));
             viewModel = vm;
             grd.DataContext = viewModel;
             grd.ItemsSource = viewModel.data;
