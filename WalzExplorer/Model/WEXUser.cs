@@ -73,7 +73,7 @@ namespace WalzExplorer
                 PrincipalSearchResult<Principal> groups = user.GetGroups();
                 //PrincipalSearchResult<Principal> groups = user.GetAuthorizationGroups();
 
-                // iterate over all groups
+                 //iterate over all groups
                 foreach (Principal p in groups)
                 {
                     // make sure to add only group principals

@@ -9,11 +9,6 @@ using Telerik.Windows.Controls.GridView;
 using WalzExplorer.Common;
 namespace WalzExplorer.Controls.RHSTabs.Tender
 {
-    /// <summary>
-    /// Interaction logic for TenderViewer.xaml
-    /// </summary>
-    
-     
     public partial class TenderContractorView : RHSTabGridViewBase
     {
       
@@ -22,7 +17,6 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         public TenderContractorView()
         {
             InitializeComponent();
-           
         }
 
         public override void TabLoad()
@@ -32,17 +26,14 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
             columnReadOnlyDeveloper.Add("RowVersion");
             columnReadOnlyDeveloper.Add("TenderID");
-            columnRename.Add("ContractorID", "ID");
-            columnReadOnly.Add("ContractorID");
+            columnReadOnlyDeveloper.Add("ContractorID");
             columnReadOnlyDeveloper.Add("SortOrder");
             columnReadOnlyDeveloper.Add("UpdatedBy");
             columnReadOnlyDeveloper.Add("UpdatedDate");
 
-
             gridAdd = true;
             gridEdit = true;
             gridDelete = true;
-
 
             // set grid data
             vm = new TenderContractorViewModel(settings);
@@ -53,11 +44,6 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             columnCombo.Add("ContractorTypeID", GridLibrary.CreateCombo("cmbContractorTypeID", "Contractor Type", vm.cmbContractTypeList(),"ContractorTypeID", "Title"));
             
             base.TabLoad();
-
         }
-
-     
-      
     }
-
 }

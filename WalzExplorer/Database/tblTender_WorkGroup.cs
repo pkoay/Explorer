@@ -98,8 +98,8 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_ActivityLabour> tblTender_ActivityLabour { get; set; }
         public virtual ICollection<tblTender_WorkgroupItem> tblTender_WorkgroupItem { get; set; }
+        public virtual tblTender tblTender { get; set; }
     }
 }

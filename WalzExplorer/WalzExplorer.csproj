@@ -183,6 +183,27 @@
     <Compile Include="Database\tblProject.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\tblProject_EarnedValueType.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblProject_History.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblProject_HistoryCritical.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblProject_HistoryManHours.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblProject_HistoryMilestone.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblProject_HistoryStatus.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblProject_Status.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\tblTender_LabourStandard.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -416,6 +437,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Database\ExplorerDB.bak" />
+    <None Include="Database\ServicesDB.BAK" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -17,14 +17,36 @@ namespace WalzExplorer.Database
         public tblPerson()
         {
             this.tblProjects = new HashSet<tblProject>();
+            this.tblProjects1 = new HashSet<tblProject>();
             this.tblTenders = new HashSet<tblTender>();
         }
     
-        private string _personID;
-    	public string PersonID 
+        private int _personID;
+    	public int PersonID 
     	{ 
     		get { return _personID; } 
     		set { SetProperty(ref _personID, value); } 
+    	}
+    
+        private string _aXPersonID;
+    	public string AXPersonID 
+    	{ 
+    		get { return _aXPersonID; } 
+    		set { SetProperty(ref _aXPersonID, value); } 
+    	}
+    
+        private string _aXDataAreaID;
+    	public string AXDataAreaID 
+    	{ 
+    		get { return _aXDataAreaID; } 
+    		set { SetProperty(ref _aXDataAreaID, value); } 
+    	}
+    
+        private string _name;
+    	public string Name 
+    	{ 
+    		get { return _name; } 
+    		set { SetProperty(ref _name, value); } 
     	}
     
         private string _login;
@@ -32,6 +54,13 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _login; } 
     		set { SetProperty(ref _login, value); } 
+    	}
+    
+        private int _statusID;
+    	public int StatusID 
+    	{ 
+    		get { return _statusID; } 
+    		set { SetProperty(ref _statusID, value); } 
     	}
     
         private string _updatedBy;
@@ -55,15 +84,9 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
-        private string _name;
-    	public string Name 
-    	{ 
-    		get { return _name; } 
-    		set { SetProperty(ref _name, value); } 
-    	}
-    
     
         public virtual ICollection<tblProject> tblProjects { get; set; }
+        public virtual ICollection<tblProject> tblProjects1 { get; set; }
         public virtual ICollection<tblTender> tblTenders { get; set; }
     }
 }

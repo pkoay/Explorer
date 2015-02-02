@@ -78,9 +78,9 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_Activity> tblTender_Activity { get; set; }
         public virtual ICollection<tblTender_ActivityLabour> tblTender_ActivityLabour { get; set; }
         public virtual ICollection<tblTender_Material> tblTender_Material { get; set; }
+        public virtual tblTender tblTender { get; set; }
     }
 }

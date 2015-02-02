@@ -124,9 +124,26 @@ namespace WalzExplorer.Database
             }
             return result.Any() ? result : null;
         }
+        private void LogChanges (List<DbEntityEntry>  changes)
+        {
+            // foreach (var entry in changes)
+            //{
+            //     switch (entry.State)
+            //     {
+            //         case EntityState.Added:
+            //             foreach (string name in entry.CurrentValues.PropertyNames)
+            //             {
+            //                 var NewValue=  entry.CurrentValues.ToObject
 
+            //             }
+            //             break;
+
+            //     }
+            //}
+        }
         public override int SaveChanges()
         {
+            List<DbEntityEntry> LogEntries = ChangeTracker.Entries().ToList();
             
             var modifiedEntries = ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
@@ -150,6 +167,7 @@ namespace WalzExplorer.Database
             try
             {
                 return base.SaveChanges();
+                LogChanges(LogEntries);
             }
             catch (DbEntityValidationException ex)
             {
@@ -172,6 +190,10 @@ namespace WalzExplorer.Database
             {
                 throw;
             }
+
+           
+
+
             
         }
 

@@ -88,7 +88,6 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual tblTender tblTender { get; set; }
         public virtual tblTender_UnitOfMeasure tblTender_UnitOfMeasure { get; set; }
         public virtual ICollection<tblTender_ActivityContractor> tblTender_ActivityContractor { get; set; }
         public virtual ICollection<tblTender_ActivityLabour> tblTender_ActivityLabour { get; set; }
@@ -96,5 +95,6 @@ namespace WalzExplorer.Database
         public virtual ICollection<tblTender_ActivityChildActivity> tblTender_ActivityChildActivity { get; set; }
         public virtual ICollection<tblTender_ActivityChildActivity> tblTender_ActivityChildActivity1 { get; set; }
         public virtual ICollection<tblTender_Item> tblTender_Item { get; set; }
+        public virtual tblTender tblTender { get; set; }
     }
 }

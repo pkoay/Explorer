@@ -14,7 +14,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
 
 
-        public TenderViewModel(string NodeType, string PersonID, int tenderId)
+        public TenderViewModel(string NodeType, int PersonID, int tenderId)
         {
            
             switch (NodeType)

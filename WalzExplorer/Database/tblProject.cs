@@ -14,25 +14,58 @@ namespace WalzExplorer.Database
     using System.Collections.Generic;
     public partial class tblProject : ModelBase
     {
-        private string _projectID;
-    	public string ProjectID 
+        public tblProject()
+        {
+            this.tblProject_History = new HashSet<tblProject_History>();
+        }
+    
+        private int _projectID;
+    	public int ProjectID 
     	{ 
     		get { return _projectID; } 
     		set { SetProperty(ref _projectID, value); } 
     	}
     
-        private string _description;
-    	public string Description 
+        private string _aXProjectID;
+    	public string AXProjectID 
     	{ 
-    		get { return _description; } 
-    		set { SetProperty(ref _description, value); } 
+    		get { return _aXProjectID; } 
+    		set { SetProperty(ref _aXProjectID, value); } 
     	}
     
-        private string _managerID;
-    	public string ManagerID 
+        private string _aXDataAreaID;
+    	public string AXDataAreaID 
+    	{ 
+    		get { return _aXDataAreaID; } 
+    		set { SetProperty(ref _aXDataAreaID, value); } 
+    	}
+    
+        private string _title;
+    	public string Title 
+    	{ 
+    		get { return _title; } 
+    		set { SetProperty(ref _title, value); } 
+    	}
+    
+        private int _managerID;
+    	public int ManagerID 
     	{ 
     		get { return _managerID; } 
     		set { SetProperty(ref _managerID, value); } 
+    	}
+    
+        private int _operationsManagerID;
+    	public int OperationsManagerID 
+    	{ 
+    		get { return _operationsManagerID; } 
+    		set { SetProperty(ref _operationsManagerID, value); } 
+    	}
+    
+        private int _statusID;
+    	public int StatusID 
+    	{ 
+    		get { return _statusID; } 
+    		set { SetProperty(ref _statusID, value); } 
     	}
     
         private string _updatedBy;
@@ -58,5 +91,8 @@ namespace WalzExplorer.Database
     
     
         public virtual tblPerson tblPerson { get; set; }
+        public virtual tblPerson tblPerson1 { get; set; }
+        public virtual ICollection<tblProject_History> tblProject_History { get; set; }
+        public virtual tblProject_Status tblProject_Status { get; set; }
     }
 }

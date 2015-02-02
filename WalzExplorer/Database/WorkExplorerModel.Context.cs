@@ -27,7 +27,6 @@ namespace WalzExplorer.Database
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<tblTender> tblTenders { get; set; }
         public virtual DbSet<tblTender_Activity> tblTender_Activity { get; set; }
         public virtual DbSet<tblTender_ActivityChildActivity> tblTender_ActivityChildActivity { get; set; }
         public virtual DbSet<tblTender_ActivityContractor> tblTender_ActivityContractor { get; set; }
@@ -49,12 +48,20 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblWEX_Tree> tblWEX_Tree { get; set; }
         public virtual DbSet<tblWEX_TreeNodeType> tblWEX_TreeNodeType { get; set; }
         public virtual DbSet<tblTender_Contractor> tblTender_Contractor { get; set; }
-        public virtual DbSet<tblPerson> tblPersons { get; set; }
-        public virtual DbSet<tblProject> tblProjects { get; set; }
         public virtual DbSet<tblTender_Workgroup> tblTender_Workgroup { get; set; }
         public virtual DbSet<tblTender_WorkgroupHeader> tblTender_WorkgroupHeader { get; set; }
         public virtual DbSet<tblTender_WorkgroupItem> tblTender_WorkgroupItem { get; set; }
         public virtual DbSet<tblTender_LabourStandard> tblTender_LabourStandard { get; set; }
+        public virtual DbSet<tblProject_History> tblProject_History { get; set; }
+        public virtual DbSet<tblProject_HistoryMilestone> tblProject_HistoryMilestone { get; set; }
+        public virtual DbSet<tblProject_Status> tblProject_Status { get; set; }
+        public virtual DbSet<tblProject_EarnedValueType> tblProject_EarnedValueType { get; set; }
+        public virtual DbSet<tblProject_HistoryCritical> tblProject_HistoryCritical { get; set; }
+        public virtual DbSet<tblProject_HistoryManHours> tblProject_HistoryManHours { get; set; }
+        public virtual DbSet<tblProject_HistoryStatus> tblProject_HistoryStatus { get; set; }
+        public virtual DbSet<tblPerson> tblPersons { get; set; }
+        public virtual DbSet<tblProject> tblProjects { get; set; }
+        public virtual DbSet<tblTender> tblTenders { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)

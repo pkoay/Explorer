@@ -17,15 +17,15 @@ namespace WalzExplorer.Database
         public tblTender()
         {
             this.tblTender_Activity = new HashSet<tblTender_Activity>();
+            this.tblTender_Contractor = new HashSet<tblTender_Contractor>();
             this.tblTender_ContractorType = new HashSet<tblTender_ContractorType>();
             this.tblTender_Drawing = new HashSet<tblTender_Drawing>();
             this.tblTender_Item = new HashSet<tblTender_Item>();
+            this.tblTender_LabourStandard = new HashSet<tblTender_LabourStandard>();
             this.tblTender_Material = new HashSet<tblTender_Material>();
             this.tblTender_Supplier = new HashSet<tblTender_Supplier>();
             this.tblTender_UnitOfMeasure = new HashSet<tblTender_UnitOfMeasure>();
-            this.tblTender_Contractor = new HashSet<tblTender_Contractor>();
             this.tblTender_Workgroup = new HashSet<tblTender_Workgroup>();
-            this.tblTender_LabourStandard = new HashSet<tblTender_LabourStandard>();
         }
     
         private int _tenderID;
@@ -56,8 +56,8 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _title, value); } 
     	}
     
-        private string _managerID;
-    	public string ManagerID 
+        private int _managerID;
+    	public int ManagerID 
     	{ 
     		get { return _managerID; } 
     		set { SetProperty(ref _managerID, value); } 
@@ -75,6 +75,13 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _statusID; } 
     		set { SetProperty(ref _statusID, value); } 
+    	}
+    
+        private int _sortOrder;
+    	public int SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
     	}
     
         private string _updatedBy;
@@ -98,25 +105,18 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
-        private int _sortOrder;
-    	public int SortOrder 
-    	{ 
-    		get { return _sortOrder; } 
-    		set { SetProperty(ref _sortOrder, value); } 
-    	}
     
-    
+        public virtual tblPerson tblPerson { get; set; }
         public virtual ICollection<tblTender_Activity> tblTender_Activity { get; set; }
+        public virtual ICollection<tblTender_Contractor> tblTender_Contractor { get; set; }
         public virtual ICollection<tblTender_ContractorType> tblTender_ContractorType { get; set; }
         public virtual ICollection<tblTender_Drawing> tblTender_Drawing { get; set; }
         public virtual ICollection<tblTender_Item> tblTender_Item { get; set; }
+        public virtual ICollection<tblTender_LabourStandard> tblTender_LabourStandard { get; set; }
         public virtual ICollection<tblTender_Material> tblTender_Material { get; set; }
         public virtual ICollection<tblTender_Supplier> tblTender_Supplier { get; set; }
         public virtual tblTender_Status tblTender_Status { get; set; }
         public virtual ICollection<tblTender_UnitOfMeasure> tblTender_UnitOfMeasure { get; set; }
-        public virtual ICollection<tblTender_Contractor> tblTender_Contractor { get; set; }
-        public virtual tblPerson tblPerson { get; set; }
         public virtual ICollection<tblTender_Workgroup> tblTender_Workgroup { get; set; }
-        public virtual ICollection<tblTender_LabourStandard> tblTender_LabourStandard { get; set; }
     }
 }

@@ -21,9 +21,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
         public TenderActivityLabourView()
         {
-            InitializeComponent();
-            
-           
+            InitializeComponent(); 
         }
 
         public override void TabLoad()

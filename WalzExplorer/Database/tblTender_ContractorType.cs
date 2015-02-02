@@ -76,7 +76,7 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_Contractor> tblTender_Contractor { get; set; }
+        public virtual tblTender tblTender { get; set; }
     }
 }
