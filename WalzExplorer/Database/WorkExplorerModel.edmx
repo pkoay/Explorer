@@ -44,6 +44,7 @@
           <Property Name="ManagerID" Type="int" Nullable="false" />
           <Property Name="OperationsManagerID" Type="int" Nullable="false" />
           <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -2917,6 +2918,7 @@
           <Property Name="ParentID" Type="Int32" Nullable="false" />
           <Property Name="TopParentID" Type="Int32" Nullable="false" />
           <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" />
         </EntityType>
         <EntityType Name="tblTender">
           <Key>
@@ -3180,15 +3182,13 @@
           <Property Type="String" Name="AXProjectID" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="AXDataAreaID" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
-          <Property Type="Int32" Name="ManagerID" Nullable="false" />
-          <Property Type="Int32" Name="OperationsManagerID" Nullable="false" />
-          <Property Type="Int32" Name="StatusID" Nullable="false" />
+          <Property Type="String" Name="Manager" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="OperationsManager" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Customer" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="UpdatedBy" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
           <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" />
-          <Property Type="String" Name="Manager" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="OperationsManager" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3834,6 +3834,7 @@
           <EntitySetMapping Name="tblProjects">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblProject">
               <MappingFragment StoreEntitySet="tblProject">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="Level" ColumnName="Level" />
                 <ScalarProperty Name="TopParentID" ColumnName="TopParentID" />
                 <ScalarProperty Name="ParentID" ColumnName="ParentID" />
@@ -3885,15 +3886,13 @@
                 <ScalarProperty Name="AXProjectID" ColumnName="AXProjectID" />
                 <ScalarProperty Name="AXDataAreaID" ColumnName="AXDataAreaID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
-                <ScalarProperty Name="OperationsManagerID" ColumnName="OperationsManagerID" />
-                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+                <ScalarProperty Name="OperationsManager" ColumnName="OperationsManager" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
-                <ScalarProperty Name="Manager" ColumnName="Manager" />
-                <ScalarProperty Name="OperationsManager" ColumnName="OperationsManager" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

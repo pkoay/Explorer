@@ -41,25 +41,32 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _title, value); } 
     	}
     
-        private int _managerID;
-    	public int ManagerID 
+        private string _manager;
+    	public string Manager 
     	{ 
-    		get { return _managerID; } 
-    		set { SetProperty(ref _managerID, value); } 
+    		get { return _manager; } 
+    		set { SetProperty(ref _manager, value); } 
     	}
     
-        private int _operationsManagerID;
-    	public int OperationsManagerID 
+        private string _operationsManager;
+    	public string OperationsManager 
     	{ 
-    		get { return _operationsManagerID; } 
-    		set { SetProperty(ref _operationsManagerID, value); } 
+    		get { return _operationsManager; } 
+    		set { SetProperty(ref _operationsManager, value); } 
     	}
     
-        private int _statusID;
-    	public int StatusID 
+        private string _customer;
+    	public string Customer 
     	{ 
-    		get { return _statusID; } 
-    		set { SetProperty(ref _statusID, value); } 
+    		get { return _customer; } 
+    		set { SetProperty(ref _customer, value); } 
+    	}
+    
+        private string _status;
+    	public string Status 
+    	{ 
+    		get { return _status; } 
+    		set { SetProperty(ref _status, value); } 
     	}
     
         private string _updatedBy;
@@ -81,27 +88,6 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _rowVersion; } 
     		set { SetProperty(ref _rowVersion, value); } 
-    	}
-    
-        private string _manager;
-    	public string Manager 
-    	{ 
-    		get { return _manager; } 
-    		set { SetProperty(ref _manager, value); } 
-    	}
-    
-        private string _operationsManager;
-    	public string OperationsManager 
-    	{ 
-    		get { return _operationsManager; } 
-    		set { SetProperty(ref _operationsManager, value); } 
-    	}
-    
-        private string _status;
-    	public string Status 
-    	{ 
-    		get { return _status; } 
-    		set { SetProperty(ref _status, value); } 
     	}
     
     }

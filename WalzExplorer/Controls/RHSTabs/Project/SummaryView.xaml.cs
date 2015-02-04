@@ -32,7 +32,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             columnReadOnlyDeveloper.Add("RowVersion");
             columnReadOnlyDeveloper.Add("ProjectID");
             columnRename.Add("AXProjectID", "ID");
-
+            columnRename.Add("OperationsManager", "Ops Manager");
+            columnReadOnlyDeveloper.Add("AXDataAreaID");
             columnReadOnlyDeveloper.Add("SortOrder");
             columnReadOnlyDeveloper.Add("UpdatedBy");
             columnReadOnlyDeveloper.Add("UpdatedDate");

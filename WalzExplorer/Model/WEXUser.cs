@@ -58,6 +58,7 @@ namespace WalzExplorer
                 case "WALZ\\SGivney":
                     SecurityGroups.Add("WD_Project");
                     break;
+                case "WALZ\\DWright":
                 case "WALZ\\JHynes":
                     SecurityGroups.Add("WD_Project");
                     SecurityGroups.Add("WP_Project_Manager");

@@ -110,6 +110,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _level, value); } 
     	}
     
+        private Nullable<int> _customerID;
+    	public Nullable<int> CustomerID 
+    	{ 
+    		get { return _customerID; } 
+    		set { SetProperty(ref _customerID, value); } 
+    	}
+    
     
         public virtual tblPerson tblPerson { get; set; }
         public virtual tblPerson tblPerson1 { get; set; }
