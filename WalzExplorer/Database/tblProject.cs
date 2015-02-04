@@ -89,6 +89,27 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
+        private int _parentID;
+    	public int ParentID 
+    	{ 
+    		get { return _parentID; } 
+    		set { SetProperty(ref _parentID, value); } 
+    	}
+    
+        private int _topParentID;
+    	public int TopParentID 
+    	{ 
+    		get { return _topParentID; } 
+    		set { SetProperty(ref _topParentID, value); } 
+    	}
+    
+        private int _level;
+    	public int Level 
+    	{ 
+    		get { return _level; } 
+    		set { SetProperty(ref _level, value); } 
+    	}
+    
     
         public virtual tblPerson tblPerson { get; set; }
         public virtual tblPerson tblPerson1 { get; set; }

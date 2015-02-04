@@ -39,6 +39,7 @@ namespace WalzExplorer
     public partial class MainWindow : MetroWindow
     {
         private WEXSettings settings=new WEXSettings ();
+        private WalzExplorerEntities we = new WalzExplorerEntities();
         //private WEXUser user = new WEXUser();
         private Dictionary<string, string> dicSQLSubsitutes = new Dictionary<string, string>();
 
@@ -84,31 +85,38 @@ namespace WalzExplorer
         {
 
 
-            settings.user.LoginID = WindowsIdentity.GetCurrent().Name;
-            sbUserName.Text = "User: " + settings.user.LoginID;
+            settings.user.Login(WindowsIdentity.GetCurrent().Name);
+          
 
 
-            WalzExplorerEntities we = new WalzExplorerEntities();
-            
 
-            sbDatabaseName.Text = "Database: " + we.Database.Connection.Database;
-            sbServerName.Text = "Server: " + we.Database.Connection.DataSource;
-
-            //Build dictionary of SQL subsitutions 
-            dicSQLSubsitutes.Add("@@UserPersonID", "'" + settings.user.Person.PersonID + "'");
-
-            LHSTabViewModel _LHSTabs = new LHSTabViewModel();
-            tcLHS.DataContext = _LHSTabs;
-            tcLHS.SelectedIndex = 0;
-
+            LoadFormForMimic();
 
             ContextMenu cm = new ContextMenu();
-            cm.Items.Add(new MenuItem { Header = "Item 1" });
+            //cm.Items.Add(new MenuItem { Header = "Item 1" });
             //cm.VerticalOffset = -100;
             btnConfigure.ContextMenu = cm;
             cm.PlacementTarget = btnConfigure;
             cm.Placement = System.Windows.Controls.Primitives.PlacementMode.AbsolutePoint;
+
+            
         }
+        private void LoadFormForMimic()
+        {
+            //Build dictionary of SQL subsitutions  (remove if already there)
+            if (dicSQLSubsitutes.ContainsKey("@@UserPersonID")) dicSQLSubsitutes.Remove("@@UserPersonID");
+            dicSQLSubsitutes.Add("@@UserPersonID", "'" + settings.user.MimicedPerson.PersonID + "'");
+            
+            sbUserName.Text = "User: " + settings.user.RealPerson.Name;
+            sbUserMimicName.Text = "Mimic: " + settings.user.MimicedPerson.Name;
+            sbDatabaseName.Text = "Database: " + we.Database.Connection.Database;
+            sbServerName.Text = "Server: " + we.Database.Connection.DataSource;
+
+            LHSTabViewModel _LHSTabs = new LHSTabViewModel();
+            tcLHS.DataContext = _LHSTabs;
+            tcLHS.SelectedIndex = 0;
+        }
+
 
         private void tbSearch_KeyDown(object sender, KeyEventArgs e)
         {
@@ -296,13 +304,20 @@ namespace WalzExplorer
             switch (mi.Name)
             {
                 case "miDeveloper":
-                    MessageBox.Show("Developer mode " + ((mi.IsChecked) ? "enabled":"disabled") +".", "About", MessageBoxButton.OK, MessageBoxImage.Information);
-                       settings.DeveloperMode=  mi.IsChecked;
-                       //rereate tab with additional columns
-                       tcLHS_SelectionChanged(tcLHS, null);
-                       break;
+                    MessageBox.Show("Developer mode " + ((mi.IsChecked) ? "enabled" : "disabled") + ".", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+                    settings.DeveloperMode = mi.IsChecked;
+                    //rereate tab with additional columns
+                    tcLHS_SelectionChanged(tcLHS, null);
+                    break;
                 case "miAbout":
-                    MessageBox.Show("This appliaction was developed for the Walz Group."+Environment.NewLine +"Developed by Phil Koay (0419233605).", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("This appliaction was developed for the Walz Group." + Environment.NewLine + "Developed by Phil Koay (0419233605).", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+                    break;
+                case "miMimic":
+                    Window window = new Windows.MimicDialog(settings);
+                    window.Owner = Application.Current.MainWindow;
+                    window.ShowDialog();
+                    //sbUserMimicName.Text = "Mimic: " + settings.user.MimicedPerson.Name;
+                    LoadFormForMimic();
                     break;
                 default:
                     MessageBox.Show(mi.Header.ToString(), "Configuration menu", MessageBoxButton.OK, MessageBoxImage.Information);

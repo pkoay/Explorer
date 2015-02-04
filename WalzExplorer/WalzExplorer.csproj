@@ -139,6 +139,11 @@
     <Compile Include="Common\GridLibrary.cs" />
     <Compile Include="Common\ConvertLibrary.cs" />
     <Compile Include="Common\ObjectLibrary.cs" />
+    <Compile Include="Controls\RHSTabs\Project\SummaryView.xaml.cs">
+      <DependentUpon>SummaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Project\SummaryViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\RHSTabGridViewBase_ReadOnly.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabGridViewBase.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabViewBase.cs" />
     <Compile Include="Controls\LHSTabs\LHSTabViewModel.cs" />
@@ -177,7 +182,13 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Related.cs" />
+    <Compile Include="Database\spWEX_RHS_Project_Summary_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\tblPerson.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblPerson_Mimic.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblProject.cs">
@@ -353,6 +364,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WorkExplorerModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Windows\MimicDialogView.xaml.cs">
+      <DependentUpon>MimicDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MimicDialogViewModel.cs" />
+    <Page Include="Controls\RHSTabs\Project\SummaryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\RHSTabs\Tender\TenderActivityMaterialView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -415,6 +434,10 @@
     <Page Include="Themes\VisualStudio2013\Telerik.Windows.Controls.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\MimicDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

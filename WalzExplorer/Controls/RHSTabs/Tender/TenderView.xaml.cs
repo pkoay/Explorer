@@ -57,7 +57,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
             // set grid data
 
-            vm = new TenderViewModel(settings.node.TypeID, settings.user.Person.PersonID, settings.node.IDAsInt());
+            vm = new TenderViewModel(settings.node.TypeID, settings.user.RealPerson.PersonID, settings.node.IDAsInt());
             viewModel = vm;
             grd.DataContext = viewModel;
             grd.ItemsSource = viewModel.data;

@@ -19,6 +19,17 @@
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblPerson_Mimic">
+          <Key>
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="MimicPersonID" />
+          </Key>
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="MimicPersonID" Type="int" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblProject">
           <Key>
             <PropertyRef Name="ProjectID" />
@@ -26,6 +37,9 @@
           <Property Name="ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AXProjectID" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="AXDataAreaID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ParentID" Type="int" Nullable="false" />
+          <Property Name="TopParentID" Type="int" Nullable="false" />
+          <Property Name="Level" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ManagerID" Type="int" Nullable="false" />
           <Property Name="OperationsManagerID" Type="int" Nullable="false" />
@@ -526,6 +540,30 @@
           <Property Name="TreeNodeTypeID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="RHSTabID" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="FK_tblPerson_Mimic_tblPerson">
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="1" />
+          <End Role="tblPerson_Mimic" Type="Self.tblPerson_Mimic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblPerson_Mimic">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPerson_Mimic_tblPerson1">
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="1" />
+          <End Role="tblPerson_Mimic" Type="Self.tblPerson_Mimic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblPerson_Mimic">
+              <PropertyRef Name="MimicPersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblProject_History_tblProject">
           <End Role="tblProject" Type="Self.tblProject" Multiplicity="1" />
           <End Role="tblProject_History" Type="Self.tblProject_History" Multiplicity="*" />
@@ -1203,6 +1241,11 @@
         <Function Name="spWEX_Node_TenderSetupList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderSetupList">
           <Parameter Name="TenderID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spWEX_RHS_Project_Summary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Summary">
+          <Parameter Name="UserPersonID" Type="nvarchar" Mode="In" />
+          <Parameter Name="NodeTypeID" Type="varchar" Mode="In" />
+          <Parameter Name="ManagerID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="spWEX_RHSTabList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHSTabList">
           <Parameter Name="TreeNodeTypeID" Type="varchar" Mode="In" />
           <Parameter Name="NTSecurityGroups" Type="varchar(max)" Mode="In" />
@@ -1215,6 +1258,7 @@
         </Function>
         <EntityContainer Name="WalzExplorerModelStoreContainer">
           <EntitySet Name="tblPerson" EntityType="Self.tblPerson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPerson_Mimic" EntityType="Self.tblPerson_Mimic" Schema="dbo" Table="tblPerson.Mimic" store:Type="Tables" />
           <EntitySet Name="tblProject" EntityType="Self.tblProject" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProject_EarnedValueType" EntityType="Self.tblProject_EarnedValueType" Schema="dbo" Table="tblProject.EarnedValueType" store:Type="Tables" />
           <EntitySet Name="tblProject_History" EntityType="Self.tblProject_History" Schema="dbo" Table="tblProject.History" store:Type="Tables" />
@@ -1252,6 +1296,14 @@
           <EntitySet Name="tblWEX_Tree_Security" EntityType="Self.tblWEX_Tree_Security" Schema="dbo" Table="tblWEX.Tree_Security" store:Type="Tables" />
           <EntitySet Name="tblWEX_TreeNodeType" EntityType="Self.tblWEX_TreeNodeType" Schema="dbo" Table="tblWEX.TreeNodeType" store:Type="Tables" />
           <EntitySet Name="tblWEX_TreeNodeType_RHSTab" EntityType="Self.tblWEX_TreeNodeType_RHSTab" Schema="dbo" Table="tblWEX.TreeNodeType_RHSTab" store:Type="Tables" />
+          <AssociationSet Name="FK_tblPerson_Mimic_tblPerson" Association="Self.FK_tblPerson_Mimic_tblPerson">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblPerson_Mimic" EntitySet="tblPerson_Mimic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPerson_Mimic_tblPerson1" Association="Self.FK_tblPerson_Mimic_tblPerson1">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblPerson_Mimic" EntitySet="tblPerson_Mimic" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblProject_History_tblProject" Association="Self.FK_tblProject_History_tblProject">
             <End Role="tblProject" EntitySet="tblProject" />
             <End Role="tblProject_History" EntitySet="tblProject_History" />
@@ -2364,6 +2416,20 @@
             <End Role="tblTender" EntitySet="tblTenders" />
             <End Role="tblTender_Workgroup" EntitySet="tblTender_Workgroup" />
           </AssociationSet>
+          <EntitySet Name="tblPerson_Mimic" EntityType="WalzExplorerModel.tblPerson_Mimic" />
+          <AssociationSet Name="FK_tblPerson_Mimic_tblPerson" Association="WalzExplorerModel.FK_tblPerson_Mimic_tblPerson">
+            <End Role="tblPerson" EntitySet="tblPersons" />
+            <End Role="tblPerson_Mimic" EntitySet="tblPerson_Mimic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPerson_Mimic_tblPerson1" Association="WalzExplorerModel.FK_tblPerson_Mimic_tblPerson1">
+            <End Role="tblPerson" EntitySet="tblPersons" />
+            <End Role="tblPerson_Mimic" EntitySet="tblPerson_Mimic" />
+          </AssociationSet>
+          <FunctionImport Name="spWEX_RHS_Project_Summary" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Summary_Result)">
+            <Parameter Name="UserPersonID" Mode="In" Type="String" />
+            <Parameter Name="NodeTypeID" Mode="In" Type="String" />
+            <Parameter Name="ManagerID" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -2827,6 +2893,8 @@
           <NavigationProperty Name="tblProjects" Relationship="WalzExplorerModel.FK_tblProject_tblPerson" FromRole="tblPerson" ToRole="tblProject" />
           <NavigationProperty Name="tblProjects1" Relationship="WalzExplorerModel.FK_tblProject_tblPerson1" FromRole="tblPerson" ToRole="tblProject" />
           <NavigationProperty Name="tblTenders" Relationship="WalzExplorerModel.FK_tblTender_tblPerson" FromRole="tblPerson" ToRole="tblTender" />
+          <NavigationProperty Name="tblPerson_Mimic" Relationship="WalzExplorerModel.FK_tblPerson_Mimic_tblPerson" FromRole="tblPerson" ToRole="tblPerson_Mimic" />
+          <NavigationProperty Name="tblPerson_Mimic1" Relationship="WalzExplorerModel.FK_tblPerson_Mimic_tblPerson1" FromRole="tblPerson" ToRole="tblPerson_Mimic" />
         </EntityType>
         <EntityType Name="tblProject">
           <Key>
@@ -2846,6 +2914,9 @@
           <NavigationProperty Name="tblPerson1" Relationship="WalzExplorerModel.FK_tblProject_tblPerson1" FromRole="tblProject" ToRole="tblPerson" />
           <NavigationProperty Name="tblProject_History" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject" FromRole="tblProject" ToRole="tblProject_History" />
           <NavigationProperty Name="tblProject_Status" Relationship="WalzExplorerModel.FK_tblProject_tblProject_Status" FromRole="tblProject" ToRole="tblProject_Status" />
+          <Property Name="ParentID" Type="Int32" Nullable="false" />
+          <Property Name="TopParentID" Type="Int32" Nullable="false" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender">
           <Key>
@@ -3067,6 +3138,58 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tblPerson_Mimic">
+          <Key>
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="MimicPersonID" />
+          </Key>
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="MimicPersonID" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblPerson" Relationship="WalzExplorerModel.FK_tblPerson_Mimic_tblPerson" FromRole="tblPerson_Mimic" ToRole="tblPerson" />
+          <NavigationProperty Name="tblPerson1" Relationship="WalzExplorerModel.FK_tblPerson_Mimic_tblPerson1" FromRole="tblPerson_Mimic" ToRole="tblPerson" />
+        </EntityType>
+        <Association Name="FK_tblPerson_Mimic_tblPerson">
+          <End Type="WalzExplorerModel.tblPerson" Role="tblPerson" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblPerson_Mimic" Role="tblPerson_Mimic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblPerson_Mimic">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPerson_Mimic_tblPerson1">
+          <End Type="WalzExplorerModel.tblPerson" Role="tblPerson" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblPerson_Mimic" Role="tblPerson_Mimic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblPerson_Mimic">
+              <PropertyRef Name="MimicPersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="spWEX_RHS_Project_Summary_Result">
+          <Property Type="Int32" Name="ProjectID" Nullable="false" />
+          <Property Type="String" Name="AXProjectID" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="AXDataAreaID" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="ManagerID" Nullable="false" />
+          <Property Type="Int32" Name="OperationsManagerID" Nullable="false" />
+          <Property Type="Int32" Name="StatusID" Nullable="false" />
+          <Property Type="String" Name="UpdatedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="Manager" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="OperationsManager" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3711,6 +3834,9 @@
           <EntitySetMapping Name="tblProjects">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblProject">
               <MappingFragment StoreEntitySet="tblProject">
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="TopParentID" ColumnName="TopParentID" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
@@ -3741,6 +3867,36 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblPerson_Mimic">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblPerson_Mimic">
+              <MappingFragment StoreEntitySet="tblPerson_Mimic">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="MimicPersonID" ColumnName="MimicPersonID" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_Summary" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_Summary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_Summary_Result">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="AXProjectID" ColumnName="AXProjectID" />
+                <ScalarProperty Name="AXDataAreaID" ColumnName="AXDataAreaID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+                <ScalarProperty Name="OperationsManagerID" ColumnName="OperationsManagerID" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+                <ScalarProperty Name="OperationsManager" ColumnName="OperationsManager" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

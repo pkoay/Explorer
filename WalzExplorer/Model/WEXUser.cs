@@ -14,37 +14,77 @@ namespace WalzExplorer
     /// </summary>
     public class WEXUser
     {
-        private string _loginID;
+        //private string _loginID;
         readonly List<string> _securityGroups = new List<string>(); //derived from Active directory
+        private tblPerson _mimicedPerson;
+        private WalzExplorerEntities db = new WalzExplorerEntities();
+
         public IList<string> SecurityGroups 
         {
             get { return _securityGroups; }
         }
-        public tblPerson Person { get; set; }  //derived from Person table via lookup of LoginID
 
+        public tblPerson RealPerson { get; set; }    //derived from Person table via lookup of LoginID
 
-        public string LoginID // derived from windows
-        {
-            get
-            {
-                return _loginID;
-            }
+        public tblPerson MimicedPerson //Same as Real Person, unless mimic is activated
+        { 
+            get { return _mimicedPerson; }
             set
             {
-                _loginID = value;
-                //Set security groups
-                foreach (GroupPrincipal group in GetGroups(_loginID))
-                {
-                    SecurityGroups.Add(group.Name);
-                }
-
-                using (WalzExplorerEntities db = new WalzExplorerEntities())
-                {
-                    Person = db.tblPersons.Where(x => x.Login == _loginID).FirstOrDefault();
-                }
-                                     
+                _mimicedPerson = value;
+                setupMimicedUser();
             }
         }
+
+       
+
+        public void Login (string loginID)
+        {
+            RealPerson = db.tblPersons.Where(x => x.Login == loginID).FirstOrDefault();
+            MimicedPerson = RealPerson;
+        }
+
+        private void setupMimicedUser()
+        {
+             
+            SecurityGroups.Clear();
+            foreach (GroupPrincipal group in GetGroups(MimicedPerson.Login))
+            {
+                SecurityGroups.Add(group.Name);
+            }
+            switch (MimicedPerson.Login)
+            {
+                case "WALZ\\IParungao":
+                case "WALZ\\SGivney":
+                    SecurityGroups.Add("WD_Project");
+                    break;
+                case "WALZ\\JHynes":
+                    SecurityGroups.Add("WD_Project");
+                    SecurityGroups.Add("WP_Project_Manager");
+                    break;
+
+            }
+        }
+
+        //public string LoginID // derived from windows
+        //{
+        //    get
+        //    {
+        //        return _loginID;
+        //    }
+        //    set
+        //    {
+        //        _loginID = value;
+        //        ////Set security groups
+        //        //foreach (GroupPrincipal group in GetGroups(_loginID))
+        //        //{
+        //        //    SecurityGroups.Add(group.Name);
+        //        //}
+
+        //        //RealPerson = db.tblPersons.Where(x => x.Login == _loginID).FirstOrDefault();
+        //        //MimicedPerson = RealPerson;     
+        //    }
+        //}
         
         public string SecurityGroupAsString ()
         {
@@ -54,37 +94,35 @@ namespace WalzExplorer
             return val;
         }
 
-       
-
-
-            public List<GroupPrincipal> GetGroups(string userName)
+        public List<GroupPrincipal> GetGroups(string userName)
         {
             List<GroupPrincipal> result = new List<GroupPrincipal>();
-
-            // establish domain context
-            PrincipalContext yourDomain = new PrincipalContext(ContextType.Domain);
-
-            // find your user
-            UserPrincipal user = UserPrincipal.FindByIdentity(yourDomain, userName);
-
-            // if found - grab its groups
-            if (user != null)
+            if (userName != null)
             {
-                PrincipalSearchResult<Principal> groups = user.GetGroups();
-                //PrincipalSearchResult<Principal> groups = user.GetAuthorizationGroups();
+                // establish domain context
+                PrincipalContext yourDomain = new PrincipalContext(ContextType.Domain);
 
-                 //iterate over all groups
-                foreach (Principal p in groups)
+                // find your user
+                UserPrincipal user = UserPrincipal.FindByIdentity(yourDomain, userName);
+
+                // if found - grab its groups
+                if (user != null)
                 {
-                    // make sure to add only group principals
-                    if (p is GroupPrincipal)
+                    PrincipalSearchResult<Principal> groups = user.GetGroups();
+                    //PrincipalSearchResult<Principal> groups = user.GetAuthorizationGroups();
+
+                    //iterate over all groups
+                    foreach (Principal p in groups)
                     {
-                        result.Add((GroupPrincipal)p);
-                        result.AddRange(GetGroups((GroupPrincipal)p));
+                        // make sure to add only group principals
+                        if (p is GroupPrincipal)
+                        {
+                            result.Add((GroupPrincipal)p);
+                            result.AddRange(GetGroups((GroupPrincipal)p));
+                        }
                     }
                 }
             }
-
             return result;
         }
         

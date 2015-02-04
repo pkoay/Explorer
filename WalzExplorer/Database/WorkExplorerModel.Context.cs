@@ -62,6 +62,7 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblPerson> tblPersons { get; set; }
         public virtual DbSet<tblProject> tblProjects { get; set; }
         public virtual DbSet<tblTender> tblTenders { get; set; }
+        public virtual DbSet<tblPerson_Mimic> tblPerson_Mimic { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)
@@ -373,6 +374,23 @@ namespace WalzExplorer.Database
                 new ObjectParameter("NTSecurityGroupsSeperator", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHSTabList_Result>("spWEX_RHSTabList", treeNodeTypeIDParameter, nTSecurityGroupsParameter, nTSecurityGroupsSeperatorParameter);
+        }
+    
+        public virtual ObjectResult<spWEX_RHS_Project_Summary_Result> spWEX_RHS_Project_Summary(string userPersonID, string nodeTypeID, string managerID)
+        {
+            var userPersonIDParameter = userPersonID != null ?
+                new ObjectParameter("UserPersonID", userPersonID) :
+                new ObjectParameter("UserPersonID", typeof(string));
+    
+            var nodeTypeIDParameter = nodeTypeID != null ?
+                new ObjectParameter("NodeTypeID", nodeTypeID) :
+                new ObjectParameter("NodeTypeID", typeof(string));
+    
+            var managerIDParameter = managerID != null ?
+                new ObjectParameter("ManagerID", managerID) :
+                new ObjectParameter("ManagerID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_Summary_Result>("spWEX_RHS_Project_Summary", userPersonIDParameter, nodeTypeIDParameter, managerIDParameter);
         }
     }
 }

@@ -93,6 +93,9 @@
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_tblTender_Status" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_UnitOfMeasure_tblTender" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroup_tblTender" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblPerson_Mimic" Width="1.5" PointX="3.5" PointY="43.875" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblPerson_Mimic_tblPerson" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblPerson_Mimic_tblPerson1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

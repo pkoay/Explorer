@@ -10,31 +10,21 @@
 namespace WalzExplorer.Database
 {
     using System;
-    using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblPerson : ModelBase
+    public partial class spWEX_RHS_Project_Summary_Result : ModelBase
     {
-        public tblPerson()
-        {
-            this.tblProjects = new HashSet<tblProject>();
-            this.tblProjects1 = new HashSet<tblProject>();
-            this.tblTenders = new HashSet<tblTender>();
-            this.tblPerson_Mimic = new HashSet<tblPerson_Mimic>();
-            this.tblPerson_Mimic1 = new HashSet<tblPerson_Mimic>();
-        }
-    
-        private int _personID;
-    	public int PersonID 
+        private int _projectID;
+    	public int ProjectID 
     	{ 
-    		get { return _personID; } 
-    		set { SetProperty(ref _personID, value); } 
+    		get { return _projectID; } 
+    		set { SetProperty(ref _projectID, value); } 
     	}
     
-        private string _aXPersonID;
-    	public string AXPersonID 
+        private string _aXProjectID;
+    	public string AXProjectID 
     	{ 
-    		get { return _aXPersonID; } 
-    		set { SetProperty(ref _aXPersonID, value); } 
+    		get { return _aXProjectID; } 
+    		set { SetProperty(ref _aXProjectID, value); } 
     	}
     
         private string _aXDataAreaID;
@@ -44,18 +34,25 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _aXDataAreaID, value); } 
     	}
     
-        private string _name;
-    	public string Name 
+        private string _title;
+    	public string Title 
     	{ 
-    		get { return _name; } 
-    		set { SetProperty(ref _name, value); } 
+    		get { return _title; } 
+    		set { SetProperty(ref _title, value); } 
     	}
     
-        private string _login;
-    	public string Login 
+        private int _managerID;
+    	public int ManagerID 
     	{ 
-    		get { return _login; } 
-    		set { SetProperty(ref _login, value); } 
+    		get { return _managerID; } 
+    		set { SetProperty(ref _managerID, value); } 
+    	}
+    
+        private int _operationsManagerID;
+    	public int OperationsManagerID 
+    	{ 
+    		get { return _operationsManagerID; } 
+    		set { SetProperty(ref _operationsManagerID, value); } 
     	}
     
         private int _statusID;
@@ -86,11 +83,26 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
+        private string _manager;
+    	public string Manager 
+    	{ 
+    		get { return _manager; } 
+    		set { SetProperty(ref _manager, value); } 
+    	}
     
-        public virtual ICollection<tblProject> tblProjects { get; set; }
-        public virtual ICollection<tblProject> tblProjects1 { get; set; }
-        public virtual ICollection<tblTender> tblTenders { get; set; }
-        public virtual ICollection<tblPerson_Mimic> tblPerson_Mimic { get; set; }
-        public virtual ICollection<tblPerson_Mimic> tblPerson_Mimic1 { get; set; }
+        private string _operationsManager;
+    	public string OperationsManager 
+    	{ 
+    		get { return _operationsManager; } 
+    		set { SetProperty(ref _operationsManager, value); } 
+    	}
+    
+        private string _status;
+    	public string Status 
+    	{ 
+    		get { return _status; } 
+    		set { SetProperty(ref _status, value); } 
+    	}
+    
     }
 }
