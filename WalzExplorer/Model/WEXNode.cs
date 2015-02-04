@@ -41,7 +41,7 @@ namespace WalzExplorer
 
             while (node != null && node.IDType != searchForTypeID)
             {
-                node = Parent;
+                node = node.Parent;
             }
             if (node == null)
                 return NotFound;

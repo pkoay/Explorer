@@ -376,7 +376,7 @@ namespace WalzExplorer.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHSTabList_Result>("spWEX_RHSTabList", treeNodeTypeIDParameter, nTSecurityGroupsParameter, nTSecurityGroupsSeperatorParameter);
         }
     
-        public virtual ObjectResult<spWEX_RHS_Project_Summary_Result> spWEX_RHS_Project_Summary(string userPersonID, string nodeTypeID, string managerID)
+        public virtual ObjectResult<spWEX_RHS_Project_Summary_Result> spWEX_RHS_Project_Summary(string userPersonID, string nodeTypeID, string managerID, string customerID)
         {
             var userPersonIDParameter = userPersonID != null ?
                 new ObjectParameter("UserPersonID", userPersonID) :
@@ -390,7 +390,11 @@ namespace WalzExplorer.Database
                 new ObjectParameter("ManagerID", managerID) :
                 new ObjectParameter("ManagerID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_Summary_Result>("spWEX_RHS_Project_Summary", userPersonIDParameter, nodeTypeIDParameter, managerIDParameter);
+            var customerIDParameter = customerID != null ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_Summary_Result>("spWEX_RHS_Project_Summary", userPersonIDParameter, nodeTypeIDParameter, managerIDParameter, customerIDParameter);
         }
     }
 }

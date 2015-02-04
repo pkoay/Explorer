@@ -1246,6 +1246,7 @@
           <Parameter Name="UserPersonID" Type="nvarchar" Mode="In" />
           <Parameter Name="NodeTypeID" Type="varchar" Mode="In" />
           <Parameter Name="ManagerID" Type="varchar" Mode="In" />
+          <Parameter Name="CustomerID" Type="varchar" Mode="In" />
         </Function>
         <Function Name="spWEX_RHSTabList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHSTabList">
           <Parameter Name="TreeNodeTypeID" Type="varchar" Mode="In" />
@@ -2430,6 +2431,7 @@
             <Parameter Name="UserPersonID" Mode="In" Type="String" />
             <Parameter Name="NodeTypeID" Mode="In" Type="String" />
             <Parameter Name="ManagerID" Mode="In" Type="String" />
+            <Parameter Name="CustomerID" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">

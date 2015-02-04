@@ -16,12 +16,14 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         public ObservableCollection<spWEX_RHS_Project_Summary_Result> data;
         public WalzExplorerEntities context = new WalzExplorerEntities();
         string ManagerID;
+        string CustomerID;
         string NodeTypeID;
         string UserPersonID;
        
         public SummaryViewModel (WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
             ManagerID = ConvertLibrary.StringToInt(settings.node.FindID("MANAGER", "-2"), -1).ToString();
+            CustomerID = ConvertLibrary.StringToInt(settings.node.FindID("CUSTOMER", "-2"), -1).ToString();
             NodeTypeID = settings.node.TypeID;
             UserPersonID=settings.user.MimicedPerson.PersonID.ToString();
 
@@ -30,7 +32,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             //var pNTSecurityGroupsSeperator = new SqlParameter("@NTSecurityGroupsSeperator", "|");
             //data = context.Database.SqlQuery( "spWEX.RHSTabList", pTreeNodeTypeID, pNodeTypeID, pNTSecurityGroupsSeperator).ToList();
 
-            data = new ObservableCollection<spWEX_RHS_Project_Summary_Result>(context.spWEX_RHS_Project_Summary(UserPersonID, NodeTypeID, ManagerID));  
+            data = new ObservableCollection<spWEX_RHS_Project_Summary_Result>(context.spWEX_RHS_Project_Summary(UserPersonID, NodeTypeID, ManagerID, CustomerID));  
         }
     }
 }
