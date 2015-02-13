@@ -3,15 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:model="clr-namespace:WalzExplorer.Windows"
        
-        Title="Feedback" Height="232" Width="300" ShowInTaskbar="False" Topmost="True" ResizeMode="NoResize" Loaded="Window_Loaded">
+        Title="Feedback" Height="402" Width="391" ShowInTaskbar="False"  ResizeMode="NoResize" Loaded="Window_Loaded">
     <Window.Resources>
         <model:FeedbackDialogViewModel x:Key="model"/>
     </Window.Resources>
-    <Grid DataContext="{DynamicResource model}">
-        <ComboBox Name="cmbType" HorizontalAlignment="Left" Margin="145,81,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding TypeList}"  DisplayMemberPath="Title"/>
-        <Label Content="Feedback User:" HorizontalAlignment="Left" Margin="35,81,0,0" VerticalAlignment="Top" Width="91"/>
-        <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="35,156,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
-        <Button Name="btnOK" Content="OK" HorizontalAlignment="Left" Margin="190,156,0,0" VerticalAlignment="Top" Width="75" Click="btnOK_Click"/>
+    <Grid DataContext="{DynamicResource model}" Background="#FF252526">
+        <ComboBox Name="cmbType" HorizontalAlignment="Left" Margin="230,34,0,0" VerticalAlignment="Top" Width="145" ItemsSource="{Binding TypeList}"  DisplayMemberPath="Title"/>
+        <Label Content="Type:" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="186"/>
+        <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="19,342,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
+        <Button Name="btnOK" Content="OK" HorizontalAlignment="Left" Margin="300,342,0,0" VerticalAlignment="Top" Width="75" Click="btnOK_Click"/>
 
     </Grid>
 </Window>
