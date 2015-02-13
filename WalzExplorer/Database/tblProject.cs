@@ -117,6 +117,41 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _customerID, value); } 
     	}
     
+        private double _contractValue;
+    	public double ContractValue 
+    	{ 
+    		get { return _contractValue; } 
+    		set { SetProperty(ref _contractValue, value); } 
+    	}
+    
+        private double _commCostAmount;
+    	public double CommCostAmount 
+    	{ 
+    		get { return _commCostAmount; } 
+    		set { SetProperty(ref _commCostAmount, value); } 
+    	}
+    
+        private double _costAmount;
+    	public double CostAmount 
+    	{ 
+    		get { return _costAmount; } 
+    		set { SetProperty(ref _costAmount, value); } 
+    	}
+    
+        private double _costOverheadAmount;
+    	public double CostOverheadAmount 
+    	{ 
+    		get { return _costOverheadAmount; } 
+    		set { SetProperty(ref _costOverheadAmount, value); } 
+    	}
+    
+        private double _invoicedAmount;
+    	public double InvoicedAmount 
+    	{ 
+    		get { return _invoicedAmount; } 
+    		set { SetProperty(ref _invoicedAmount, value); } 
+    	}
+    
     
         public virtual tblPerson tblPerson { get; set; }
         public virtual tblPerson tblPerson1 { get; set; }

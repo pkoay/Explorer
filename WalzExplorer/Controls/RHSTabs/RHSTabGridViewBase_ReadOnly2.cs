@@ -23,27 +23,19 @@ using System.Windows.Shapes;
 
 namespace WalzExplorer.Controls.RHSTabs
 {         
-    public class RHSTabGridViewBase_ReadOnly : RHSTabViewBase
+    public class RHSTabGridViewBase_ReadOnly2 : RHSTabViewBase
     {
         private RadGridView g;  // Standard grid
         //protected RHSTabGridViewModelBase viewModel;
 
         //Grid Formatting
-        protected Dictionary<string, string> columnRename = new Dictionary<string, string>();
-        protected Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
-        protected List<string> columnReadOnlyDeveloper = new List<string>();
+
         protected GridViewRow ContextMenuRow;
 
         //public Style style;
 
-        public RHSTabGridViewBase_ReadOnly()
+        public RHSTabGridViewBase_ReadOnly2()
         { 
-        }
-
-        public void Reset()
-        {
-            columnRename.Clear();
-            columnCombo.Clear();
         }
 
         public override void TabLoad()
@@ -72,49 +64,7 @@ namespace WalzExplorer.Controls.RHSTabs
         public void SetGrid (RadGridView grd )
         {
             g = grd;
-            //set font color
-
-            
-            //set basic grid properties
-            g.AutoGenerateColumns=true;
-            g.GroupRenderMode = GroupRenderMode.Flat;
-            g.SelectionMode = System.Windows.Controls.SelectionMode.Extended;
-            g.SelectionUnit = GridViewSelectionUnit.FullRow;
-            g.AlternationCount = 4;
-            g.CanUserFreezeColumns = true;
-            g.GridLinesVisibility = GridLinesVisibility.None;
-            g.ClipboardCopyMode = GridViewClipboardCopyMode.Cells;
-            g.ValidatesOnDataErrors = GridViewValidationMode.Default;
-            g.AutoGeneratingColumn += g_AutoGeneratingColumn;
-            g.ContextMenuOpening += g_ContextMenuOpening;
-            g.ShowColumnHeaders = true;
-            g.ShowColumnFooters = false;
-            g.ShowGroupPanel = true;
         }
-
-      
-
-      
-
-
-     
-        //// Helper to search up the VisualTree
-        //private static T FindAnchestor<T>(DependencyObject current)
-        //    where T : DependencyObject
-        //{
-        //    do
-        //    {
-        //        if (current is T)
-        //        {
-        //            return (T)current;
-        //        }
-        //        current = VisualTreeHelper.GetParent(current);
-        //    }
-        //    while (current != null);
-        //    return null;
-        //}
-
-     
         
         public void g_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
@@ -157,41 +107,7 @@ namespace WalzExplorer.Controls.RHSTabs
             }
         }
        
-        public void g_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
-        {
-            Telerik.Windows.Controls.GridViewColumn c = e.Column;
-            Style style = new Style();
-            style.Setters.Add(new Setter(GridViewRow.ForegroundProperty, new SolidColorBrush(Colors.Red)));
-            //Ignore Error Columns
-            if (c.UniqueName == "Error" || c.UniqueName == "HasError") { e.Cancel = true; return; }
-
-            //Ignore foreign key all columns
-            if (c.UniqueName.StartsWith("tbl")) { e.Cancel = true; return; }
-
-            //Ignore Columns for developers only while not in development mode
-            if (columnReadOnlyDeveloper.Contains(c.UniqueName) && !settings.DeveloperMode) { e.Cancel = true; return; }
-
-            //Rename 
-            if (columnRename.ContainsKey(c.UniqueName))
-            {
-                //Rename from the dictionary
-                c.Header = columnRename[c.UniqueName];
-            }
-            else
-            {
-                //Set the name from PascalCase to Logical (e.g. 'UpdatedBy' to 'Updated By')
-                Regex r = new Regex("([A-Z]+[a-z]+)");
-                c.Header = r.Replace(c.UniqueName, m => (m.Value.Length > 3 ? m.Value : m.Value.ToLower()) + " ");
-            }
-
-           // All columns read only
-            //e.Column.CellStyle = style;
-            e.Column.IsReadOnly = true;
-            //e.Column.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
-            //e.Column.CellStyle = style;
-            g.Rebind();
-           
-        }
+      
 
         public override string IssueIfClosed()
         {

@@ -90,5 +90,33 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
+        private Nullable<double> _contract;
+    	public Nullable<double> Contract 
+    	{ 
+    		get { return _contract; } 
+    		set { SetProperty(ref _contract, value); } 
+    	}
+    
+        private Nullable<double> _cost;
+    	public Nullable<double> Cost 
+    	{ 
+    		get { return _cost; } 
+    		set { SetProperty(ref _cost, value); } 
+    	}
+    
+        private Nullable<double> _committed;
+    	public Nullable<double> Committed 
+    	{ 
+    		get { return _committed; } 
+    		set { SetProperty(ref _committed, value); } 
+    	}
+    
+        private Nullable<double> _invoiced;
+    	public Nullable<double> Invoiced 
+    	{ 
+    		get { return _invoiced; } 
+    		set { SetProperty(ref _invoiced, value); } 
+    	}
+    
     }
 }

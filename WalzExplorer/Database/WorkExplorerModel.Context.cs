@@ -376,7 +376,7 @@ namespace WalzExplorer.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHSTabList_Result>("spWEX_RHSTabList", treeNodeTypeIDParameter, nTSecurityGroupsParameter, nTSecurityGroupsSeperatorParameter);
         }
     
-        public virtual ObjectResult<spWEX_RHS_Project_Summary_Result> spWEX_RHS_Project_Summary(string userPersonID, string nodeTypeID, string managerID, string customerID)
+        public virtual ObjectResult<spWEX_RHS_Project_Summary_Result> spWEX_RHS_Project_Summary(string userPersonID, string nodeTypeID, Nullable<int> projectID, Nullable<int> managerID, Nullable<int> customerID)
         {
             var userPersonIDParameter = userPersonID != null ?
                 new ObjectParameter("UserPersonID", userPersonID) :
@@ -386,15 +386,28 @@ namespace WalzExplorer.Database
                 new ObjectParameter("NodeTypeID", nodeTypeID) :
                 new ObjectParameter("NodeTypeID", typeof(string));
     
-            var managerIDParameter = managerID != null ?
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            var managerIDParameter = managerID.HasValue ?
                 new ObjectParameter("ManagerID", managerID) :
-                new ObjectParameter("ManagerID", typeof(string));
+                new ObjectParameter("ManagerID", typeof(int));
     
-            var customerIDParameter = customerID != null ?
+            var customerIDParameter = customerID.HasValue ?
                 new ObjectParameter("CustomerID", customerID) :
-                new ObjectParameter("CustomerID", typeof(string));
+                new ObjectParameter("CustomerID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_Summary_Result>("spWEX_RHS_Project_Summary", userPersonIDParameter, nodeTypeIDParameter, managerIDParameter, customerIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_Summary_Result>("spWEX_RHS_Project_Summary", userPersonIDParameter, nodeTypeIDParameter, projectIDParameter, managerIDParameter, customerIDParameter);
+        }
+    
+        public virtual ObjectResult<spWEX_RHS_Project_Cost_Result> spWEX_RHS_Project_Cost(Nullable<int> projectID)
+        {
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_Cost_Result>("spWEX_RHS_Project_Cost", projectIDParameter);
         }
     }
 }

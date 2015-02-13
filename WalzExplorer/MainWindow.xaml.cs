@@ -133,7 +133,9 @@ namespace WalzExplorer
 
         private void btnFeedback_Click(object sender, RoutedEventArgs e)
         {
-            //Search();
+            Window winFeedBack = new Windows.FeedbackDialog(settings);
+            winFeedBack.Owner = Application.Current.MainWindow;
+            winFeedBack.ShowDialog();
         }
 
         private void tcLHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -319,6 +321,7 @@ namespace WalzExplorer
                     //sbUserMimicName.Text = "Mimic: " + settings.user.MimicedPerson.Name;
                     LoadFormForMimic();
                     break;
+               
                 default:
                     MessageBox.Show(mi.Header.ToString(), "Configuration menu", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;

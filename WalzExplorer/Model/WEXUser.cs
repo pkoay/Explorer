@@ -52,16 +52,20 @@ namespace WalzExplorer
             {
                 SecurityGroups.Add(group.Name);
             }
-            switch (MimicedPerson.Login)
+            switch (MimicedPerson.AXPersonID) //Login.ToUpper())
             {
-                case "WALZ\\IParungao":
-                case "WALZ\\SGivney":
+                case "2640"://"WALZ\\IPARUGAO":
+                case "3125"://"WALZ\\SGIVNEY":
                     SecurityGroups.Add("WD_Project");
                     break;
-                case "WALZ\\DWright":
-                case "WALZ\\JHynes":
+                case "WRID": //"WALZ\\DWRIGHT":
+                case "HYNEJ": //"WALZ\\JHYNES":
                     SecurityGroups.Add("WD_Project");
                     SecurityGroups.Add("WP_Project_Manager");
+                    break;
+                case "1908": // "WALZ\\TRIGBY":
+                    SecurityGroups.Add("WD_Tender");
+                    SecurityGroups.Add("WP_Tender_Manager");
                     break;
 
             }

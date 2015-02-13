@@ -8,8 +8,17 @@
              xmlns:tab="clr-namespace:WalzExplorer.Controls.RHSTabs"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="402.09" d:DesignHeight="143.881"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
-             x:Class="WalzExplorer.Controls.RHSTabs.Project.SummaryView">
+             x:Class="WalzExplorer.Controls.RHSTabs.Project.CostView">
     <Grid>
-        <telerik:RadGridView  x:Name="grd" AutoGeneratingColumn="grd_AutoGeneratingColumn"/>
+        <telerik:RadGridView  Name="grd"  AutoGeneratingColumn="grd_AutoGeneratingColumn" Initialized="grd_Initialized"  DataLoaded="grd_DataLoaded">
+            <!--<telerik:RadGridView.GroupDescriptors>
+                --><!--<telerik:GroupDescriptor Member="ProjID"
+                                    SortDirection="Ascending" />
+                <telerik:GroupDescriptor Member="CategoryGroup"
+                                    SortDirection="Ascending" />
+                <telerik:GroupDescriptor Member="CategoryName"
+                                    SortDirection="Ascending" />--><!--
+            </telerik:RadGridView.GroupDescriptors>-->
+        </telerik:RadGridView>
     </Grid>
 </base:RHSTabGridViewBase_ReadOnly>

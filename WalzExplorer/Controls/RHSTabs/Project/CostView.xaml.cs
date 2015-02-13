@@ -1,11 +1,13 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
+using Telerik.Windows.Data;
 using WalzExplorer.Common;
 namespace WalzExplorer.Controls.RHSTabs.Project
 {
@@ -14,12 +16,12 @@ namespace WalzExplorer.Controls.RHSTabs.Project
     /// </summary>
     
      
-    public partial class SummaryView : RHSTabGridViewBase_ReadOnly
+    public partial class CostView : RHSTabGridViewBase_ReadOnly
     {
       
-        SummaryViewModel vm;
+        CostViewModel vm;
 
-        public SummaryView()
+        public CostView()
         {
             InitializeComponent();
         }
@@ -29,22 +31,18 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             base.SetGrid(grd);
             base.Reset();
 
-            columnReadOnlyDeveloper.Add("RowVersion");
-            columnReadOnlyDeveloper.Add("ProjectID");
-            columnRename.Add("AXProjectID", "ID");
-            columnRename.Add("OperationsManager", "Ops Manager");
-            columnReadOnlyDeveloper.Add("AXDataAreaID");
-            columnReadOnlyDeveloper.Add("SortOrder");
-            columnReadOnlyDeveloper.Add("UpdatedBy");
-            columnReadOnlyDeveloper.Add("UpdatedDate");
+           
+            //columnRename.Add("OperationsManager", "Ops Manager");
+            columnReadOnlyDeveloper.Add("DataAreaID");
+           
 
             // set grid data
-            vm = new SummaryViewModel(settings);
+            vm = new CostViewModel(settings);
             grd.DataContext = vm;
             grd.ItemsSource = vm.data;
            
             base.TabLoad();
-
+            
         }
 
         private void grd_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
@@ -52,15 +50,18 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             GridViewDataColumn column = e.Column as GridViewDataColumn;
             switch (e.Column.Header.ToString())
             {
-                case "Contract":
+                case "ProjId":
+                    e.Column.AggregateFunctions.Add(new CountFunction() { Caption = "Count" });
+                    break;
+                case "Date":
+                    column.DataFormatString = "dd-MMM-yyyy";
+                    column.TextAlignment = TextAlignment.Right;
+                    break;
+                case "CostAmount":
                     column.DataFormatString = "#,##0";
                     column.TextAlignment = TextAlignment.Right;
                     break;
-                case "Cost":
-                    column.DataFormatString = "#,##0";
-                    column.TextAlignment = TextAlignment.Right;
-                    break;
-                case "Committed":
+                case "CostOverhead":
                     column.DataFormatString = "#,##0";
                     column.TextAlignment = TextAlignment.Right;
                     break;
@@ -68,9 +69,24 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     column.DataFormatString = "#,##0";
                     column.TextAlignment = TextAlignment.Right;
                     break;
-          
-
+                case "Quantity":
+                    column.DataFormatString = "#,##0";
+                    column.TextAlignment = TextAlignment.Right;
+                    break;
             }
+        }
+
+        private void grd_Initialized(object sender, EventArgs e)
+        {
+
+            grd.GroupDescriptors.Add(new GroupDescriptor() { Member = "ProjId" });
+        }
+
+        private void grd_DataLoaded(object sender, EventArgs e)
+        {
+            
+               // grd.GroupDescriptors.Add(new GroupDescriptor() { Member = "ProjId" });
+           
         }
 
      

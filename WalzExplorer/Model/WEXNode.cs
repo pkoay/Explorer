@@ -39,7 +39,7 @@ namespace WalzExplorer
         {
             WEXNode node = this;
 
-            while (node != null && node.IDType != searchForTypeID)
+            while (node != null && node.IDType.ToUpper() != searchForTypeID.ToUpper())
             {
                 node = node.Parent;
             }

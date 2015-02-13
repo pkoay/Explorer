@@ -45,6 +45,11 @@
           <Property Name="OperationsManagerID" Type="int" Nullable="false" />
           <Property Name="StatusID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" />
+          <Property Name="ContractValue" Type="float" Nullable="false" />
+          <Property Name="CommCostAmount" Type="float" Nullable="false" />
+          <Property Name="CostAmount" Type="float" Nullable="false" />
+          <Property Name="CostOverheadAmount" Type="float" Nullable="false" />
+          <Property Name="InvoicedAmount" Type="float" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -1242,11 +1247,15 @@
         <Function Name="spWEX_Node_TenderSetupList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderSetupList">
           <Parameter Name="TenderID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spWEX_RHS_Project_Cost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Cost">
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
+        </Function>
         <Function Name="spWEX_RHS_Project_Summary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Summary">
           <Parameter Name="UserPersonID" Type="nvarchar" Mode="In" />
           <Parameter Name="NodeTypeID" Type="varchar" Mode="In" />
-          <Parameter Name="ManagerID" Type="varchar" Mode="In" />
-          <Parameter Name="CustomerID" Type="varchar" Mode="In" />
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
+          <Parameter Name="ManagerID" Type="int" Mode="In" />
+          <Parameter Name="CustomerID" Type="int" Mode="In" />
         </Function>
         <Function Name="spWEX_RHSTabList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHSTabList">
           <Parameter Name="TreeNodeTypeID" Type="varchar" Mode="In" />
@@ -2430,8 +2439,12 @@
           <FunctionImport Name="spWEX_RHS_Project_Summary" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Summary_Result)">
             <Parameter Name="UserPersonID" Mode="In" Type="String" />
             <Parameter Name="NodeTypeID" Mode="In" Type="String" />
-            <Parameter Name="ManagerID" Mode="In" Type="String" />
-            <Parameter Name="CustomerID" Mode="In" Type="String" />
+            <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+            <Parameter Name="ManagerID" Mode="In" Type="Int32" />
+            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_RHS_Project_Cost" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Cost_Result)">
+          <Parameter Name="ProjectID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
@@ -2921,6 +2934,11 @@
           <Property Name="TopParentID" Type="Int32" Nullable="false" />
           <Property Name="Level" Type="Int32" Nullable="false" />
           <Property Name="CustomerID" Type="Int32" />
+          <Property Name="ContractValue" Type="Double" Nullable="false" />
+          <Property Name="CommCostAmount" Type="Double" Nullable="false" />
+          <Property Name="CostAmount" Type="Double" Nullable="false" />
+          <Property Name="CostOverheadAmount" Type="Double" Nullable="false" />
+          <Property Name="InvoicedAmount" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender">
           <Key>
@@ -3191,6 +3209,24 @@
           <Property Type="String" Name="UpdatedBy" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
           <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" />
+          <Property Type="Double" Name="Contract" Nullable="true" />
+          <Property Type="Double" Name="Cost" Nullable="true" />
+          <Property Type="Double" Name="Committed" Nullable="true" />
+          <Property Type="Double" Name="Invoiced" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spWEX_RHS_Project_Cost_Result">
+          <Property Type="String" Name="DataAreaID" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="ProjId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="false" MaxLength="60" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Employee" Nullable="true" MaxLength="51" />
+          <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="CostAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="CostOverhead" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="Invoiced" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="CategoryGroup" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="60" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3836,6 +3872,11 @@
           <EntitySetMapping Name="tblProjects">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblProject">
               <MappingFragment StoreEntitySet="tblProject">
+                <ScalarProperty Name="InvoicedAmount" ColumnName="InvoicedAmount" />
+                <ScalarProperty Name="CostOverheadAmount" ColumnName="CostOverheadAmount" />
+                <ScalarProperty Name="CostAmount" ColumnName="CostAmount" />
+                <ScalarProperty Name="CommCostAmount" ColumnName="CommCostAmount" />
+                <ScalarProperty Name="ContractValue" ColumnName="ContractValue" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="Level" ColumnName="Level" />
                 <ScalarProperty Name="TopParentID" ColumnName="TopParentID" />
@@ -3895,6 +3936,28 @@
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="Contract" ColumnName="Contract" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Committed" ColumnName="Committed" />
+                <ScalarProperty Name="Invoiced" ColumnName="Invoiced" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_Cost" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_Cost">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_Cost_Result">
+                <ScalarProperty Name="DataAreaID" ColumnName="DataAreaID" />
+                <ScalarProperty Name="ProjId" ColumnName="ProjId" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Employee" ColumnName="Employee" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CostAmount" ColumnName="CostAmount" />
+                <ScalarProperty Name="CostOverhead" ColumnName="CostOverhead" />
+                <ScalarProperty Name="Invoiced" ColumnName="Invoiced" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CategoryGroup" ColumnName="CategoryGroup" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
