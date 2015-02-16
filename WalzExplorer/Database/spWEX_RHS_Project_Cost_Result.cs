@@ -34,6 +34,20 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _projectName, value); } 
     	}
     
+        private string _categoryGroup;
+    	public string CategoryGroup 
+    	{ 
+    		get { return _categoryGroup; } 
+    		set { SetProperty(ref _categoryGroup, value); } 
+    	}
+    
+        private string _categoryName;
+    	public string CategoryName 
+    	{ 
+    		get { return _categoryName; } 
+    		set { SetProperty(ref _categoryName, value); } 
+    	}
+    
         private Nullable<System.DateTime> _date;
     	public Nullable<System.DateTime> Date 
     	{ 
@@ -69,6 +83,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _costOverhead, value); } 
     	}
     
+        private Nullable<decimal> _costTotal;
+    	public Nullable<decimal> CostTotal 
+    	{ 
+    		get { return _costTotal; } 
+    		set { SetProperty(ref _costTotal, value); } 
+    	}
+    
         private Nullable<decimal> _invoiced;
     	public Nullable<decimal> Invoiced 
     	{ 
@@ -81,20 +102,6 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _description; } 
     		set { SetProperty(ref _description, value); } 
-    	}
-    
-        private string _categoryGroup;
-    	public string CategoryGroup 
-    	{ 
-    		get { return _categoryGroup; } 
-    		set { SetProperty(ref _categoryGroup, value); } 
-    	}
-    
-        private string _categoryName;
-    	public string CategoryName 
-    	{ 
-    		get { return _categoryName; } 
-    		set { SetProperty(ref _categoryName, value); } 
     	}
     
     }

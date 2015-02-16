@@ -238,6 +238,209 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
+        private string _statusActionsTaken;
+    	public string StatusActionsTaken 
+    	{ 
+    		get { return _statusActionsTaken; } 
+    		set { SetProperty(ref _statusActionsTaken, value); } 
+    	}
+    
+        private string _resourcesPFRiskOpp;
+    	public string ResourcesPFRiskOpp 
+    	{ 
+    		get { return _resourcesPFRiskOpp; } 
+    		set { SetProperty(ref _resourcesPFRiskOpp, value); } 
+    	}
+    
+        private string _resourcesEACRiskOpp;
+    	public string ResourcesEACRiskOpp 
+    	{ 
+    		get { return _resourcesEACRiskOpp; } 
+    		set { SetProperty(ref _resourcesEACRiskOpp, value); } 
+    	}
+    
+        private Nullable<double> _summaryContractValueOriginal;
+    	public Nullable<double> SummaryContractValueOriginal 
+    	{ 
+    		get { return _summaryContractValueOriginal; } 
+    		set { SetProperty(ref _summaryContractValueOriginal, value); } 
+    	}
+    
+        private Nullable<double> _summaryContactValueApproved;
+    	public Nullable<double> SummaryContactValueApproved 
+    	{ 
+    		get { return _summaryContactValueApproved; } 
+    		set { SetProperty(ref _summaryContactValueApproved, value); } 
+    	}
+    
+        private string _summaryContactValueRiskOpp;
+    	public string SummaryContactValueRiskOpp 
+    	{ 
+    		get { return _summaryContactValueRiskOpp; } 
+    		set { SetProperty(ref _summaryContactValueRiskOpp, value); } 
+    	}
+    
+        private Nullable<double> _summaryAtCompletionBudget;
+    	public Nullable<double> SummaryAtCompletionBudget 
+    	{ 
+    		get { return _summaryAtCompletionBudget; } 
+    		set { SetProperty(ref _summaryAtCompletionBudget, value); } 
+    	}
+    
+        private Nullable<double> _summaryAtCompletionEstimate;
+    	public Nullable<double> SummaryAtCompletionEstimate 
+    	{ 
+    		get { return _summaryAtCompletionEstimate; } 
+    		set { SetProperty(ref _summaryAtCompletionEstimate, value); } 
+    	}
+    
+        private string _summaryAtCompletionRiskOpp;
+    	public string SummaryAtCompletionRiskOpp 
+    	{ 
+    		get { return _summaryAtCompletionRiskOpp; } 
+    		set { SetProperty(ref _summaryAtCompletionRiskOpp, value); } 
+    	}
+    
+        private Nullable<double> _summaryCPI;
+    	public Nullable<double> SummaryCPI 
+    	{ 
+    		get { return _summaryCPI; } 
+    		set { SetProperty(ref _summaryCPI, value); } 
+    	}
+    
+        private Nullable<double> _summarySPI;
+    	public Nullable<double> SummarySPI 
+    	{ 
+    		get { return _summarySPI; } 
+    		set { SetProperty(ref _summarySPI, value); } 
+    	}
+    
+        private string _summarySPICPIRiskOpp;
+    	public string SummarySPICPIRiskOpp 
+    	{ 
+    		get { return _summarySPICPIRiskOpp; } 
+    		set { SetProperty(ref _summarySPICPIRiskOpp, value); } 
+    	}
+    
+        private Nullable<double> _budgetBudget;
+    	public Nullable<double> BudgetBudget 
+    	{ 
+    		get { return _budgetBudget; } 
+    		set { SetProperty(ref _budgetBudget, value); } 
+    	}
+    
+        private Nullable<double> _budgetPlanned;
+    	public Nullable<double> BudgetPlanned 
+    	{ 
+    		get { return _budgetPlanned; } 
+    		set { SetProperty(ref _budgetPlanned, value); } 
+    	}
+    
+        private Nullable<double> _budgetEarned;
+    	public Nullable<double> BudgetEarned 
+    	{ 
+    		get { return _budgetEarned; } 
+    		set { SetProperty(ref _budgetEarned, value); } 
+    	}
+    
+        private Nullable<double> _budgetActual;
+    	public Nullable<double> BudgetActual 
+    	{ 
+    		get { return _budgetActual; } 
+    		set { SetProperty(ref _budgetActual, value); } 
+    	}
+    
+        private Nullable<double> _budgetCV;
+    	public Nullable<double> BudgetCV 
+    	{ 
+    		get { return _budgetCV; } 
+    		set { SetProperty(ref _budgetCV, value); } 
+    	}
+    
+        private Nullable<double> _budgetSV;
+    	public Nullable<double> BudgetSV 
+    	{ 
+    		get { return _budgetSV; } 
+    		set { SetProperty(ref _budgetSV, value); } 
+    	}
+    
+        private Nullable<double> _budgetCPI;
+    	public Nullable<double> BudgetCPI 
+    	{ 
+    		get { return _budgetCPI; } 
+    		set { SetProperty(ref _budgetCPI, value); } 
+    	}
+    
+        private string _budgetRiskOpp;
+    	public string BudgetRiskOpp 
+    	{ 
+    		get { return _budgetRiskOpp; } 
+    		set { SetProperty(ref _budgetRiskOpp, value); } 
+    	}
+    
+        private byte[] _statusGantt;
+    	public byte[] StatusGantt 
+    	{ 
+    		get { return _statusGantt; } 
+    		set { SetProperty(ref _statusGantt, value); } 
+    	}
+    
+        private string _statusRiskOpp;
+    	public string StatusRiskOpp 
+    	{ 
+    		get { return _statusRiskOpp; } 
+    		set { SetProperty(ref _statusRiskOpp, value); } 
+    	}
+    
+        private Nullable<double> _budgetContractTotal;
+    	public Nullable<double> BudgetContractTotal 
+    	{ 
+    		get { return _budgetContractTotal; } 
+    		set { SetProperty(ref _budgetContractTotal, value); } 
+    	}
+    
+        private Nullable<double> _budgetContractMarginDollars;
+    	public Nullable<double> BudgetContractMarginDollars 
+    	{ 
+    		get { return _budgetContractMarginDollars; } 
+    		set { SetProperty(ref _budgetContractMarginDollars, value); } 
+    	}
+    
+        private Nullable<double> _budgetContractMarginPercent;
+    	public Nullable<double> BudgetContractMarginPercent 
+    	{ 
+    		get { return _budgetContractMarginPercent; } 
+    		set { SetProperty(ref _budgetContractMarginPercent, value); } 
+    	}
+    
+        private string _rFIForeseenIssuesActions;
+    	public string RFIForeseenIssuesActions 
+    	{ 
+    		get { return _rFIForeseenIssuesActions; } 
+    		set { SetProperty(ref _rFIForeseenIssuesActions, value); } 
+    	}
+    
+        private string _qualityForeseenIssuesActions;
+    	public string QualityForeseenIssuesActions 
+    	{ 
+    		get { return _qualityForeseenIssuesActions; } 
+    		set { SetProperty(ref _qualityForeseenIssuesActions, value); } 
+    	}
+    
+        private string _environmentForeseenIssuesActions;
+    	public string EnvironmentForeseenIssuesActions 
+    	{ 
+    		get { return _environmentForeseenIssuesActions; } 
+    		set { SetProperty(ref _environmentForeseenIssuesActions, value); } 
+    	}
+    
+        private string _other;
+    	public string Other 
+    	{ 
+    		get { return _other; } 
+    		set { SetProperty(ref _other, value); } 
+    	}
+    
     
         public virtual tblProject_HistoryStatus tblProject_HistoryStatus { get; set; }
         public virtual ICollection<tblProject_HistoryCritical> tblProject_HistoryCritical { get; set; }

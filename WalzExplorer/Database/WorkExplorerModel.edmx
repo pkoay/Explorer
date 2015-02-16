@@ -85,7 +85,7 @@
           <Property Name="KeyDatesOriginalPC" Type="datetime" />
           <Property Name="KeyDatesApprovedPC" Type="datetime" />
           <Property Name="KeyDatesForecastPC" Type="datetime" />
-          <Property Name="KeyDatesRiskOpp" Type="text" />
+          <Property Name="KeyDatesRiskOpp" Type="varchar(max)" />
           <Property Name="DurationActual" Type="int" />
           <Property Name="DurationOriginal" Type="int" />
           <Property Name="DurationApproved" Type="int" />
@@ -96,9 +96,38 @@
           <Property Name="CompleteApprovedBaseline" Type="float" />
           <Property Name="CompleteForecast" Type="float" />
           <Property Name="CompleteRiskOpp" Type="varchar(max)" />
+          <Property Name="StatusActionsTaken" Type="varchar(max)" />
+          <Property Name="ResourcesPFRiskOpp" Type="varchar(max)" />
+          <Property Name="ResourcesEACRiskOpp" Type="varchar(max)" />
+          <Property Name="SummaryContractValueOriginal" Type="float" />
+          <Property Name="SummaryContactValueApproved" Type="float" />
+          <Property Name="SummaryContactValueRiskOpp" Type="varchar(max)" />
+          <Property Name="SummaryAtCompletionBudget" Type="float" />
+          <Property Name="SummaryAtCompletionEstimate" Type="float" />
+          <Property Name="SummaryAtCompletionRiskOpp" Type="varchar(max)" />
+          <Property Name="SummaryCPI" Type="float" />
+          <Property Name="SummarySPI" Type="float" />
+          <Property Name="SummarySPICPIRiskOpp" Type="varchar(max)" />
+          <Property Name="BudgetBudget" Type="float" />
+          <Property Name="BudgetPlanned" Type="float" />
+          <Property Name="BudgetEarned" Type="float" />
+          <Property Name="BudgetActual" Type="float" />
+          <Property Name="BudgetCV" Type="float" />
+          <Property Name="BudgetSV" Type="float" />
+          <Property Name="BudgetCPI" Type="float" />
+          <Property Name="BudgetRiskOpp" Type="varchar(max)" />
+          <Property Name="StatusGantt" Type="varbinary(max)" />
+          <Property Name="StatusRiskOpp" Type="varchar(max)" />
+          <Property Name="BudgetContractTotal" Type="float" />
+          <Property Name="BudgetContractMarginDollars" Type="float" />
+          <Property Name="BudgetContractMarginPercent" Type="float" />
+          <Property Name="RFIForeseenIssuesActions" Type="varchar(max)" />
+          <Property Name="QualityForeseenIssuesActions" Type="varchar(max)" />
+          <Property Name="EnvironmentForeseenIssuesActions" Type="varchar(max)" />
+          <Property Name="Other" Type="varchar(max)" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
-          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="tblProject_HistoryCritical">
           <Key>
@@ -2444,7 +2473,7 @@
             <Parameter Name="CustomerID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spWEX_RHS_Project_Cost" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Cost_Result)">
-          <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+            <Parameter Name="ProjectID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
@@ -2749,7 +2778,36 @@
           <NavigationProperty Name="tblProject" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject" FromRole="tblProject_History" ToRole="tblProject" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <Property Name="StatusActionsTaken" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ResourcesPFRiskOpp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ResourcesEACRiskOpp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SummaryContractValueOriginal" Type="Double" />
+          <Property Name="SummaryContactValueApproved" Type="Double" />
+          <Property Name="SummaryContactValueRiskOpp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SummaryAtCompletionBudget" Type="Double" />
+          <Property Name="SummaryAtCompletionEstimate" Type="Double" />
+          <Property Name="SummaryAtCompletionRiskOpp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SummaryCPI" Type="Double" />
+          <Property Name="SummarySPI" Type="Double" />
+          <Property Name="SummarySPICPIRiskOpp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="BudgetBudget" Type="Double" />
+          <Property Name="BudgetPlanned" Type="Double" />
+          <Property Name="BudgetEarned" Type="Double" />
+          <Property Name="BudgetActual" Type="Double" />
+          <Property Name="BudgetCV" Type="Double" />
+          <Property Name="BudgetSV" Type="Double" />
+          <Property Name="BudgetCPI" Type="Double" />
+          <Property Name="BudgetRiskOpp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StatusGantt" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="StatusRiskOpp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="BudgetContractTotal" Type="Double" />
+          <Property Name="BudgetContractMarginDollars" Type="Double" />
+          <Property Name="BudgetContractMarginPercent" Type="Double" />
+          <Property Name="RFIForeseenIssuesActions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="QualityForeseenIssuesActions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EnvironmentForeseenIssuesActions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Other" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblProject_HistoryMilestone">
           <Key>
@@ -3218,15 +3276,16 @@
           <Property Type="String" Name="DataAreaID" Nullable="false" MaxLength="4" />
           <Property Type="String" Name="ProjId" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="ProjectName" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="CategoryGroup" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="60" />
           <Property Type="DateTime" Name="Date" Nullable="true" />
           <Property Type="String" Name="Employee" Nullable="true" MaxLength="51" />
           <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="38" Scale="12" />
           <Property Type="Decimal" Name="CostAmount" Nullable="true" Precision="38" Scale="12" />
           <Property Type="Decimal" Name="CostOverhead" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="CostTotal" Nullable="true" Precision="38" Scale="6" />
           <Property Type="Decimal" Name="Invoiced" Nullable="true" Precision="38" Scale="12" />
           <Property Type="String" Name="Description" Nullable="true" MaxLength="1000" />
-          <Property Type="String" Name="CategoryGroup" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="60" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3741,6 +3800,35 @@
           <EntitySetMapping Name="tblProject_History">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_History">
               <MappingFragment StoreEntitySet="tblProject_History">
+                <ScalarProperty Name="Other" ColumnName="Other" />
+                <ScalarProperty Name="EnvironmentForeseenIssuesActions" ColumnName="EnvironmentForeseenIssuesActions" />
+                <ScalarProperty Name="QualityForeseenIssuesActions" ColumnName="QualityForeseenIssuesActions" />
+                <ScalarProperty Name="RFIForeseenIssuesActions" ColumnName="RFIForeseenIssuesActions" />
+                <ScalarProperty Name="BudgetContractMarginPercent" ColumnName="BudgetContractMarginPercent" />
+                <ScalarProperty Name="BudgetContractMarginDollars" ColumnName="BudgetContractMarginDollars" />
+                <ScalarProperty Name="BudgetContractTotal" ColumnName="BudgetContractTotal" />
+                <ScalarProperty Name="StatusRiskOpp" ColumnName="StatusRiskOpp" />
+                <ScalarProperty Name="StatusGantt" ColumnName="StatusGantt" />
+                <ScalarProperty Name="BudgetRiskOpp" ColumnName="BudgetRiskOpp" />
+                <ScalarProperty Name="BudgetCPI" ColumnName="BudgetCPI" />
+                <ScalarProperty Name="BudgetSV" ColumnName="BudgetSV" />
+                <ScalarProperty Name="BudgetCV" ColumnName="BudgetCV" />
+                <ScalarProperty Name="BudgetActual" ColumnName="BudgetActual" />
+                <ScalarProperty Name="BudgetEarned" ColumnName="BudgetEarned" />
+                <ScalarProperty Name="BudgetPlanned" ColumnName="BudgetPlanned" />
+                <ScalarProperty Name="BudgetBudget" ColumnName="BudgetBudget" />
+                <ScalarProperty Name="SummarySPICPIRiskOpp" ColumnName="SummarySPICPIRiskOpp" />
+                <ScalarProperty Name="SummarySPI" ColumnName="SummarySPI" />
+                <ScalarProperty Name="SummaryCPI" ColumnName="SummaryCPI" />
+                <ScalarProperty Name="SummaryAtCompletionRiskOpp" ColumnName="SummaryAtCompletionRiskOpp" />
+                <ScalarProperty Name="SummaryAtCompletionEstimate" ColumnName="SummaryAtCompletionEstimate" />
+                <ScalarProperty Name="SummaryAtCompletionBudget" ColumnName="SummaryAtCompletionBudget" />
+                <ScalarProperty Name="SummaryContactValueRiskOpp" ColumnName="SummaryContactValueRiskOpp" />
+                <ScalarProperty Name="SummaryContactValueApproved" ColumnName="SummaryContactValueApproved" />
+                <ScalarProperty Name="SummaryContractValueOriginal" ColumnName="SummaryContractValueOriginal" />
+                <ScalarProperty Name="ResourcesEACRiskOpp" ColumnName="ResourcesEACRiskOpp" />
+                <ScalarProperty Name="ResourcesPFRiskOpp" ColumnName="ResourcesPFRiskOpp" />
+                <ScalarProperty Name="StatusActionsTaken" ColumnName="StatusActionsTaken" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
@@ -3949,15 +4037,16 @@
                 <ScalarProperty Name="DataAreaID" ColumnName="DataAreaID" />
                 <ScalarProperty Name="ProjId" ColumnName="ProjId" />
                 <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CategoryGroup" ColumnName="CategoryGroup" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Employee" ColumnName="Employee" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="CostAmount" ColumnName="CostAmount" />
                 <ScalarProperty Name="CostOverhead" ColumnName="CostOverhead" />
+                <ScalarProperty Name="CostTotal" ColumnName="CostTotal" />
                 <ScalarProperty Name="Invoiced" ColumnName="Invoiced" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CategoryGroup" ColumnName="CategoryGroup" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

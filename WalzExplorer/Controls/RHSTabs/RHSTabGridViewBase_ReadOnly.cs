@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.Dynamic;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Telerik.Windows.Data;
 
 namespace WalzExplorer.Controls.RHSTabs
 {         
@@ -198,6 +199,36 @@ namespace WalzExplorer.Controls.RHSTabs
             return "";
         }
 
+        public void SetColumn(GridViewDataColumn column, string type)
+        {
+            switch (type.ToUpper())
+            {
+                case "DATE":
+                    column.DataFormatString = "dd-MMM-yyyy";
+                    column.TextAlignment = TextAlignment.Right;
+                    column.HeaderTextAlignment = TextAlignment.Right;
+                    column.FooterTextAlignment = TextAlignment.Right;
+                    column.IsGroupable = false;
+                    break;
+
+                case "TEXT":
+                    column.DataFormatString = "";
+                    column.TextAlignment = TextAlignment.Left;
+                    column.HeaderTextAlignment = TextAlignment.Left;
+                    column.FooterTextAlignment = TextAlignment.Left;
+                    column.IsGroupable = true;
+                    break;
+                case "NUMBER":
+                    column.DataFormatString = "#,##0";
+                    column.TextAlignment = TextAlignment.Right;
+                    column.HeaderTextAlignment = TextAlignment.Right;
+                    column.FooterTextAlignment = TextAlignment.Right;
+                    column.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = "{0:#,0}" });
+                    column.IsGroupable = false;
+                    break;
+            }
+           
+        }
     }
 
     
