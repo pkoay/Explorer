@@ -36,7 +36,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
            
             //columnRename.Add("OperationsManager", "Ops Manager");
             columnReadOnlyDeveloper.Add("DataAreaID");
-           
+            columnReadOnlyDeveloper.Add("Invoiced");
 
             // set grid data
             vm = new CostViewModel(settings);

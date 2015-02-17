@@ -13,13 +13,13 @@ namespace WalzExplorer.Windows
         WalzExplorerEntities context = new WalzExplorerEntities();
         public ObservableCollection<tblPerson> MimicList { get; private set; }
 
-        public MimicDialogViewModel()
+        public MimicDialogViewModel(WEXSettings settings)
         {
             var query =
                 from p in context.tblPersons
                 join m in context.tblPerson_Mimic on p.PersonID equals m.MimicPersonID into pm
                 from m in pm.DefaultIfEmpty()
-                where (m.MimicPersonID != null || p.PersonID == 1470) 
+                where (m.MimicPersonID != null && m.PersonID == settings.user.RealPerson.PersonID) 
                 select p ;
 
             MimicList = new ObservableCollection<tblPerson>(query.ToList());

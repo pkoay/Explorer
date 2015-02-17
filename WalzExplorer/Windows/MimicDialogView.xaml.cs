@@ -28,7 +28,8 @@ namespace WalzExplorer.Windows
         public MimicDialog(WEXSettings settings)
         {
             InitializeComponent();
-            viewModel = new MimicDialogViewModel();
+            viewModel = new MimicDialogViewModel(settings);
+            cmbMimic.ItemsSource = viewModel.MimicList;
             _settings = settings;
             
             

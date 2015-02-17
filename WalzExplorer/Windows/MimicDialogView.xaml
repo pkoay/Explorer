@@ -4,11 +4,11 @@
         xmlns:model="clr-namespace:WalzExplorer.Windows"
        
         Title="Mimic" Height="232" Width="300" ShowInTaskbar="False"  ResizeMode="NoResize" Loaded="Window_Loaded">
-    <Window.Resources>
+    <!--<Window.Resources>
         <model:MimicDialogViewModel x:Key="model"/>
-    </Window.Resources>
-    <Grid DataContext="{DynamicResource model}" Background="#FF252526">
-        <ComboBox Name="cmbMimic" HorizontalAlignment="Left" Margin="145,81,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding MimicList}"  DisplayMemberPath="Name"/>
+    </Window.Resources>-->
+    <Grid  Background="#FF252526">
+        <ComboBox Name="cmbMimic" HorizontalAlignment="Left" Margin="145,81,0,0" VerticalAlignment="Top" Width="120"  DisplayMemberPath="Name"/>
         <Label Content="Mimic User:" HorizontalAlignment="Left" Margin="35,81,0,0" VerticalAlignment="Top" Width="91"/>
         <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="35,156,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
         <Button Name="btnOK" Content="OK" HorizontalAlignment="Left" Margin="190,156,0,0" VerticalAlignment="Top" Width="75" Click="btnOK_Click"/>
