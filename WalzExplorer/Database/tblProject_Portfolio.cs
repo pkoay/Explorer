@@ -12,19 +12,18 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblProject_EarnedValueType : ModelBase
+    public partial class tblProject_Portfolio : ModelBase
     {
-        public tblProject_EarnedValueType()
+        public tblProject_Portfolio()
         {
-            this.tblProject_HistoryDollars = new HashSet<tblProject_HistoryDollars>();
-            this.tblProject_HistoryHours = new HashSet<tblProject_HistoryHours>();
+            this.tblProjects = new HashSet<tblProject>();
         }
     
-        private int _earnedValueTypeID;
-    	public int EarnedValueTypeID 
+        private int _portfolioID;
+    	public int PortfolioID 
     	{ 
-    		get { return _earnedValueTypeID; } 
-    		set { SetProperty(ref _earnedValueTypeID, value); } 
+    		get { return _portfolioID; } 
+    		set { SetProperty(ref _portfolioID, value); } 
     	}
     
         private string _title;
@@ -32,6 +31,27 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _title; } 
     		set { SetProperty(ref _title, value); } 
+    	}
+    
+        private Nullable<int> _parentID;
+    	public Nullable<int> ParentID 
+    	{ 
+    		get { return _parentID; } 
+    		set { SetProperty(ref _parentID, value); } 
+    	}
+    
+        private bool _canAllocate;
+    	public bool CanAllocate 
+    	{ 
+    		get { return _canAllocate; } 
+    		set { SetProperty(ref _canAllocate, value); } 
+    	}
+    
+        private int _sortOrder;
+    	public int SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
     	}
     
         private string _updatedBy;
@@ -56,7 +76,6 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual ICollection<tblProject_HistoryDollars> tblProject_HistoryDollars { get; set; }
-        public virtual ICollection<tblProject_HistoryHours> tblProject_HistoryHours { get; set; }
+        public virtual ICollection<tblProject> tblProjects { get; set; }
     }
 }

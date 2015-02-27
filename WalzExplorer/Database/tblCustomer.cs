@@ -12,29 +12,25 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblPerson : ModelBase
+    public partial class tblCustomer : ModelBase
     {
-        public tblPerson()
+        public tblCustomer()
         {
             this.tblProjects = new HashSet<tblProject>();
-            this.tblProjects1 = new HashSet<tblProject>();
-            this.tblTenders = new HashSet<tblTender>();
-            this.tblPerson_Mimic = new HashSet<tblPerson_Mimic>();
-            this.tblPerson_Mimic1 = new HashSet<tblPerson_Mimic>();
         }
     
-        private int _personID;
-    	public int PersonID 
+        private int _customerID;
+    	public int CustomerID 
     	{ 
-    		get { return _personID; } 
-    		set { SetProperty(ref _personID, value); } 
+    		get { return _customerID; } 
+    		set { SetProperty(ref _customerID, value); } 
     	}
     
-        private string _aXPersonID;
-    	public string AXPersonID 
+        private string _aXCustomerID;
+    	public string AXCustomerID 
     	{ 
-    		get { return _aXPersonID; } 
-    		set { SetProperty(ref _aXPersonID, value); } 
+    		get { return _aXCustomerID; } 
+    		set { SetProperty(ref _aXCustomerID, value); } 
     	}
     
         private string _aXDataAreaID;
@@ -49,20 +45,6 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _name; } 
     		set { SetProperty(ref _name, value); } 
-    	}
-    
-        private string _login;
-    	public string Login 
-    	{ 
-    		get { return _login; } 
-    		set { SetProperty(ref _login, value); } 
-    	}
-    
-        private int _statusID;
-    	public int StatusID 
-    	{ 
-    		get { return _statusID; } 
-    		set { SetProperty(ref _statusID, value); } 
     	}
     
         private string _updatedBy;
@@ -86,18 +68,7 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
-        private string _initals;
-    	public string Initals 
-    	{ 
-    		get { return _initals; } 
-    		set { SetProperty(ref _initals, value); } 
-    	}
-    
     
         public virtual ICollection<tblProject> tblProjects { get; set; }
-        public virtual ICollection<tblProject> tblProjects1 { get; set; }
-        public virtual ICollection<tblTender> tblTenders { get; set; }
-        public virtual ICollection<tblPerson_Mimic> tblPerson_Mimic { get; set; }
-        public virtual ICollection<tblPerson_Mimic> tblPerson_Mimic1 { get; set; }
     }
 }

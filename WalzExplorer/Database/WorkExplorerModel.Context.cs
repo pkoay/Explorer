@@ -57,12 +57,20 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblProject_Status> tblProject_Status { get; set; }
         public virtual DbSet<tblProject_EarnedValueType> tblProject_EarnedValueType { get; set; }
         public virtual DbSet<tblProject_HistoryCritical> tblProject_HistoryCritical { get; set; }
-        public virtual DbSet<tblProject_HistoryManHours> tblProject_HistoryManHours { get; set; }
         public virtual DbSet<tblProject_HistoryStatus> tblProject_HistoryStatus { get; set; }
         public virtual DbSet<tblPerson> tblPersons { get; set; }
         public virtual DbSet<tblProject> tblProjects { get; set; }
         public virtual DbSet<tblTender> tblTenders { get; set; }
         public virtual DbSet<tblPerson_Mimic> tblPerson_Mimic { get; set; }
+        public virtual DbSet<tblCustomer> tblCustomers { get; set; }
+        public virtual DbSet<tblProject_ContractType> tblProject_ContractType { get; set; }
+        public virtual DbSet<tblProject_HistoryDollars> tblProject_HistoryDollars { get; set; }
+        public virtual DbSet<tblProject_HistoryHours> tblProject_HistoryHours { get; set; }
+        public virtual DbSet<tblProject_HistoryIncident> tblProject_HistoryIncident { get; set; }
+        public virtual DbSet<tblProject_HistoryNCR> tblProject_HistoryNCR { get; set; }
+        public virtual DbSet<tblProject_HistoryRating> tblProject_HistoryRating { get; set; }
+        public virtual DbSet<tblProject_HistoryRFI> tblProject_HistoryRFI { get; set; }
+        public virtual DbSet<tblProject_Portfolio> tblProject_Portfolio { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)

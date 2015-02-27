@@ -12,19 +12,22 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblProject_EarnedValueType : ModelBase
+    public partial class tblProject_HistoryRating : ModelBase
     {
-        public tblProject_EarnedValueType()
+        public tblProject_HistoryRating()
         {
-            this.tblProject_HistoryDollars = new HashSet<tblProject_HistoryDollars>();
-            this.tblProject_HistoryHours = new HashSet<tblProject_HistoryHours>();
+            this.tblProject_History = new HashSet<tblProject_History>();
+            this.tblProject_History1 = new HashSet<tblProject_History>();
+            this.tblProject_History2 = new HashSet<tblProject_History>();
+            this.tblProject_History3 = new HashSet<tblProject_History>();
+            this.tblProject_History4 = new HashSet<tblProject_History>();
         }
     
-        private int _earnedValueTypeID;
-    	public int EarnedValueTypeID 
+        private int _ratingID;
+    	public int RatingID 
     	{ 
-    		get { return _earnedValueTypeID; } 
-    		set { SetProperty(ref _earnedValueTypeID, value); } 
+    		get { return _ratingID; } 
+    		set { SetProperty(ref _ratingID, value); } 
     	}
     
         private string _title;
@@ -32,6 +35,13 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _title; } 
     		set { SetProperty(ref _title, value); } 
+    	}
+    
+        private string _color;
+    	public string Color 
+    	{ 
+    		get { return _color; } 
+    		set { SetProperty(ref _color, value); } 
     	}
     
         private string _updatedBy;
@@ -56,7 +66,10 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual ICollection<tblProject_HistoryDollars> tblProject_HistoryDollars { get; set; }
-        public virtual ICollection<tblProject_HistoryHours> tblProject_HistoryHours { get; set; }
+        public virtual ICollection<tblProject_History> tblProject_History { get; set; }
+        public virtual ICollection<tblProject_History> tblProject_History1 { get; set; }
+        public virtual ICollection<tblProject_History> tblProject_History2 { get; set; }
+        public virtual ICollection<tblProject_History> tblProject_History3 { get; set; }
+        public virtual ICollection<tblProject_History> tblProject_History4 { get; set; }
     }
 }

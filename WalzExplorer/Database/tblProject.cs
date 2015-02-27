@@ -152,10 +152,48 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _invoicedAmount, value); } 
     	}
     
+        private string _aXJobID;
+    	public string AXJobID 
+    	{ 
+    		get { return _aXJobID; } 
+    		set { SetProperty(ref _aXJobID, value); } 
+    	}
+    
+        private int _portfolioID;
+    	public int PortfolioID 
+    	{ 
+    		get { return _portfolioID; } 
+    		set { SetProperty(ref _portfolioID, value); } 
+    	}
+    
+        private double _costBudget;
+    	public double CostBudget 
+    	{ 
+    		get { return _costBudget; } 
+    		set { SetProperty(ref _costBudget, value); } 
+    	}
+    
+        private double _hoursBudget;
+    	public double HoursBudget 
+    	{ 
+    		get { return _hoursBudget; } 
+    		set { SetProperty(ref _hoursBudget, value); } 
+    	}
+    
+        private Nullable<int> _contractTypeID;
+    	public Nullable<int> ContractTypeID 
+    	{ 
+    		get { return _contractTypeID; } 
+    		set { SetProperty(ref _contractTypeID, value); } 
+    	}
+    
     
         public virtual tblPerson tblPerson { get; set; }
         public virtual tblPerson tblPerson1 { get; set; }
         public virtual ICollection<tblProject_History> tblProject_History { get; set; }
         public virtual tblProject_Status tblProject_Status { get; set; }
+        public virtual tblProject_ContractType tblProject_ContractType { get; set; }
+        public virtual tblProject_Portfolio tblProject_Portfolio { get; set; }
+        public virtual tblCustomer tblCustomer { get; set; }
     }
 }

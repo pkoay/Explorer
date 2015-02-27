@@ -218,12 +218,34 @@ namespace WalzExplorer.Controls.RHSTabs
                     column.FooterTextAlignment = TextAlignment.Left;
                     column.IsGroupable = true;
                     break;
-                case "NUMBER":
+                case "INT":
                     column.DataFormatString = "#,##0";
                     column.TextAlignment = TextAlignment.Right;
                     column.HeaderTextAlignment = TextAlignment.Right;
                     column.FooterTextAlignment = TextAlignment.Right;
                     column.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = "{0:#,0}" });
+                    column.IsGroupable = false;
+                    break;
+                case "INT_NO_TOTAL":
+                    column.DataFormatString = "#,##0";
+                    column.TextAlignment = TextAlignment.Right;
+                    column.HeaderTextAlignment = TextAlignment.Right;
+                    column.FooterTextAlignment = TextAlignment.Right;
+                    column.IsGroupable = false;
+                    break;
+                case "TWO_DECIMAL_NO_TOTAL":
+                    column.DataFormatString = "#,##0.00";
+                    column.TextAlignment = TextAlignment.Right;
+                    column.HeaderTextAlignment = TextAlignment.Right;
+                    column.FooterTextAlignment = TextAlignment.Right;
+                    column.IsGroupable = false;
+                    break;
+                case "TWO_DECIMAL":
+                    column.DataFormatString = "#,##0.00";
+                    column.TextAlignment = TextAlignment.Right;
+                    column.HeaderTextAlignment = TextAlignment.Right;
+                    column.FooterTextAlignment = TextAlignment.Right;
+                    column.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = "{0:#,0.00}" });
                     column.IsGroupable = false;
                     break;
             }

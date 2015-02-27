@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="WalzExplorerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblCustomer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AXCustomerID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AXDataAreaID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblPerson">
           <Key>
             <PropertyRef Name="PersonID" />
@@ -13,6 +25,7 @@
           <Property Name="AXPersonID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AXDataAreaID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Initals" Type="varchar" MaxLength="50" />
           <Property Name="Login" Type="varchar" MaxLength="100" />
           <Property Name="StatusID" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
@@ -37,6 +50,7 @@
           <Property Name="ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AXProjectID" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="AXDataAreaID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AXJobID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ParentID" Type="int" Nullable="false" />
           <Property Name="TopParentID" Type="int" Nullable="false" />
           <Property Name="Level" Type="int" Nullable="false" />
@@ -45,11 +59,27 @@
           <Property Name="OperationsManagerID" Type="int" Nullable="false" />
           <Property Name="StatusID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" />
+          <Property Name="PortfolioID" Type="int" Nullable="false" />
           <Property Name="ContractValue" Type="float" Nullable="false" />
+          <Property Name="CostBudget" Type="float" Nullable="false" />
+          <Property Name="HoursBudget" Type="float" Nullable="false" />
+          <Property Name="ContractTypeID" Type="int" />
           <Property Name="CommCostAmount" Type="float" Nullable="false" />
           <Property Name="CostAmount" Type="float" Nullable="false" />
           <Property Name="CostOverheadAmount" Type="float" Nullable="false" />
           <Property Name="InvoicedAmount" Type="float" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblProject_ContractType">
+          <Key>
+            <PropertyRef Name="ContractTypeID" />
+          </Key>
+          <Property Name="ContractTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AXDataAreaID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AXProjGroupID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -70,17 +100,31 @@
           </Key>
           <Property Name="HistoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProjectID" Type="int" Nullable="false" />
-          <Property Name="Period" Type="datetime" Nullable="false" />
+          <Property Name="PeriodStart" Type="date" Nullable="false" />
+          <Property Name="PeriodEnd" Type="date" Nullable="false" />
           <Property Name="StatusID" Type="int" Nullable="false" />
           <Property Name="AXProjectID" Type="varchar" MaxLength="100" />
           <Property Name="Title" Type="varchar" MaxLength="100" />
           <Property Name="Status" Type="varchar" MaxLength="100" />
-          <Property Name="GrossProfit" Type="int" />
+          <Property Name="GrossProfit" Type="float" />
           <Property Name="AXJobNo" Type="varchar" MaxLength="100" />
           <Property Name="ContractType" Type="varchar" MaxLength="100" />
-          <Property Name="Client" Type="varchar" MaxLength="100" />
-          <Property Name="Date" Type="datetime" />
+          <Property Name="Customer" Type="varchar" MaxLength="100" />
+          <Property Name="TimeRatingID" Type="int" />
+          <Property Name="HoursRatingID" Type="int" />
+          <Property Name="CostRatingID" Type="int" />
+          <Property Name="SafetyRatingID" Type="int" />
+          <Property Name="QualityRatingID" Type="int" />
+          <Property Name="PMSummaryNotes" Type="varchar(max)" />
+          <Property Name="OMSummaryNotes" Type="varchar(max)" />
           <Property Name="WeekEnding" Type="datetime" />
+          <Property Name="SafetyLTI" Type="int" />
+          <Property Name="SafetyMTI" Type="int" />
+          <Property Name="SafetyFAI" Type="int" />
+          <Property Name="SafetyNearMiss" Type="int" />
+          <Property Name="SafetyLTIFR" Type="int" />
+          <Property Name="SafetyTRIFR" Type="int" />
+          <Property Name="SafetyHours" Type="int" />
           <Property Name="KeyDatesAward" Type="datetime" />
           <Property Name="KeyDatesOriginalPC" Type="datetime" />
           <Property Name="KeyDatesApprovedPC" Type="datetime" />
@@ -96,9 +140,12 @@
           <Property Name="CompleteApprovedBaseline" Type="float" />
           <Property Name="CompleteForecast" Type="float" />
           <Property Name="CompleteRiskOpp" Type="varchar(max)" />
+          <Property Name="StatusGantt" Type="varbinary(max)" />
           <Property Name="StatusActionsTaken" Type="varchar(max)" />
           <Property Name="ResourcesPFRiskOpp" Type="varchar(max)" />
           <Property Name="ResourcesEACRiskOpp" Type="varchar(max)" />
+          <Property Name="SummaryHousBudget" Type="float" />
+          <Property Name="SummaryCostBudget" Type="float" />
           <Property Name="SummaryContractValueOriginal" Type="float" />
           <Property Name="SummaryContactValueApproved" Type="float" />
           <Property Name="SummaryContactValueRiskOpp" Type="varchar(max)" />
@@ -116,7 +163,6 @@
           <Property Name="BudgetSV" Type="float" />
           <Property Name="BudgetCPI" Type="float" />
           <Property Name="BudgetRiskOpp" Type="varchar(max)" />
-          <Property Name="StatusGantt" Type="varbinary(max)" />
           <Property Name="StatusRiskOpp" Type="varchar(max)" />
           <Property Name="BudgetContractTotal" Type="float" />
           <Property Name="BudgetContractMarginDollars" Type="float" />
@@ -125,6 +171,10 @@
           <Property Name="QualityForeseenIssuesActions" Type="varchar(max)" />
           <Property Name="EnvironmentForeseenIssuesActions" Type="varchar(max)" />
           <Property Name="Other" Type="varchar(max)" />
+          <Property Name="ProjectManagerSignID" Type="int" />
+          <Property Name="ProjectManagerSignDate" Type="datetime" />
+          <Property Name="OperationsManagerSignID" Type="int" />
+          <Property Name="OperationsManagerSignDate" Type="datetime" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" />
@@ -144,7 +194,7 @@
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
-        <EntityType Name="tblProject_HistoryManHours">
+        <EntityType Name="tblProject_HistoryDollars">
           <Key>
             <PropertyRef Name="HistoryID" />
             <PropertyRef Name="Week" />
@@ -154,6 +204,37 @@
           <Property Name="Week" Type="datetime" Nullable="false" />
           <Property Name="EarnedValueTypeID" Type="int" Nullable="false" />
           <Property Name="Value" Type="float" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblProject_HistoryHours">
+          <Key>
+            <PropertyRef Name="HistoryID" />
+            <PropertyRef Name="WeekEnd" />
+            <PropertyRef Name="EarnedValueTypeID" />
+          </Key>
+          <Property Name="HistoryID" Type="int" Nullable="false" />
+          <Property Name="WeekEnd" Type="date" Nullable="false" />
+          <Property Name="EarnedValueTypeID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="float" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblProject_HistoryIncident">
+          <Key>
+            <PropertyRef Name="HistoryID" />
+            <PropertyRef Name="IncidentID" />
+          </Key>
+          <Property Name="HistoryID" Type="int" Nullable="false" />
+          <Property Name="IncidentID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReportedDate" Type="date" Nullable="false" />
+          <Property Name="IncidentType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DetailedDescription" Type="varchar(max)" Nullable="false" />
+          <Property Name="InjuryDescription" Type="varchar(max)" Nullable="false" />
+          <Property Name="ActualConsequLevel" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PotentialConsqLevel" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -174,12 +255,68 @@
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblProject_HistoryNCR">
+          <Key>
+            <PropertyRef Name="HistoryID" />
+            <PropertyRef Name="ReportID" />
+          </Key>
+          <Property Name="HistoryID" Type="int" Nullable="false" />
+          <Property Name="ReportID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IssuedToPerson" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IssuedToCompany" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateRaised" Type="date" Nullable="false" />
+          <Property Name="EventDesc" Type="varchar(max)" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblProject_HistoryRating">
+          <Key>
+            <PropertyRef Name="RatingID" />
+          </Key>
+          <Property Name="RatingID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Color" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblProject_HistoryRFI">
+          <Key>
+            <PropertyRef Name="HistoryID" />
+            <PropertyRef Name="RFIID" />
+          </Key>
+          <Property Name="HistoryID" Type="int" Nullable="false" />
+          <Property Name="RFIID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RaisedBy" Type="varchar" MaxLength="50" />
+          <Property Name="DateRaised" Type="date" Nullable="false" />
+          <Property Name="Subject" Type="varchar(max)" Nullable="false" />
+          <Property Name="Reference" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="QueryText" Type="varchar(max)" Nullable="false" />
+          <Property Name="EmailSent" Type="bit" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblProject_HistoryStatus">
           <Key>
             <PropertyRef Name="StatusID" />
           </Key>
           <Property Name="StatusID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblProject_Portfolio">
+          <Key>
+            <PropertyRef Name="PortfolioID" />
+          </Key>
+          <Property Name="PortfolioID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="CanAllocate" Type="bit" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -611,6 +748,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblProject_History_tblProject_HistoryRating">
+          <End Role="tblProject_HistoryRating" Type="Self.tblProject_HistoryRating" Multiplicity="0..1" />
+          <End Role="tblProject_History" Type="Self.tblProject_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_HistoryRating">
+              <PropertyRef Name="RatingID" />
+            </Principal>
+            <Dependent Role="tblProject_History">
+              <PropertyRef Name="CostRatingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_History_tblProject_HistoryRating1">
+          <End Role="tblProject_HistoryRating" Type="Self.tblProject_HistoryRating" Multiplicity="0..1" />
+          <End Role="tblProject_History" Type="Self.tblProject_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_HistoryRating">
+              <PropertyRef Name="RatingID" />
+            </Principal>
+            <Dependent Role="tblProject_History">
+              <PropertyRef Name="SafetyRatingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_History_tblProject_HistoryRating2">
+          <End Role="tblProject_HistoryRating" Type="Self.tblProject_HistoryRating" Multiplicity="0..1" />
+          <End Role="tblProject_History" Type="Self.tblProject_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_HistoryRating">
+              <PropertyRef Name="RatingID" />
+            </Principal>
+            <Dependent Role="tblProject_History">
+              <PropertyRef Name="HoursRatingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_History_tblProject_HistoryRating3">
+          <End Role="tblProject_HistoryRating" Type="Self.tblProject_HistoryRating" Multiplicity="0..1" />
+          <End Role="tblProject_History" Type="Self.tblProject_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_HistoryRating">
+              <PropertyRef Name="RatingID" />
+            </Principal>
+            <Dependent Role="tblProject_History">
+              <PropertyRef Name="TimeRatingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_History_tblProject_HistoryRating4">
+          <End Role="tblProject_HistoryRating" Type="Self.tblProject_HistoryRating" Multiplicity="0..1" />
+          <End Role="tblProject_History" Type="Self.tblProject_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_HistoryRating">
+              <PropertyRef Name="RatingID" />
+            </Principal>
+            <Dependent Role="tblProject_History">
+              <PropertyRef Name="QualityRatingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblProject_History_tblProject_HistoryStatus">
           <End Role="tblProject_HistoryStatus" Type="Self.tblProject_HistoryStatus" Multiplicity="1" />
           <End Role="tblProject_History" Type="Self.tblProject_History" Multiplicity="*" />
@@ -635,26 +832,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblProject_HistoryManHours_tblProject_EarnedValueType">
+        <Association Name="FK_tblProject_HistoryDollars_tblProject_EarnedValueType">
           <End Role="tblProject_EarnedValueType" Type="Self.tblProject_EarnedValueType" Multiplicity="1" />
-          <End Role="tblProject_HistoryManHours" Type="Self.tblProject_HistoryManHours" Multiplicity="*" />
+          <End Role="tblProject_HistoryDollars" Type="Self.tblProject_HistoryDollars" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblProject_EarnedValueType">
               <PropertyRef Name="EarnedValueTypeID" />
             </Principal>
-            <Dependent Role="tblProject_HistoryManHours">
+            <Dependent Role="tblProject_HistoryDollars">
+              <PropertyRef Name="EarnedValueTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_HistoryDollars_tblProject_History">
+          <End Role="tblProject_History" Type="Self.tblProject_History" Multiplicity="1" />
+          <End Role="tblProject_HistoryDollars" Type="Self.tblProject_HistoryDollars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_History">
+              <PropertyRef Name="HistoryID" />
+            </Principal>
+            <Dependent Role="tblProject_HistoryDollars">
+              <PropertyRef Name="HistoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_HistoryIncident_tblProject_History">
+          <End Role="tblProject_History" Type="Self.tblProject_History" Multiplicity="1" />
+          <End Role="tblProject_HistoryIncident" Type="Self.tblProject_HistoryIncident" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_History">
+              <PropertyRef Name="HistoryID" />
+            </Principal>
+            <Dependent Role="tblProject_HistoryIncident">
+              <PropertyRef Name="HistoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_HistoryManHours_tblProject_EarnedValueType">
+          <End Role="tblProject_EarnedValueType" Type="Self.tblProject_EarnedValueType" Multiplicity="1" />
+          <End Role="tblProject_HistoryHours" Type="Self.tblProject_HistoryHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_EarnedValueType">
+              <PropertyRef Name="EarnedValueTypeID" />
+            </Principal>
+            <Dependent Role="tblProject_HistoryHours">
               <PropertyRef Name="EarnedValueTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblProject_HistoryManHours_tblProject_History">
           <End Role="tblProject_History" Type="Self.tblProject_History" Multiplicity="1" />
-          <End Role="tblProject_HistoryManHours" Type="Self.tblProject_HistoryManHours" Multiplicity="*" />
+          <End Role="tblProject_HistoryHours" Type="Self.tblProject_HistoryHours" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblProject_History">
               <PropertyRef Name="HistoryID" />
             </Principal>
-            <Dependent Role="tblProject_HistoryManHours">
+            <Dependent Role="tblProject_HistoryHours">
               <PropertyRef Name="HistoryID" />
             </Dependent>
           </ReferentialConstraint>
@@ -668,6 +901,42 @@
             </Principal>
             <Dependent Role="tblProject_HistoryMilestone">
               <PropertyRef Name="HistoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_HistoryNCR_tblProject_History">
+          <End Role="tblProject_History" Type="Self.tblProject_History" Multiplicity="1" />
+          <End Role="tblProject_HistoryNCR" Type="Self.tblProject_HistoryNCR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_History">
+              <PropertyRef Name="HistoryID" />
+            </Principal>
+            <Dependent Role="tblProject_HistoryNCR">
+              <PropertyRef Name="HistoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_HistoryRFI_tblProject_History">
+          <End Role="tblProject_History" Type="Self.tblProject_History" Multiplicity="1" />
+          <End Role="tblProject_HistoryRFI" Type="Self.tblProject_HistoryRFI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_History">
+              <PropertyRef Name="HistoryID" />
+            </Principal>
+            <Dependent Role="tblProject_HistoryRFI">
+              <PropertyRef Name="HistoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="0..1" />
+          <End Role="tblProject" Type="Self.tblProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tblProject">
+              <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -692,6 +961,30 @@
             </Principal>
             <Dependent Role="tblProject">
               <PropertyRef Name="OperationsManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_tblProject_ContractType">
+          <End Role="tblProject_ContractType" Type="Self.tblProject_ContractType" Multiplicity="0..1" />
+          <End Role="tblProject" Type="Self.tblProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_ContractType">
+              <PropertyRef Name="ContractTypeID" />
+            </Principal>
+            <Dependent Role="tblProject">
+              <PropertyRef Name="ContractTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_tblProject_Portfolio">
+          <End Role="tblProject_Portfolio" Type="Self.tblProject_Portfolio" Multiplicity="1" />
+          <End Role="tblProject" Type="Self.tblProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_Portfolio">
+              <PropertyRef Name="PortfolioID" />
+            </Principal>
+            <Dependent Role="tblProject">
+              <PropertyRef Name="PortfolioID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1297,15 +1590,23 @@
           <Parameter Name="NTSecurityGroupsSeperator" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="WalzExplorerModelStoreContainer">
+          <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPerson" EntityType="Self.tblPerson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPerson_Mimic" EntityType="Self.tblPerson_Mimic" Schema="dbo" Table="tblPerson.Mimic" store:Type="Tables" />
           <EntitySet Name="tblProject" EntityType="Self.tblProject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProject_ContractType" EntityType="Self.tblProject_ContractType" Schema="dbo" Table="tblProject.ContractType" store:Type="Tables" />
           <EntitySet Name="tblProject_EarnedValueType" EntityType="Self.tblProject_EarnedValueType" Schema="dbo" Table="tblProject.EarnedValueType" store:Type="Tables" />
           <EntitySet Name="tblProject_History" EntityType="Self.tblProject_History" Schema="dbo" Table="tblProject.History" store:Type="Tables" />
           <EntitySet Name="tblProject_HistoryCritical" EntityType="Self.tblProject_HistoryCritical" Schema="dbo" Table="tblProject.HistoryCritical" store:Type="Tables" />
-          <EntitySet Name="tblProject_HistoryManHours" EntityType="Self.tblProject_HistoryManHours" Schema="dbo" Table="tblProject.HistoryManHours" store:Type="Tables" />
+          <EntitySet Name="tblProject_HistoryDollars" EntityType="Self.tblProject_HistoryDollars" Schema="dbo" Table="tblProject.HistoryDollars" store:Type="Tables" />
+          <EntitySet Name="tblProject_HistoryHours" EntityType="Self.tblProject_HistoryHours" Schema="dbo" Table="tblProject.HistoryHours" store:Type="Tables" />
+          <EntitySet Name="tblProject_HistoryIncident" EntityType="Self.tblProject_HistoryIncident" Schema="dbo" Table="tblProject.HistoryIncident" store:Type="Tables" />
           <EntitySet Name="tblProject_HistoryMilestone" EntityType="Self.tblProject_HistoryMilestone" Schema="dbo" Table="tblProject.HistoryMilestone" store:Type="Tables" />
+          <EntitySet Name="tblProject_HistoryNCR" EntityType="Self.tblProject_HistoryNCR" Schema="dbo" Table="tblProject.HistoryNCR" store:Type="Tables" />
+          <EntitySet Name="tblProject_HistoryRating" EntityType="Self.tblProject_HistoryRating" Schema="dbo" Table="tblProject.HistoryRating" store:Type="Tables" />
+          <EntitySet Name="tblProject_HistoryRFI" EntityType="Self.tblProject_HistoryRFI" Schema="dbo" Table="tblProject.HistoryRFI" store:Type="Tables" />
           <EntitySet Name="tblProject_HistoryStatus" EntityType="Self.tblProject_HistoryStatus" Schema="dbo" Table="tblProject.HistoryStatus" store:Type="Tables" />
+          <EntitySet Name="tblProject_Portfolio" EntityType="Self.tblProject_Portfolio" Schema="dbo" Table="tblProject.Portfolio" store:Type="Tables" />
           <EntitySet Name="tblProject_Status" EntityType="Self.tblProject_Status" Schema="dbo" Table="tblProject.Status" store:Type="Tables" />
           <EntitySet Name="tblTender" EntityType="Self.tblTender" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblTender_Activity" EntityType="Self.tblTender_Activity" Schema="dbo" Table="tblTender.Activity" store:Type="Tables" />
@@ -1348,6 +1649,26 @@
             <End Role="tblProject" EntitySet="tblProject" />
             <End Role="tblProject_History" EntitySet="tblProject_History" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblProject_History_tblProject_HistoryRating" Association="Self.FK_tblProject_History_tblProject_HistoryRating">
+            <End Role="tblProject_HistoryRating" EntitySet="tblProject_HistoryRating" />
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_History_tblProject_HistoryRating1" Association="Self.FK_tblProject_History_tblProject_HistoryRating1">
+            <End Role="tblProject_HistoryRating" EntitySet="tblProject_HistoryRating" />
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_History_tblProject_HistoryRating2" Association="Self.FK_tblProject_History_tblProject_HistoryRating2">
+            <End Role="tblProject_HistoryRating" EntitySet="tblProject_HistoryRating" />
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_History_tblProject_HistoryRating3" Association="Self.FK_tblProject_History_tblProject_HistoryRating3">
+            <End Role="tblProject_HistoryRating" EntitySet="tblProject_HistoryRating" />
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_History_tblProject_HistoryRating4" Association="Self.FK_tblProject_History_tblProject_HistoryRating4">
+            <End Role="tblProject_HistoryRating" EntitySet="tblProject_HistoryRating" />
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblProject_History_tblProject_HistoryStatus" Association="Self.FK_tblProject_History_tblProject_HistoryStatus">
             <End Role="tblProject_HistoryStatus" EntitySet="tblProject_HistoryStatus" />
             <End Role="tblProject_History" EntitySet="tblProject_History" />
@@ -1356,17 +1677,41 @@
             <End Role="tblProject_History" EntitySet="tblProject_History" />
             <End Role="tblProject_HistoryCritical" EntitySet="tblProject_HistoryCritical" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblProject_HistoryDollars_tblProject_EarnedValueType" Association="Self.FK_tblProject_HistoryDollars_tblProject_EarnedValueType">
+            <End Role="tblProject_EarnedValueType" EntitySet="tblProject_EarnedValueType" />
+            <End Role="tblProject_HistoryDollars" EntitySet="tblProject_HistoryDollars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_HistoryDollars_tblProject_History" Association="Self.FK_tblProject_HistoryDollars_tblProject_History">
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+            <End Role="tblProject_HistoryDollars" EntitySet="tblProject_HistoryDollars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_HistoryIncident_tblProject_History" Association="Self.FK_tblProject_HistoryIncident_tblProject_History">
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+            <End Role="tblProject_HistoryIncident" EntitySet="tblProject_HistoryIncident" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblProject_HistoryManHours_tblProject_EarnedValueType" Association="Self.FK_tblProject_HistoryManHours_tblProject_EarnedValueType">
             <End Role="tblProject_EarnedValueType" EntitySet="tblProject_EarnedValueType" />
-            <End Role="tblProject_HistoryManHours" EntitySet="tblProject_HistoryManHours" />
+            <End Role="tblProject_HistoryHours" EntitySet="tblProject_HistoryHours" />
           </AssociationSet>
           <AssociationSet Name="FK_tblProject_HistoryManHours_tblProject_History" Association="Self.FK_tblProject_HistoryManHours_tblProject_History">
             <End Role="tblProject_History" EntitySet="tblProject_History" />
-            <End Role="tblProject_HistoryManHours" EntitySet="tblProject_HistoryManHours" />
+            <End Role="tblProject_HistoryHours" EntitySet="tblProject_HistoryHours" />
           </AssociationSet>
           <AssociationSet Name="FK_tblProject_HistoryMilestone_tblProject_History" Association="Self.FK_tblProject_HistoryMilestone_tblProject_History">
             <End Role="tblProject_History" EntitySet="tblProject_History" />
             <End Role="tblProject_HistoryMilestone" EntitySet="tblProject_HistoryMilestone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_HistoryNCR_tblProject_History" Association="Self.FK_tblProject_HistoryNCR_tblProject_History">
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+            <End Role="tblProject_HistoryNCR" EntitySet="tblProject_HistoryNCR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_HistoryRFI_tblProject_History" Association="Self.FK_tblProject_HistoryRFI_tblProject_History">
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+            <End Role="tblProject_HistoryRFI" EntitySet="tblProject_HistoryRFI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_tblCustomer" Association="Self.FK_tblProject_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomer" />
+            <End Role="tblProject" EntitySet="tblProject" />
           </AssociationSet>
           <AssociationSet Name="FK_tblProject_tblPerson" Association="Self.FK_tblProject_tblPerson">
             <End Role="tblPerson" EntitySet="tblPerson" />
@@ -1374,6 +1719,14 @@
           </AssociationSet>
           <AssociationSet Name="FK_tblProject_tblPerson1" Association="Self.FK_tblProject_tblPerson1">
             <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblProject" EntitySet="tblProject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_tblProject_ContractType" Association="Self.FK_tblProject_tblProject_ContractType">
+            <End Role="tblProject_ContractType" EntitySet="tblProject_ContractType" />
+            <End Role="tblProject" EntitySet="tblProject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_tblProject_Portfolio" Association="Self.FK_tblProject_tblProject_Portfolio">
+            <End Role="tblProject_Portfolio" EntitySet="tblProject_Portfolio" />
             <End Role="tblProject" EntitySet="tblProject" />
           </AssociationSet>
           <AssociationSet Name="FK_tblProject_tblProject_Status" Association="Self.FK_tblProject_tblProject_Status">
@@ -2367,12 +2720,7 @@
           <EntitySet Name="tblProject_Status" EntityType="WalzExplorerModel.tblProject_Status" />
           <EntitySet Name="tblProject_EarnedValueType" EntityType="WalzExplorerModel.tblProject_EarnedValueType" />
           <EntitySet Name="tblProject_HistoryCritical" EntityType="WalzExplorerModel.tblProject_HistoryCritical" />
-          <EntitySet Name="tblProject_HistoryManHours" EntityType="WalzExplorerModel.tblProject_HistoryManHours" />
           <EntitySet Name="tblProject_HistoryStatus" EntityType="WalzExplorerModel.tblProject_HistoryStatus" />
-          <AssociationSet Name="FK_tblProject_HistoryManHours_tblProject_EarnedValueType" Association="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_EarnedValueType">
-            <End Role="tblProject_EarnedValueType" EntitySet="tblProject_EarnedValueType" />
-            <End Role="tblProject_HistoryManHours" EntitySet="tblProject_HistoryManHours" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblProject_History_tblProject_HistoryStatus" Association="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryStatus">
             <End Role="tblProject_HistoryStatus" EntitySet="tblProject_HistoryStatus" />
             <End Role="tblProject_History" EntitySet="tblProject_History" />
@@ -2380,10 +2728,6 @@
           <AssociationSet Name="FK_tblProject_HistoryCritical_tblProject_History" Association="WalzExplorerModel.FK_tblProject_HistoryCritical_tblProject_History">
             <End Role="tblProject_History" EntitySet="tblProject_History" />
             <End Role="tblProject_HistoryCritical" EntitySet="tblProject_HistoryCritical" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblProject_HistoryManHours_tblProject_History" Association="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_History">
-            <End Role="tblProject_History" EntitySet="tblProject_History" />
-            <End Role="tblProject_HistoryManHours" EntitySet="tblProject_HistoryManHours" />
           </AssociationSet>
           <AssociationSet Name="FK_tblProject_HistoryMilestone_tblProject_History" Association="WalzExplorerModel.FK_tblProject_HistoryMilestone_tblProject_History">
             <End Role="tblProject_History" EntitySet="tblProject_History" />
@@ -2473,8 +2817,77 @@
             <Parameter Name="CustomerID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spWEX_RHS_Project_Cost" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Cost_Result)">
-            <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+          <Parameter Name="ProjectID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="tblCustomers" EntityType="WalzExplorerModel.tblCustomer" />
+          <EntitySet Name="tblProject_ContractType" EntityType="WalzExplorerModel.tblProject_ContractType" />
+          <EntitySet Name="tblProject_HistoryDollars" EntityType="WalzExplorerModel.tblProject_HistoryDollars" />
+          <EntitySet Name="tblProject_HistoryHours" EntityType="WalzExplorerModel.tblProject_HistoryHours" />
+          <EntitySet Name="tblProject_HistoryIncident" EntityType="WalzExplorerModel.tblProject_HistoryIncident" />
+          <EntitySet Name="tblProject_HistoryNCR" EntityType="WalzExplorerModel.tblProject_HistoryNCR" />
+          <EntitySet Name="tblProject_HistoryRating" EntityType="WalzExplorerModel.tblProject_HistoryRating" />
+          <EntitySet Name="tblProject_HistoryRFI" EntityType="WalzExplorerModel.tblProject_HistoryRFI" />
+          <EntitySet Name="tblProject_Portfolio" EntityType="WalzExplorerModel.tblProject_Portfolio" />
+          <AssociationSet Name="FK_tblProject_tblProject_ContractType" Association="WalzExplorerModel.FK_tblProject_tblProject_ContractType">
+            <End Role="tblProject_ContractType" EntitySet="tblProject_ContractType" />
+            <End Role="tblProject" EntitySet="tblProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_tblProject_Portfolio" Association="WalzExplorerModel.FK_tblProject_tblProject_Portfolio">
+            <End Role="tblProject_Portfolio" EntitySet="tblProject_Portfolio" />
+            <End Role="tblProject" EntitySet="tblProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_HistoryDollars_tblProject_EarnedValueType" Association="WalzExplorerModel.FK_tblProject_HistoryDollars_tblProject_EarnedValueType">
+            <End Role="tblProject_EarnedValueType" EntitySet="tblProject_EarnedValueType" />
+            <End Role="tblProject_HistoryDollars" EntitySet="tblProject_HistoryDollars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_HistoryManHours_tblProject_EarnedValueType" Association="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_EarnedValueType">
+            <End Role="tblProject_EarnedValueType" EntitySet="tblProject_EarnedValueType" />
+            <End Role="tblProject_HistoryHours" EntitySet="tblProject_HistoryHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_History_tblProject_HistoryRating" Association="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating">
+            <End Role="tblProject_HistoryRating" EntitySet="tblProject_HistoryRating" />
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_History_tblProject_HistoryRating1" Association="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating1">
+            <End Role="tblProject_HistoryRating" EntitySet="tblProject_HistoryRating" />
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_History_tblProject_HistoryRating2" Association="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating2">
+            <End Role="tblProject_HistoryRating" EntitySet="tblProject_HistoryRating" />
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_History_tblProject_HistoryRating3" Association="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating3">
+            <End Role="tblProject_HistoryRating" EntitySet="tblProject_HistoryRating" />
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_History_tblProject_HistoryRating4" Association="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating4">
+            <End Role="tblProject_HistoryRating" EntitySet="tblProject_HistoryRating" />
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_HistoryDollars_tblProject_History" Association="WalzExplorerModel.FK_tblProject_HistoryDollars_tblProject_History">
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+            <End Role="tblProject_HistoryDollars" EntitySet="tblProject_HistoryDollars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_HistoryIncident_tblProject_History" Association="WalzExplorerModel.FK_tblProject_HistoryIncident_tblProject_History">
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+            <End Role="tblProject_HistoryIncident" EntitySet="tblProject_HistoryIncident" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_HistoryManHours_tblProject_History" Association="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_History">
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+            <End Role="tblProject_HistoryHours" EntitySet="tblProject_HistoryHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_HistoryNCR_tblProject_History" Association="WalzExplorerModel.FK_tblProject_HistoryNCR_tblProject_History">
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+            <End Role="tblProject_HistoryNCR" EntitySet="tblProject_HistoryNCR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_HistoryRFI_tblProject_History" Association="WalzExplorerModel.FK_tblProject_HistoryRFI_tblProject_History">
+            <End Role="tblProject_History" EntitySet="tblProject_History" />
+            <End Role="tblProject_HistoryRFI" EntitySet="tblProject_HistoryRFI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblProject_tblCustomer" Association="WalzExplorerModel.FK_tblProject_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomers" />
+            <End Role="tblProject" EntitySet="tblProjects" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -2745,15 +3158,12 @@
           </Key>
           <Property Name="HistoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProjectID" Type="Int32" Nullable="false" />
-          <Property Name="Period" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="AXProjectID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="GrossProfit" Type="Int32" />
           <Property Name="AXJobNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ContractType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Client" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
           <Property Name="WeekEnding" Type="DateTime" Precision="3" />
           <Property Name="KeyDatesAward" Type="DateTime" Precision="3" />
           <Property Name="KeyDatesOriginalPC" Type="DateTime" Precision="3" />
@@ -2773,7 +3183,6 @@
           <Property Name="StatusID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tblProject_HistoryStatus" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryStatus" FromRole="tblProject_History" ToRole="tblProject_HistoryStatus" />
           <NavigationProperty Name="tblProject_HistoryCritical" Relationship="WalzExplorerModel.FK_tblProject_HistoryCritical_tblProject_History" FromRole="tblProject_History" ToRole="tblProject_HistoryCritical" />
-          <NavigationProperty Name="tblProject_HistoryManHours" Relationship="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_History" FromRole="tblProject_History" ToRole="tblProject_HistoryManHours" />
           <NavigationProperty Name="tblProject_HistoryMilestone" Relationship="WalzExplorerModel.FK_tblProject_HistoryMilestone_tblProject_History" FromRole="tblProject_History" ToRole="tblProject_HistoryMilestone" />
           <NavigationProperty Name="tblProject" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject" FromRole="tblProject_History" ToRole="tblProject" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -2808,6 +3217,39 @@
           <Property Name="QualityForeseenIssuesActions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="EnvironmentForeseenIssuesActions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Other" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PeriodStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PeriodEnd" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Customer" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TimeRatingID" Type="Int32" />
+          <Property Name="HoursRatingID" Type="Int32" />
+          <Property Name="CostRatingID" Type="Int32" />
+          <Property Name="SafetyRatingID" Type="Int32" />
+          <Property Name="QualityRatingID" Type="Int32" />
+          <Property Name="PMSummaryNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="OMSummaryNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SafetyLTI" Type="Int32" />
+          <Property Name="SafetyMTI" Type="Int32" />
+          <Property Name="SafetyFAI" Type="Int32" />
+          <Property Name="SafetyNearMiss" Type="Int32" />
+          <Property Name="SafetyLTIFR" Type="Int32" />
+          <Property Name="SafetyTRIFR" Type="Int32" />
+          <Property Name="SafetyHours" Type="Int32" />
+          <Property Name="SummaryHousBudget" Type="Double" />
+          <Property Name="SummaryCostBudget" Type="Double" />
+          <Property Name="ProjectManagerSignID" Type="Int32" />
+          <Property Name="ProjectManagerSignDate" Type="DateTime" Precision="3" />
+          <Property Name="OperationsManagerSignID" Type="Int32" />
+          <Property Name="OperationsManagerSignDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblProject_HistoryRating" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating" FromRole="tblProject_History" ToRole="tblProject_HistoryRating" />
+          <NavigationProperty Name="tblProject_HistoryRating1" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating1" FromRole="tblProject_History" ToRole="tblProject_HistoryRating" />
+          <NavigationProperty Name="tblProject_HistoryRating2" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating2" FromRole="tblProject_History" ToRole="tblProject_HistoryRating" />
+          <NavigationProperty Name="tblProject_HistoryRating3" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating3" FromRole="tblProject_History" ToRole="tblProject_HistoryRating" />
+          <NavigationProperty Name="tblProject_HistoryRating4" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating4" FromRole="tblProject_History" ToRole="tblProject_HistoryRating" />
+          <NavigationProperty Name="tblProject_HistoryDollars" Relationship="WalzExplorerModel.FK_tblProject_HistoryDollars_tblProject_History" FromRole="tblProject_History" ToRole="tblProject_HistoryDollars" />
+          <NavigationProperty Name="tblProject_HistoryIncident" Relationship="WalzExplorerModel.FK_tblProject_HistoryIncident_tblProject_History" FromRole="tblProject_History" ToRole="tblProject_HistoryIncident" />
+          <NavigationProperty Name="tblProject_HistoryHours" Relationship="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_History" FromRole="tblProject_History" ToRole="tblProject_HistoryHours" />
+          <NavigationProperty Name="tblProject_HistoryNCR" Relationship="WalzExplorerModel.FK_tblProject_HistoryNCR_tblProject_History" FromRole="tblProject_History" ToRole="tblProject_HistoryNCR" />
+          <NavigationProperty Name="tblProject_HistoryRFI" Relationship="WalzExplorerModel.FK_tblProject_HistoryRFI_tblProject_History" FromRole="tblProject_History" ToRole="tblProject_HistoryRFI" />
         </EntityType>
         <EntityType Name="tblProject_HistoryMilestone">
           <Key>
@@ -2843,10 +3285,11 @@
           </Key>
           <Property Name="EarnedValueTypeID" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblProject_HistoryManHours" Relationship="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_EarnedValueType" FromRole="tblProject_EarnedValueType" ToRole="tblProject_HistoryManHours" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblProject_HistoryDollars" Relationship="WalzExplorerModel.FK_tblProject_HistoryDollars_tblProject_EarnedValueType" FromRole="tblProject_EarnedValueType" ToRole="tblProject_HistoryDollars" />
+          <NavigationProperty Name="tblProject_HistoryHours" Relationship="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_EarnedValueType" FromRole="tblProject_EarnedValueType" ToRole="tblProject_HistoryHours" />
         </EntityType>
         <EntityType Name="tblProject_HistoryCritical">
           <Key>
@@ -2864,22 +3307,6 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
         </EntityType>
-        <EntityType Name="tblProject_HistoryManHours">
-          <Key>
-            <PropertyRef Name="HistoryID" />
-            <PropertyRef Name="Week" />
-            <PropertyRef Name="EarnedValueTypeID" />
-          </Key>
-          <Property Name="HistoryID" Type="Int32" Nullable="false" />
-          <Property Name="Week" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EarnedValueTypeID" Type="Int32" Nullable="false" />
-          <Property Name="Value" Type="Double" Nullable="false" />
-          <NavigationProperty Name="tblProject_EarnedValueType" Relationship="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_EarnedValueType" FromRole="tblProject_HistoryManHours" ToRole="tblProject_EarnedValueType" />
-          <NavigationProperty Name="tblProject_History" Relationship="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_History" FromRole="tblProject_HistoryManHours" ToRole="tblProject_History" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
-        </EntityType>
         <EntityType Name="tblProject_HistoryStatus">
           <Key>
             <PropertyRef Name="StatusID" />
@@ -2891,18 +3318,6 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
         </EntityType>
-        <Association Name="FK_tblProject_HistoryManHours_tblProject_EarnedValueType">
-          <End Type="WalzExplorerModel.tblProject_EarnedValueType" Role="tblProject_EarnedValueType" Multiplicity="1" />
-          <End Type="WalzExplorerModel.tblProject_HistoryManHours" Role="tblProject_HistoryManHours" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblProject_EarnedValueType">
-              <PropertyRef Name="EarnedValueTypeID" />
-            </Principal>
-            <Dependent Role="tblProject_HistoryManHours">
-              <PropertyRef Name="EarnedValueTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblProject_History_tblProject_HistoryStatus">
           <End Type="WalzExplorerModel.tblProject_HistoryStatus" Role="tblProject_HistoryStatus" Multiplicity="1" />
           <End Type="WalzExplorerModel.tblProject_History" Role="tblProject_History" Multiplicity="*" />
@@ -2923,18 +3338,6 @@
               <PropertyRef Name="HistoryID" />
             </Principal>
             <Dependent Role="tblProject_HistoryCritical">
-              <PropertyRef Name="HistoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblProject_HistoryManHours_tblProject_History">
-          <End Type="WalzExplorerModel.tblProject_History" Role="tblProject_History" Multiplicity="1" />
-          <End Type="WalzExplorerModel.tblProject_HistoryManHours" Role="tblProject_HistoryManHours" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblProject_History">
-              <PropertyRef Name="HistoryID" />
-            </Principal>
-            <Dependent Role="tblProject_HistoryManHours">
               <PropertyRef Name="HistoryID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2969,6 +3372,7 @@
           <NavigationProperty Name="tblTenders" Relationship="WalzExplorerModel.FK_tblTender_tblPerson" FromRole="tblPerson" ToRole="tblTender" />
           <NavigationProperty Name="tblPerson_Mimic" Relationship="WalzExplorerModel.FK_tblPerson_Mimic_tblPerson" FromRole="tblPerson" ToRole="tblPerson_Mimic" />
           <NavigationProperty Name="tblPerson_Mimic1" Relationship="WalzExplorerModel.FK_tblPerson_Mimic_tblPerson1" FromRole="tblPerson" ToRole="tblPerson_Mimic" />
+          <Property Name="Initals" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblProject">
           <Key>
@@ -2997,6 +3401,14 @@
           <Property Name="CostAmount" Type="Double" Nullable="false" />
           <Property Name="CostOverheadAmount" Type="Double" Nullable="false" />
           <Property Name="InvoicedAmount" Type="Double" Nullable="false" />
+          <Property Name="AXJobID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PortfolioID" Type="Int32" Nullable="false" />
+          <Property Name="CostBudget" Type="Double" Nullable="false" />
+          <Property Name="HoursBudget" Type="Double" Nullable="false" />
+          <Property Name="ContractTypeID" Type="Int32" />
+          <NavigationProperty Name="tblProject_ContractType" Relationship="WalzExplorerModel.FK_tblProject_tblProject_ContractType" FromRole="tblProject" ToRole="tblProject_ContractType" />
+          <NavigationProperty Name="tblProject_Portfolio" Relationship="WalzExplorerModel.FK_tblProject_tblProject_Portfolio" FromRole="tblProject" ToRole="tblProject_Portfolio" />
+          <NavigationProperty Name="tblCustomer" Relationship="WalzExplorerModel.FK_tblProject_tblCustomer" FromRole="tblProject" ToRole="tblCustomer" />
         </EntityType>
         <EntityType Name="tblTender">
           <Key>
@@ -3281,12 +3693,337 @@
           <Property Type="DateTime" Name="Date" Nullable="true" />
           <Property Type="String" Name="Employee" Nullable="true" MaxLength="51" />
           <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="38" Scale="12" />
-          <Property Type="Decimal" Name="CostAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="CostAmount" Nullable="true" Precision="38" Scale="16" />
           <Property Type="Decimal" Name="CostOverhead" Nullable="true" Precision="38" Scale="6" />
           <Property Type="Decimal" Name="CostTotal" Nullable="true" Precision="38" Scale="6" />
-          <Property Type="Decimal" Name="Invoiced" Nullable="true" Precision="38" Scale="12" />
           <Property Type="String" Name="Description" Nullable="true" MaxLength="1000" />
-        </ComplexType>
+          <Property Type="String" Name="PurchOrderID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="PurchVendor" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="PurchUnit" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="PurchQtyPrice" Nullable="true" Precision="36" Scale="16" />
+          <Property Type="String" Name="PurchInvoice" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="Hours" Nullable="true" Precision="38" Scale="12" />
+          </ComplexType>
+        <EntityType Name="tblCustomer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AXCustomerID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AXDataAreaID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblProjects" Relationship="WalzExplorerModel.FK_tblProject_tblCustomer" FromRole="tblCustomer" ToRole="tblProject" />
+        </EntityType>
+        <EntityType Name="tblProject_ContractType">
+          <Key>
+            <PropertyRef Name="ContractTypeID" />
+          </Key>
+          <Property Name="ContractTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AXDataAreaID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AXProjGroupID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblProjects" Relationship="WalzExplorerModel.FK_tblProject_tblProject_ContractType" FromRole="tblProject_ContractType" ToRole="tblProject" />
+        </EntityType>
+        <EntityType Name="tblProject_HistoryDollars">
+          <Key>
+            <PropertyRef Name="HistoryID" />
+            <PropertyRef Name="Week" />
+            <PropertyRef Name="EarnedValueTypeID" />
+          </Key>
+          <Property Name="HistoryID" Type="Int32" Nullable="false" />
+          <Property Name="Week" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EarnedValueTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Double" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblProject_EarnedValueType" Relationship="WalzExplorerModel.FK_tblProject_HistoryDollars_tblProject_EarnedValueType" FromRole="tblProject_HistoryDollars" ToRole="tblProject_EarnedValueType" />
+          <NavigationProperty Name="tblProject_History" Relationship="WalzExplorerModel.FK_tblProject_HistoryDollars_tblProject_History" FromRole="tblProject_HistoryDollars" ToRole="tblProject_History" />
+        </EntityType>
+        <EntityType Name="tblProject_HistoryHours">
+          <Key>
+            <PropertyRef Name="HistoryID" />
+            <PropertyRef Name="WeekEnd" />
+            <PropertyRef Name="EarnedValueTypeID" />
+          </Key>
+          <Property Name="HistoryID" Type="Int32" Nullable="false" />
+          <Property Name="WeekEnd" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EarnedValueTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Double" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblProject_EarnedValueType" Relationship="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_EarnedValueType" FromRole="tblProject_HistoryHours" ToRole="tblProject_EarnedValueType" />
+          <NavigationProperty Name="tblProject_History" Relationship="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_History" FromRole="tblProject_HistoryHours" ToRole="tblProject_History" />
+        </EntityType>
+        <EntityType Name="tblProject_HistoryIncident">
+          <Key>
+            <PropertyRef Name="HistoryID" />
+            <PropertyRef Name="IncidentID" />
+          </Key>
+          <Property Name="HistoryID" Type="Int32" Nullable="false" />
+          <Property Name="IncidentID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ReportedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IncidentType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DetailedDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="InjuryDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ActualConsequLevel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PotentialConsqLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblProject_History" Relationship="WalzExplorerModel.FK_tblProject_HistoryIncident_tblProject_History" FromRole="tblProject_HistoryIncident" ToRole="tblProject_History" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+        </EntityType>
+        <EntityType Name="tblProject_HistoryNCR">
+          <Key>
+            <PropertyRef Name="HistoryID" />
+            <PropertyRef Name="ReportID" />
+          </Key>
+          <Property Name="HistoryID" Type="Int32" Nullable="false" />
+          <Property Name="ReportID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IssuedToPerson" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IssuedToCompany" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateRaised" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EventDesc" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblProject_History" Relationship="WalzExplorerModel.FK_tblProject_HistoryNCR_tblProject_History" FromRole="tblProject_HistoryNCR" ToRole="tblProject_History" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+        </EntityType>
+        <EntityType Name="tblProject_HistoryRating">
+          <Key>
+            <PropertyRef Name="RatingID" />
+          </Key>
+          <Property Name="RatingID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Color" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblProject_History" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating" FromRole="tblProject_HistoryRating" ToRole="tblProject_History" />
+          <NavigationProperty Name="tblProject_History1" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating1" FromRole="tblProject_HistoryRating" ToRole="tblProject_History" />
+          <NavigationProperty Name="tblProject_History2" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating2" FromRole="tblProject_HistoryRating" ToRole="tblProject_History" />
+          <NavigationProperty Name="tblProject_History3" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating3" FromRole="tblProject_HistoryRating" ToRole="tblProject_History" />
+          <NavigationProperty Name="tblProject_History4" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating4" FromRole="tblProject_HistoryRating" ToRole="tblProject_History" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+        </EntityType>
+        <EntityType Name="tblProject_HistoryRFI">
+          <Key>
+            <PropertyRef Name="HistoryID" />
+            <PropertyRef Name="RFIID" />
+          </Key>
+          <Property Name="HistoryID" Type="Int32" Nullable="false" />
+          <Property Name="RFIID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RaisedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateRaised" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Reference" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="QueryText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EmailSent" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblProject_History" Relationship="WalzExplorerModel.FK_tblProject_HistoryRFI_tblProject_History" FromRole="tblProject_HistoryRFI" ToRole="tblProject_History" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+        </EntityType>
+        <EntityType Name="tblProject_Portfolio">
+          <Key>
+            <PropertyRef Name="PortfolioID" />
+          </Key>
+          <Property Name="PortfolioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="CanAllocate" Type="Boolean" Nullable="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblProjects" Relationship="WalzExplorerModel.FK_tblProject_tblProject_Portfolio" FromRole="tblProject_Portfolio" ToRole="tblProject" />
+        </EntityType>
+        <Association Name="FK_tblProject_tblProject_ContractType">
+          <End Type="WalzExplorerModel.tblProject_ContractType" Role="tblProject_ContractType" Multiplicity="0..1" />
+          <End Type="WalzExplorerModel.tblProject" Role="tblProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_ContractType">
+              <PropertyRef Name="ContractTypeID" />
+            </Principal>
+            <Dependent Role="tblProject">
+              <PropertyRef Name="ContractTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_tblProject_Portfolio">
+          <End Type="WalzExplorerModel.tblProject_Portfolio" Role="tblProject_Portfolio" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblProject" Role="tblProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_Portfolio">
+              <PropertyRef Name="PortfolioID" />
+            </Principal>
+            <Dependent Role="tblProject">
+              <PropertyRef Name="PortfolioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_HistoryDollars_tblProject_EarnedValueType">
+          <End Type="WalzExplorerModel.tblProject_EarnedValueType" Role="tblProject_EarnedValueType" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblProject_HistoryDollars" Role="tblProject_HistoryDollars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_EarnedValueType">
+              <PropertyRef Name="EarnedValueTypeID" />
+            </Principal>
+            <Dependent Role="tblProject_HistoryDollars">
+              <PropertyRef Name="EarnedValueTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_HistoryManHours_tblProject_EarnedValueType">
+          <End Type="WalzExplorerModel.tblProject_EarnedValueType" Role="tblProject_EarnedValueType" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblProject_HistoryHours" Role="tblProject_HistoryHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_EarnedValueType">
+              <PropertyRef Name="EarnedValueTypeID" />
+            </Principal>
+            <Dependent Role="tblProject_HistoryHours">
+              <PropertyRef Name="EarnedValueTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_History_tblProject_HistoryRating">
+          <End Type="WalzExplorerModel.tblProject_HistoryRating" Role="tblProject_HistoryRating" Multiplicity="0..1" />
+          <End Type="WalzExplorerModel.tblProject_History" Role="tblProject_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_HistoryRating">
+              <PropertyRef Name="RatingID" />
+            </Principal>
+            <Dependent Role="tblProject_History">
+              <PropertyRef Name="CostRatingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_History_tblProject_HistoryRating1">
+          <End Type="WalzExplorerModel.tblProject_HistoryRating" Role="tblProject_HistoryRating" Multiplicity="0..1" />
+          <End Type="WalzExplorerModel.tblProject_History" Role="tblProject_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_HistoryRating">
+              <PropertyRef Name="RatingID" />
+            </Principal>
+            <Dependent Role="tblProject_History">
+              <PropertyRef Name="SafetyRatingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_History_tblProject_HistoryRating2">
+          <End Type="WalzExplorerModel.tblProject_HistoryRating" Role="tblProject_HistoryRating" Multiplicity="0..1" />
+          <End Type="WalzExplorerModel.tblProject_History" Role="tblProject_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_HistoryRating">
+              <PropertyRef Name="RatingID" />
+            </Principal>
+            <Dependent Role="tblProject_History">
+              <PropertyRef Name="HoursRatingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_History_tblProject_HistoryRating3">
+          <End Type="WalzExplorerModel.tblProject_HistoryRating" Role="tblProject_HistoryRating" Multiplicity="0..1" />
+          <End Type="WalzExplorerModel.tblProject_History" Role="tblProject_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_HistoryRating">
+              <PropertyRef Name="RatingID" />
+            </Principal>
+            <Dependent Role="tblProject_History">
+              <PropertyRef Name="TimeRatingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_History_tblProject_HistoryRating4">
+          <End Type="WalzExplorerModel.tblProject_HistoryRating" Role="tblProject_HistoryRating" Multiplicity="0..1" />
+          <End Type="WalzExplorerModel.tblProject_History" Role="tblProject_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_HistoryRating">
+              <PropertyRef Name="RatingID" />
+            </Principal>
+            <Dependent Role="tblProject_History">
+              <PropertyRef Name="QualityRatingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_HistoryDollars_tblProject_History">
+          <End Type="WalzExplorerModel.tblProject_History" Role="tblProject_History" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblProject_HistoryDollars" Role="tblProject_HistoryDollars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_History">
+              <PropertyRef Name="HistoryID" />
+            </Principal>
+            <Dependent Role="tblProject_HistoryDollars">
+              <PropertyRef Name="HistoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_HistoryIncident_tblProject_History">
+          <End Type="WalzExplorerModel.tblProject_History" Role="tblProject_History" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblProject_HistoryIncident" Role="tblProject_HistoryIncident" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_History">
+              <PropertyRef Name="HistoryID" />
+            </Principal>
+            <Dependent Role="tblProject_HistoryIncident">
+              <PropertyRef Name="HistoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_HistoryManHours_tblProject_History">
+          <End Type="WalzExplorerModel.tblProject_History" Role="tblProject_History" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblProject_HistoryHours" Role="tblProject_HistoryHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_History">
+              <PropertyRef Name="HistoryID" />
+            </Principal>
+            <Dependent Role="tblProject_HistoryHours">
+              <PropertyRef Name="HistoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_HistoryNCR_tblProject_History">
+          <End Type="WalzExplorerModel.tblProject_History" Role="tblProject_History" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblProject_HistoryNCR" Role="tblProject_HistoryNCR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_History">
+              <PropertyRef Name="HistoryID" />
+            </Principal>
+            <Dependent Role="tblProject_HistoryNCR">
+              <PropertyRef Name="HistoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_HistoryRFI_tblProject_History">
+          <End Type="WalzExplorerModel.tblProject_History" Role="tblProject_History" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblProject_HistoryRFI" Role="tblProject_HistoryRFI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProject_History">
+              <PropertyRef Name="HistoryID" />
+            </Principal>
+            <Dependent Role="tblProject_HistoryRFI">
+              <PropertyRef Name="HistoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblProject_tblCustomer">
+          <End Type="WalzExplorerModel.tblCustomer" Role="tblCustomer" Multiplicity="0..1" />
+          <End Type="WalzExplorerModel.tblProject" Role="tblProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tblProject">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3800,6 +4537,29 @@
           <EntitySetMapping Name="tblProject_History">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_History">
               <MappingFragment StoreEntitySet="tblProject_History">
+                <ScalarProperty Name="OperationsManagerSignDate" ColumnName="OperationsManagerSignDate" />
+                <ScalarProperty Name="OperationsManagerSignID" ColumnName="OperationsManagerSignID" />
+                <ScalarProperty Name="ProjectManagerSignDate" ColumnName="ProjectManagerSignDate" />
+                <ScalarProperty Name="ProjectManagerSignID" ColumnName="ProjectManagerSignID" />
+                <ScalarProperty Name="SummaryCostBudget" ColumnName="SummaryCostBudget" />
+                <ScalarProperty Name="SummaryHousBudget" ColumnName="SummaryHousBudget" />
+                <ScalarProperty Name="SafetyHours" ColumnName="SafetyHours" />
+                <ScalarProperty Name="SafetyTRIFR" ColumnName="SafetyTRIFR" />
+                <ScalarProperty Name="SafetyLTIFR" ColumnName="SafetyLTIFR" />
+                <ScalarProperty Name="SafetyNearMiss" ColumnName="SafetyNearMiss" />
+                <ScalarProperty Name="SafetyFAI" ColumnName="SafetyFAI" />
+                <ScalarProperty Name="SafetyMTI" ColumnName="SafetyMTI" />
+                <ScalarProperty Name="SafetyLTI" ColumnName="SafetyLTI" />
+                <ScalarProperty Name="OMSummaryNotes" ColumnName="OMSummaryNotes" />
+                <ScalarProperty Name="PMSummaryNotes" ColumnName="PMSummaryNotes" />
+                <ScalarProperty Name="QualityRatingID" ColumnName="QualityRatingID" />
+                <ScalarProperty Name="SafetyRatingID" ColumnName="SafetyRatingID" />
+                <ScalarProperty Name="CostRatingID" ColumnName="CostRatingID" />
+                <ScalarProperty Name="HoursRatingID" ColumnName="HoursRatingID" />
+                <ScalarProperty Name="TimeRatingID" ColumnName="TimeRatingID" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="PeriodEnd" ColumnName="PeriodEnd" />
+                <ScalarProperty Name="PeriodStart" ColumnName="PeriodStart" />
                 <ScalarProperty Name="Other" ColumnName="Other" />
                 <ScalarProperty Name="EnvironmentForeseenIssuesActions" ColumnName="EnvironmentForeseenIssuesActions" />
                 <ScalarProperty Name="QualityForeseenIssuesActions" ColumnName="QualityForeseenIssuesActions" />
@@ -3849,15 +4609,12 @@
                 <ScalarProperty Name="KeyDatesOriginalPC" ColumnName="KeyDatesOriginalPC" />
                 <ScalarProperty Name="KeyDatesAward" ColumnName="KeyDatesAward" />
                 <ScalarProperty Name="WeekEnding" ColumnName="WeekEnding" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Client" ColumnName="Client" />
                 <ScalarProperty Name="ContractType" ColumnName="ContractType" />
                 <ScalarProperty Name="AXJobNo" ColumnName="AXJobNo" />
                 <ScalarProperty Name="GrossProfit" ColumnName="GrossProfit" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="AXProjectID" ColumnName="AXProjectID" />
-                <ScalarProperty Name="Period" ColumnName="Period" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
                 <ScalarProperty Name="HistoryID" ColumnName="HistoryID" />
               </MappingFragment>
@@ -3918,19 +4675,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblProject_HistoryManHours">
-            <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_HistoryManHours">
-              <MappingFragment StoreEntitySet="tblProject_HistoryManHours">
-                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="EarnedValueTypeID" ColumnName="EarnedValueTypeID" />
-                <ScalarProperty Name="Week" ColumnName="Week" />
-                <ScalarProperty Name="HistoryID" ColumnName="HistoryID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblProject_HistoryStatus">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_HistoryStatus">
               <MappingFragment StoreEntitySet="tblProject_HistoryStatus">
@@ -3945,6 +4689,7 @@
           <EntitySetMapping Name="tblPersons">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblPerson">
               <MappingFragment StoreEntitySet="tblPerson">
+                <ScalarProperty Name="Initals" ColumnName="Initals" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
@@ -3960,6 +4705,11 @@
           <EntitySetMapping Name="tblProjects">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblProject">
               <MappingFragment StoreEntitySet="tblProject">
+                <ScalarProperty Name="ContractTypeID" ColumnName="ContractTypeID" />
+                <ScalarProperty Name="HoursBudget" ColumnName="HoursBudget" />
+                <ScalarProperty Name="CostBudget" ColumnName="CostBudget" />
+                <ScalarProperty Name="PortfolioID" ColumnName="PortfolioID" />
+                <ScalarProperty Name="AXJobID" ColumnName="AXJobID" />
                 <ScalarProperty Name="InvoicedAmount" ColumnName="InvoicedAmount" />
                 <ScalarProperty Name="CostOverheadAmount" ColumnName="CostOverheadAmount" />
                 <ScalarProperty Name="CostAmount" ColumnName="CostAmount" />
@@ -4045,11 +4795,143 @@
                 <ScalarProperty Name="CostAmount" ColumnName="CostAmount" />
                 <ScalarProperty Name="CostOverhead" ColumnName="CostOverhead" />
                 <ScalarProperty Name="CostTotal" ColumnName="CostTotal" />
-                <ScalarProperty Name="Invoiced" ColumnName="Invoiced" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-              </ComplexTypeMapping>
+                <ScalarProperty Name="PurchOrderID" ColumnName="PurchOrderID" />
+                <ScalarProperty Name="PurchVendor" ColumnName="PurchVendor" />
+                <ScalarProperty Name="PurchUnit" ColumnName="PurchUnit" />
+                <ScalarProperty Name="PurchQtyPrice" ColumnName="PurchQtyPrice" />
+                <ScalarProperty Name="PurchInvoice" ColumnName="PurchInvoice" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblCustomers">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblCustomer">
+              <MappingFragment StoreEntitySet="tblCustomer">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AXDataAreaID" ColumnName="AXDataAreaID" />
+                <ScalarProperty Name="AXCustomerID" ColumnName="AXCustomerID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProject_ContractType">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_ContractType">
+              <MappingFragment StoreEntitySet="tblProject_ContractType">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="AXProjGroupID" ColumnName="AXProjGroupID" />
+                <ScalarProperty Name="AXDataAreaID" ColumnName="AXDataAreaID" />
+                <ScalarProperty Name="ContractTypeID" ColumnName="ContractTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProject_HistoryDollars">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_HistoryDollars">
+              <MappingFragment StoreEntitySet="tblProject_HistoryDollars">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="EarnedValueTypeID" ColumnName="EarnedValueTypeID" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="HistoryID" ColumnName="HistoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProject_HistoryHours">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_HistoryHours">
+              <MappingFragment StoreEntitySet="tblProject_HistoryHours">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="EarnedValueTypeID" ColumnName="EarnedValueTypeID" />
+                <ScalarProperty Name="WeekEnd" ColumnName="WeekEnd" />
+                <ScalarProperty Name="HistoryID" ColumnName="HistoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProject_HistoryIncident">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_HistoryIncident">
+              <MappingFragment StoreEntitySet="tblProject_HistoryIncident">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="PotentialConsqLevel" ColumnName="PotentialConsqLevel" />
+                <ScalarProperty Name="ActualConsequLevel" ColumnName="ActualConsequLevel" />
+                <ScalarProperty Name="InjuryDescription" ColumnName="InjuryDescription" />
+                <ScalarProperty Name="DetailedDescription" ColumnName="DetailedDescription" />
+                <ScalarProperty Name="IncidentType" ColumnName="IncidentType" />
+                <ScalarProperty Name="ReportedDate" ColumnName="ReportedDate" />
+                <ScalarProperty Name="IncidentID" ColumnName="IncidentID" />
+                <ScalarProperty Name="HistoryID" ColumnName="HistoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProject_HistoryNCR">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_HistoryNCR">
+              <MappingFragment StoreEntitySet="tblProject_HistoryNCR">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="EventDesc" ColumnName="EventDesc" />
+                <ScalarProperty Name="DateRaised" ColumnName="DateRaised" />
+                <ScalarProperty Name="IssuedToCompany" ColumnName="IssuedToCompany" />
+                <ScalarProperty Name="IssuedToPerson" ColumnName="IssuedToPerson" />
+                <ScalarProperty Name="ReportID" ColumnName="ReportID" />
+                <ScalarProperty Name="HistoryID" ColumnName="HistoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProject_HistoryRating">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_HistoryRating">
+              <MappingFragment StoreEntitySet="tblProject_HistoryRating">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="RatingID" ColumnName="RatingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProject_HistoryRFI">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_HistoryRFI">
+              <MappingFragment StoreEntitySet="tblProject_HistoryRFI">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="EmailSent" ColumnName="EmailSent" />
+                <ScalarProperty Name="QueryText" ColumnName="QueryText" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="DateRaised" ColumnName="DateRaised" />
+                <ScalarProperty Name="RaisedBy" ColumnName="RaisedBy" />
+                <ScalarProperty Name="RFIID" ColumnName="RFIID" />
+                <ScalarProperty Name="HistoryID" ColumnName="HistoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProject_Portfolio">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_Portfolio">
+              <MappingFragment StoreEntitySet="tblProject_Portfolio">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="CanAllocate" ColumnName="CanAllocate" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PortfolioID" ColumnName="PortfolioID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -257,6 +257,9 @@
     <Compile Include="Database\spWEX_RHS_Project_Summary_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\tblCustomer.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\tblFeedback_Application.cs">
       <DependentUpon>ServicesModel.tt</DependentUpon>
     </Compile>
@@ -311,6 +314,9 @@
     <Compile Include="Database\tblProject.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\tblProject_ContractType.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\tblProject_EarnedValueType.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -320,13 +326,31 @@
     <Compile Include="Database\tblProject_HistoryCritical.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\tblProject_HistoryManHours.cs">
+    <Compile Include="Database\tblProject_HistoryDollars.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblProject_HistoryHours.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblProject_HistoryIncident.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblProject_HistoryMilestone.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\tblProject_HistoryNCR.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblProject_HistoryRating.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblProject_HistoryRFI.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\tblProject_HistoryStatus.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblProject_Portfolio.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblProject_Status.cs">

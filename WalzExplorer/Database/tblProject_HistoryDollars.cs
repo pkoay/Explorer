@@ -12,13 +12,21 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblProject_EarnedValueType : ModelBase
+    public partial class tblProject_HistoryDollars : ModelBase
     {
-        public tblProject_EarnedValueType()
-        {
-            this.tblProject_HistoryDollars = new HashSet<tblProject_HistoryDollars>();
-            this.tblProject_HistoryHours = new HashSet<tblProject_HistoryHours>();
-        }
+        private int _historyID;
+    	public int HistoryID 
+    	{ 
+    		get { return _historyID; } 
+    		set { SetProperty(ref _historyID, value); } 
+    	}
+    
+        private System.DateTime _week;
+    	public System.DateTime Week 
+    	{ 
+    		get { return _week; } 
+    		set { SetProperty(ref _week, value); } 
+    	}
     
         private int _earnedValueTypeID;
     	public int EarnedValueTypeID 
@@ -27,11 +35,11 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _earnedValueTypeID, value); } 
     	}
     
-        private string _title;
-    	public string Title 
+        private double _value;
+    	public double Value 
     	{ 
-    		get { return _title; } 
-    		set { SetProperty(ref _title, value); } 
+    		get { return _value; } 
+    		set { SetProperty(ref _value, value); } 
     	}
     
         private string _updatedBy;
@@ -56,7 +64,7 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual ICollection<tblProject_HistoryDollars> tblProject_HistoryDollars { get; set; }
-        public virtual ICollection<tblProject_HistoryHours> tblProject_HistoryHours { get; set; }
+        public virtual tblProject_EarnedValueType tblProject_EarnedValueType { get; set; }
+        public virtual tblProject_History tblProject_History { get; set; }
     }
 }

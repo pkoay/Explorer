@@ -12,26 +12,48 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblProject_EarnedValueType : ModelBase
+    public partial class tblProject_HistoryNCR : ModelBase
     {
-        public tblProject_EarnedValueType()
-        {
-            this.tblProject_HistoryDollars = new HashSet<tblProject_HistoryDollars>();
-            this.tblProject_HistoryHours = new HashSet<tblProject_HistoryHours>();
-        }
-    
-        private int _earnedValueTypeID;
-    	public int EarnedValueTypeID 
+        private int _historyID;
+    	public int HistoryID 
     	{ 
-    		get { return _earnedValueTypeID; } 
-    		set { SetProperty(ref _earnedValueTypeID, value); } 
+    		get { return _historyID; } 
+    		set { SetProperty(ref _historyID, value); } 
     	}
     
-        private string _title;
-    	public string Title 
+        private string _reportID;
+    	public string ReportID 
     	{ 
-    		get { return _title; } 
-    		set { SetProperty(ref _title, value); } 
+    		get { return _reportID; } 
+    		set { SetProperty(ref _reportID, value); } 
+    	}
+    
+        private string _issuedToPerson;
+    	public string IssuedToPerson 
+    	{ 
+    		get { return _issuedToPerson; } 
+    		set { SetProperty(ref _issuedToPerson, value); } 
+    	}
+    
+        private string _issuedToCompany;
+    	public string IssuedToCompany 
+    	{ 
+    		get { return _issuedToCompany; } 
+    		set { SetProperty(ref _issuedToCompany, value); } 
+    	}
+    
+        private System.DateTime _dateRaised;
+    	public System.DateTime DateRaised 
+    	{ 
+    		get { return _dateRaised; } 
+    		set { SetProperty(ref _dateRaised, value); } 
+    	}
+    
+        private string _eventDesc;
+    	public string EventDesc 
+    	{ 
+    		get { return _eventDesc; } 
+    		set { SetProperty(ref _eventDesc, value); } 
     	}
     
         private string _updatedBy;
@@ -56,7 +78,6 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual ICollection<tblProject_HistoryDollars> tblProject_HistoryDollars { get; set; }
-        public virtual ICollection<tblProject_HistoryHours> tblProject_HistoryHours { get; set; }
+        public virtual tblProject_History tblProject_History { get; set; }
     }
 }

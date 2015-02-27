@@ -17,8 +17,12 @@ namespace WalzExplorer.Database
         public tblProject_History()
         {
             this.tblProject_HistoryCritical = new HashSet<tblProject_HistoryCritical>();
-            this.tblProject_HistoryManHours = new HashSet<tblProject_HistoryManHours>();
             this.tblProject_HistoryMilestone = new HashSet<tblProject_HistoryMilestone>();
+            this.tblProject_HistoryDollars = new HashSet<tblProject_HistoryDollars>();
+            this.tblProject_HistoryIncident = new HashSet<tblProject_HistoryIncident>();
+            this.tblProject_HistoryHours = new HashSet<tblProject_HistoryHours>();
+            this.tblProject_HistoryNCR = new HashSet<tblProject_HistoryNCR>();
+            this.tblProject_HistoryRFI = new HashSet<tblProject_HistoryRFI>();
         }
     
         private int _historyID;
@@ -33,13 +37,6 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _projectID; } 
     		set { SetProperty(ref _projectID, value); } 
-    	}
-    
-        private System.DateTime _period;
-    	public System.DateTime Period 
-    	{ 
-    		get { return _period; } 
-    		set { SetProperty(ref _period, value); } 
     	}
     
         private string _aXProjectID;
@@ -82,20 +79,6 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _contractType; } 
     		set { SetProperty(ref _contractType, value); } 
-    	}
-    
-        private string _client;
-    	public string Client 
-    	{ 
-    		get { return _client; } 
-    		set { SetProperty(ref _client, value); } 
-    	}
-    
-        private Nullable<System.DateTime> _date;
-    	public Nullable<System.DateTime> Date 
-    	{ 
-    		get { return _date; } 
-    		set { SetProperty(ref _date, value); } 
     	}
     
         private Nullable<System.DateTime> _weekEnding;
@@ -441,11 +424,181 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _other, value); } 
     	}
     
+        private System.DateTime _periodStart;
+    	public System.DateTime PeriodStart 
+    	{ 
+    		get { return _periodStart; } 
+    		set { SetProperty(ref _periodStart, value); } 
+    	}
+    
+        private System.DateTime _periodEnd;
+    	public System.DateTime PeriodEnd 
+    	{ 
+    		get { return _periodEnd; } 
+    		set { SetProperty(ref _periodEnd, value); } 
+    	}
+    
+        private string _customer;
+    	public string Customer 
+    	{ 
+    		get { return _customer; } 
+    		set { SetProperty(ref _customer, value); } 
+    	}
+    
+        private Nullable<int> _timeRatingID;
+    	public Nullable<int> TimeRatingID 
+    	{ 
+    		get { return _timeRatingID; } 
+    		set { SetProperty(ref _timeRatingID, value); } 
+    	}
+    
+        private Nullable<int> _hoursRatingID;
+    	public Nullable<int> HoursRatingID 
+    	{ 
+    		get { return _hoursRatingID; } 
+    		set { SetProperty(ref _hoursRatingID, value); } 
+    	}
+    
+        private Nullable<int> _costRatingID;
+    	public Nullable<int> CostRatingID 
+    	{ 
+    		get { return _costRatingID; } 
+    		set { SetProperty(ref _costRatingID, value); } 
+    	}
+    
+        private Nullable<int> _safetyRatingID;
+    	public Nullable<int> SafetyRatingID 
+    	{ 
+    		get { return _safetyRatingID; } 
+    		set { SetProperty(ref _safetyRatingID, value); } 
+    	}
+    
+        private Nullable<int> _qualityRatingID;
+    	public Nullable<int> QualityRatingID 
+    	{ 
+    		get { return _qualityRatingID; } 
+    		set { SetProperty(ref _qualityRatingID, value); } 
+    	}
+    
+        private string _pMSummaryNotes;
+    	public string PMSummaryNotes 
+    	{ 
+    		get { return _pMSummaryNotes; } 
+    		set { SetProperty(ref _pMSummaryNotes, value); } 
+    	}
+    
+        private string _oMSummaryNotes;
+    	public string OMSummaryNotes 
+    	{ 
+    		get { return _oMSummaryNotes; } 
+    		set { SetProperty(ref _oMSummaryNotes, value); } 
+    	}
+    
+        private Nullable<int> _safetyLTI;
+    	public Nullable<int> SafetyLTI 
+    	{ 
+    		get { return _safetyLTI; } 
+    		set { SetProperty(ref _safetyLTI, value); } 
+    	}
+    
+        private Nullable<int> _safetyMTI;
+    	public Nullable<int> SafetyMTI 
+    	{ 
+    		get { return _safetyMTI; } 
+    		set { SetProperty(ref _safetyMTI, value); } 
+    	}
+    
+        private Nullable<int> _safetyFAI;
+    	public Nullable<int> SafetyFAI 
+    	{ 
+    		get { return _safetyFAI; } 
+    		set { SetProperty(ref _safetyFAI, value); } 
+    	}
+    
+        private Nullable<int> _safetyNearMiss;
+    	public Nullable<int> SafetyNearMiss 
+    	{ 
+    		get { return _safetyNearMiss; } 
+    		set { SetProperty(ref _safetyNearMiss, value); } 
+    	}
+    
+        private Nullable<int> _safetyLTIFR;
+    	public Nullable<int> SafetyLTIFR 
+    	{ 
+    		get { return _safetyLTIFR; } 
+    		set { SetProperty(ref _safetyLTIFR, value); } 
+    	}
+    
+        private Nullable<int> _safetyTRIFR;
+    	public Nullable<int> SafetyTRIFR 
+    	{ 
+    		get { return _safetyTRIFR; } 
+    		set { SetProperty(ref _safetyTRIFR, value); } 
+    	}
+    
+        private Nullable<int> _safetyHours;
+    	public Nullable<int> SafetyHours 
+    	{ 
+    		get { return _safetyHours; } 
+    		set { SetProperty(ref _safetyHours, value); } 
+    	}
+    
+        private Nullable<double> _summaryHousBudget;
+    	public Nullable<double> SummaryHousBudget 
+    	{ 
+    		get { return _summaryHousBudget; } 
+    		set { SetProperty(ref _summaryHousBudget, value); } 
+    	}
+    
+        private Nullable<double> _summaryCostBudget;
+    	public Nullable<double> SummaryCostBudget 
+    	{ 
+    		get { return _summaryCostBudget; } 
+    		set { SetProperty(ref _summaryCostBudget, value); } 
+    	}
+    
+        private Nullable<int> _projectManagerSignID;
+    	public Nullable<int> ProjectManagerSignID 
+    	{ 
+    		get { return _projectManagerSignID; } 
+    		set { SetProperty(ref _projectManagerSignID, value); } 
+    	}
+    
+        private Nullable<System.DateTime> _projectManagerSignDate;
+    	public Nullable<System.DateTime> ProjectManagerSignDate 
+    	{ 
+    		get { return _projectManagerSignDate; } 
+    		set { SetProperty(ref _projectManagerSignDate, value); } 
+    	}
+    
+        private Nullable<int> _operationsManagerSignID;
+    	public Nullable<int> OperationsManagerSignID 
+    	{ 
+    		get { return _operationsManagerSignID; } 
+    		set { SetProperty(ref _operationsManagerSignID, value); } 
+    	}
+    
+        private Nullable<System.DateTime> _operationsManagerSignDate;
+    	public Nullable<System.DateTime> OperationsManagerSignDate 
+    	{ 
+    		get { return _operationsManagerSignDate; } 
+    		set { SetProperty(ref _operationsManagerSignDate, value); } 
+    	}
+    
     
         public virtual tblProject_HistoryStatus tblProject_HistoryStatus { get; set; }
         public virtual ICollection<tblProject_HistoryCritical> tblProject_HistoryCritical { get; set; }
-        public virtual ICollection<tblProject_HistoryManHours> tblProject_HistoryManHours { get; set; }
         public virtual ICollection<tblProject_HistoryMilestone> tblProject_HistoryMilestone { get; set; }
         public virtual tblProject tblProject { get; set; }
+        public virtual tblProject_HistoryRating tblProject_HistoryRating { get; set; }
+        public virtual tblProject_HistoryRating tblProject_HistoryRating1 { get; set; }
+        public virtual tblProject_HistoryRating tblProject_HistoryRating2 { get; set; }
+        public virtual tblProject_HistoryRating tblProject_HistoryRating3 { get; set; }
+        public virtual tblProject_HistoryRating tblProject_HistoryRating4 { get; set; }
+        public virtual ICollection<tblProject_HistoryDollars> tblProject_HistoryDollars { get; set; }
+        public virtual ICollection<tblProject_HistoryIncident> tblProject_HistoryIncident { get; set; }
+        public virtual ICollection<tblProject_HistoryHours> tblProject_HistoryHours { get; set; }
+        public virtual ICollection<tblProject_HistoryNCR> tblProject_HistoryNCR { get; set; }
+        public virtual ICollection<tblProject_HistoryRFI> tblProject_HistoryRFI { get; set; }
     }
 }

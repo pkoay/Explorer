@@ -65,72 +65,37 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             {
                 case "ProjId":
                     e.Column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
-                  
                     column.ShowColumnWhenGrouped = false;
                     break;
                 case "Date":
                     SetColumn(column, "DATE");
-                    //column.DataFormatString = "dd-MMM-yyyy";
-                    //column.TextAlignment = TextAlignment.Right;
-                    //column.HeaderTextAlignment = TextAlignment.Right;
-                    //column.FooterTextAlignment = TextAlignment.Right;
-                    //column.IsGroupable = false;
                     break;
                 case "CostAmount":
-                    SetColumn(column, "NUMBER");
-                    //column.DataFormatString = "#,##0";
-                    //column.TextAlignment = TextAlignment.Right;
-                    //column.HeaderTextAlignment = TextAlignment.Right;
-                    //column.FooterTextAlignment = TextAlignment.Right;
-                    //column.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = "{0:#,0}"});
-                    //column.IsGroupable = false;
+                    SetColumn(column, "TWO_DECIMAL");
                     break;
                 case "CostOverhead":
-                    SetColumn(column, "NUMBER");
-                    //column.DataFormatString = "#,##0";
-                    //column.TextAlignment = TextAlignment.Right;
-                    //    column.HeaderTextAlignment = TextAlignment.Right;
-                    //column.FooterTextAlignment = TextAlignment.Right;
-                    //e.Column.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = "{0:#,0}" });
-                    //column.IsGroupable = false;
+                    SetColumn(column, "TWO_DECIMAL");
                     break;
                 case "CostTotal":
-                    SetColumn(column, "NUMBER");
-                    ////column.DataFormatString = "#,##0";
-                    ////column.TextAlignment = TextAlignment.Right;
-                    ////    column.HeaderTextAlignment = TextAlignment.Right;
-                    ////column.FooterTextAlignment = TextAlignment.Right;
-                    //e.Column.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = "{0:#,0}" });
-                    //column.IsGroupable = false;
+                    SetColumn(column, "TWO_DECIMAL");
                     break;
-                case "Invoiced":
-                    SetColumn(column, "NUMBER");
-                    //column.DataFormatString = "#,##0";
-                    //column.TextAlignment = TextAlignment.Right;
-                    //    column.HeaderTextAlignment = TextAlignment.Right;
-                    //column.FooterTextAlignment = TextAlignment.Right;
-                    //column.IsGroupable = false;
+                case "Hours":
+                    SetColumn(column, "TWO_DECIMAL");
                     break;
                 case "Quantity":
-                    SetColumn(column, "NUMBER");
-                    //column.DataFormatString = "#,##0";
-                    //column.TextAlignment = TextAlignment.Right;
-                    //column.HeaderTextAlignment = TextAlignment.Right;
-                    //column.FooterTextAlignment = TextAlignment.Right;
-                    //e.Column.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = "{0:#,0}" });
-                    //column.IsGroupable = false;
+                    SetColumn(column, "TWO_DECIMAL");
                     break;
                 case "Employee":
                     SetColumn(column, "TEXT");
-                    //column.ShowColumnWhenGrouped = false;
                     break;
                 case "CategoryGroup":
                     SetColumn(column, "TEXT");
-                       //column.ShowColumnWhenGrouped = false;
                     break;
                 case "CategoryName":
                     SetColumn(column, "TEXT");
-                    //column.ShowColumnWhenGrouped = false;
+                    break;
+                case "PurchQtyPrice":
+                    SetColumn(column, "TWO_DECIMAL_NO_TOTAL");
                     break;
             }
         }

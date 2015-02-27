@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblProject_HistoryManHours : ModelBase
+    public partial class tblProject_HistoryIncident : ModelBase
     {
         private int _historyID;
     	public int HistoryID 
@@ -21,25 +21,53 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _historyID, value); } 
     	}
     
-        private System.DateTime _week;
-    	public System.DateTime Week 
+        private string _incidentID;
+    	public string IncidentID 
     	{ 
-    		get { return _week; } 
-    		set { SetProperty(ref _week, value); } 
+    		get { return _incidentID; } 
+    		set { SetProperty(ref _incidentID, value); } 
     	}
     
-        private int _earnedValueTypeID;
-    	public int EarnedValueTypeID 
+        private System.DateTime _reportedDate;
+    	public System.DateTime ReportedDate 
     	{ 
-    		get { return _earnedValueTypeID; } 
-    		set { SetProperty(ref _earnedValueTypeID, value); } 
+    		get { return _reportedDate; } 
+    		set { SetProperty(ref _reportedDate, value); } 
     	}
     
-        private double _value;
-    	public double Value 
+        private string _incidentType;
+    	public string IncidentType 
     	{ 
-    		get { return _value; } 
-    		set { SetProperty(ref _value, value); } 
+    		get { return _incidentType; } 
+    		set { SetProperty(ref _incidentType, value); } 
+    	}
+    
+        private string _detailedDescription;
+    	public string DetailedDescription 
+    	{ 
+    		get { return _detailedDescription; } 
+    		set { SetProperty(ref _detailedDescription, value); } 
+    	}
+    
+        private string _injuryDescription;
+    	public string InjuryDescription 
+    	{ 
+    		get { return _injuryDescription; } 
+    		set { SetProperty(ref _injuryDescription, value); } 
+    	}
+    
+        private string _actualConsequLevel;
+    	public string ActualConsequLevel 
+    	{ 
+    		get { return _actualConsequLevel; } 
+    		set { SetProperty(ref _actualConsequLevel, value); } 
+    	}
+    
+        private string _potentialConsqLevel;
+    	public string PotentialConsqLevel 
+    	{ 
+    		get { return _potentialConsqLevel; } 
+    		set { SetProperty(ref _potentialConsqLevel, value); } 
     	}
     
         private string _updatedBy;
@@ -64,7 +92,6 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual tblProject_EarnedValueType tblProject_EarnedValueType { get; set; }
         public virtual tblProject_History tblProject_History { get; set; }
     }
 }

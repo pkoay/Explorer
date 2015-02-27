@@ -4,22 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2fb347df5c3d4e0c93f4192576989bc7" Name="All">
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Activity" Width="2.125" PointX="8.75" PointY="50.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityChildActivity" Width="2.625" PointX="17.625" PointY="48.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityContractor" Width="2.5" PointX="13.625" PointY="42.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityLabour" Width="2.375" PointX="11.625" PointY="57.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityMaterial" Width="2.375" PointX="18.5" PointY="53.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ContractorType" Width="2.75" PointX="5.75" PointY="28.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Drawing" Width="2" PointX="5.75" PointY="34.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Item" Width="1.5" PointX="14.625" PointY="47" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Material" Width="2" PointX="11.75" PointY="49.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Schedule" Width="1.5" PointX="12.375" PointY="63.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Status" Width="2" PointX="0.75" PointY="34.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Step" Width="1.5" PointX="11.375" PointY="27.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Supplier" Width="2.25" PointX="5.75" PointY="58.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Supplier_Material" Width="2.5" PointX="14.5" PointY="53.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_UnitOfMeasure" Width="2.25" PointX="5.75" PointY="62" IsExpanded="true" />
+      <Diagram DiagramId="2fb347df5c3d4e0c93f4192576989bc7" Name="All" ZoomLevel="72">
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Activity" Width="2.125" PointX="8.75" PointY="61.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityChildActivity" Width="2.625" PointX="15.625" PointY="59.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityContractor" Width="2.5" PointX="18.5" PointY="52.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityLabour" Width="2.375" PointX="14.625" PointY="69" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ActivityMaterial" Width="2.375" PointX="18.5" PointY="64.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ContractorType" Width="2.75" PointX="5.75" PointY="38.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Drawing" Width="2" PointX="5.75" PointY="42.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Item" Width="1.5" PointX="15.625" PointY="52.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Material" Width="2" PointX="11.75" PointY="60.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Schedule" Width="1.5" PointX="13.375" PointY="31.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Status" Width="2" PointX="0.75" PointY="44.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Step" Width="1.5" PointX="16.25" PointY="40.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Supplier" Width="2.25" PointX="5.75" PointY="68.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Supplier_Material" Width="2.5" PointX="14.5" PointY="64.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_UnitOfMeasure" Width="2.25" PointX="5.75" PointY="72.125" IsExpanded="true" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkGroup" Width="1.5" PointX="5.25" PointY="56" IsExpanded="true" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkGroupHeader" Width="1.5" PointX="5.25" PointY="60.625" IsExpanded="true" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkGroupItem" Width="1.5" PointX="7.5" PointY="56.125" IsExpanded="true" />
@@ -55,28 +55,25 @@
         <AssociationConnector Association="WalzExplorerModel.tblWEX_RHSTab_Security" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.tblWEX_Tree_Security" ManuallyRouted="false" />
         <AssociationConnector Association="WalzExplorerModel.tblWEX_TreeNodeType_RHSTab" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Contractor" Width="1.5" PointX="9.25" PointY="31.875" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Contractor" Width="1.5" PointX="12.25" PointY="44" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Contractor" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Contractor_tblTender_ContractorType" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Workgroup" Width="2" PointX="5.75" PointY="43" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkgroupHeader" Width="2" PointX="5.75" PointY="24.625" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkgroupItem" Width="2" PointX="8.5" PointY="45" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_LabourStandard" Width="1.5" PointX="5.75" PointY="47.5" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_History" Width="1.5" PointX="8.75" PointY="36" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_HistoryMilestone" Width="1.5" PointX="11" PointY="36.375" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_Status" Width="1.5" PointX="4.25" PointY="51.875" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_EarnedValueType" Width="1.5" PointX="11.75" PointY="32.875" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_HistoryCritical" Width="1.5" PointX="11" PointY="40.875" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_HistoryManHours" Width="1.5" PointX="14" PointY="38.625" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_HistoryStatus" Width="1.5" PointX="6.5" PointY="51.875" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_EarnedValueType" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Workgroup" Width="2" PointX="5.75" PointY="55.125" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkgroupHeader" Width="2" PointX="9.75" PointY="35.75" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkgroupItem" Width="2" PointX="12.5" PointY="55.125" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_LabourStandard" Width="1.5" PointX="5.75" PointY="59.625" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_History" Width="1.5" PointX="9.75" PointY="40.5" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_HistoryMilestone" Width="2.5" PointX="12" PointY="48.75" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_Status" Width="1.5" PointX="4.25" PointY="63.75" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_EarnedValueType" Width="1.5" PointX="12.75" PointY="35.875" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_HistoryCritical" Width="1.5" PointX="12" PointY="65.375" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_HistoryStatus" Width="1.5" PointX="7.5" PointY="31" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryStatus" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblProject_HistoryCritical_tblProject_History" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_History" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblProject_HistoryMilestone_tblProject_History" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblPerson" Width="1.5" PointX="1.25" PointY="38.25" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblProject" Width="1.5" PointX="6.5" PointY="38.125" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender" Width="1.5" PointX="3.5" PointY="37.25" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblPerson" Width="1.5" PointX="1.25" PointY="48.125" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject" Width="1.5" PointX="6.5" PointY="46.625" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender" Width="1.5" PointX="3.5" PointY="47.375" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblProject_tblPerson" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblProject_tblPerson1" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_tblPerson" />
@@ -93,9 +90,33 @@
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_tblTender_Status" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_UnitOfMeasure_tblTender" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroup_tblTender" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblPerson_Mimic" Width="1.5" PointX="3.5" PointY="43.875" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblPerson_Mimic" Width="1.5" PointX="3.5" PointY="80.5" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblPerson_Mimic_tblPerson" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblPerson_Mimic_tblPerson1" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblCustomer" Width="1.5" PointX="4.25" PointY="35" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_ContractType" Width="1.5" PointX="4.25" PointY="76.625" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_HistoryDollars" Width="1.5" PointX="15" PointY="44.75" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_HistoryHours" Width="1.5" PointX="16" PointY="48.75" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_HistoryIncident" Width="1.5" PointX="12" PointY="73.25" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_HistoryNCR" Width="1.5" PointX="12" PointY="39.625" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_HistoryRating" Width="1.5" PointX="7.5" PointY="34.125" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_HistoryRFI" Width="1.5" PointX="12" PointY="69.25" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblProject_Portfolio" Width="1.5" PointX="4.25" PointY="31.25" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_tblProject_ContractType" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_tblProject_Portfolio" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_HistoryDollars_tblProject_EarnedValueType" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_EarnedValueType" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating1" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating2" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating3" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_History_tblProject_HistoryRating4" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_HistoryDollars_tblProject_History" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_HistoryIncident_tblProject_History" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_History" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_HistoryNCR_tblProject_History" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_HistoryRFI_tblProject_History" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblProject_tblCustomer" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

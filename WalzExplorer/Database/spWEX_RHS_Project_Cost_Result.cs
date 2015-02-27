@@ -61,7 +61,14 @@ namespace WalzExplorer.Database
     		get { return _employee; } 
     		set { SetProperty(ref _employee, value); } 
     	}
-    
+
+        private Nullable<decimal> _hours;
+        public Nullable<decimal> Hours
+        {
+            get { return _hours; }
+            set { SetProperty(ref _hours, value); }
+        }
+
         private Nullable<decimal> _quantity;
     	public Nullable<decimal> Quantity 
     	{ 
@@ -90,19 +97,49 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _costTotal, value); } 
     	}
     
-        private Nullable<decimal> _invoiced;
-    	public Nullable<decimal> Invoiced 
-    	{ 
-    		get { return _invoiced; } 
-    		set { SetProperty(ref _invoiced, value); } 
-    	}
-    
         private string _description;
     	public string Description 
     	{ 
     		get { return _description; } 
     		set { SetProperty(ref _description, value); } 
     	}
+    
+        private string _purchOrderID;
+    	public string PurchOrderID 
+    	{ 
+    		get { return _purchOrderID; } 
+    		set { SetProperty(ref _purchOrderID, value); } 
+    	}
+    
+        private string _purchVendor;
+    	public string PurchVendor 
+    	{ 
+    		get { return _purchVendor; } 
+    		set { SetProperty(ref _purchVendor, value); } 
+    	}
+    
+        private string _purchUnit;
+    	public string PurchUnit 
+    	{ 
+    		get { return _purchUnit; } 
+    		set { SetProperty(ref _purchUnit, value); } 
+    	}
+    
+        private Nullable<decimal> _purchQtyPrice;
+    	public Nullable<decimal> PurchQtyPrice 
+    	{ 
+    		get { return _purchQtyPrice; } 
+    		set { SetProperty(ref _purchQtyPrice, value); } 
+    	}
+    
+        private string _purchInvoice;
+    	public string PurchInvoice 
+    	{ 
+    		get { return _purchInvoice; } 
+    		set { SetProperty(ref _purchInvoice, value); } 
+    	}
+    
+       
     
     }
 }
