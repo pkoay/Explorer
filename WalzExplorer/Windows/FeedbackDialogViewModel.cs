@@ -10,7 +10,7 @@ namespace WalzExplorer.Windows
 {
     class FeedbackDialogViewModel
     {
-        ServicesEntities context = new ServicesEntities();
+        ServicesEntities context = new ServicesEntities(false);
         public ObservableCollection<tblFeedback_Type> TypeList { get; private set; }
 
         public FeedbackDialogViewModel()

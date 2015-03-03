@@ -62,6 +62,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _employee, value); } 
     	}
     
+        private Nullable<decimal> _hours;
+    	public Nullable<decimal> Hours 
+    	{ 
+    		get { return _hours; } 
+    		set { SetProperty(ref _hours, value); } 
+    	}
+    
         private Nullable<decimal> _quantity;
     	public Nullable<decimal> Quantity 
     	{ 
@@ -130,13 +137,6 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _purchInvoice; } 
     		set { SetProperty(ref _purchInvoice, value); } 
-    	}
-    
-        private Nullable<decimal> _hours;
-    	public Nullable<decimal> Hours 
-    	{ 
-    		get { return _hours; } 
-    		set { SetProperty(ref _hours, value); } 
     	}
     
     }

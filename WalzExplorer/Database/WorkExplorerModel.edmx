@@ -2819,9 +2819,6 @@
             <Parameter Name="ManagerID" Mode="In" Type="Int32" />
             <Parameter Name="CustomerID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="spWEX_RHS_Project_Cost" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Cost_Result)">
-          <Parameter Name="ProjectID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="tblCustomers" EntityType="WalzExplorerModel.tblCustomer" />
           <EntitySet Name="tblProject_ContractType" EntityType="WalzExplorerModel.tblProject_ContractType" />
           <EntitySet Name="tblProject_HistoryDollars" EntityType="WalzExplorerModel.tblProject_HistoryDollars" />
@@ -2892,6 +2889,9 @@
             <End Role="tblProject" EntitySet="tblProjects" />
           </AssociationSet>
           <FunctionImport Name="spWEX_RHS_Project_Committed" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Committed_Result)">
+          <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_RHS_Project_Cost" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Cost_Result)">
             <Parameter Name="ProjectID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
@@ -3690,26 +3690,6 @@
           <Property Type="Double" Name="Committed" Nullable="true" />
           <Property Type="Double" Name="Invoiced" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="spWEX_RHS_Project_Cost_Result">
-          <Property Type="String" Name="DataAreaID" Nullable="false" MaxLength="4" />
-          <Property Type="String" Name="ProjId" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="ProjectName" Nullable="false" MaxLength="60" />
-          <Property Type="String" Name="CategoryGroup" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="60" />
-          <Property Type="DateTime" Name="Date" Nullable="true" />
-          <Property Type="String" Name="Employee" Nullable="true" MaxLength="51" />
-          <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="38" Scale="12" />
-          <Property Type="Decimal" Name="CostAmount" Nullable="true" Precision="38" Scale="16" />
-          <Property Type="Decimal" Name="CostOverhead" Nullable="true" Precision="38" Scale="6" />
-          <Property Type="Decimal" Name="CostTotal" Nullable="true" Precision="38" Scale="6" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="1000" />
-          <Property Type="String" Name="PurchOrderID" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="PurchVendor" Nullable="true" MaxLength="60" />
-          <Property Type="String" Name="PurchUnit" Nullable="true" MaxLength="10" />
-          <Property Type="Decimal" Name="PurchQtyPrice" Nullable="true" Precision="36" Scale="16" />
-          <Property Type="String" Name="PurchInvoice" Nullable="true" MaxLength="20" />
-          <Property Type="Decimal" Name="Hours" Nullable="true" Precision="38" Scale="12" />
-          </ComplexType>
         <EntityType Name="tblCustomer">
           <Key>
             <PropertyRef Name="CustomerID" />
@@ -4044,6 +4024,26 @@
           <Property Type="String" Name="PurchVendor" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="PurchUnit" Nullable="true" MaxLength="10" />
           <Property Type="Decimal" Name="PurchQtyPrice" Nullable="true" Precision="36" Scale="16" />
+        </ComplexType>
+        <ComplexType Name="spWEX_RHS_Project_Cost_Result">
+          <Property Type="String" Name="DataAreaID" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="ProjId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="CategoryGroup" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="60" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="Employee" Nullable="true" MaxLength="51" />
+          <Property Type="Decimal" Name="Hours" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="CostAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="CostOverhead" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="CostTotal" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="PurchOrderID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="PurchVendor" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="PurchUnit" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="PurchQtyPrice" Nullable="true" Precision="36" Scale="16" />
+          <Property Type="String" Name="PurchInvoice" Nullable="true" MaxLength="20" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -4802,30 +4802,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_Cost" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_Cost">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_Cost_Result">
-                <ScalarProperty Name="DataAreaID" ColumnName="DataAreaID" />
-                <ScalarProperty Name="ProjId" ColumnName="ProjId" />
-                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
-                <ScalarProperty Name="CategoryGroup" ColumnName="CategoryGroup" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Employee" ColumnName="Employee" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="CostAmount" ColumnName="CostAmount" />
-                <ScalarProperty Name="CostOverhead" ColumnName="CostOverhead" />
-                <ScalarProperty Name="CostTotal" ColumnName="CostTotal" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="PurchOrderID" ColumnName="PurchOrderID" />
-                <ScalarProperty Name="PurchVendor" ColumnName="PurchVendor" />
-                <ScalarProperty Name="PurchUnit" ColumnName="PurchUnit" />
-                <ScalarProperty Name="PurchQtyPrice" ColumnName="PurchQtyPrice" />
-                <ScalarProperty Name="PurchInvoice" ColumnName="PurchInvoice" />
-                <ScalarProperty Name="Hours" ColumnName="Hours" />
-                </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="tblCustomers">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblCustomer">
               <MappingFragment StoreEntitySet="tblCustomer">
@@ -4969,6 +4945,30 @@
                 <ScalarProperty Name="PurchVendor" ColumnName="PurchVendor" />
                 <ScalarProperty Name="PurchUnit" ColumnName="PurchUnit" />
                 <ScalarProperty Name="PurchQtyPrice" ColumnName="PurchQtyPrice" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_Cost" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_Cost">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_Cost_Result">
+                <ScalarProperty Name="DataAreaID" ColumnName="DataAreaID" />
+                <ScalarProperty Name="ProjId" ColumnName="ProjId" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CategoryGroup" ColumnName="CategoryGroup" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Employee" ColumnName="Employee" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CostAmount" ColumnName="CostAmount" />
+                <ScalarProperty Name="CostOverhead" ColumnName="CostOverhead" />
+                <ScalarProperty Name="CostTotal" ColumnName="CostTotal" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PurchOrderID" ColumnName="PurchOrderID" />
+                <ScalarProperty Name="PurchVendor" ColumnName="PurchVendor" />
+                <ScalarProperty Name="PurchUnit" ColumnName="PurchUnit" />
+                <ScalarProperty Name="PurchQtyPrice" ColumnName="PurchQtyPrice" />
+                <ScalarProperty Name="PurchInvoice" ColumnName="PurchInvoice" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
