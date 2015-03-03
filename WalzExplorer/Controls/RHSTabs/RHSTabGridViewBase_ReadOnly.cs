@@ -199,6 +199,27 @@ namespace WalzExplorer.Controls.RHSTabs
             return "";
         }
 
+        public void ColumnToolTipStatic(RadGridView grd, GridViewDataColumn column, string ToolTipString)
+        {
+            //Create the template
+            var rectangleFactory = new FrameworkElementFactory(typeof(TextBlock));
+            rectangleFactory.SetValue(TextBlock.TextProperty, ToolTipString);
+            DataTemplate template = new DataTemplate
+            {
+                VisualTree = rectangleFactory,
+            };
+            template.Seal();
+
+            //Name of template
+            string TemplateName = grd.Name + "_" + column.UniqueName;
+
+            //Add the template to resources
+            this.Resources.Add(TemplateName, template);
+
+            //Apply template to column
+            column.ToolTipTemplate = this.Resources[TemplateName] as DataTemplate;
+        }
+
         public void SetColumn(GridViewDataColumn column, string type)
         {
             switch (type.ToUpper())

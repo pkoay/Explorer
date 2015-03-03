@@ -23,8 +23,25 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         public SummaryView()
         {
             InitializeComponent();
+            
         }
 
+        public static void AddRectangleTemplateToResources(FrameworkElement element)
+        {
+            element.Resources.Add("ToolTipTemplate", CreateRectangleDataTemplate());
+        }
+        public static DataTemplate CreateRectangleDataTemplate()
+        {
+            var rectangleFactory = new FrameworkElementFactory(typeof(TextBlock));
+            rectangleFactory.SetValue(TextBlock.TextProperty, "HELLO");
+            
+            DataTemplate template= new DataTemplate
+            {
+                VisualTree = rectangleFactory,
+            };
+            template.Seal();
+            return template;
+        }
         public override void TabLoad()
         {
             base.SetGrid(grd);
@@ -48,33 +65,34 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
         }
 
+     
+
         private void grd_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
         {
+           
             GridViewDataColumn column = e.Column as GridViewDataColumn;
             switch (e.Column.Header.ToString())
             {
                 case "Contract":
                     column.DataFormatString = "#,##0";
                     column.TextAlignment = TextAlignment.Right;
+                    ColumnToolTipStatic(grd, column, "Contract Value including all approved variations");
                     break;
                 case "Cost":
                     column.DataFormatString = "#,##0";
                     column.TextAlignment = TextAlignment.Right;
-                    e.Column.ToolTip = "Costs (Includeds Overheads) (Excludeds Committed Costs)";
+                    ColumnToolTipStatic(grd,column, "Costs to date (Includes Overheads) (Excludes Committed Costs)");
                     break;
                 case "Committed":
                     column.DataFormatString = "#,##0";
                     column.TextAlignment = TextAlignment.Right;
-
-                    //e.Column.Header = new TextBlock() { Text = "HEllo", ToolTip = "New tooltip" };
+                    ColumnToolTipStatic(grd, column, "Committed Costs to date (Open purchase orders)");
                     break;
                 case "Invoiced":
                     column.DataFormatString = "#,##0";
                     column.TextAlignment = TextAlignment.Right;
-                    column.ToolTip = "Invoiced to client";
+                    ColumnToolTipStatic(grd, column, "Invoiced to client to date");
                     break;
-          
-
             }
         }
 
