@@ -15,11 +15,27 @@ using WalzExplorer.Controls.TreeView.ViewModel;
 using WalzExplorer.Controls.RHSTabs;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
+using System.Data.Common;
 
 namespace WalzExplorer.Database
 {
     public partial class WalzExplorerEntities
     {
+        public  WalzExplorerEntities(bool test)
+            : base("name=WalzExplorerEntities")
+        {
+            // Add the password programatically (should not store in config file
+            var originalConnectionString = ConfigurationManager.ConnectionStrings["WalzExplorerEntities"].ConnectionString;
+            var entityBuilder = new EntityConnectionStringBuilder(originalConnectionString);
+            var factory = DbProviderFactories.GetFactory(entityBuilder.Provider);
+            var providerBuilder = factory.CreateConnectionStringBuilder();
+            providerBuilder.ConnectionString = entityBuilder.ProviderConnectionString;
+            providerBuilder.Add("Password", "1JUDQlPsYzHm6s");
+            entityBuilder.ProviderConnectionString = providerBuilder.ToString();
+            //this.Database.Connection.ConnectionString = entityBuilder.ToString();
+            this.Database.Connection.ConnectionString = providerBuilder.ToString();
+        }
 
         protected override DbEntityValidationResult ValidateEntity(System.Data.Entity.Infrastructure.DbEntityEntry entityEntry, IDictionary<object, object> items)
         {
@@ -54,6 +70,7 @@ namespace WalzExplorer.Database
         {
             get { return (this as IObjectContextAdapter).ObjectContext; }
         }
+
         public string Verification ()
         {
             ObjectContext octx = _ObjectContext;
@@ -167,7 +184,7 @@ namespace WalzExplorer.Database
             try
             {
                 return base.SaveChanges();
-                LogChanges(LogEntries);
+                //LogChanges(LogEntries);
             }
             catch (DbEntityValidationException ex)
             {

@@ -8,6 +8,7 @@ using System.Windows.Threading;
 using Telerik.Windows.Controls;
 using WalzExplorer.Database;
 using WalzExplorer.Common;
+using System.Security.Principal;
 
 namespace WalzExplorer
 {
@@ -24,27 +25,32 @@ namespace WalzExplorer
            this.InitializeComponent();
 
 #if DEBUG
-           
-               WalzExplorerEntities e = new WalzExplorerEntities();
+           string user = WindowsIdentity.GetCurrent().Name;
+
+           //Check database issues
+            if (user.ToUpper()=="WALZ\\PKOAY")
+            { 
+               WalzExplorerEntities e = new WalzExplorerEntities(false);
                string s = e.Verification();
                if (s != "")
                {
                    MessageBox.Show(s, "Database Issues", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                    this.Shutdown();
                }
-           
+            }
+
+         
 #else
            Console.WriteLine("Mode=Release"); 
 #endif
            
-
-           
-
         }
-        private void APP_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+      
+        private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            MessageBox.Show(e.Exception.Message);
+            MessageBox.Show("Unhandled exception occured. Walz Explorer will now close. Exception was:"+e.Exception.Message, "Exception Occured", MessageBoxButton.OK, MessageBoxImage.Error);
             e.Handled = true;
+            Application.Current.Shutdown();
         }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="WalzExplorerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="WalzExplorerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tblCustomer">
           <Key>
             <PropertyRef Name="CustomerID" />
@@ -51,8 +51,8 @@
           <Property Name="AXProjectID" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="AXDataAreaID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AXJobID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ParentID" Type="int" Nullable="false" />
-          <Property Name="TopParentID" Type="int" Nullable="false" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="TopParentID" Type="int" />
           <Property Name="Level" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ManagerID" Type="int" Nullable="false" />
@@ -1569,6 +1569,9 @@
         <Function Name="spWEX_Node_TenderSetupList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderSetupList">
           <Parameter Name="TenderID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spWEX_RHS_Project_Committed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Committed">
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
+        </Function>
         <Function Name="spWEX_RHS_Project_Cost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Cost">
           <Parameter Name="ProjectID" Type="int" Mode="In" />
         </Function>
@@ -2888,6 +2891,9 @@
             <End Role="tblCustomer" EntitySet="tblCustomers" />
             <End Role="tblProject" EntitySet="tblProjects" />
           </AssociationSet>
+          <FunctionImport Name="spWEX_RHS_Project_Committed" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Committed_Result)">
+            <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -3392,8 +3398,8 @@
           <NavigationProperty Name="tblPerson1" Relationship="WalzExplorerModel.FK_tblProject_tblPerson1" FromRole="tblProject" ToRole="tblPerson" />
           <NavigationProperty Name="tblProject_History" Relationship="WalzExplorerModel.FK_tblProject_History_tblProject" FromRole="tblProject" ToRole="tblProject_History" />
           <NavigationProperty Name="tblProject_Status" Relationship="WalzExplorerModel.FK_tblProject_tblProject_Status" FromRole="tblProject" ToRole="tblProject_Status" />
-          <Property Name="ParentID" Type="Int32" Nullable="false" />
-          <Property Name="TopParentID" Type="Int32" Nullable="false" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="TopParentID" Type="Int32" />
           <Property Name="Level" Type="Int32" Nullable="false" />
           <Property Name="CustomerID" Type="Int32" />
           <Property Name="ContractValue" Type="Double" Nullable="false" />
@@ -4024,6 +4030,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="spWEX_RHS_Project_Committed_Result">
+          <Property Type="String" Name="DataAreaId" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="ProjId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="CategoryGroup" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="60" />
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="28" Scale="12" />
+          <Property Type="Decimal" Name="CommCostAmount" Nullable="false" Precision="28" Scale="12" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="PurchOrderID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="PurchVendor" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="PurchUnit" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="PurchQtyPrice" Nullable="true" Precision="36" Scale="16" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4932,6 +4953,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_Committed" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_Committed">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_Committed_Result">
+                <ScalarProperty Name="DataAreaId" ColumnName="DataAreaId" />
+                <ScalarProperty Name="ProjId" ColumnName="ProjId" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CategoryGroup" ColumnName="CategoryGroup" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CommCostAmount" ColumnName="CommCostAmount" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PurchOrderID" ColumnName="PurchOrderID" />
+                <ScalarProperty Name="PurchVendor" ColumnName="PurchVendor" />
+                <ScalarProperty Name="PurchUnit" ColumnName="PurchUnit" />
+                <ScalarProperty Name="PurchQtyPrice" ColumnName="PurchQtyPrice" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

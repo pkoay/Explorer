@@ -89,15 +89,15 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
-        private int _parentID;
-    	public int ParentID 
+        private Nullable<int> _parentID;
+    	public Nullable<int> ParentID 
     	{ 
     		get { return _parentID; } 
     		set { SetProperty(ref _parentID, value); } 
     	}
     
-        private int _topParentID;
-    	public int TopParentID 
+        private Nullable<int> _topParentID;
+    	public Nullable<int> TopParentID 
     	{ 
     		get { return _topParentID; } 
     		set { SetProperty(ref _topParentID, value); } 

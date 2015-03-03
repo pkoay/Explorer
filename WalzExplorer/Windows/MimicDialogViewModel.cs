@@ -10,7 +10,7 @@ namespace WalzExplorer.Windows
 {
     class MimicDialogViewModel
     {
-        WalzExplorerEntities context = new WalzExplorerEntities();
+        WalzExplorerEntities context = new WalzExplorerEntities(false);
         public ObservableCollection<tblPerson> MimicList { get; private set; }
 
         public MimicDialogViewModel(WEXSettings settings)

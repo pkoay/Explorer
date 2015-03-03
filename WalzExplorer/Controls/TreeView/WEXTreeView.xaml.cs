@@ -22,7 +22,7 @@ namespace WalzExplorer.Controls.TreeView
     /// </summary>
     public partial class WEXTreeView : UserControl
     {
-        WalzExplorerEntities context = new WalzExplorerEntities();
+        WalzExplorerEntities context = new WalzExplorerEntities(false);
         private RootViewModel _rootNode;
         private NodeViewModel _selectedNode;
 

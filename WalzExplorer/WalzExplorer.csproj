@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
@@ -27,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\WALZ-dc-01\Company\Walz Construction\Projects\test\</InstallUrl>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>21</ApplicationRevision>
+    <ApplicationRevision>34</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -184,6 +185,10 @@
     <Compile Include="Controls\RHSTabs\Project\Cost2View.xaml.cs">
       <DependentUpon>Cost2View.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RHSTabs\Project\CommittedViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Project\CommittedView.xaml.cs">
+      <DependentUpon>CommittedView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RHSTabs\Project\InvoicedView.xaml.cs">
       <DependentUpon>InvoicedView.xaml</DependentUpon>
     </Compile>
@@ -250,6 +255,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ServicesModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_RHS_Project_Committed_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\spWEX_RHS_Project_Cost_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
@@ -514,6 +522,10 @@
     <Compile Include="Windows\FeedbackDialogViewModel.cs" />
     <Compile Include="Windows\MimicDialogViewModel.cs" />
     <Page Include="Controls\RHSTabs\Project\Cost2View.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Project\CommittedView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

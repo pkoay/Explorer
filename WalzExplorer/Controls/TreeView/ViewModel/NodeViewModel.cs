@@ -12,7 +12,7 @@ namespace WalzExplorer.Controls.TreeView.ViewModel
     public class NodeViewModel : TreeViewItemViewModel
     {
         
-        WalzExplorerEntities context= new WalzExplorerEntities();
+        WalzExplorerEntities context= new WalzExplorerEntities(false);
         readonly WEXNode _node;
         readonly Dictionary<string, string> _dicSQLSubsitutes;
 

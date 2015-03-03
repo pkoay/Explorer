@@ -14,7 +14,7 @@ namespace WalzExplorer.Database
 
         public WalzExplorerViewModel()
         {
-            this.context = new WalzExplorerEntities();
+            this.context = new WalzExplorerEntities(false);
             this.tenderContractorsView = new ObservableCollection<tblTender_Contractor>(context.tblTender_Contractor);
         }
 

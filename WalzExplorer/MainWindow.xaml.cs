@@ -39,7 +39,7 @@ namespace WalzExplorer
     public partial class MainWindow : MetroWindow
     {
         private WEXSettings settings=new WEXSettings ();
-        private WalzExplorerEntities we = new WalzExplorerEntities();
+        
         //private WEXUser user = new WEXUser();
         private Dictionary<string, string> dicSQLSubsitutes = new Dictionary<string, string>();
 
@@ -83,38 +83,47 @@ namespace WalzExplorer
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-
-
+            string user = WindowsIdentity.GetCurrent().Name;
+            //MessageBox.Show("User is " + user);
             settings.user.Login(WindowsIdentity.GetCurrent().Name);
-          
+            if (settings.user.RealPerson == null)
+            {
+                MessageBox.Show("Login failed. The user '" + user + "' has not been assigned an AX EmployeeID", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                // exit app (unable to login)
+                Application.Current.Shutdown();
+            }
+            else
+            {
+                //Load the mimic not the real person, note when starting up Mimic= real person. Real person is only rerally used for security logs etc.
+                LoadFormForMimic();
 
+                //Context Menu setup
+                ContextMenu cm = new ContextMenu();
+                btnConfigure.ContextMenu = cm;
+                cm.PlacementTarget = btnConfigure;
+                cm.Placement = System.Windows.Controls.Primitives.PlacementMode.AbsolutePoint;
+            }
 
-
-            LoadFormForMimic();
-
-            ContextMenu cm = new ContextMenu();
-            //cm.Items.Add(new MenuItem { Header = "Item 1" });
-            //cm.VerticalOffset = -100;
-            btnConfigure.ContextMenu = cm;
-            cm.PlacementTarget = btnConfigure;
-            cm.Placement = System.Windows.Controls.Primitives.PlacementMode.AbsolutePoint;
-
-            
         }
         private void LoadFormForMimic()
         {
-            //Build dictionary of SQL subsitutions  (remove if already there)
-            if (dicSQLSubsitutes.ContainsKey("@@UserPersonID")) dicSQLSubsitutes.Remove("@@UserPersonID");
-            dicSQLSubsitutes.Add("@@UserPersonID", "'" + settings.user.MimicedPerson.PersonID + "'");
-            
-            sbUserName.Text = "User: " + settings.user.RealPerson.Name;
-            sbUserMimicName.Text = "Mimic: " + settings.user.MimicedPerson.Name;
-            sbDatabaseName.Text = "Database: " + we.Database.Connection.Database;
-            sbServerName.Text = "Server: " + we.Database.Connection.DataSource;
+            using (WalzExplorerEntities we = new WalzExplorerEntities(false))
+            {
+                we.Database.Connection.Open();
 
-            LHSTabViewModel _LHSTabs = new LHSTabViewModel();
-            tcLHS.DataContext = _LHSTabs;
-            tcLHS.SelectedIndex = 0;
+                //Build dictionary of SQL subsitutions  (remove if already there)
+                if (dicSQLSubsitutes.ContainsKey("@@UserPersonID")) dicSQLSubsitutes.Remove("@@UserPersonID");
+                dicSQLSubsitutes.Add("@@UserPersonID", "'" + settings.user.MimicedPerson.PersonID + "'");
+
+                sbUserName.Text = "User: " + settings.user.RealPerson.Name;
+                sbUserMimicName.Text = "Mimic: " + settings.user.MimicedPerson.Name;
+                sbDatabaseName.Text = "Database: " + we.Database.Connection.Database;
+                sbServerName.Text = "Server: " + we.Database.Connection.DataSource;
+
+                LHSTabViewModel _LHSTabs = new LHSTabViewModel();
+                tcLHS.DataContext = _LHSTabs;
+                tcLHS.SelectedIndex = 0;
+            }
         }
 
 

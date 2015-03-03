@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Telerik.Windows.Controls;
@@ -59,14 +60,18 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 case "Cost":
                     column.DataFormatString = "#,##0";
                     column.TextAlignment = TextAlignment.Right;
+                    e.Column.ToolTip = "Costs (Includeds Overheads) (Excludeds Committed Costs)";
                     break;
                 case "Committed":
                     column.DataFormatString = "#,##0";
                     column.TextAlignment = TextAlignment.Right;
+
+                    //e.Column.Header = new TextBlock() { Text = "HEllo", ToolTip = "New tooltip" };
                     break;
                 case "Invoiced":
                     column.DataFormatString = "#,##0";
                     column.TextAlignment = TextAlignment.Right;
+                    column.ToolTip = "Invoiced to client";
                     break;
           
 

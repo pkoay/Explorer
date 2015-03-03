@@ -44,7 +44,7 @@ namespace WalzExplorer.Database
 
     public partial class tblProject_Project
     {
-        public string this[string columnName]
+        public  string this[string columnName]
         {
             get{return null;}
         }
@@ -52,7 +52,7 @@ namespace WalzExplorer.Database
 
     public partial class tblPerson_Person
     {
-        public string this[string columnName]
+        public  string this[string columnName]
         {
             get { return null; }
         }
@@ -60,77 +60,77 @@ namespace WalzExplorer.Database
 
     public partial class tblTender_ContractorType
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblWEX_RHSTab
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblWEX_RHSTab_Security
     {
-        public string this[string columnName]
+        public  string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_Drawing
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_Item
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_Material
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_Status
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblWEX_NTSecurityGroup
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_Step
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_Supplier
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblWEX_TreeNodeType
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
@@ -144,105 +144,105 @@ namespace WalzExplorer.Database
     }
     public partial class tblTender_Workgroup
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_WorkgroupHeader
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblWEX_Tree
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblWEX_LHSTab
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_Activity
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_ActivityChildActivity
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_LabourStandard
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_ActivityContractor
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_Supplier_Material
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_UnitOfMeasure
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_ActivityLabour
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_ActivityMaterial
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_WorkgroupItem
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }
     }
     public partial class tblTender_Schedule
     {
-        public string this[string columnName]
+        public override string this[string columnName]
         {
             get { return null; }
         }

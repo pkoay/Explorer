@@ -24,7 +24,7 @@
     <!--WINDOW TITLEBAR BUTTONS-->
     <MahApps:MetroWindow.RightWindowCommands>
         <MahApps:WindowCommands>
-            <StackPanel Orientation="Horizontal">
+            <!--<StackPanel Orientation="Horizontal">
                 <TextBox Name="tbSearch" KeyDown="tbSearch_KeyDown" Width="200" Height="20" ToolTip="Search"/>
                 <Button Name="btnSearch" Click="btnSearch_Click" ToolTip="Search" >
                     <Rectangle Width="16" Height="16" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
@@ -33,7 +33,7 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
-            </StackPanel>
+            </StackPanel>-->
             <Button Name="btnFeedback" Click="btnFeedback_Click" ToolTip="FeedBack" >
                 <Rectangle Width="16" Height="13"
                    Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">

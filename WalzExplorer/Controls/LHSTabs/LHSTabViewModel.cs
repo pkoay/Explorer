@@ -17,7 +17,7 @@ namespace WalzExplorer.Controls.LHSTabs
     /// </summary>
     public sealed class LHSTabViewModel
     {
-        WalzExplorerEntities context = new WalzExplorerEntities();
+        WalzExplorerEntities context = new WalzExplorerEntities(false);
         public ObservableCollection<WEXLHSTab> LHSTabs { get; set; }
         public LHSTabViewModel()
         {

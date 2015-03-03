@@ -6,6 +6,7 @@ using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Data.Entity.Core.Objects;
 using WalzExplorer.Database;
+using System.DirectoryServices;
 
 namespace WalzExplorer
 {
@@ -17,7 +18,7 @@ namespace WalzExplorer
         //private string _loginID;
         readonly List<string> _securityGroups = new List<string>(); //derived from Active directory
         private tblPerson _mimicedPerson;
-        private WalzExplorerEntities db = new WalzExplorerEntities();
+        private WalzExplorerEntities db = new WalzExplorerEntities(false);
 
         public IList<string> SecurityGroups 
         {
@@ -37,21 +38,41 @@ namespace WalzExplorer
         }
 
        
-
         public void Login (string loginID)
         {
-            RealPerson = db.tblPersons.Where(x => x.Login == loginID).FirstOrDefault();
-            MimicedPerson = RealPerson;
+            RealPerson = db.tblPersons.Where(x => x.Login.ToUpper() == loginID.ToUpper()).FirstOrDefault();
+            
+            if (RealPerson != null)
+            {
+                // if pkoay then mimic Sam Givney (ease of testing)
+                if (loginID.ToUpper() == "WALZ\\PKOAY")
+                {
+                    MimicedPerson = db.tblPersons.Where(x => x.Login == "WALZ\\SGivney").FirstOrDefault();
+                }
+                else
+                {
+                    MimicedPerson = RealPerson;
+                }
+            }
+
         }
 
         private void setupMimicedUser()
         {
              
             SecurityGroups.Clear();
-            foreach (GroupPrincipal group in GetGroups(MimicedPerson.Login))
+            foreach (string group in xGetGroups(MimicedPerson.Login.ToUpper().Replace("WALZ\\","")))
             {
-                SecurityGroups.Add(group.Name);
+                SecurityGroups.Add(group);
             }
+
+            //foreach (GroupPrincipal group in GetGroups(MimicedPerson.Login))
+            //{
+            //    SecurityGroups.Add(group.Name);
+            //}
+
+
+
             //switch (MimicedPerson.AXPersonID) //Login.ToUpper())
             //{
             //    case "2640"://"WALZ\\IPARUGAO":
@@ -113,7 +134,7 @@ namespace WalzExplorer
                 // if found - grab its groups
                 if (user != null)
                 {
-                    PrincipalSearchResult<Principal> groups = user.GetGroups();
+                    PrincipalSearchResult<Principal> groups = user.GetGroups(yourDomain);
                     //PrincipalSearchResult<Principal> groups = user.GetAuthorizationGroups();
 
                     //iterate over all groups
@@ -123,7 +144,7 @@ namespace WalzExplorer
                         if (p is GroupPrincipal)
                         {
                             result.Add((GroupPrincipal)p);
-                            result.AddRange(GetGroups((GroupPrincipal)p));
+                            result.AddRange(GetGroups((GroupPrincipal)p, yourDomain));
                         }
                     }
                 }
@@ -131,11 +152,11 @@ namespace WalzExplorer
             return result;
         }
         
-        public List<GroupPrincipal>  GetGroups (GroupPrincipal group)
+        public List<GroupPrincipal>  GetGroups (GroupPrincipal group, PrincipalContext yourDomain)
         {
             List<GroupPrincipal> result = new List<GroupPrincipal>();
 
-            PrincipalSearchResult<Principal> groups = group.GetGroups();
+            PrincipalSearchResult<Principal> groups = group.GetGroups(yourDomain);
             //PrincipalSearchResult<Principal> groups = user.GetAuthorizationGroups();
 
             // iterate over all groups
@@ -147,12 +168,56 @@ namespace WalzExplorer
                     result.Add((GroupPrincipal)p);
 
                     //Recursive
-                    result.AddRange(GetGroups((GroupPrincipal)p));
+                    result.AddRange(GetGroups((GroupPrincipal)p, yourDomain));
                 }
             }
 
             return result;
         }
+
+
+        IEnumerable<String> xGetGroups(String samAccountName)
+        {
+            var userNestedMembership = new List<string>();
+
+            var domainConnection = new DirectoryEntry();
+            domainConnection.AuthenticationType = System.DirectoryServices.AuthenticationTypes.Secure;
+
+            var samSearcher = new DirectorySearcher();
+
+            samSearcher.SearchRoot = domainConnection;
+            samSearcher.Filter = "(samAccountName=" + samAccountName + ")";
+            samSearcher.PropertiesToLoad.Add("displayName");
+
+            var samResult = samSearcher.FindOne();
+
+            if (samResult != null)
+            {
+                var theUser = samResult.GetDirectoryEntry();
+                theUser.RefreshCache(new string[] { "tokenGroups" });
+
+                foreach (byte[] resultBytes in theUser.Properties["tokenGroups"])
+                {
+                    var SID = new SecurityIdentifier(resultBytes, 0);
+                    var sidSearcher = new DirectorySearcher();
+
+                    sidSearcher.SearchRoot = domainConnection;
+                    sidSearcher.Filter = "(objectSid=" + SID.Value + ")";
+                    sidSearcher.PropertiesToLoad.Add("name");
+
+                    var sidResult = sidSearcher.FindOne();
+                    if (sidResult != null)
+                    {
+                        userNestedMembership.Add((string)sidResult.Properties["name"][0]);
+                    }
+                }
+            }
+
+            return userNestedMembership;
+        }
+
+
+
     }
     
 }

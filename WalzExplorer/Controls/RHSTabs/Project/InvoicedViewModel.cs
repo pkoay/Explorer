@@ -14,7 +14,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
     public class InvoicedViewModel 
     {
         public ObservableCollection<spWEX_RHS_Project_Summary_Result> data;
-        public WalzExplorerEntities context = new WalzExplorerEntities();
+        public WalzExplorerEntities context = new WalzExplorerEntities(false);
         int ProjectID;
         
 

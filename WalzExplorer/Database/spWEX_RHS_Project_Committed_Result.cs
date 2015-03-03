@@ -11,13 +11,13 @@ namespace WalzExplorer.Database
 {
     using System;
     using System.Collections.Generic;
-    public partial class spWEX_RHS_Project_Cost_Result : ModelBase
+    public partial class spWEX_RHS_Project_Committed_Result : ModelBase
     {
-        private string _dataAreaID;
-    	public string DataAreaID 
+        private string _dataAreaId;
+    	public string DataAreaId 
     	{ 
-    		get { return _dataAreaID; } 
-    		set { SetProperty(ref _dataAreaID, value); } 
+    		get { return _dataAreaId; } 
+    		set { SetProperty(ref _dataAreaId, value); } 
     	}
     
         private string _projId;
@@ -55,39 +55,18 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _date, value); } 
     	}
     
-        private string _employee;
-    	public string Employee 
-    	{ 
-    		get { return _employee; } 
-    		set { SetProperty(ref _employee, value); } 
-    	}
-    
-        private Nullable<decimal> _quantity;
-    	public Nullable<decimal> Quantity 
+        private decimal _quantity;
+    	public decimal Quantity 
     	{ 
     		get { return _quantity; } 
     		set { SetProperty(ref _quantity, value); } 
     	}
     
-        private Nullable<decimal> _costAmount;
-    	public Nullable<decimal> CostAmount 
+        private decimal _commCostAmount;
+    	public decimal CommCostAmount 
     	{ 
-    		get { return _costAmount; } 
-    		set { SetProperty(ref _costAmount, value); } 
-    	}
-    
-        private Nullable<decimal> _costOverhead;
-    	public Nullable<decimal> CostOverhead 
-    	{ 
-    		get { return _costOverhead; } 
-    		set { SetProperty(ref _costOverhead, value); } 
-    	}
-    
-        private Nullable<decimal> _costTotal;
-    	public Nullable<decimal> CostTotal 
-    	{ 
-    		get { return _costTotal; } 
-    		set { SetProperty(ref _costTotal, value); } 
+    		get { return _commCostAmount; } 
+    		set { SetProperty(ref _commCostAmount, value); } 
     	}
     
         private string _description;
@@ -123,20 +102,6 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _purchQtyPrice; } 
     		set { SetProperty(ref _purchQtyPrice, value); } 
-    	}
-    
-        private string _purchInvoice;
-    	public string PurchInvoice 
-    	{ 
-    		get { return _purchInvoice; } 
-    		set { SetProperty(ref _purchInvoice, value); } 
-    	}
-    
-        private Nullable<decimal> _hours;
-    	public Nullable<decimal> Hours 
-    	{ 
-    		get { return _hours; } 
-    		set { SetProperty(ref _hours, value); } 
     	}
     
     }

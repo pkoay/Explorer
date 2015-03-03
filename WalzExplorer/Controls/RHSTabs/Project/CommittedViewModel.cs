@@ -11,25 +11,23 @@ using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.RHSTabs.Project
 {
-    public class CostViewModel 
+    public class CommittedViewModel 
     {
-        public ObservableCollection<spWEX_RHS_Project_Cost_Result> data;
+        public ObservableCollection<spWEX_RHS_Project_Committed_Result> data;
         public WalzExplorerEntities context = new WalzExplorerEntities(false);
         int ProjectID;
         //string CustomerID;
         //string NodeTypeID;
         //string UserPersonID;
-       
-        public CostViewModel (WEXSettings settings) //(string NodeType, string PersonID, int Id)
+
+        public CommittedViewModel(WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
             ProjectID = ConvertLibrary.StringToInt(settings.node.FindID("PROJECT", "-2"), -1);
             //CustomerID = ConvertLibrary.StringToInt(settings.node.FindID("CUSTOMER", "-2"), -1).ToString();
             //NodeTypeID = settings.node.TypeID;
             //UserPersonID=settings.user.MimicedPerson.PersonID.ToString();
 
-
-
-            data = new ObservableCollection<spWEX_RHS_Project_Cost_Result>(context.spWEX_RHS_Project_Cost(ProjectID));  
+            data = new ObservableCollection<spWEX_RHS_Project_Committed_Result>(context.spWEX_RHS_Project_Committed(ProjectID));  
         }
     }
 }

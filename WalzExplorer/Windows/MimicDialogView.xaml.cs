@@ -21,7 +21,7 @@ namespace WalzExplorer.Windows
     /// </summary>
     public partial class MimicDialog : Window
     {
-        WalzExplorerEntities context = new WalzExplorerEntities();
+        WalzExplorerEntities context = new WalzExplorerEntities(false);
         private WEXSettings _settings;
         private MimicDialogViewModel viewModel;
 

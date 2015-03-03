@@ -25,7 +25,7 @@ namespace WalzExplorer.Controls.RHSTabs
 
         public RHSTabGridViewModelBase()
         {
-            this.context = new WalzExplorerEntities();
+            this.context = new WalzExplorerEntities(false);
         }
 
         public virtual ModelBase DefaultItem()

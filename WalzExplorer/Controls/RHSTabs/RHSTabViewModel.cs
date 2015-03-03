@@ -13,7 +13,7 @@ namespace WalzExplorer.Controls.RHSTabs
     /// </summary>
     public sealed class RHSTabViewModel
     {
-        WalzExplorerEntities context = new WalzExplorerEntities();
+        WalzExplorerEntities context = new WalzExplorerEntities(false);
         public ObservableCollection<WEXRHSTab> RHSTabs { get; set; }
         public RHSTabViewModel(NodeViewModel LHSNode, WEXUser user)
         {
