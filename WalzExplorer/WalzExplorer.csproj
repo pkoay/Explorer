@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\WALZ-dc-01\Company\Walz Construction\Projects\test\</InstallUrl>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>35</ApplicationRevision>
+    <ApplicationRevision>36</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -182,6 +182,7 @@
     <Compile Include="Common\GridLibrary.cs" />
     <Compile Include="Common\ConvertLibrary.cs" />
     <Compile Include="Common\ObjectLibrary.cs" />
+    <Compile Include="Common\WaitCursor.cs" />
     <Compile Include="Controls\RHSTabs\Project\Cost2View.xaml.cs">
       <DependentUpon>Cost2View.xaml</DependentUpon>
     </Compile>

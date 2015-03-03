@@ -30,6 +30,7 @@ using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.TabControl;
 using Telerik.Windows.Controls.Input;
 using Telerik.Windows.Data;
+using WalzExplorer.Common;
 
 namespace WalzExplorer
 {
@@ -84,8 +85,10 @@ namespace WalzExplorer
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             string user = WindowsIdentity.GetCurrent().Name;
-            //MessageBox.Show("User is " + user);
-            settings.user.Login(WindowsIdentity.GetCurrent().Name);
+            using (new WaitCursor())
+            {
+                settings.user.Login(WindowsIdentity.GetCurrent().Name);
+            }
             if (settings.user.RealPerson == null)
             {
                 MessageBox.Show("Login failed. The user '" + user + "' has not been assigned an AX EmployeeID", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -149,38 +152,40 @@ namespace WalzExplorer
 
         private void tcLHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
-            RadTabControl tc = (RadTabControl)sender;
-            if (tc.SelectedItem != null)
+            using (new WaitCursor())
             {
-                WEXLHSTab ti = (WEXLHSTab)tc.SelectedItem;
+                RadTabControl tc = (RadTabControl)sender;
+                if (tc.SelectedItem != null)
+                {
+                    WEXLHSTab ti = (WEXLHSTab)tc.SelectedItem;
 
-                if (ti.Content == null)
-                {
-                    //Create Treeview if not created
-                    WEXTreeView tv = new WEXTreeView() { Name = ti.TreeviewName(), Tag = ti.ID };
-                    tv.PopulateRoot(settings.user, dicSQLSubsitutes);
-                    tv.NodeChanged += new EventHandler(tvLHS_NodeChanged);
-                    ti.Content = tv;
-                }
-                else
-                {
-                    // Fire node change event when tab changed
-                    WEXTreeView tv = (WEXTreeView)ti.Content;
-                    tvLHS_NodeChanged(tv, null);
+                    if (ti.Content == null)
+                    {
+                        //Create Treeview if not created
+                        WEXTreeView tv = new WEXTreeView() { Name = ti.TreeviewName(), Tag = ti.ID };
+                        tv.PopulateRoot(settings.user, dicSQLSubsitutes);
+                        tv.NodeChanged += new EventHandler(tvLHS_NodeChanged);
+                        ti.Content = tv;
+                    }
+                    else
+                    {
+                        // Fire node change event when tab changed
+                        WEXTreeView tv = (WEXTreeView)ti.Content;
+                        tvLHS_NodeChanged(tv, null);
+                    }
                 }
             }
-
         }
 
         private void tcRHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            using (new WaitCursor())
+            {
+                //TabItem ti = (TabItem) tcRHS.Items[tcRHS.SelectedIndex];
+                //ti.Content = new ProjectDetail ();
 
-            //TabItem ti = (TabItem) tcRHS.Items[tcRHS.SelectedIndex];
-            //ti.Content = new ProjectDetail ();
-
-            SelectedRHSTabRefresh();
-           
+                SelectedRHSTabRefresh();
+            }
         }
 
         private void SelectedRHSTabRefresh()
