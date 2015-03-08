@@ -91,6 +91,18 @@ namespace WalzExplorer.Controls.RHSTabs
             g.ShowColumnHeaders = true;
             g.ShowColumnFooters = false;
             g.ShowGroupPanel = true;
+
+
+            // Sets style for group headers (i.e. group totals (aggregates) below columns, not in header just concatenated
+            if (!grd.Resources.Contains(typeof(GroupHeaderRow)))
+            {
+                Style style = new Style(typeof(GroupHeaderRow));
+                style.BasedOn = (Style)FindResource("GroupHeaderRowStyle");
+                style.Setters.Add(new Setter(GroupHeaderRow.ShowGroupHeaderColumnAggregatesProperty, true));
+                style.Setters.Add(new Setter(GroupHeaderRow.ShowHeaderAggregatesProperty, false));
+                style.Seal();
+                grd.Resources.Add(typeof(GroupHeaderRow), style);
+            }
         }
 
       

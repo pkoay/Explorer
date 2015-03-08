@@ -5,13 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ServicesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="tblFeedback_Application">
-          <Key>
-            <PropertyRef Name="ApplicationID" />
-          </Key>
-          <Property Name="ApplicationID" Type="int" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="tblFeedback_Item">
           <Key>
             <PropertyRef Name="ItemID" />
@@ -41,126 +34,6 @@
           <Property Name="TypeID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="tblIntegrity_Check">
-          <Key>
-            <PropertyRef Name="CheckID" />
-          </Key>
-          <Property Name="CheckID" Type="int" Nullable="false" />
-          <Property Name="SystemID" Type="int" Nullable="false" />
-          <Property Name="StoredProcedure" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="IssueObjectType" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Solution" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="InfoField1Title" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="InfoField2Title" Type="varchar" MaxLength="255" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblIntegrity_EmailRecipient">
-          <Key>
-            <PropertyRef Name="EmailRecipientID" />
-          </Key>
-          <Property Name="EmailRecipientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EmailAddress" Type="varchar" MaxLength="255" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblIntegrity_Issue">
-          <Key>
-            <PropertyRef Name="IssueID" />
-          </Key>
-          <Property Name="IssueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CheckID" Type="int" Nullable="false" />
-          <Property Name="IssueObjectID" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="IssueRaisedDate" Type="datetime" Nullable="false" />
-          <Property Name="IssueLastCheckDate" Type="datetime" />
-          <Property Name="IssueInfo1" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="IssueInfo2" Type="varchar" MaxLength="255" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblIntegrity_Issue_temp">
-          <Key>
-            <PropertyRef Name="CheckID" />
-            <PropertyRef Name="IssueObjectID" />
-          </Key>
-          <Property Name="CheckID" Type="int" Nullable="false" />
-          <Property Name="IssueObjectID" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="LastCheckDate" Type="datetime" Nullable="false" />
-          <Property Name="IssueInfo1" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="IssueInfo2" Type="varchar" MaxLength="255" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblIntegrity_System">
-          <Key>
-            <PropertyRef Name="SystemID" />
-          </Key>
-          <Property Name="SystemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblIntegrity_System_EmailRecipient">
-          <Key>
-            <PropertyRef Name="EmailRecipientID" />
-            <PropertyRef Name="SystemID" />
-          </Key>
-          <Property Name="EmailRecipientID" Type="int" Nullable="false" />
-          <Property Name="SystemID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblLog">
-          <Key>
-            <PropertyRef Name="LogID" />
-          </Key>
-          <Property Name="LogID" Type="int" Nullable="false" />
-          <Property Name="DatabaseID" Type="int" Nullable="false" />
-          <Property Name="TableID" Type="int" Nullable="false" />
-          <Property Name="ColumnID" Type="int" Nullable="false" />
-          <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="DateTime" Type="datetime" Nullable="false" />
-          <Property Name="RowID" Type="int" Nullable="false" />
-          <Property Name="OperationID" Type="int" Nullable="false" />
-          <Property Name="NewValue" Type="varchar(max)" Nullable="false" />
-          <Property Name="Timestamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblLog_Column">
-          <Key>
-            <PropertyRef Name="ColumnID" />
-          </Key>
-          <Property Name="ColumnID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="100" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblLog_Database">
-          <Key>
-            <PropertyRef Name="DatabaseID" />
-          </Key>
-          <Property Name="DatabaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblLog_Operation">
-          <Key>
-            <PropertyRef Name="OperationID" />
-          </Key>
-          <Property Name="OperationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblLog_Table">
-          <Key>
-            <PropertyRef Name="TableID" />
-          </Key>
-          <Property Name="TableID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblLog_User">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_tblFeedback_Item_tblFeedback_Application">
-          <End Role="tblFeedback_Application" Type="Self.tblFeedback_Application" Multiplicity="1" />
-          <End Role="tblFeedback_Item" Type="Self.tblFeedback_Item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblFeedback_Application">
-              <PropertyRef Name="ApplicationID" />
-            </Principal>
-            <Dependent Role="tblFeedback_Item">
-              <PropertyRef Name="ApplicationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblFeedback_Item_tblFeedback_Type">
           <End Role="tblFeedback_Type" Type="Self.tblFeedback_Type" Multiplicity="1" />
           <End Role="tblFeedback_Item" Type="Self.tblFeedback_Item" Multiplicity="*" />
@@ -185,147 +58,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblIntegrity_Check_tblIntegrity_System">
-          <End Role="tblIntegrity_System" Type="Self.tblIntegrity_System" Multiplicity="1" />
-          <End Role="tblIntegrity_Check" Type="Self.tblIntegrity_Check" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblIntegrity_System">
-              <PropertyRef Name="SystemID" />
-            </Principal>
-            <Dependent Role="tblIntegrity_Check">
-              <PropertyRef Name="SystemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblIntegrity_Issue_tblIntegrity_Check">
-          <End Role="tblIntegrity_Check" Type="Self.tblIntegrity_Check" Multiplicity="1" />
-          <End Role="tblIntegrity_Issue" Type="Self.tblIntegrity_Issue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblIntegrity_Check">
-              <PropertyRef Name="CheckID" />
-            </Principal>
-            <Dependent Role="tblIntegrity_Issue">
-              <PropertyRef Name="CheckID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblIntegrity_Issue_temp_tblIntegrity_Check">
-          <End Role="tblIntegrity_Check" Type="Self.tblIntegrity_Check" Multiplicity="1" />
-          <End Role="tblIntegrity_Issue_temp" Type="Self.tblIntegrity_Issue_temp" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblIntegrity_Check">
-              <PropertyRef Name="CheckID" />
-            </Principal>
-            <Dependent Role="tblIntegrity_Issue_temp">
-              <PropertyRef Name="CheckID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblIntegrity_System_EmailRecipient_tblIntegrity_EmailRecipient">
-          <End Role="tblIntegrity_EmailRecipient" Type="Self.tblIntegrity_EmailRecipient" Multiplicity="1" />
-          <End Role="tblIntegrity_System_EmailRecipient" Type="Self.tblIntegrity_System_EmailRecipient" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblIntegrity_EmailRecipient">
-              <PropertyRef Name="EmailRecipientID" />
-            </Principal>
-            <Dependent Role="tblIntegrity_System_EmailRecipient">
-              <PropertyRef Name="EmailRecipientID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblIntegrity_System_EmailRecipient_tblIntegrity_System">
-          <End Role="tblIntegrity_System" Type="Self.tblIntegrity_System" Multiplicity="1" />
-          <End Role="tblIntegrity_System_EmailRecipient" Type="Self.tblIntegrity_System_EmailRecipient" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblIntegrity_System">
-              <PropertyRef Name="SystemID" />
-            </Principal>
-            <Dependent Role="tblIntegrity_System_EmailRecipient">
-              <PropertyRef Name="SystemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblLog_tblColumn">
-          <End Role="tblLog_Column" Type="Self.tblLog_Column" Multiplicity="1" />
-          <End Role="tblLog" Type="Self.tblLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblLog_Column">
-              <PropertyRef Name="ColumnID" />
-            </Principal>
-            <Dependent Role="tblLog">
-              <PropertyRef Name="ColumnID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblLog_tblDatabase">
-          <End Role="tblLog_Database" Type="Self.tblLog_Database" Multiplicity="1" />
-          <End Role="tblLog" Type="Self.tblLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblLog_Database">
-              <PropertyRef Name="DatabaseID" />
-            </Principal>
-            <Dependent Role="tblLog">
-              <PropertyRef Name="DatabaseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblLog_tblOperation">
-          <End Role="tblLog_Operation" Type="Self.tblLog_Operation" Multiplicity="1" />
-          <End Role="tblLog" Type="Self.tblLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblLog_Operation">
-              <PropertyRef Name="OperationID" />
-            </Principal>
-            <Dependent Role="tblLog">
-              <PropertyRef Name="OperationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblLog_tblTable">
-          <End Role="tblLog_Table" Type="Self.tblLog_Table" Multiplicity="1" />
-          <End Role="tblLog" Type="Self.tblLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblLog_Table">
-              <PropertyRef Name="TableID" />
-            </Principal>
-            <Dependent Role="tblLog">
-              <PropertyRef Name="TableID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblLog_tblUser">
-          <End Role="tblLog_User" Type="Self.tblLog_User" Multiplicity="1" />
-          <End Role="tblLog" Type="Self.tblLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblLog_User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="tblLog">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <Function Name="spLogChange" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Database" Type="varchar" Mode="In" />
+          <Parameter Name="Table" Type="varchar" Mode="In" />
+          <Parameter Name="Column" Type="varchar" Mode="In" />
+          <Parameter Name="User" Type="varchar" Mode="In" />
+          <Parameter Name="Row" Type="varchar" Mode="In" />
+          <Parameter Name="Operation" Type="varchar" Mode="In" />
+          <Parameter Name="NewValue" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="spLogEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Application" Type="varchar" Mode="In" />
+          <Parameter Name="Operation" Type="varchar" Mode="In" />
+          <Parameter Name="User" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="ServicesModelStoreContainer">
-          <EntitySet Name="tblFeedback_Application" EntityType="Self.tblFeedback_Application" Schema="dbo" Table="tblFeedback.Application" store:Type="Tables" />
-          <EntitySet Name="tblFeedback_Item" EntityType="Self.tblFeedback_Item" Schema="dbo" Table="tblFeedback.Item" store:Type="Tables" />
-          <EntitySet Name="tblFeedback_Status" EntityType="Self.tblFeedback_Status" Schema="dbo" Table="tblFeedback.Status" store:Type="Tables" />
-          <EntitySet Name="tblFeedback_Type" EntityType="Self.tblFeedback_Type" Schema="dbo" Table="tblFeedback.Type" store:Type="Tables" />
-          <EntitySet Name="tblIntegrity_Check" EntityType="Self.tblIntegrity_Check" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblIntegrity_EmailRecipient" EntityType="Self.tblIntegrity_EmailRecipient" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblIntegrity_Issue" EntityType="Self.tblIntegrity_Issue" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblIntegrity_Issue_temp" EntityType="Self.tblIntegrity_Issue_temp" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblIntegrity_System" EntityType="Self.tblIntegrity_System" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblIntegrity_System_EmailRecipient" EntityType="Self.tblIntegrity_System_EmailRecipient" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblLog" EntityType="Self.tblLog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblLog_Column" EntityType="Self.tblLog_Column" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblLog_Database" EntityType="Self.tblLog_Database" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblLog_Operation" EntityType="Self.tblLog_Operation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblLog_Table" EntityType="Self.tblLog_Table" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblLog_User" EntityType="Self.tblLog_User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_tblFeedback_Item_tblFeedback_Application" Association="Self.FK_tblFeedback_Item_tblFeedback_Application">
-            <End Role="tblFeedback_Application" EntitySet="tblFeedback_Application" />
-            <End Role="tblFeedback_Item" EntitySet="tblFeedback_Item" />
-          </AssociationSet>
+          <EntitySet Name="tblFeedback_Item" EntityType="Self.tblFeedback_Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFeedback_Status" EntityType="Self.tblFeedback_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFeedback_Type" EntityType="Self.tblFeedback_Type" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_tblFeedback_Item_tblFeedback_Type" Association="Self.FK_tblFeedback_Item_tblFeedback_Type">
             <End Role="tblFeedback_Type" EntitySet="tblFeedback_Type" />
             <End Role="tblFeedback_Item" EntitySet="tblFeedback_Item" />
@@ -334,325 +84,29 @@
             <End Role="tblFeedback_Status" EntitySet="tblFeedback_Status" />
             <End Role="tblFeedback_Item" EntitySet="tblFeedback_Item" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblIntegrity_Check_tblIntegrity_System" Association="Self.FK_tblIntegrity_Check_tblIntegrity_System">
-            <End Role="tblIntegrity_System" EntitySet="tblIntegrity_System" />
-            <End Role="tblIntegrity_Check" EntitySet="tblIntegrity_Check" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblIntegrity_Issue_tblIntegrity_Check" Association="Self.FK_tblIntegrity_Issue_tblIntegrity_Check">
-            <End Role="tblIntegrity_Check" EntitySet="tblIntegrity_Check" />
-            <End Role="tblIntegrity_Issue" EntitySet="tblIntegrity_Issue" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblIntegrity_Issue_temp_tblIntegrity_Check" Association="Self.FK_tblIntegrity_Issue_temp_tblIntegrity_Check">
-            <End Role="tblIntegrity_Check" EntitySet="tblIntegrity_Check" />
-            <End Role="tblIntegrity_Issue_temp" EntitySet="tblIntegrity_Issue_temp" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblIntegrity_System_EmailRecipient_tblIntegrity_EmailRecipient" Association="Self.FK_tblIntegrity_System_EmailRecipient_tblIntegrity_EmailRecipient">
-            <End Role="tblIntegrity_EmailRecipient" EntitySet="tblIntegrity_EmailRecipient" />
-            <End Role="tblIntegrity_System_EmailRecipient" EntitySet="tblIntegrity_System_EmailRecipient" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblIntegrity_System_EmailRecipient_tblIntegrity_System" Association="Self.FK_tblIntegrity_System_EmailRecipient_tblIntegrity_System">
-            <End Role="tblIntegrity_System" EntitySet="tblIntegrity_System" />
-            <End Role="tblIntegrity_System_EmailRecipient" EntitySet="tblIntegrity_System_EmailRecipient" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblLog_tblColumn" Association="Self.FK_tblLog_tblColumn">
-            <End Role="tblLog_Column" EntitySet="tblLog_Column" />
-            <End Role="tblLog" EntitySet="tblLog" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblLog_tblDatabase" Association="Self.FK_tblLog_tblDatabase">
-            <End Role="tblLog_Database" EntitySet="tblLog_Database" />
-            <End Role="tblLog" EntitySet="tblLog" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblLog_tblOperation" Association="Self.FK_tblLog_tblOperation">
-            <End Role="tblLog_Operation" EntitySet="tblLog_Operation" />
-            <End Role="tblLog" EntitySet="tblLog" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblLog_tblTable" Association="Self.FK_tblLog_tblTable">
-            <End Role="tblLog_Table" EntitySet="tblLog_Table" />
-            <End Role="tblLog" EntitySet="tblLog" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblLog_tblUser" Association="Self.FK_tblLog_tblUser">
-            <End Role="tblLog_User" EntitySet="tblLog_User" />
-            <End Role="tblLog" EntitySet="tblLog" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ServicesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="tblIntegrity_Check">
-          <Key>
-            <PropertyRef Name="CheckID" />
-          </Key>
-          <Property Name="CheckID" Type="Int32" Nullable="false" />
-          <Property Name="SystemID" Type="Int32" Nullable="false" />
-          <Property Name="StoredProcedure" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IssueObjectType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Solution" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="InfoField1Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="InfoField2Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblIntegrity_System" Relationship="Self.FK_tblIntegrity_Check_tblIntegrity_System" FromRole="tblIntegrity_Check" ToRole="tblIntegrity_System" />
-          <NavigationProperty Name="tblIntegrity_Issue" Relationship="Self.FK_tblIntegrity_Issue_tblIntegrity_Check" FromRole="tblIntegrity_Check" ToRole="tblIntegrity_Issue" />
-          <NavigationProperty Name="tblIntegrity_Issue_temp" Relationship="Self.FK_tblIntegrity_Issue_temp_tblIntegrity_Check" FromRole="tblIntegrity_Check" ToRole="tblIntegrity_Issue_temp" />
-        </EntityType>
-        <EntityType Name="tblIntegrity_EmailRecipient">
-          <Key>
-            <PropertyRef Name="EmailRecipientID" />
-          </Key>
-          <Property Name="EmailRecipientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmailAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblIntegrity_System" Relationship="Self.tblIntegrity_System_EmailRecipient" FromRole="tblIntegrity_EmailRecipient" ToRole="tblIntegrity_System" />
-        </EntityType>
-        <EntityType Name="tblIntegrity_Issue">
-          <Key>
-            <PropertyRef Name="IssueID" />
-          </Key>
-          <Property Name="IssueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CheckID" Type="Int32" Nullable="false" />
-          <Property Name="IssueObjectID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IssueRaisedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IssueLastCheckDate" Type="DateTime" Precision="3" />
-          <Property Name="IssueInfo1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IssueInfo2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblIntegrity_Check" Relationship="Self.FK_tblIntegrity_Issue_tblIntegrity_Check" FromRole="tblIntegrity_Issue" ToRole="tblIntegrity_Check" />
-        </EntityType>
-        <EntityType Name="tblIntegrity_Issue_temp">
-          <Key>
-            <PropertyRef Name="CheckID" />
-            <PropertyRef Name="IssueObjectID" />
-          </Key>
-          <Property Name="CheckID" Type="Int32" Nullable="false" />
-          <Property Name="IssueObjectID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastCheckDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IssueInfo1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IssueInfo2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblIntegrity_Check" Relationship="Self.FK_tblIntegrity_Issue_temp_tblIntegrity_Check" FromRole="tblIntegrity_Issue_temp" ToRole="tblIntegrity_Check" />
-        </EntityType>
-        <EntityType Name="tblIntegrity_System">
-          <Key>
-            <PropertyRef Name="SystemID" />
-          </Key>
-          <Property Name="SystemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblIntegrity_Check" Relationship="Self.FK_tblIntegrity_Check_tblIntegrity_System" FromRole="tblIntegrity_System" ToRole="tblIntegrity_Check" />
-          <NavigationProperty Name="tblIntegrity_EmailRecipient" Relationship="Self.tblIntegrity_System_EmailRecipient" FromRole="tblIntegrity_System" ToRole="tblIntegrity_EmailRecipient" />
-        </EntityType>
-        <EntityType Name="tblLog">
-          <Key>
-            <PropertyRef Name="LogID" />
-          </Key>
-          <Property Name="LogID" Type="Int32" Nullable="false" />
-          <Property Name="DatabaseID" Type="Int32" Nullable="false" />
-          <Property Name="TableID" Type="Int32" Nullable="false" />
-          <Property Name="ColumnID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RowID" Type="Int32" Nullable="false" />
-          <Property Name="OperationID" Type="Int32" Nullable="false" />
-          <Property Name="NewValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Timestamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="tblLog_Column" Relationship="Self.FK_tblLog_tblColumn" FromRole="tblLog" ToRole="tblLog_Column" />
-          <NavigationProperty Name="tblLog_Database" Relationship="Self.FK_tblLog_tblDatabase" FromRole="tblLog" ToRole="tblLog_Database" />
-          <NavigationProperty Name="tblLog_Operation" Relationship="Self.FK_tblLog_tblOperation" FromRole="tblLog" ToRole="tblLog_Operation" />
-          <NavigationProperty Name="tblLog_Table" Relationship="Self.FK_tblLog_tblTable" FromRole="tblLog" ToRole="tblLog_Table" />
-          <NavigationProperty Name="tblLog_User" Relationship="Self.FK_tblLog_tblUser" FromRole="tblLog" ToRole="tblLog_User" />
-        </EntityType>
-        <EntityType Name="tblLog_Column">
-          <Key>
-            <PropertyRef Name="ColumnID" />
-          </Key>
-          <Property Name="ColumnID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblLogs" Relationship="Self.FK_tblLog_tblColumn" FromRole="tblLog_Column" ToRole="tblLog" />
-        </EntityType>
-        <EntityType Name="tblLog_Database">
-          <Key>
-            <PropertyRef Name="DatabaseID" />
-          </Key>
-          <Property Name="DatabaseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblLogs" Relationship="Self.FK_tblLog_tblDatabase" FromRole="tblLog_Database" ToRole="tblLog" />
-        </EntityType>
-        <EntityType Name="tblLog_Operation">
-          <Key>
-            <PropertyRef Name="OperationID" />
-          </Key>
-          <Property Name="OperationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblLogs" Relationship="Self.FK_tblLog_tblOperation" FromRole="tblLog_Operation" ToRole="tblLog" />
-        </EntityType>
-        <EntityType Name="tblLog_Table">
-          <Key>
-            <PropertyRef Name="TableID" />
-          </Key>
-          <Property Name="TableID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblLogs" Relationship="Self.FK_tblLog_tblTable" FromRole="tblLog_Table" ToRole="tblLog" />
-        </EntityType>
-        <EntityType Name="tblLog_User">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="tblLogs" Relationship="Self.FK_tblLog_tblUser" FromRole="tblLog_User" ToRole="tblLog" />
-        </EntityType>
-        <Association Name="FK_tblIntegrity_Check_tblIntegrity_System">
-          <End Role="tblIntegrity_System" Type="Self.tblIntegrity_System" Multiplicity="1" />
-          <End Role="tblIntegrity_Check" Type="Self.tblIntegrity_Check" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblIntegrity_System">
-              <PropertyRef Name="SystemID" />
-            </Principal>
-            <Dependent Role="tblIntegrity_Check">
-              <PropertyRef Name="SystemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblIntegrity_Issue_tblIntegrity_Check">
-          <End Role="tblIntegrity_Check" Type="Self.tblIntegrity_Check" Multiplicity="1" />
-          <End Role="tblIntegrity_Issue" Type="Self.tblIntegrity_Issue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblIntegrity_Check">
-              <PropertyRef Name="CheckID" />
-            </Principal>
-            <Dependent Role="tblIntegrity_Issue">
-              <PropertyRef Name="CheckID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblIntegrity_Issue_temp_tblIntegrity_Check">
-          <End Role="tblIntegrity_Check" Type="Self.tblIntegrity_Check" Multiplicity="1" />
-          <End Role="tblIntegrity_Issue_temp" Type="Self.tblIntegrity_Issue_temp" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblIntegrity_Check">
-              <PropertyRef Name="CheckID" />
-            </Principal>
-            <Dependent Role="tblIntegrity_Issue_temp">
-              <PropertyRef Name="CheckID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblLog_tblColumn">
-          <End Role="tblLog_Column" Type="Self.tblLog_Column" Multiplicity="1" />
-          <End Role="tblLog" Type="Self.tblLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblLog_Column">
-              <PropertyRef Name="ColumnID" />
-            </Principal>
-            <Dependent Role="tblLog">
-              <PropertyRef Name="ColumnID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblLog_tblDatabase">
-          <End Role="tblLog_Database" Type="Self.tblLog_Database" Multiplicity="1" />
-          <End Role="tblLog" Type="Self.tblLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblLog_Database">
-              <PropertyRef Name="DatabaseID" />
-            </Principal>
-            <Dependent Role="tblLog">
-              <PropertyRef Name="DatabaseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblLog_tblOperation">
-          <End Role="tblLog_Operation" Type="Self.tblLog_Operation" Multiplicity="1" />
-          <End Role="tblLog" Type="Self.tblLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblLog_Operation">
-              <PropertyRef Name="OperationID" />
-            </Principal>
-            <Dependent Role="tblLog">
-              <PropertyRef Name="OperationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblLog_tblTable">
-          <End Role="tblLog_Table" Type="Self.tblLog_Table" Multiplicity="1" />
-          <End Role="tblLog" Type="Self.tblLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblLog_Table">
-              <PropertyRef Name="TableID" />
-            </Principal>
-            <Dependent Role="tblLog">
-              <PropertyRef Name="TableID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblLog_tblUser">
-          <End Role="tblLog_User" Type="Self.tblLog_User" Multiplicity="1" />
-          <End Role="tblLog" Type="Self.tblLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblLog_User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="tblLog">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="tblIntegrity_System_EmailRecipient">
-          <End Role="tblIntegrity_EmailRecipient" Type="Self.tblIntegrity_EmailRecipient" Multiplicity="*" />
-          <End Role="tblIntegrity_System" Type="Self.tblIntegrity_System" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="ServicesEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tblIntegrity_Check" EntityType="Self.tblIntegrity_Check" />
-          <EntitySet Name="tblIntegrity_EmailRecipient" EntityType="Self.tblIntegrity_EmailRecipient" />
-          <EntitySet Name="tblIntegrity_Issue" EntityType="Self.tblIntegrity_Issue" />
-          <EntitySet Name="tblIntegrity_Issue_temp" EntityType="Self.tblIntegrity_Issue_temp" />
-          <EntitySet Name="tblIntegrity_System" EntityType="Self.tblIntegrity_System" />
-          <EntitySet Name="tblLogs" EntityType="Self.tblLog" />
-          <EntitySet Name="tblLog_Column" EntityType="Self.tblLog_Column" />
-          <EntitySet Name="tblLog_Database" EntityType="Self.tblLog_Database" />
-          <EntitySet Name="tblLog_Operation" EntityType="Self.tblLog_Operation" />
-          <EntitySet Name="tblLog_Table" EntityType="Self.tblLog_Table" />
-          <EntitySet Name="tblLog_User" EntityType="Self.tblLog_User" />
-          <AssociationSet Name="FK_tblIntegrity_Check_tblIntegrity_System" Association="Self.FK_tblIntegrity_Check_tblIntegrity_System">
-            <End Role="tblIntegrity_System" EntitySet="tblIntegrity_System" />
-            <End Role="tblIntegrity_Check" EntitySet="tblIntegrity_Check" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblIntegrity_Issue_tblIntegrity_Check" Association="Self.FK_tblIntegrity_Issue_tblIntegrity_Check">
-            <End Role="tblIntegrity_Check" EntitySet="tblIntegrity_Check" />
-            <End Role="tblIntegrity_Issue" EntitySet="tblIntegrity_Issue" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblIntegrity_Issue_temp_tblIntegrity_Check" Association="Self.FK_tblIntegrity_Issue_temp_tblIntegrity_Check">
-            <End Role="tblIntegrity_Check" EntitySet="tblIntegrity_Check" />
-            <End Role="tblIntegrity_Issue_temp" EntitySet="tblIntegrity_Issue_temp" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblLog_tblColumn" Association="Self.FK_tblLog_tblColumn">
-            <End Role="tblLog_Column" EntitySet="tblLog_Column" />
-            <End Role="tblLog" EntitySet="tblLogs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblLog_tblDatabase" Association="Self.FK_tblLog_tblDatabase">
-            <End Role="tblLog_Database" EntitySet="tblLog_Database" />
-            <End Role="tblLog" EntitySet="tblLogs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblLog_tblOperation" Association="Self.FK_tblLog_tblOperation">
-            <End Role="tblLog_Operation" EntitySet="tblLog_Operation" />
-            <End Role="tblLog" EntitySet="tblLogs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblLog_tblTable" Association="Self.FK_tblLog_tblTable">
-            <End Role="tblLog_Table" EntitySet="tblLog_Table" />
-            <End Role="tblLog" EntitySet="tblLogs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblLog_tblUser" Association="Self.FK_tblLog_tblUser">
-            <End Role="tblLog_User" EntitySet="tblLog_User" />
-            <End Role="tblLog" EntitySet="tblLogs" />
-          </AssociationSet>
-          <AssociationSet Name="tblIntegrity_System_EmailRecipient" Association="Self.tblIntegrity_System_EmailRecipient">
-            <End Role="tblIntegrity_EmailRecipient" EntitySet="tblIntegrity_EmailRecipient" />
-            <End Role="tblIntegrity_System" EntitySet="tblIntegrity_System" />
-          </AssociationSet>
-          <EntitySet Name="tblFeedback_Application" EntityType="ServicesModel.tblFeedback_Application" />
+          <FunctionImport Name="spEventLogEntry">
+            <Parameter Name="Application" Mode="In" Type="String" />
+            <Parameter Name="Operation" Mode="In" Type="String" />
+            <Parameter Name="User" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spChangeLogEntry">
+            <Parameter Name="Database" Mode="In" Type="String" />
+            <Parameter Name="Table" Mode="In" Type="String" />
+            <Parameter Name="Column" Mode="In" Type="String" />
+            <Parameter Name="User" Mode="In" Type="String" />
+            <Parameter Name="Row" Mode="In" Type="String" />
+            <Parameter Name="Operation" Mode="In" Type="String" />
+            <Parameter Name="NewValue" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="tblFeedback_Type" EntityType="ServicesModel.tblFeedback_Type" />
           <EntitySet Name="tblFeedback_Item" EntityType="ServicesModel.tblFeedback_Item" />
           <EntitySet Name="tblFeedback_Status" EntityType="ServicesModel.tblFeedback_Status" />
-          <EntitySet Name="tblFeedback_Type" EntityType="ServicesModel.tblFeedback_Type" />
-          <AssociationSet Name="FK_tblFeedback_Item_tblFeedback_Application" Association="ServicesModel.FK_tblFeedback_Item_tblFeedback_Application">
-            <End Role="tblFeedback_Application" EntitySet="tblFeedback_Application" />
-            <End Role="tblFeedback_Item" EntitySet="tblFeedback_Item" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblFeedback_Item_tblFeedback_Type" Association="ServicesModel.FK_tblFeedback_Item_tblFeedback_Type">
             <End Role="tblFeedback_Type" EntitySet="tblFeedback_Type" />
             <End Role="tblFeedback_Item" EntitySet="tblFeedback_Item" />
@@ -661,20 +115,34 @@
             <End Role="tblFeedback_Status" EntitySet="tblFeedback_Status" />
             <End Role="tblFeedback_Item" EntitySet="tblFeedback_Item" />
           </AssociationSet>
+          <FunctionImport Name="spLogChange">
+            <Parameter Name="Database" Mode="In" Type="String" />
+            <Parameter Name="Table" Mode="In" Type="String" />
+            <Parameter Name="Column" Mode="In" Type="String" />
+            <Parameter Name="User" Mode="In" Type="String" />
+            <Parameter Name="Row" Mode="In" Type="String" />
+            <Parameter Name="Operation" Mode="In" Type="String" />
+            <Parameter Name="NewValue" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spLogEvent">
+            <Parameter Name="Application" Mode="In" Type="String" />
+            <Parameter Name="Operation" Mode="In" Type="String" />
+            <Parameter Name="User" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
-        <EntityType Name="tblFeedback_Application">
+        <EntityType Name="tblFeedback_Type">
           <Key>
-            <PropertyRef Name="ApplicationID" />
+            <PropertyRef Name="TypeID" />
           </Key>
-          <Property Name="ApplicationID" Type="Int32" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblFeedback_Item" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedback_Application" FromRole="tblFeedback_Application" ToRole="tblFeedback_Item" />
+          <NavigationProperty Name="tblFeedback_Item" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedback_Type" FromRole="tblFeedback_Type" ToRole="tblFeedback_Item" />
         </EntityType>
         <EntityType Name="tblFeedback_Item">
           <Key>
             <PropertyRef Name="ItemID" />
           </Key>
-          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TypeID" Type="Int32" Nullable="false" />
           <Property Name="StatusID" Type="Int32" Nullable="false" />
           <Property Name="ApplicationID" Type="Int32" Nullable="false" />
@@ -682,11 +150,10 @@
           <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Notes" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CompletedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblFeedback_Application" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedback_Application" FromRole="tblFeedback_Item" ToRole="tblFeedback_Application" />
           <NavigationProperty Name="tblFeedback_Type" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedback_Type" FromRole="tblFeedback_Item" ToRole="tblFeedback_Type" />
           <NavigationProperty Name="tblFeedback_Status" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedbackStatus" FromRole="tblFeedback_Item" ToRole="tblFeedback_Status" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="tblFeedback_Status">
           <Key>
@@ -696,26 +163,6 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblFeedback_Item" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedbackStatus" FromRole="tblFeedback_Status" ToRole="tblFeedback_Item" />
         </EntityType>
-        <EntityType Name="tblFeedback_Type">
-          <Key>
-            <PropertyRef Name="TypeID" />
-          </Key>
-          <Property Name="TypeID" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblFeedback_Item" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedback_Type" FromRole="tblFeedback_Type" ToRole="tblFeedback_Item" />
-        </EntityType>
-        <Association Name="FK_tblFeedback_Item_tblFeedback_Application">
-          <End Type="ServicesModel.tblFeedback_Application" Role="tblFeedback_Application" Multiplicity="1" />
-          <End Type="ServicesModel.tblFeedback_Item" Role="tblFeedback_Item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblFeedback_Application">
-              <PropertyRef Name="ApplicationID" />
-            </Principal>
-            <Dependent Role="tblFeedback_Item">
-              <PropertyRef Name="ApplicationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblFeedback_Item_tblFeedback_Type">
           <End Type="ServicesModel.tblFeedback_Type" Role="tblFeedback_Type" Multiplicity="1" />
           <End Type="ServicesModel.tblFeedback_Item" Role="tblFeedback_Item" Multiplicity="*" />
@@ -746,137 +193,19 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ServicesModelStoreContainer" CdmEntityContainer="ServicesEntities">
-          <EntitySetMapping Name="tblIntegrity_Check">
-            <EntityTypeMapping TypeName="ServicesModel.tblIntegrity_Check">
-              <MappingFragment StoreEntitySet="tblIntegrity_Check">
-                <ScalarProperty Name="CheckID" ColumnName="CheckID" />
-                <ScalarProperty Name="SystemID" ColumnName="SystemID" />
-                <ScalarProperty Name="StoredProcedure" ColumnName="StoredProcedure" />
+          <EntitySetMapping Name="tblFeedback_Type">
+            <EntityTypeMapping TypeName="ServicesModel.tblFeedback_Type">
+              <MappingFragment StoreEntitySet="tblFeedback_Type">
                 <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="IssueObjectType" ColumnName="IssueObjectType" />
-                <ScalarProperty Name="Solution" ColumnName="Solution" />
-                <ScalarProperty Name="InfoField1Title" ColumnName="InfoField1Title" />
-                <ScalarProperty Name="InfoField2Title" ColumnName="InfoField2Title" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblIntegrity_EmailRecipient">
-            <EntityTypeMapping TypeName="ServicesModel.tblIntegrity_EmailRecipient">
-              <MappingFragment StoreEntitySet="tblIntegrity_EmailRecipient">
-                <ScalarProperty Name="EmailRecipientID" ColumnName="EmailRecipientID" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblIntegrity_Issue">
-            <EntityTypeMapping TypeName="ServicesModel.tblIntegrity_Issue">
-              <MappingFragment StoreEntitySet="tblIntegrity_Issue">
-                <ScalarProperty Name="IssueID" ColumnName="IssueID" />
-                <ScalarProperty Name="CheckID" ColumnName="CheckID" />
-                <ScalarProperty Name="IssueObjectID" ColumnName="IssueObjectID" />
-                <ScalarProperty Name="IssueRaisedDate" ColumnName="IssueRaisedDate" />
-                <ScalarProperty Name="IssueLastCheckDate" ColumnName="IssueLastCheckDate" />
-                <ScalarProperty Name="IssueInfo1" ColumnName="IssueInfo1" />
-                <ScalarProperty Name="IssueInfo2" ColumnName="IssueInfo2" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblIntegrity_Issue_temp">
-            <EntityTypeMapping TypeName="ServicesModel.tblIntegrity_Issue_temp">
-              <MappingFragment StoreEntitySet="tblIntegrity_Issue_temp">
-                <ScalarProperty Name="CheckID" ColumnName="CheckID" />
-                <ScalarProperty Name="IssueObjectID" ColumnName="IssueObjectID" />
-                <ScalarProperty Name="LastCheckDate" ColumnName="LastCheckDate" />
-                <ScalarProperty Name="IssueInfo1" ColumnName="IssueInfo1" />
-                <ScalarProperty Name="IssueInfo2" ColumnName="IssueInfo2" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblIntegrity_System">
-            <EntityTypeMapping TypeName="ServicesModel.tblIntegrity_System">
-              <MappingFragment StoreEntitySet="tblIntegrity_System">
-                <ScalarProperty Name="SystemID" ColumnName="SystemID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblLogs">
-            <EntityTypeMapping TypeName="ServicesModel.tblLog">
-              <MappingFragment StoreEntitySet="tblLog">
-                <ScalarProperty Name="LogID" ColumnName="LogID" />
-                <ScalarProperty Name="DatabaseID" ColumnName="DatabaseID" />
-                <ScalarProperty Name="TableID" ColumnName="TableID" />
-                <ScalarProperty Name="ColumnID" ColumnName="ColumnID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
-                <ScalarProperty Name="RowID" ColumnName="RowID" />
-                <ScalarProperty Name="OperationID" ColumnName="OperationID" />
-                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
-                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblLog_Column">
-            <EntityTypeMapping TypeName="ServicesModel.tblLog_Column">
-              <MappingFragment StoreEntitySet="tblLog_Column">
-                <ScalarProperty Name="ColumnID" ColumnName="ColumnID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblLog_Database">
-            <EntityTypeMapping TypeName="ServicesModel.tblLog_Database">
-              <MappingFragment StoreEntitySet="tblLog_Database">
-                <ScalarProperty Name="DatabaseID" ColumnName="DatabaseID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblLog_Operation">
-            <EntityTypeMapping TypeName="ServicesModel.tblLog_Operation">
-              <MappingFragment StoreEntitySet="tblLog_Operation">
-                <ScalarProperty Name="OperationID" ColumnName="OperationID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblLog_Table">
-            <EntityTypeMapping TypeName="ServicesModel.tblLog_Table">
-              <MappingFragment StoreEntitySet="tblLog_Table">
-                <ScalarProperty Name="TableID" ColumnName="TableID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblLog_User">
-            <EntityTypeMapping TypeName="ServicesModel.tblLog_User">
-              <MappingFragment StoreEntitySet="tblLog_User">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="tblIntegrity_System_EmailRecipient" TypeName="ServicesModel.tblIntegrity_System_EmailRecipient" StoreEntitySet="tblIntegrity_System_EmailRecipient">
-            <EndProperty Name="tblIntegrity_EmailRecipient">
-              <ScalarProperty Name="EmailRecipientID" ColumnName="EmailRecipientID" />
-            </EndProperty>
-            <EndProperty Name="tblIntegrity_System">
-              <ScalarProperty Name="SystemID" ColumnName="SystemID" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <EntitySetMapping Name="tblFeedback_Application">
-            <EntityTypeMapping TypeName="ServicesModel.tblFeedback_Application">
-              <MappingFragment StoreEntitySet="tblFeedback_Application">
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ApplicationID" ColumnName="ApplicationID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tblFeedback_Item">
             <EntityTypeMapping TypeName="ServicesModel.tblFeedback_Item">
               <MappingFragment StoreEntitySet="tblFeedback_Item">
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="CompletedDate" ColumnName="CompletedDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="User" ColumnName="User" />
@@ -896,15 +225,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblFeedback_Type">
-            <EntityTypeMapping TypeName="ServicesModel.tblFeedback_Type">
-              <MappingFragment StoreEntitySet="tblFeedback_Type">
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="spLogChange" FunctionName="ServicesModel.Store.spLogChange" />
+          <FunctionImportMapping FunctionImportName="spLogEvent" FunctionName="ServicesModel.Store.spLogEvent" />
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

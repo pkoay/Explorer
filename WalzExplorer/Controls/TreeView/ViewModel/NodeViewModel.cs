@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using WalzExplorer.Common;
 using WalzExplorer.Database;
 
 
@@ -51,10 +52,13 @@ namespace WalzExplorer.Controls.TreeView.ViewModel
 
         protected override void LoadChildren()
         {
-            if (_node.ChildSQL != "")
+            using (new WaitCursor())
             {
-                foreach (WEXNode node in context.GetNodes(_node,_node.ChildSQL, _dicSQLSubsitutes))
-                    base.Children.Add(new NodeViewModel(this, node, _dicSQLSubsitutes));
+                if (_node.ChildSQL != "")
+                {
+                    foreach (WEXNode node in context.GetNodes(_node, _node.ChildSQL, _dicSQLSubsitutes))
+                        base.Children.Add(new NodeViewModel(this, node, _dicSQLSubsitutes));
+                }
             }
         }
     }

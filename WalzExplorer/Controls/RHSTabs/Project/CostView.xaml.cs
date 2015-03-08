@@ -34,7 +34,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             base.Reset();
 
            
-            //columnRename.Add("OperationsManager", "Ops Manager");
+           
             columnReadOnlyDeveloper.Add("DataAreaID");
             columnReadOnlyDeveloper.Add("Invoiced");
 
@@ -43,16 +43,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.DataContext = vm;
             grd.ItemsSource = vm.data;
             grd.ShowColumnFooters = true;
-
-            //Style s = new Style(typeof(GroupHeaderRow));
-            //Setter newSetter = new Setter(GroupHeaderRow.ShowHeaderAggregatesProperty, false);
-            //s.Setters.Add(newSetter);
-            //Setter x = new Setter(GroupHeaderRow.ShowGroupHeaderColumnAggregatesProperty, true);
-            //s.Setters.Add(x);
-            //s.Seal();
-            //grd.GroupRowStyle = s;
-
-
 
             base.TabLoad();
             

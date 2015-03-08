@@ -84,6 +84,7 @@ namespace WalzExplorer
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            Logging.LogEvent("Login");
             string user = WindowsIdentity.GetCurrent().Name;
             using (new WaitCursor())
             {
@@ -108,6 +109,7 @@ namespace WalzExplorer
             }
 
         }
+       
         private void LoadFormForMimic()
         {
             using (WalzExplorerEntities we = new WalzExplorerEntities(false))
@@ -152,13 +154,14 @@ namespace WalzExplorer
 
         private void tcLHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
             using (new WaitCursor())
             {
                 RadTabControl tc = (RadTabControl)sender;
                 if (tc.SelectedItem != null)
                 {
                     WEXLHSTab ti = (WEXLHSTab)tc.SelectedItem;
-
+                    Logging.LogEvent("CHANGE LHSTab to" + ti.ID);
                     if (ti.Content == null)
                     {
                         //Create Treeview if not created
@@ -193,6 +196,7 @@ namespace WalzExplorer
              WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
             if (CurrentTab != null)
             {
+                Logging.LogEvent("CHANGE RHSTab to" + CurrentTab.ID);
                 settings.node=SelectedNode();
                 CurrentTab.Settings(settings);
                 CurrentTab.Content.TabLoad();
@@ -206,6 +210,8 @@ namespace WalzExplorer
             WEXTreeView ntv = (WEXTreeView)sender;
             RHSTabViewModel _rhsTabs = new RHSTabViewModel(ntv.SelectedItem(), settings.user);
 
+            WEXNode node = ntv.SelectedItem().Node;
+            Logging.LogEvent("CHANGE LHSNode to Type:" + node.IDType +", ID:"+node.ID );
 
             //if tab list the same
             //NOT doing this as issue with clareaing RADGRID with dropdowns Itemssource=Null;rebind(); does not get rid of all columns
@@ -341,6 +347,13 @@ namespace WalzExplorer
                     break;
             }
         }
+
+        private void MetroWindow_Closed(object sender, EventArgs e)
+        {
+            Logging.LogEvent("Logout");
+        }
+
+       
 
 
     }

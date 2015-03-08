@@ -5,34 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b2816e3b07034389a7d365354489d35a" Name="Diagram1">
-        <EntityTypeShape EntityType="ServicesModel.tblIntegrity_Check" Width="1.5" PointX="10.25" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServicesModel.tblIntegrity_EmailRecipient" Width="1.5" PointX="5.75" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServicesModel.tblIntegrity_Issue" Width="1.5" PointX="12.5" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServicesModel.tblIntegrity_Issue_temp" Width="1.5" PointX="12.5" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServicesModel.tblIntegrity_System" Width="1.5" PointX="8" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServicesModel.tblLog" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServicesModel.tblLog_Column" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServicesModel.tblLog_Database" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServicesModel.tblLog_Operation" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServicesModel.tblLog_Table" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServicesModel.tblLog_User" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
-        <AssociationConnector Association="ServicesModel.FK_tblIntegrity_Check_tblIntegrity_System" ManuallyRouted="false" />
-        <AssociationConnector Association="ServicesModel.FK_tblIntegrity_Issue_tblIntegrity_Check" ManuallyRouted="false" />
-        <AssociationConnector Association="ServicesModel.FK_tblIntegrity_Issue_temp_tblIntegrity_Check" ManuallyRouted="false" />
-        <AssociationConnector Association="ServicesModel.FK_tblLog_tblColumn" ManuallyRouted="false" />
-        <AssociationConnector Association="ServicesModel.FK_tblLog_tblDatabase" ManuallyRouted="false" />
-        <AssociationConnector Association="ServicesModel.FK_tblLog_tblOperation" ManuallyRouted="false" />
-        <AssociationConnector Association="ServicesModel.FK_tblLog_tblTable" ManuallyRouted="false" />
-        <AssociationConnector Association="ServicesModel.FK_tblLog_tblUser" ManuallyRouted="false" />
-        <AssociationConnector Association="ServicesModel.tblIntegrity_System_EmailRecipient" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ServicesModel.tblFeedback_Application" Width="1.5" PointX="3.375" PointY="7" />
-        <EntityTypeShape EntityType="ServicesModel.tblFeedback_Item" Width="1.5" PointX="5.625" PointY="6" />
-        <EntityTypeShape EntityType="ServicesModel.tblFeedback_Status" Width="1.5" PointX="3.375" PointY="12.125" />
-        <EntityTypeShape EntityType="ServicesModel.tblFeedback_Type" Width="1.5" PointX="3.375" PointY="9.75" />
-        <AssociationConnector Association="ServicesModel.FK_tblFeedback_Item_tblFeedback_Application" />
+        <EntityTypeShape EntityType="ServicesModel.tblFeedback_Type" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ServicesModel.tblFeedback_Item" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="ServicesModel.tblFeedback_Status" Width="1.5" PointX="0.75" PointY="4.625" />
         <AssociationConnector Association="ServicesModel.FK_tblFeedback_Item_tblFeedback_Type" />
         <AssociationConnector Association="ServicesModel.FK_tblFeedback_Item_tblFeedbackStatus" />
-        </Diagram>
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -12,6 +12,8 @@ namespace WalzExplorer.Database
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class ServicesEntities : DbContext
     {
@@ -25,20 +27,108 @@ namespace WalzExplorer.Database
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<tblIntegrity_Check> tblIntegrity_Check { get; set; }
-        public virtual DbSet<tblIntegrity_EmailRecipient> tblIntegrity_EmailRecipient { get; set; }
-        public virtual DbSet<tblIntegrity_Issue> tblIntegrity_Issue { get; set; }
-        public virtual DbSet<tblIntegrity_Issue_temp> tblIntegrity_Issue_temp { get; set; }
-        public virtual DbSet<tblIntegrity_System> tblIntegrity_System { get; set; }
-        public virtual DbSet<tblLog> tblLogs { get; set; }
-        public virtual DbSet<tblLog_Column> tblLog_Column { get; set; }
-        public virtual DbSet<tblLog_Database> tblLog_Database { get; set; }
-        public virtual DbSet<tblLog_Operation> tblLog_Operation { get; set; }
-        public virtual DbSet<tblLog_Table> tblLog_Table { get; set; }
-        public virtual DbSet<tblLog_User> tblLog_User { get; set; }
-        public virtual DbSet<tblFeedback_Application> tblFeedback_Application { get; set; }
+        public virtual DbSet<tblFeedback_Type> tblFeedback_Type { get; set; }
         public virtual DbSet<tblFeedback_Item> tblFeedback_Item { get; set; }
         public virtual DbSet<tblFeedback_Status> tblFeedback_Status { get; set; }
-        public virtual DbSet<tblFeedback_Type> tblFeedback_Type { get; set; }
+    
+        public virtual int spEventLogEntry(string application, string operation, string user)
+        {
+            var applicationParameter = application != null ?
+                new ObjectParameter("Application", application) :
+                new ObjectParameter("Application", typeof(string));
+    
+            var operationParameter = operation != null ?
+                new ObjectParameter("Operation", operation) :
+                new ObjectParameter("Operation", typeof(string));
+    
+            var userParameter = user != null ?
+                new ObjectParameter("User", user) :
+                new ObjectParameter("User", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spEventLogEntry", applicationParameter, operationParameter, userParameter);
+        }
+    
+        public virtual int spChangeLogEntry(string database, string table, string column, string user, string row, string operation, string newValue)
+        {
+            var databaseParameter = database != null ?
+                new ObjectParameter("Database", database) :
+                new ObjectParameter("Database", typeof(string));
+    
+            var tableParameter = table != null ?
+                new ObjectParameter("Table", table) :
+                new ObjectParameter("Table", typeof(string));
+    
+            var columnParameter = column != null ?
+                new ObjectParameter("Column", column) :
+                new ObjectParameter("Column", typeof(string));
+    
+            var userParameter = user != null ?
+                new ObjectParameter("User", user) :
+                new ObjectParameter("User", typeof(string));
+    
+            var rowParameter = row != null ?
+                new ObjectParameter("Row", row) :
+                new ObjectParameter("Row", typeof(string));
+    
+            var operationParameter = operation != null ?
+                new ObjectParameter("Operation", operation) :
+                new ObjectParameter("Operation", typeof(string));
+    
+            var newValueParameter = newValue != null ?
+                new ObjectParameter("NewValue", newValue) :
+                new ObjectParameter("NewValue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spChangeLogEntry", databaseParameter, tableParameter, columnParameter, userParameter, rowParameter, operationParameter, newValueParameter);
+        }
+    
+        public virtual int spLogChange(string database, string table, string column, string user, string row, string operation, string newValue)
+        {
+            var databaseParameter = database != null ?
+                new ObjectParameter("Database", database) :
+                new ObjectParameter("Database", typeof(string));
+    
+            var tableParameter = table != null ?
+                new ObjectParameter("Table", table) :
+                new ObjectParameter("Table", typeof(string));
+    
+            var columnParameter = column != null ?
+                new ObjectParameter("Column", column) :
+                new ObjectParameter("Column", typeof(string));
+    
+            var userParameter = user != null ?
+                new ObjectParameter("User", user) :
+                new ObjectParameter("User", typeof(string));
+    
+            var rowParameter = row != null ?
+                new ObjectParameter("Row", row) :
+                new ObjectParameter("Row", typeof(string));
+    
+            var operationParameter = operation != null ?
+                new ObjectParameter("Operation", operation) :
+                new ObjectParameter("Operation", typeof(string));
+    
+            var newValueParameter = newValue != null ?
+                new ObjectParameter("NewValue", newValue) :
+                new ObjectParameter("NewValue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spLogChange", databaseParameter, tableParameter, columnParameter, userParameter, rowParameter, operationParameter, newValueParameter);
+        }
+    
+        public virtual int spLogEvent(string application, string operation, string user)
+        {
+            var applicationParameter = application != null ?
+                new ObjectParameter("Application", application) :
+                new ObjectParameter("Application", typeof(string));
+    
+            var operationParameter = operation != null ?
+                new ObjectParameter("Operation", operation) :
+                new ObjectParameter("Operation", typeof(string));
+    
+            var userParameter = user != null ?
+                new ObjectParameter("User", user) :
+                new ObjectParameter("User", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spLogEvent", applicationParameter, operationParameter, userParameter);
+        }
     }
 }

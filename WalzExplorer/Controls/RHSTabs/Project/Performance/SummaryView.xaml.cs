@@ -9,7 +9,7 @@ using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
 using WalzExplorer.Common;
-namespace WalzExplorer.Controls.RHSTabs.Project
+namespace WalzExplorer.Controls.RHSTabs.Project.Performance
 {
     /// <summary>
     /// Interaction logic for TenderViewer.xaml
@@ -61,7 +61,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     break;
                 case "Contract":
                     SetColumn(column, "TWO_DECIMAL");
-                    ColumnToolTipStatic(grd, column, "Contract Value including all approved variations");
+                    ColumnToolTipStatic(grd, column, "DIFFERENT!!!");
                     break;
                 case "Cost":
                     SetColumn(column, "TWO_DECIMAL");

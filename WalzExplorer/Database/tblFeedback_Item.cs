@@ -22,10 +22,9 @@ namespace WalzExplorer.Database
         public string User { get; set; }
         public string Title { get; set; }
         public string Notes { get; set; }
-        public Nullable<System.DateTime> CompletedDate { get; set; }
         public System.DateTime CreateDate { get; set; }
+        public Nullable<System.DateTime> CompletedDate { get; set; }
     
-        public virtual tblFeedback_Application tblFeedback_Application { get; set; }
         public virtual tblFeedback_Type tblFeedback_Type { get; set; }
         public virtual tblFeedback_Status tblFeedback_Status { get; set; }
     }
