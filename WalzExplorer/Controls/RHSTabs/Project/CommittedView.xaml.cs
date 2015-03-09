@@ -31,10 +31,11 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         public override void TabLoad()
         {
             base.SetGrid(grd);
-            base.Reset();
+            base.Reset(grd);
 
-            columnReadOnlyDeveloper.Add("DataAreaId");
-            
+            GridColumnSettings setting = new GridColumnSettings();
+            setting.columnReadOnlyDeveloper.Add("DataAreaId");
+            gridColumnSettings.Add(grd, setting);
 
             // set grid data
             vm = new CommittedViewModel(settings);

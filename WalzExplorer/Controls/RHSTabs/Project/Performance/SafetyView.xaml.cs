@@ -29,16 +29,18 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
         public override void TabLoad()
         {
             base.SetGrid(grd);
-            base.Reset();
+            base.Reset(grd);
 
-            columnReadOnlyDeveloper.Add("RowVersion");
-            columnReadOnlyDeveloper.Add("ProjectID");
-            columnRename.Add("AXProjectID", "ID");
-            columnRename.Add("OperationsManager", "Ops Manager");
-            columnReadOnlyDeveloper.Add("AXDataAreaID");
-            columnReadOnlyDeveloper.Add("SortOrder");
-            columnReadOnlyDeveloper.Add("UpdatedBy");
-            columnReadOnlyDeveloper.Add("UpdatedDate");
+            GridColumnSettings setting = new GridColumnSettings();
+            setting.columnReadOnlyDeveloper.Add("RowVersion");
+            setting.columnReadOnlyDeveloper.Add("ProjectID");
+            setting.columnRename.Add("AXProjectID", "ID");
+            setting.columnRename.Add("OperationsManager", "Ops Manager");
+            setting.columnReadOnlyDeveloper.Add("AXDataAreaID");
+            setting.columnReadOnlyDeveloper.Add("SortOrder");
+            setting.columnReadOnlyDeveloper.Add("UpdatedBy");
+            setting.columnReadOnlyDeveloper.Add("UpdatedDate");
+            gridColumnSettings.Add(grd, setting);
 
             //Set view
             vm = new SafetyViewModel(settings);

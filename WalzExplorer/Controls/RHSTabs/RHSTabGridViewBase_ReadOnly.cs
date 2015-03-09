@@ -24,27 +24,42 @@ using Telerik.Windows.Data;
 
 namespace WalzExplorer.Controls.RHSTabs
 {         
+    public class GridColumnSettings
+    {
+        public Dictionary<string, string> columnRename = new Dictionary<string, string>();
+        public Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
+        public List<string> columnReadOnlyDeveloper = new List<string>();
+    }
+
     public class RHSTabGridViewBase_ReadOnly : RHSTabViewBase
     {
         //private RadGridView g;  // Standard grid
         //protected RHSTabGridViewModelBase viewModel;
 
         //Grid Formatting
-        protected Dictionary<string, string> columnRename = new Dictionary<string, string>();
-        protected Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
-        protected List<string> columnReadOnlyDeveloper = new List<string>();
+        protected Dictionary<RadGridView, GridColumnSettings> gridColumnSettings = new Dictionary<RadGridView, GridColumnSettings>();
+        //protected Dictionary<string, string> columnRename = new Dictionary<string, string>();
+        //protected Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
+        //protected List<string> columnReadOnlyDeveloper = new List<string>();
+
         protected GridViewRow ContextMenuRow;
-        ContextMenu cm;
+        //ContextMenu cm;
         //public Style style;
 
         public RHSTabGridViewBase_ReadOnly()
         { 
         }
 
-        public void Reset()
+        public void Reset(RadGridView grd)
         {
-            columnRename.Clear();
-            columnCombo.Clear();
+               //Determine settings
+            if (gridColumnSettings.ContainsKey(grd))
+            {
+                //Rename from the dictionary
+                GridColumnSettings setting = gridColumnSettings[grd];
+                setting.columnRename.Clear();
+                setting.columnCombo.Clear();
+            }
         }
 
         public override void TabLoad()
@@ -57,7 +72,7 @@ namespace WalzExplorer.Controls.RHSTabs
         private ContextMenu GenerateContextMenu()
         {
             // add context menu
-            cm = new ContextMenu();
+            ContextMenu cm = new ContextMenu();
             cm.FontSize = 12;
          
             MenuItem mi;
@@ -159,6 +174,19 @@ namespace WalzExplorer.Controls.RHSTabs
        
         public void g_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
         {
+            //determine grid
+            RadGridView g;
+            if (sender is RadGridView)
+            {
+                g = (RadGridView)sender;
+            }
+            else
+            {
+                FrameworkElement element = (FrameworkElement)sender;
+                g = (element).ParentOfType<RadGridView>();
+            }
+
+            
             Telerik.Windows.Controls.GridViewColumn c = e.Column;
             Style style = new Style();
             style.Setters.Add(new Setter(GridViewRow.ForegroundProperty, new SolidColorBrush(Colors.Red)));
@@ -168,37 +196,33 @@ namespace WalzExplorer.Controls.RHSTabs
             //Ignore foreign key all columns
             if (c.UniqueName.StartsWith("tbl")) { e.Cancel = true; return; }
 
-            //Ignore Columns for developers only while not in development mode
-            if (columnReadOnlyDeveloper.Contains(c.UniqueName) && !settings.DeveloperMode) { e.Cancel = true; return; }
 
-            //Rename 
-            if (columnRename.ContainsKey(c.UniqueName))
+
+            //Determine settings
+            if (gridColumnSettings.ContainsKey(g))
             {
                 //Rename from the dictionary
-                c.Header = columnRename[c.UniqueName];
-            }
-            else
-            {
-                //Set the name from PascalCase to Logical (e.g. 'UpdatedBy' to 'Updated By')
-                Regex r = new Regex("([A-Z]+[a-z]+)");
-                c.Header = r.Replace(c.UniqueName, m => (m.Value.Length > 3 ? m.Value : m.Value.ToLower()) + " ");
-            }
+                GridColumnSettings setting = gridColumnSettings[g];
 
-           // All columns read only
-            //e.Column.CellStyle = style;
+                //Ignore Columns for developers only while not in development mode
+                if (setting.columnReadOnlyDeveloper.Contains(c.UniqueName) && !settings.DeveloperMode) { e.Cancel = true; return; }
+
+                //Rename 
+                if (setting.columnRename.ContainsKey(c.UniqueName))
+                {
+                    //Rename from the dictionary
+                    c.Header = setting.columnRename[c.UniqueName];
+                }
+                else
+                {
+                    //Set the name from PascalCase to Logical (e.g. 'UpdatedBy' to 'Updated By')
+                    Regex r = new Regex("([A-Z]+[a-z]+)");
+                    c.Header = r.Replace(c.UniqueName, m => (m.Value.Length > 3 ? m.Value : m.Value.ToLower()) + " ");
+                }
+            }
+            
             e.Column.IsReadOnly = true;
-            //e.Column.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
-            //e.Column.CellStyle = style;
-            RadGridView g;
-            if (sender is RadGridView)
-            {
-                g =  (RadGridView)sender;
-            }
-            else
-            {
-                FrameworkElement element = (FrameworkElement)sender;
-                 g = (element).ParentOfType<RadGridView>();
-            }
+           
             g.Rebind();
            
         }
