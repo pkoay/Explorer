@@ -10,21 +10,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
              x:Class="WalzExplorer.Controls.RHSTabs.Project.CommittedView">
     <Grid>
-        <Grid.Resources>
-            <Style TargetType="telerik:GroupHeaderRow" BasedOn="{StaticResource GroupHeaderRowStyle}">
-                <Setter Property="ShowGroupHeaderColumnAggregates" Value="True" />
-                <Setter Property="ShowHeaderAggregates"  Value="False" />
-            </Style>
-        </Grid.Resources>
-        <telerik:RadGridView  Name="grd"  AutoGeneratingColumn="grd_AutoGeneratingColumn" Initialized="grd_Initialized"  DataLoaded="grd_DataLoaded">
-            <!--<telerik:RadGridView.GroupDescriptors>
-                --><!--<telerik:GroupDescriptor Member="ProjID"
-                                    SortDirection="Ascending" />
-                <telerik:GroupDescriptor Member="CategoryGroup"
-                                    SortDirection="Ascending" />
-                <telerik:GroupDescriptor Member="CategoryName"
-                                    SortDirection="Ascending" />--><!--
-            </telerik:RadGridView.GroupDescriptors>-->
-        </telerik:RadGridView>
+        <telerik:RadGridView  Name="grd"  AutoGeneratingColumn="grd_AutoGeneratingColumn"/>
     </Grid>
 </base:RHSTabGridViewBase_ReadOnly>

@@ -54,18 +54,18 @@ namespace WalzExplorer.Controls.RHSTabs
             
         }
 
-        private ContextMenu GenerateContextMenu(RadGridView grd)
+        private ContextMenu GenerateContextMenu()
         {
             // add context menu
             cm = new ContextMenu();
             cm.FontSize = 12;
-            //cm.Tag = grd;
+         
             MenuItem mi;
 
-            mi = new MenuItem() { Name = "miCopy", Header = "Copy", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_copy", 16, 16) ,Tag=grd};
+            mi = new MenuItem() { Name = "miCopy", Header = "Copy", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_copy", 16, 16) };
             cm.Items.Add(mi);
             cm.Items.Add(new Separator());
-            cm.Items.Add(new MenuItem() { Name = "miExportExcel", Header = "Export to Excel", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16), Tag = grd });
+            cm.Items.Add(new MenuItem() { Name = "miExportExcel", Header = "Export to Excel", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16)});
             foreach (object o in cm.Items)
             {
                 if (!(o is Separator))
@@ -96,10 +96,10 @@ namespace WalzExplorer.Controls.RHSTabs
             grd.AutoGeneratingColumn += g_AutoGeneratingColumn;
             grd.ContextMenuOpening += g_ContextMenuOpening;
             grd.ShowColumnHeaders = true;
-            grd.ShowColumnFooters = false;
             grd.ShowGroupPanel = true;
+            grd.ShowColumnFooters = true;
 
-            grd.ContextMenu = GenerateContextMenu(grd);
+            grd.ContextMenu = GenerateContextMenu();
             // Sets style for group headers (i.e. group totals (aggregates) below columns, not in header just concatenated
             if (!grd.Resources.Contains(typeof(GroupHeaderRow)))
             {
@@ -113,34 +113,12 @@ namespace WalzExplorer.Controls.RHSTabs
         }
 
       
-
-      
-
-
-     
-        //// Helper to search up the VisualTree
-        //private static T FindAnchestor<T>(DependencyObject current)
-        //    where T : DependencyObject
-        //{
-        //    do
-        //    {
-        //        if (current is T)
-        //        {
-        //            return (T)current;
-        //        }
-        //        current = VisualTreeHelper.GetParent(current);
-        //    }
-        //    while (current != null);
-        //    return null;
-        //}
-
-     
         
         public void g_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             //store the grid row the contextmenu was open over
             var element = e.OriginalSource;
-            ContextMenuRow = (element as FrameworkElement).ParentOfType<GridViewRow>();
+            ContextMenuRow = (element as FrameworkElement).ParentOfType<GridViewRow>(); 
         }
        
         // context menu actions
@@ -158,8 +136,8 @@ namespace WalzExplorer.Controls.RHSTabs
                     string fileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".xml";
                     using (Stream stream = File.Create(fileName))
                     {
-                        
-                        RadGridView g = (RadGridView)mi.Tag;
+
+                        RadGridView g = ContextMenuRow.ParentOfType<RadGridView>();
                         g.Export(stream,
                          new GridViewExportOptions()
                          {

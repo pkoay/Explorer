@@ -42,8 +42,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             vm = new CostViewModel(settings);
             grd.DataContext = vm;
             grd.ItemsSource = vm.data;
-            grd.ShowColumnFooters = true;
-
+            
             base.TabLoad();
             
         }

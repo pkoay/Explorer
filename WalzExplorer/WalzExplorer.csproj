@@ -184,9 +184,6 @@
     <Compile Include="Common\Logging.cs" />
     <Compile Include="Common\ObjectLibrary.cs" />
     <Compile Include="Common\WaitCursor.cs" />
-    <Compile Include="Controls\RHSTabs\Project\Cost2View.xaml.cs">
-      <DependentUpon>Cost2View.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\RHSTabs\Project\CommittedViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Project\CommittedView.xaml.cs">
       <DependentUpon>CommittedView.xaml</DependentUpon>
@@ -506,10 +503,6 @@
     </Compile>
     <Compile Include="Windows\FeedbackDialogViewModel.cs" />
     <Compile Include="Windows\MimicDialogViewModel.cs" />
-    <Page Include="Controls\RHSTabs\Project\Cost2View.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\RHSTabs\Project\CommittedView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

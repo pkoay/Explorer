@@ -14,8 +14,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
     /// <summary>
     /// Interaction logic for TenderViewer.xaml
     /// </summary>
-    
-     
+
+
     public partial class SummaryView : RHSTabGridViewBase_ReadOnly
     {
       

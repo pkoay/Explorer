@@ -11,12 +11,6 @@
              x:Class="WalzExplorer.Controls.RHSTabs.Project.SummaryView">
     <Grid>
         <telerik:RadGridView  x:Name="grd" AutoGeneratingColumn="grd_AutoGeneratingColumn">
-            <telerik:RadGridView.Resources>
-                <!--<Style TargetType="telerik:GroupHeaderRow" BasedOn="{StaticResource GroupHeaderRowStyle}">
-                    <Setter Property="ShowGroupHeaderColumnAggregates" Value="True" />
-                    <Setter Property="ShowHeaderAggregates"  Value="False" />
-                </Style>-->
-            </telerik:RadGridView.Resources>
         </telerik:RadGridView>
     </Grid>
 </base:RHSTabGridViewBase_ReadOnly>

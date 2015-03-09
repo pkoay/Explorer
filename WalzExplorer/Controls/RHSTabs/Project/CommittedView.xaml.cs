@@ -33,8 +33,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             base.SetGrid(grd);
             base.Reset();
 
-           
-            //columnRename.Add("OperationsManager", "Ops Manager");
             columnReadOnlyDeveloper.Add("DataAreaId");
             
 
@@ -42,18 +40,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             vm = new CommittedViewModel(settings);
             grd.DataContext = vm;
             grd.ItemsSource = vm.data;
-            grd.ShowColumnFooters = true;
+            
 
-            //Style s = new Style(typeof(GroupHeaderRow));
-            //Setter newSetter = new Setter(GroupHeaderRow.ShowHeaderAggregatesProperty, false);
-            //s.Setters.Add(newSetter);
-            //Setter x = new Setter(GroupHeaderRow.ShowGroupHeaderColumnAggregatesProperty, true);
-            //s.Setters.Add(x);
-            //s.Seal();
-            //grd.GroupRowStyle = s;
-
-
-
+           
             base.TabLoad();
             
         }
@@ -73,21 +62,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 case "CommCostAmount":
                     SetColumn(column, "TWO_DECIMAL");
                     break;
-                //case "CostOverhead":
-                //    SetColumn(column, "TWO_DECIMAL");
-                //    break;
-                //case "CostTotal":
-                //    SetColumn(column, "TWO_DECIMAL");
-                //    break;
-                //case "Hours":
-                //    SetColumn(column, "TWO_DECIMAL");
-                //    break;
                 case "Quantity":
                     SetColumn(column, "TWO_DECIMAL");
                     break;
-                //case "Employee":
-                //    SetColumn(column, "TEXT");
-                //    break;
                 case "CategoryGroup":
                     SetColumn(column, "TEXT");
                     break;
@@ -100,20 +77,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             }
         }
 
-        private void grd_Initialized(object sender, EventArgs e)
-        {
-          
-
-            //grd.GroupDescriptors.Add(new GroupDescriptor() { Member = "ProjId" });
-        }
-
-        private void grd_DataLoaded(object sender, EventArgs e)
-        {
-            
-               // grd.GroupDescriptors.Add(new GroupDescriptor() { Member = "ProjId" });
-           
-        }
-
+       
      
       
     }
