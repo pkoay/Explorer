@@ -1575,6 +1575,12 @@
         <Function Name="spWEX_RHS_Project_Cost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Cost">
           <Parameter Name="ProjectID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spWEX_RHS_Project_Performance_History" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Performance_History">
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spWEX_RHS_Project_Performance_Safety" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Performance_Safety">
+          <Parameter Name="HistoryID" Type="int" Mode="In" />
+        </Function>
         <Function Name="spWEX_RHS_Project_Summary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Summary">
           <Parameter Name="UserPersonID" Type="nvarchar" Mode="In" />
           <Parameter Name="NodeTypeID" Type="varchar" Mode="In" />
@@ -2892,6 +2898,12 @@
           <Parameter Name="ProjectID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spWEX_RHS_Project_Cost" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Cost_Result)">
+          <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_RHS_Project_Performance_Safety" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Performance_Safety_Result)">
+          <Parameter Name="HistoryID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_RHS_Project_Performance_History" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Performance_History_Result)">
             <Parameter Name="ProjectID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
@@ -4045,6 +4057,24 @@
           <Property Type="Decimal" Name="PurchQtyPrice" Nullable="true" Precision="36" Scale="16" />
           <Property Type="String" Name="PurchInvoice" Nullable="true" MaxLength="20" />
         </ComplexType>
+        <ComplexType Name="spWEX_RHS_Project_Performance_Safety_Result">
+          <Property Type="Int32" Name="HistoryID" Nullable="false" />
+          <Property Type="String" Name="IncidentID" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="ReportedDate" Nullable="false" />
+          <Property Type="String" Name="IncidentType" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="DetailedDescription" Nullable="false" />
+          <Property Type="String" Name="InjuryDescription" Nullable="false" />
+          <Property Type="String" Name="ActualConsequLevel" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PotentialConsqLevel" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="UpdatedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" />
+        </ComplexType>
+        <ComplexType Name="spWEX_RHS_Project_Performance_History_Result">
+          <Property Type="Int32" Name="HistoryID" Nullable="false" />
+          <Property Type="DateTime" Name="PeriodStart" Nullable="false" />
+          <Property Type="DateTime" Name="PeriodEnd" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4969,6 +4999,32 @@
                 <ScalarProperty Name="PurchUnit" ColumnName="PurchUnit" />
                 <ScalarProperty Name="PurchQtyPrice" ColumnName="PurchQtyPrice" />
                 <ScalarProperty Name="PurchInvoice" ColumnName="PurchInvoice" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_Performance_Safety" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_Performance_Safety">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_Performance_Safety_Result">
+                <ScalarProperty Name="HistoryID" ColumnName="HistoryID" />
+                <ScalarProperty Name="IncidentID" ColumnName="IncidentID" />
+                <ScalarProperty Name="ReportedDate" ColumnName="ReportedDate" />
+                <ScalarProperty Name="IncidentType" ColumnName="IncidentType" />
+                <ScalarProperty Name="DetailedDescription" ColumnName="DetailedDescription" />
+                <ScalarProperty Name="InjuryDescription" ColumnName="InjuryDescription" />
+                <ScalarProperty Name="ActualConsequLevel" ColumnName="ActualConsequLevel" />
+                <ScalarProperty Name="PotentialConsqLevel" ColumnName="PotentialConsqLevel" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_Performance_History" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_Performance_History">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_Performance_History_Result">
+                <ScalarProperty Name="HistoryID" ColumnName="HistoryID" />
+                <ScalarProperty Name="PeriodStart" ColumnName="PeriodStart" />
+                <ScalarProperty Name="PeriodEnd" ColumnName="PeriodEnd" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

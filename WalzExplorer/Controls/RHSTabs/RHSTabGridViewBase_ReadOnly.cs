@@ -26,7 +26,7 @@ namespace WalzExplorer.Controls.RHSTabs
 {         
     public class RHSTabGridViewBase_ReadOnly : RHSTabViewBase
     {
-        private RadGridView g;  // Standard grid
+        //private RadGridView g;  // Standard grid
         //protected RHSTabGridViewModelBase viewModel;
 
         //Grid Formatting
@@ -34,7 +34,7 @@ namespace WalzExplorer.Controls.RHSTabs
         protected Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
         protected List<string> columnReadOnlyDeveloper = new List<string>();
         protected GridViewRow ContextMenuRow;
-
+        ContextMenu cm;
         //public Style style;
 
         public RHSTabGridViewBase_ReadOnly()
@@ -50,15 +50,22 @@ namespace WalzExplorer.Controls.RHSTabs
         public override void TabLoad()
         {
 
+           
+            
+        }
+
+        private ContextMenu GenerateContextMenu(RadGridView grd)
+        {
             // add context menu
-            ContextMenu cm = new ContextMenu();
+            cm = new ContextMenu();
             cm.FontSize = 12;
+            //cm.Tag = grd;
             MenuItem mi;
 
-            mi = new MenuItem() { Name = "miCopy", Header = "Copy", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_copy", 16, 16) };
+            mi = new MenuItem() { Name = "miCopy", Header = "Copy", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_copy", 16, 16) ,Tag=grd};
             cm.Items.Add(mi);
             cm.Items.Add(new Separator());
-            cm.Items.Add(new MenuItem() { Name = "miExportExcel", Header = "Export to Excel", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
+            cm.Items.Add(new MenuItem() { Name = "miExportExcel", Header = "Export to Excel", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16), Tag = grd });
             foreach (object o in cm.Items)
             {
                 if (!(o is Separator))
@@ -67,32 +74,32 @@ namespace WalzExplorer.Controls.RHSTabs
                     mi.Click += new RoutedEventHandler(cm_ItemClick);
                 }
             }
-            g.ContextMenu = cm;
+            return cm;
         }
 
         public void SetGrid (RadGridView grd )
         {
-            g = grd;
-            //set font color
+            //g = ;
+            ////set font color
 
             
             //set basic grid properties
-            g.AutoGenerateColumns=true;
-            g.GroupRenderMode = GroupRenderMode.Flat;
-            g.SelectionMode = System.Windows.Controls.SelectionMode.Extended;
-            g.SelectionUnit = GridViewSelectionUnit.FullRow;
-            g.AlternationCount = 4;
-            g.CanUserFreezeColumns = true;
-            g.GridLinesVisibility = GridLinesVisibility.None;
-            g.ClipboardCopyMode = GridViewClipboardCopyMode.Cells;
-            g.ValidatesOnDataErrors = GridViewValidationMode.Default;
-            g.AutoGeneratingColumn += g_AutoGeneratingColumn;
-            g.ContextMenuOpening += g_ContextMenuOpening;
-            g.ShowColumnHeaders = true;
-            g.ShowColumnFooters = false;
-            g.ShowGroupPanel = true;
+            grd.AutoGenerateColumns = true;
+            grd.GroupRenderMode = GroupRenderMode.Flat;
+            grd.SelectionMode = System.Windows.Controls.SelectionMode.Extended;
+            grd.SelectionUnit = GridViewSelectionUnit.FullRow;
+            grd.AlternationCount = 4;
+            grd.CanUserFreezeColumns = true;
+            grd.GridLinesVisibility = GridLinesVisibility.None;
+            grd.ClipboardCopyMode = GridViewClipboardCopyMode.Cells;
+            grd.ValidatesOnDataErrors = GridViewValidationMode.Default;
+            grd.AutoGeneratingColumn += g_AutoGeneratingColumn;
+            grd.ContextMenuOpening += g_ContextMenuOpening;
+            grd.ShowColumnHeaders = true;
+            grd.ShowColumnFooters = false;
+            grd.ShowGroupPanel = true;
 
-
+            grd.ContextMenu = GenerateContextMenu(grd);
             // Sets style for group headers (i.e. group totals (aggregates) below columns, not in header just concatenated
             if (!grd.Resources.Contains(typeof(GroupHeaderRow)))
             {
@@ -151,6 +158,8 @@ namespace WalzExplorer.Controls.RHSTabs
                     string fileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".xml";
                     using (Stream stream = File.Create(fileName))
                     {
+                        
+                        RadGridView g = (RadGridView)mi.Tag;
                         g.Export(stream,
                          new GridViewExportOptions()
                          {
@@ -202,6 +211,16 @@ namespace WalzExplorer.Controls.RHSTabs
             e.Column.IsReadOnly = true;
             //e.Column.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
             //e.Column.CellStyle = style;
+            RadGridView g;
+            if (sender is RadGridView)
+            {
+                g =  (RadGridView)sender;
+            }
+            else
+            {
+                FrameworkElement element = (FrameworkElement)sender;
+                 g = (element).ParentOfType<RadGridView>();
+            }
             g.Rebind();
            
         }

@@ -6,17 +6,59 @@
              
              xmlns:WalzExplorer="clr-namespace:WalzExplorer"
              xmlns:tab="clr-namespace:WalzExplorer.Controls.RHSTabs"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="402.09" d:DesignHeight="143.881"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="2000" d:DesignHeight="600"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
              x:Class="WalzExplorer.Controls.RHSTabs.Project.Performance.SummaryView">
     <Grid>
-        <telerik:RadGridView  x:Name="grd" AutoGeneratingColumn="grd_AutoGeneratingColumn">
-            <telerik:RadGridView.Resources>
-                <Style TargetType="telerik:GroupHeaderRow" BasedOn="{StaticResource GroupHeaderRowStyle}">
-                    <Setter Property="ShowGroupHeaderColumnAggregates" Value="True" />
-                    <Setter Property="ShowHeaderAggregates"  Value="False" />
-                </Style>
-            </telerik:RadGridView.Resources>
-        </telerik:RadGridView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="83*"/>
+            <RowDefinition Height="449*"/>
+            <RowDefinition Height="68*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Summary Rating" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" Height="26" Width="99" Grid.Row="0"/>
+        <ComboBox HorizontalAlignment="Left" Margin="114,47,0,0" VerticalAlignment="Top" Width="120" Height="26" Grid.Row="0"/>
+        <Label Content="Period" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="26" Width="44" Grid.Row="0"/>
+        <ComboBox HorizontalAlignment="Left" Margin="114,10,0,0" VerticalAlignment="Top" Width="120" Height="26" Grid.Row="0"/>
+        <TextBox HorizontalAlignment="Left" Height="68" Margin="375,5,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="1037" Grid.Row="0"/>
+        <Label Content="Comments" HorizontalAlignment="Left" Margin="251,10,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>
+        <Button Content="Sign" HorizontalAlignment="Left" Margin="899,22,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75"/>
+        <telerik:RadTabControl HorizontalAlignment="Stretch" Margin="10,10,149,70" Grid.Row="1" VerticalAlignment="Stretch" Background="Transparent">
+            <telerik:RadTabItem x:Name="RadTabItem" Header="Time" Height="24" Margin="0">
+                <Grid Background="Transparent"/>
+            </telerik:RadTabItem>
+            <telerik:RadTabItem Header="Cost" Margin="0">
+                <Grid Background="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="254*"/>
+                        <ColumnDefinition Width="1585*"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </telerik:RadTabItem>
+            <telerik:RadTabItem Header="Hours" Margin="0">
+                <Grid Background="Transparent"/>
+            </telerik:RadTabItem>
+            <telerik:RadTabItem Header="Cashflow" Margin="0">
+                <Grid Background="Transparent"/>
+            </telerik:RadTabItem>
+            <telerik:RadTabItem Header="Safety" Margin="0">
+                <Grid Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="34"/>
+                        <RowDefinition Height="130"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <telerik:RadGridView Grid.Row="2" x:Name="grdSummary" AutoGeneratingColumn="grd_AutoGeneratingColumn"/>
+                    <Label  Grid.Row="3"  Content="Incidents:" />
+                    <telerik:RadGridView Grid.Row="4" x:Name="grd" AutoGeneratingColumn="grd_AutoGeneratingColumn"/>
+                    <Label Content="Safety Rating" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Height="26" Width="80" Grid.Row="0"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="194" Height="26" Grid.Row="0"/>
+                    <TextBox HorizontalAlignment="Left" Height="76" Margin="407,4,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="689" Grid.Row="0"/>
+                    <Label Content="Rating Comments" HorizontalAlignment="Left" Margin="297,3,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>
+                    <Label Content="Incident Summary:" HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="138"/>
+                </Grid>
+            </telerik:RadTabItem>
+        </telerik:RadTabControl>
     </Grid>
 </base:RHSTabGridViewBase_ReadOnly>
