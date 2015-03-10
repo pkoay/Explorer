@@ -23,12 +23,16 @@ using System.Windows.Shapes;
 using Telerik.Windows.Data;
 
 namespace WalzExplorer.Controls.RHSTabs
-{         
-    public class GridColumnSettings
+{
+    public class GridColumnSettings : IDisposable
     {
         public Dictionary<string, string> columnRename = new Dictionary<string, string>();
         public Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
         public List<string> columnReadOnlyDeveloper = new List<string>();
+        public void Dispose()
+        {
+        }
+
     }
 
     public class RHSTabGridViewBase_ReadOnly : RHSTabViewBase
@@ -198,10 +202,10 @@ namespace WalzExplorer.Controls.RHSTabs
 
 
 
-            //Determine settings
+            //Settings to be applied?
             if (gridColumnSettings.ContainsKey(g))
             {
-                //Rename from the dictionary
+                //Determine settingsfor grid
                 GridColumnSettings setting = gridColumnSettings[g];
 
                 //Ignore Columns for developers only while not in development mode

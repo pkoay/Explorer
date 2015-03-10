@@ -161,6 +161,7 @@
       <HintPath>..\lib\RCWPF\2014.3.1202.45.NoXaml\Telerik.Windows.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase">
       <Private>True</Private>
     </Reference>
@@ -194,13 +195,9 @@
     <Compile Include="Controls\RHSTabs\Project\CostView.xaml.cs">
       <DependentUpon>CostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RHSTabs\Project\Performance\SafetyView.xaml.cs">
-      <DependentUpon>SafetyView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\RHSTabs\Project\Performance\CostView.xaml.cs">
       <DependentUpon>CostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RHSTabs\Project\Performance\SafetyViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Project\Performance\SummaryView.xaml.cs">
       <DependentUpon>SummaryView.xaml</DependentUpon>
     </Compile>
@@ -512,10 +509,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Project\CostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\RHSTabs\Project\Performance\SafetyView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

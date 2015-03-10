@@ -33,10 +33,14 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             base.SetGrid(grd);
             base.Reset(grd);
 
-            GridColumnSettings setting = new GridColumnSettings();
-            setting.columnReadOnlyDeveloper.Add("DataAreaId");
-            gridColumnSettings.Add(grd, setting);
-
+            if (!gridColumnSettings.ContainsKey(grd))
+            {
+                using (GridColumnSettings setting = new GridColumnSettings())
+                {
+                    setting.columnReadOnlyDeveloper.Add("DataAreaId");
+                    gridColumnSettings.Add(grd, setting);
+                }
+            }
             // set grid data
             vm = new CommittedViewModel(settings);
             grd.DataContext = vm;

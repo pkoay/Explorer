@@ -17,8 +17,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
     {
         public WalzExplorerEntities context = new WalzExplorerEntities(false);
 
+        //history
+        public ObservableCollection<tblProject_HistoryRating> ratingList;
         public ObservableCollection<spWEX_RHS_Project_Performance_History_Result> historyList;
-        public ObservableCollection<spWEX_RHS_Project_Performance_Safety_Result> data;
+        public ObservableCollection<tblProject_History> historyData;
+
+        //safety
+        public ObservableCollection<spWEX_RHS_Project_Performance_Safety_Result> safetyDetailedData;
         public ObservableCollection<SafetySummarydata> safteySummaryData = new ObservableCollection<SafetySummarydata>();
 
         int ProjectID;
@@ -40,23 +45,47 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
 
             //History Dropdown population
             historyList = new ObservableCollection<spWEX_RHS_Project_Performance_History_Result>(context.spWEX_RHS_Project_Performance_History(ProjectID));
+            ratingList = new ObservableCollection<tblProject_HistoryRating>(context.tblProject_HistoryRating);
 
-            //Set Incident Data
-            data = new ObservableCollection<spWEX_RHS_Project_Performance_Safety_Result>(context.spWEX_RHS_Project_Performance_Safety(HistoryID));
+            //Have history
+            if (historyList.Count > 0)
+            {
+                HistoryID = historyList.FirstOrDefault().HistoryID;
+                RefreshData(HistoryID);
+            }
+        }
 
-            //Set Summary data
-            safteySummaryData.Add(new SafetySummarydata() { Title = "Target", LTI = 0, MTI = 0, FAI = null, NearMiss = null, LTIFR = 0, TRIFR = 5 });
+        public void RefreshData (int HistoryID)
+        {
+            historyData = new ObservableCollection<tblProject_History>(context.tblProject_History.Where(x => x.HistoryID == HistoryID));
+
+
+            //Set safety data
+            safetyDetailedData = new ObservableCollection<spWEX_RHS_Project_Performance_Safety_Result>(context.spWEX_RHS_Project_Performance_Safety(HistoryID));
+            safteySummaryData.Add(new SafetySummarydata() { Title = "Target", LTI = 0, MTI = 0, FAI = null, NearMiss = null, LTIFR = 0, TRIFR = 5 ,Hours =null});
+            safteySummaryData.Add(new SafetySummarydata() { 
+                Title = "Actual",
+                LTI = (int?) historyData[0].SafetyLTI,
+                MTI = (int?)historyData[0].SafetyMTI,
+                FAI = (int?)historyData[0].SafetyFAI,
+                NearMiss = (int?)historyData[0].SafetyNearMiss,
+                LTIFR = (int?)historyData[0].SafetyLTIFR,
+                TRIFR = (int?)historyData[0].SafetyTRIFR,
+                Hours = (int?)historyData[0].SafetyHours,
+            });
+
         }
     }
 
     public class SafetySummarydata
     {
         public String Title { get; set; }
-        public int LTI { get; set; }
-        public int MTI { get; set; }
+        public int? LTI { get; set; }
+        public int? MTI { get; set; }
         public int? FAI { get; set; }
         public int? NearMiss { get; set; }
-        public int LTIFR { get; set; }
-        public int TRIFR { get; set; }
+        public int? LTIFR { get; set; }
+        public int? TRIFR { get; set; }
+        public int? Hours { get; set; }
     }
 }

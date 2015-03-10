@@ -31,21 +31,26 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
             base.SetGrid(grd);
             base.Reset(grd);
 
-            GridColumnSettings setting = new GridColumnSettings();
-            setting.columnReadOnlyDeveloper.Add("RowVersion");
-            setting.columnReadOnlyDeveloper.Add("ProjectID");
-            setting.columnRename.Add("AXProjectID", "ID");
-            setting.columnRename.Add("OperationsManager", "Ops Manager");
-            setting.columnReadOnlyDeveloper.Add("AXDataAreaID");
-            setting.columnReadOnlyDeveloper.Add("SortOrder");
-            setting.columnReadOnlyDeveloper.Add("UpdatedBy");
-            setting.columnReadOnlyDeveloper.Add("UpdatedDate");
-            gridColumnSettings.Add(grd, setting);
+            if (!gridColumnSettings.ContainsKey(grd))
+            {
+                using (GridColumnSettings setting = new GridColumnSettings())
+                {
+                    setting.columnReadOnlyDeveloper.Add("RowVersion");
+                    setting.columnReadOnlyDeveloper.Add("ProjectID");
+                    setting.columnRename.Add("AXProjectID", "ID");
+                    setting.columnRename.Add("OperationsManager", "Ops Manager");
+                    setting.columnReadOnlyDeveloper.Add("AXDataAreaID");
+                    setting.columnReadOnlyDeveloper.Add("SortOrder");
+                    setting.columnReadOnlyDeveloper.Add("UpdatedBy");
+                    setting.columnReadOnlyDeveloper.Add("UpdatedDate");
+                    gridColumnSettings.Add(grd, setting);
+                }
+            }
 
             // set grid data
             vm = new SummaryViewModel(settings);
             grd.DataContext = vm;
-            grd.ItemsSource = vm.data;
+            grd.ItemsSource = vm.safetyDetailedData;
            
             base.TabLoad();
 

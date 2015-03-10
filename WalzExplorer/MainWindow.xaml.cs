@@ -182,13 +182,15 @@ namespace WalzExplorer
 
         private void tcRHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            using (new WaitCursor())
-            {
-                //TabItem ti = (TabItem) tcRHS.Items[tcRHS.SelectedIndex];
-                //ti.Content = new ProjectDetail ();
+          
+                using (new WaitCursor())
+                {
+                    //TabItem ti = (TabItem) tcRHS.Items[tcRHS.SelectedIndex];
+                    //ti.Content = new ProjectDetail ();
 
-                SelectedRHSTabRefresh();
-            }
+                    SelectedRHSTabRefresh();
+                }
+            
         }
 
         private void SelectedRHSTabRefresh()

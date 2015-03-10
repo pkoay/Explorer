@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using Telerik.Windows.Controls;
@@ -28,54 +29,135 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
         
         public override void TabLoad()
         {
-            //base.SetGrid(grd);
-            //base.Reset();
+            //ViewModel
+            vm = new SummaryViewModel(settings);
 
-            //columnReadOnlyDeveloper.Add("RowVersion");
-            //columnReadOnlyDeveloper.Add("ProjectID");
-            //columnRename.Add("AXProjectID", "ID");
-            //columnRename.Add("OperationsManager", "Ops Manager");
-            //columnReadOnlyDeveloper.Add("AXDataAreaID");
-            //columnReadOnlyDeveloper.Add("SortOrder");
-            //columnReadOnlyDeveloper.Add("UpdatedBy");
-            //columnReadOnlyDeveloper.Add("UpdatedDate");
+            //***********************
+            // GENERAL
 
-            //// set grid data
-            //vm = new SummaryViewModel(settings);
-            //grd.DataContext = vm;
-            //grd.ItemsSource = vm.data;
+             //Period End list
+            cmbPeriodEnd.ItemsSource = vm.historyList;
+            cmbPeriodEnd.DisplayMemberPath = "PeriodEnd";
+            cmbPeriodEnd.ItemStringFormat = "dd-MMM-yyyy";
+            cmbPeriodEnd.SelectedIndex=0;
+            cmbPeriodEnd.ItemsSource = vm.historyList;
+            
+
+            //Rating
+            cmbSummaryRating.ItemsSource = vm.ratingList;
+            cmbSummaryRating.DisplayMemberPath = "Title";
+            cmbSummaryRating.DataContext = vm.historyData;
+            cmbSummaryRating.SelectedValuePath = "RatingID";
+            cmbSummaryRating.SetBinding(RadComboBox.SelectedIndexProperty, new Binding("SummaryRatingID"));
+
+            //Comments
+            tbSummaryPMComments.DataContext = vm.historyData;
+            tbSummaryPMComments.SetBinding(TextBox.TextProperty, new Binding("PMSummaryNotes"));
+
+            //***********************
+            //SAFETY
+
+            //Detail Grid
+            base.SetGrid(grdSafetyDetail);
+            base.Reset(grdSafetyDetail);
+            if (!gridColumnSettings.ContainsKey(grdSafetyDetail))
+            {
+                using (GridColumnSettings setting = new GridColumnSettings())
+                {
+                    setting.columnReadOnlyDeveloper.Add("RowVersion");
+                    setting.columnReadOnlyDeveloper.Add("HistoryID");
+                    setting.columnReadOnlyDeveloper.Add("SortOrder");
+                    setting.columnReadOnlyDeveloper.Add("UpdatedBy");
+                    setting.columnReadOnlyDeveloper.Add("UpdatedDate");
+                    gridColumnSettings.Add(grdSafetyDetail, setting);
+                }
+            }
+            grdSafetyDetail.DataContext = vm;
+            grdSafetyDetail.ItemsSource = vm.safetyDetailedData;
            
-            //base.TabLoad();
+            //Summary Grid
+            base.SetGrid(grdSafetySummary);
+            base.Reset(grdSafetySummary);
+            grdSafetySummary.ShowGroupPanel = false;
+            grdSafetySummary.ShowColumnFooters = false;
+            grdSafetySummary.CanUserFreezeColumns = false;
+            grdSafetySummary.IsFilteringAllowed = false;
+            grdSafetySummary.DataContext = vm;
+            grdSafetySummary.ItemsSource = vm.safteySummaryData;
+
+            //SafetyRating
+            cmbSafetyRating.ItemsSource = vm.ratingList;
+            cmbSafetyRating.DisplayMemberPath = "Title";
+            cmbSafetyRating.DataContext = vm.historyData;
+            cmbSafetyRating.SelectedValuePath = "RatingID";
+            cmbSafetyRating.SetBinding(RadComboBox.SelectedValueProperty, new Binding("SafetyRatingID"));
+
+            base.TabLoad();
 
         }
 
+        //private void ComboColor(RadComboBox cmb)
+        //{
+        //    //cmb.Items[0].
+        //    //foreach (RadComboBoxItem i in cmb.Items)
+        //    //{
+                
+        //    //    i.Style.Setters.Add(new Setter(RadComboBoxItem.BackgroundProperty, "red"));
+        //    //        //tyle.Setters.Add(new Setter(GroupHeaderRow.ShowGroupHeaderColumnAggregatesProperty, true));
+        //    //}
+        //    //myCombo.get_items().getItem(0).get_element().style.color = "red"; 
+        //}
+
         private void grd_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
         {
+            RadGridView grd = (RadGridView) sender;
+            GridViewDataColumn column = e.Column as GridViewDataColumn;
+
+            switch (grd.Name)
+            {
+                case "grdSafetySummary":
+                    switch (e.Column.Header.ToString())
+                    {
+                        case "FAI":
+                        case "MTI":
+                        case "LTI":
+                        case "NearMiss":
+                        case "LTIFR":
+                        case "TRIFR":
+                        case "Hours":
+                            SetColumn(column, "INT");
+                            break;
+                        
+                          
+                        
+                    }
+                    break;
+                case "grdSafetyDetail":
+                    switch (e.Column.Header.ToString())
+                    {
+                        case "IncidentID":
+                            e.Column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
+                            column.ShowColumnWhenGrouped = false;
+                            break;
+                        case "ReportedDate":
+                            SetColumn(column, "DATE");
+                            break;
+                    }
+                    break;
+            }
            
-            //GridViewDataColumn column = e.Column as GridViewDataColumn;
-            //switch (e.Column.Header.ToString())
-            //{
-            //    case "AXProjectID":
-            //        e.Column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
-            //        column.ShowColumnWhenGrouped = false;
-            //        break;
-            //    case "Contract":
-            //        SetColumn(column, "TWO_DECIMAL");
-            //        ColumnToolTipStatic(grd, column, "DIFFERENT!!!");
-            //        break;
-            //    case "Cost":
-            //        SetColumn(column, "TWO_DECIMAL");
-            //        ColumnToolTipStatic(grd,column, "Costs to date (Includes Overheads) (Excludes Committed Costs)");
-            //        break;
-            //    case "Committed":
-            //        SetColumn(column, "TWO_DECIMAL");
-            //        ColumnToolTipStatic(grd, column, "Committed Costs to date (Open purchase orders)");
-            //        break;
-            //    case "Invoiced":
-            //        SetColumn(column, "TWO_DECIMAL");
-            //        ColumnToolTipStatic(grd, column, "Invoiced to client to date");
-            //        break;
-            //}
+           
+        }
+
+        private void tcHistory_SelectionChanged(object sender, RadSelectionChangedEventArgs e)
+        {
+            // stop it from bubbling
+            e.Handled = true;
+        }
+
+        private void btnSign_Click(object sender, RoutedEventArgs e)
+        {
+            vm.context.SaveChanges();
         }
 
      
