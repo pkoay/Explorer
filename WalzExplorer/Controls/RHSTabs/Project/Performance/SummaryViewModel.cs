@@ -18,9 +18,17 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
         public WalzExplorerEntities context = new WalzExplorerEntities(false);
 
         //history
-        public ObservableCollection<tblProject_HistoryRating> ratingList;
         public ObservableCollection<spWEX_RHS_Project_Performance_History_Result> historyList;
         public ObservableCollection<tblProject_History> historyData;
+
+        //multi purpose
+        public ObservableCollection<tblProject_HistoryRating> ratingList;
+        public ObservableCollection<tblProject_EarnedValueType> earnedValueList;
+
+        //Hours
+        public ObservableCollection<tblProject_HistoryHours> hoursPlannedData;
+        public ObservableCollection<tblProject_HistoryHours> hoursEarnedData;
+        public ObservableCollection<tblProject_HistoryHours> hoursActualData;
 
         //safety
         public ObservableCollection<spWEX_RHS_Project_Performance_Safety_Result> safetyDetailedData;
@@ -45,7 +53,10 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
 
             //History Dropdown population
             historyList = new ObservableCollection<spWEX_RHS_Project_Performance_History_Result>(context.spWEX_RHS_Project_Performance_History(ProjectID));
+
+            //multi purpose
             ratingList = new ObservableCollection<tblProject_HistoryRating>(context.tblProject_HistoryRating);
+            earnedValueList = new ObservableCollection<tblProject_EarnedValueType>(context.tblProject_EarnedValueType);
 
             //Have history
             if (historyList.Count > 0)
@@ -57,7 +68,17 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
 
         public void RefreshData (int HistoryID)
         {
+            //Summary
             historyData = new ObservableCollection<tblProject_History>(context.tblProject_History.Where(x => x.HistoryID == HistoryID));
+
+            //Multi use
+            
+
+            //Hours
+            hoursActualData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 3));
+            hoursEarnedData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 2));
+            hoursPlannedData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 1));
+
 
 
             //Set safety data

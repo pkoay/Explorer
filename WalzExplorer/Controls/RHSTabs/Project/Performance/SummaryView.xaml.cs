@@ -6,10 +6,14 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
+using Telerik.Charting;
 using Telerik.Windows.Controls;
+using Telerik.Windows.Controls.ChartView;
 using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
 using WalzExplorer.Common;
+using WalzExplorer.Database;
 namespace WalzExplorer.Controls.RHSTabs.Project.Performance
 {
     /// <summary>
@@ -32,6 +36,15 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
             //ViewModel
             vm = new SummaryViewModel(settings);
 
+            //Build Rating styles
+            //Style Rating_RadComboItemStyle = new Style(typeof(RadComboBoxItem));
+            //Rating_RadComboItemStyle.BasedOn = (Style)FindResource("RadComboBoxItemStyle");
+            ////Rating_RadComboItemStyle.Setters.Add(new Setter(RadComboBoxItem.ForegroundProperty, "Black"));
+            //Rating_RadComboItemStyle.Setters.Add(new Setter(RadComboBoxItem.BackgroundProperty, "{Binding Color}"));
+            //Rating_RadComboItemStyle.Seal();
+            //this.Resources.Add("Rating_RadComboItemStyle", Rating_RadComboItemStyle); 
+
+
             //***********************
             // GENERAL
 
@@ -49,10 +62,80 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
             cmbSummaryRating.DataContext = vm.historyData;
             cmbSummaryRating.SelectedValuePath = "RatingID";
             cmbSummaryRating.SetBinding(RadComboBox.SelectedIndexProperty, new Binding("SummaryRatingID"));
+            //cmbSummaryRating.style = Rating_RadComboItemStyle;
 
             //Comments
             tbSummaryPMComments.DataContext = vm.historyData;
             tbSummaryPMComments.SetBinding(TextBox.TextProperty, new Binding("PMSummaryNotes"));
+
+            //***********************
+            //HOURS
+           
+            chartHours.Series.Clear();
+            //calculate series
+            List<CartesianSeries> generatedSeries = new List<CartesianSeries>();
+
+            
+            foreach (tblProject_EarnedValueType ev  in vm.earnedValueList)
+            {
+
+            //}
+            //for (int i = 0; i < 3; i++)
+            //{
+                
+                SplineSeries series = new SplineSeries();
+
+                string TemplateName = string.Format("EllipseTemplate{0}", ev.Title);
+                
+
+                //DataTemplate dt = new DataTemplate();
+                ////Create the template
+                //var ellipseFactory = new FrameworkElementFactory(typeof(Ellipse));
+                ////ellipseFactory.SetValue(Ellipse.HeightProperty, 6);
+                ////ellipseFactory.SetValue(Ellipse.WidthProperty, 6);
+                //ellipseFactory.SetValue(Ellipse.FillProperty, ev.Color);
+                //DataTemplate template = new DataTemplate {VisualTree = ellipseFactory,};
+                //template.Seal();
+
+                //chartHours.Resources.Add(TemplateName, template);
+                series.PointTemplate = chartHours.Resources[TemplateName] as DataTemplate;
+
+
+                
+                series.CategoryBinding = new PropertyNameDataPointBinding("WeekEnd");
+                series.ValueBinding = new PropertyNameDataPointBinding("Value");
+
+                //<DataTemplate x:Key="PointTemplatePlanned">
+                //                <Ellipse Height="6" Width="6" Fill="#FF8EC441" />
+                //            </DataTemplate>
+
+                var bc = new BrushConverter();
+                series.Stroke = (Brush)bc.ConvertFrom(ev.Color);
+                switch (ev.Title)
+                {
+                    case "Planned":
+                        series.ItemsSource = vm.hoursPlannedData;
+                        break;
+                    case "Earned": 
+                        series.ItemsSource=vm.hoursEarnedData;
+                        break;
+                     case "Actual": 
+                        series.ItemsSource=vm.hoursActualData;
+                        break;
+                }
+                chartHours.Series.Add(series);
+
+                CategoricalAxis categoricalAxis = chartHours.HorizontalAxis as CategoricalAxis;
+                if (categoricalAxis != null)
+                {
+                    AxisPlotMode plotMode = AxisPlotMode.BetweenTicks;
+                    categoricalAxis.PlotMode = plotMode;
+                }
+            }
+            
+           
+
+
 
             //***********************
             //SAFETY
@@ -98,14 +181,14 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
 
         //private void ComboColor(RadComboBox cmb)
         //{
-        //    //cmb.Items[0].
-        //    //foreach (RadComboBoxItem i in cmb.Items)
-        //    //{
-                
-        //    //    i.Style.Setters.Add(new Setter(RadComboBoxItem.BackgroundProperty, "red"));
-        //    //        //tyle.Setters.Add(new Setter(GroupHeaderRow.ShowGroupHeaderColumnAggregatesProperty, true));
-        //    //}
-        //    //myCombo.get_items().getItem(0).get_element().style.color = "red"; 
+        //    cmb.Items[0].
+        //    foreach (RadComboBoxItem i in cmb.Items)
+        //    {
+
+        //        i.Style.Setters.Add(new Setter(RadComboBoxItem.BackgroundProperty, "red"));
+        //            //tyle.Setters.Add(new Setter(GroupHeaderRow.ShowGroupHeaderColumnAggregatesProperty, true));
+        //    }
+          
         //}
 
         private void grd_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
