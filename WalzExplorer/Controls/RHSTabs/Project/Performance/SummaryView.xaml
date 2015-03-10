@@ -61,9 +61,17 @@
                         <RowDefinition Height="83*"/>
                         <RowDefinition Height="500*"/>
                         <RowDefinition Height="68*"/>
+                        <RowDefinition Height="68*"/>
                     </Grid.RowDefinitions>
+                    
+                    <!--Rating-->
+                    <Label Content="Hours Rating" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Height="26" Width="80" Grid.Row="0"/>
+                    <telerik:RadComboBox Name="cmbHoursRating" SelectedItem="{Binding Path=SafetyRatingID}" Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}"  HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="194" Height="26" Grid.Row="0"/>
+                    <TextBox Name="tbHoursComments" Text="{Binding Source= historyData, Path=PMSummaryNotes}" HorizontalAlignment="Left" Height="76" Margin="407,5,5,5" TextWrapping="Wrap"  VerticalAlignment="Top" Width="689" Grid.Row="0"/>
+                    <Label Content="Comments" HorizontalAlignment="Left" Margin="297,3,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>
+                    
+                    <!--Chart-->
                     <telerik:RadCartesianChart Name="chartHours"  Grid.Row="1">
-                        
                         <telerik:RadCartesianChart.Resources>
                             <DataTemplate x:Key="EllipseTemplatePlanned">
                                 <Ellipse Height="6" Width="6" Fill="#FF8EC441" />
@@ -76,7 +84,7 @@
                             </DataTemplate>
                         </telerik:RadCartesianChart.Resources>
                         <telerik:RadCartesianChart.HorizontalAxis>
-                            <telerik:CategoricalAxis LabelFormat="dd/MMM/yyyy" />
+                            <telerik:CategoricalAxis />
                         </telerik:RadCartesianChart.HorizontalAxis>
                         <telerik:RadCartesianChart.VerticalAxis>
                             <telerik:LinearAxis />
@@ -91,6 +99,10 @@
                             <telerik:CartesianChartGrid MajorLinesVisibility="Y"/>
                         </telerik:RadCartesianChart.Grid>
                     </telerik:RadCartesianChart>
+
+                    <!--Incident Summary-->
+                    <Label Name="lblHoursSummary"  HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="2" VerticalAlignment="Top" Width="600"/>
+                    <telerik:RadGridView Grid.Row="3" x:Name="grdHoursSummary" AutoGeneratingColumn="grd_AutoGeneratingColumn"/>
                 </Grid>
                 
             </telerik:RadTabItem>
@@ -110,28 +122,19 @@
                         <RowDefinition Height="26"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <telerik:RadGridView Grid.Row="2" x:Name="grdSafetySummary" AutoGeneratingColumn="grd_AutoGeneratingColumn"/>
-                    <Label  Grid.Row="3"  Content="Incidents:" />
-                    <telerik:RadGridView Grid.Row="4" x:Name="grdSafetyDetail" AutoGeneratingColumn="grd_AutoGeneratingColumn"/>
+                    <!--Rating-->
                     <Label Content="Safety Rating" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Height="26" Width="80" Grid.Row="0"/>
-
-                    <telerik:RadComboBox Name="cmbSafetyRating" SelectedItem="{Binding Path=SafetyRatingID}" Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}"  HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="194" Height="26" Grid.Row="0">
-                        <!--<telerik:RadComboBox.Style>
-                            <Style TargetType="{x:Type telerik:RadComboBox}" BasedOn="{StaticResource RadComboBoxStyle}">
-                                <Setter Property="Foreground" Value="Black"/>
-                                <Setter Property="Background" Value="{Binding Path=SelectedItem.Color}"/>
-                            </Style>
-                        </telerik:RadComboBox.Style>-->
-                        <!--<telerik:RadComboBox.ItemContainerStyle>
-                            <Style TargetType="{x:Type telerik:RadComboBoxItem}" BasedOn="{StaticResource RadComboBoxItemStyle}">
-                                <Setter Property="Foreground" Value="Black"/>
-                                <Setter Property="Background" Value="{Binding Path=Color}"/>
-                            </Style>
-                        </telerik:RadComboBox.ItemContainerStyle>-->
-                    </telerik:RadComboBox>
+                    <telerik:RadComboBox Name="cmbSafetyRating" SelectedItem="{Binding Path=SafetyRatingID}" Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}"  HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="194" Height="26" Grid.Row="0"/>
                     <TextBox Name="tbSafetyComments" Text="{Binding Source= historyData, Path=PMSummaryNotes}" HorizontalAlignment="Left" Height="76" Margin="407,4,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="689" Grid.Row="0"/>
                     <Label Content="Comments" HorizontalAlignment="Left" Margin="297,3,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>
+                    <!--Incident Summary-->
                     <Label Content="Incident Summary:" HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="138"/>
+                    <telerik:RadGridView Grid.Row="2" x:Name="grdSafetySummary" AutoGeneratingColumn="grd_AutoGeneratingColumn"/>
+                    <!--Incident Detail-->
+                    <Label  Grid.Row="3"  Content="Incidents:" />
+                    <telerik:RadGridView Grid.Row="4" x:Name="grdSafetyDetail" AutoGeneratingColumn="grd_AutoGeneratingColumn"/>
+                    
+                   
                 </Grid>
             </telerik:RadTabItem>
             

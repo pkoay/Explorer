@@ -29,6 +29,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
         public ObservableCollection<tblProject_HistoryHours> hoursPlannedData;
         public ObservableCollection<tblProject_HistoryHours> hoursEarnedData;
         public ObservableCollection<tblProject_HistoryHours> hoursActualData;
+        public ObservableCollection<EarnedValueSummarydata> hoursSummaryData = new ObservableCollection<EarnedValueSummarydata>();
 
         //safety
         public ObservableCollection<spWEX_RHS_Project_Performance_Safety_Result> safetyDetailedData;
@@ -68,8 +69,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
 
         public void RefreshData (int HistoryID)
         {
+            
+
             //Summary
             historyData = new ObservableCollection<tblProject_History>(context.tblProject_History.Where(x => x.HistoryID == HistoryID));
+
+            //General
+            DateTime dtPeriodEnd=historyData.FirstOrDefault().PeriodEnd;
 
             //Multi use
             
@@ -78,8 +84,19 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
             hoursActualData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 3));
             hoursEarnedData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 2));
             hoursPlannedData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 1));
-
-
+            double dPlanned = hoursPlannedData.Where(x=>x.WeekEnd==dtPeriodEnd).First().Value;
+             double  dEarned = hoursEarnedData.Where(x=>x.WeekEnd==dtPeriodEnd).First().Value;
+             double dActual = hoursActualData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
+            hoursSummaryData.Add(new EarnedValueSummarydata(){
+                Planned = dPlanned,
+                Earned = dEarned,
+                Actual = dActual,
+                ScheduleVariance = dEarned-dPlanned,
+                CostVariance = dEarned - dActual,
+                SPI = dEarned/dPlanned,
+                CPI = dEarned / dActual,
+            });
+          
 
             //Set safety data
             safetyDetailedData = new ObservableCollection<spWEX_RHS_Project_Performance_Safety_Result>(context.spWEX_RHS_Project_Performance_Safety(HistoryID));
@@ -95,6 +112,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
                 Hours = (int?)historyData[0].SafetyHours,
             });
 
+            
+            
+
         }
     }
 
@@ -108,5 +128,17 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
         public int? LTIFR { get; set; }
         public int? TRIFR { get; set; }
         public int? Hours { get; set; }
+    }
+
+    public class EarnedValueSummarydata
+    {
+        
+        public double? Planned { get; set; }
+        public double? Earned { get; set; }
+        public double? Actual { get; set; }
+        public double? ScheduleVariance { get; set; }
+        public double? CostVariance { get; set; }
+        public double? SPI { get; set; }
+        public double? CPI { get; set; }
     }
 }

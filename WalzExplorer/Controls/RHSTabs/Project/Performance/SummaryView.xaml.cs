@@ -35,6 +35,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
         {
             //ViewModel
             vm = new SummaryViewModel(settings);
+            
 
             //Build Rating styles
             //Style Rating_RadComboItemStyle = new Style(typeof(RadComboBoxItem));
@@ -54,7 +55,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
             cmbPeriodEnd.ItemStringFormat = "dd-MMM-yyyy";
             cmbPeriodEnd.SelectedIndex=0;
             cmbPeriodEnd.ItemsSource = vm.historyList;
-            
+            string strPeriod = ((spWEX_RHS_Project_Performance_History_Result)cmbPeriodEnd.SelectedItem).PeriodEnd.ToString("dd-MMM-yyyy");
 
             //Rating
             cmbSummaryRating.ItemsSource = vm.ratingList;
@@ -70,24 +71,26 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
 
             //***********************
             //HOURS
-           
-            chartHours.Series.Clear();
-            //calculate series
-            List<CartesianSeries> generatedSeries = new List<CartesianSeries>();
-
             
+             //Rating
+            cmbHoursRating.ItemsSource = vm.ratingList;
+            cmbHoursRating.DisplayMemberPath = "Title";
+            cmbHoursRating.DataContext = vm.historyData;
+            cmbHoursRating.SelectedValuePath = "RatingID";
+            cmbHoursRating.SetBinding(RadComboBox.SelectedValueProperty, new Binding("HoursRatingID"));
+
+            //Chart
+            chartHours.Series.Clear();
+            List<CartesianSeries> generatedSeries = new List<CartesianSeries>();
             foreach (tblProject_EarnedValueType ev  in vm.earnedValueList)
             {
-
-            //}
-            //for (int i = 0; i < 3; i++)
-            //{
-                
                 SplineSeries series = new SplineSeries();
-
                 string TemplateName = string.Format("EllipseTemplate{0}", ev.Title);
-                
 
+
+                //<DataTemplate x:Key="PointTemplatePlanned">
+                //                <Ellipse Height="6" Width="6" Fill="#FF8EC441" />
+                //            </DataTemplate>
                 //DataTemplate dt = new DataTemplate();
                 ////Create the template
                 //var ellipseFactory = new FrameworkElementFactory(typeof(Ellipse));
@@ -96,19 +99,11 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
                 //ellipseFactory.SetValue(Ellipse.FillProperty, ev.Color);
                 //DataTemplate template = new DataTemplate {VisualTree = ellipseFactory,};
                 //template.Seal();
-
                 //chartHours.Resources.Add(TemplateName, template);
+
                 series.PointTemplate = chartHours.Resources[TemplateName] as DataTemplate;
-
-
-                
                 series.CategoryBinding = new PropertyNameDataPointBinding("WeekEnd");
                 series.ValueBinding = new PropertyNameDataPointBinding("Value");
-
-                //<DataTemplate x:Key="PointTemplatePlanned">
-                //                <Ellipse Height="6" Width="6" Fill="#FF8EC441" />
-                //            </DataTemplate>
-
                 var bc = new BrushConverter();
                 series.Stroke = (Brush)bc.ConvertFrom(ev.Color);
                 switch (ev.Title)
@@ -133,12 +128,39 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
                 }
             }
             
-           
+            //Hours Summary
+            lblHoursSummary.Content = "Hours Summary (as at "+ strPeriod +"):";
 
+            //Summary Grid
+            base.SetGrid(grdHoursSummary);
+            base.Reset(grdHoursSummary);
+            grdHoursSummary.ShowGroupPanel = false;
+            grdHoursSummary.ShowColumnFooters = false;
+            grdHoursSummary.CanUserFreezeColumns = false;
+            grdHoursSummary.IsFilteringAllowed = false;
+            grdHoursSummary.DataContext = vm;
+            grdHoursSummary.ItemsSource = vm.hoursSummaryData;
 
 
             //***********************
             //SAFETY
+
+            //SafetyRating
+            cmbSafetyRating.ItemsSource = vm.ratingList;
+            cmbSafetyRating.DisplayMemberPath = "Title";
+            cmbSafetyRating.DataContext = vm.historyData;
+            cmbSafetyRating.SelectedValuePath = "RatingID";
+            cmbSafetyRating.SetBinding(RadComboBox.SelectedValueProperty, new Binding("SafetyRatingID"));
+
+            //Summary Grid
+            base.SetGrid(grdSafetySummary);
+            base.Reset(grdSafetySummary);
+            grdSafetySummary.ShowGroupPanel = false;
+            grdSafetySummary.ShowColumnFooters = false;
+            grdSafetySummary.CanUserFreezeColumns = false;
+            grdSafetySummary.IsFilteringAllowed = false;
+            grdSafetySummary.DataContext = vm;
+            grdSafetySummary.ItemsSource = vm.safteySummaryData;
 
             //Detail Grid
             base.SetGrid(grdSafetyDetail);
@@ -158,22 +180,11 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
             grdSafetyDetail.DataContext = vm;
             grdSafetyDetail.ItemsSource = vm.safetyDetailedData;
            
-            //Summary Grid
-            base.SetGrid(grdSafetySummary);
-            base.Reset(grdSafetySummary);
-            grdSafetySummary.ShowGroupPanel = false;
-            grdSafetySummary.ShowColumnFooters = false;
-            grdSafetySummary.CanUserFreezeColumns = false;
-            grdSafetySummary.IsFilteringAllowed = false;
-            grdSafetySummary.DataContext = vm;
-            grdSafetySummary.ItemsSource = vm.safteySummaryData;
+          
 
-            //SafetyRating
-            cmbSafetyRating.ItemsSource = vm.ratingList;
-            cmbSafetyRating.DisplayMemberPath = "Title";
-            cmbSafetyRating.DataContext = vm.historyData;
-            cmbSafetyRating.SelectedValuePath = "RatingID";
-            cmbSafetyRating.SetBinding(RadComboBox.SelectedValueProperty, new Binding("SafetyRatingID"));
+
+
+            
 
             base.TabLoad();
 
