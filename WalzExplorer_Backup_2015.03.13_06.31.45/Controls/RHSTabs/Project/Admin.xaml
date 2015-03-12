@@ -1,0 +1,17 @@
+﻿<base:RHSTabViewBase
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:base="clr-namespace:WalzExplorer.Controls.RHSTabs"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             
+             xmlns:WalzExplorer="clr-namespace:WalzExplorer"
+             xmlns:tab="clr-namespace:WalzExplorer.Controls.RHSTabs"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="402.09" d:DesignHeight="143.881"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
+             x:Class="WalzExplorer.Controls.RHSTabs.Project.AdminView">
+    <Grid>
+        <Label Content="Performance"  FontWeight="Bold" HorizontalAlignment="Left" Margin="99,43,0,0" VerticalAlignment="Top"/>
+        <Label Content="Create Perfromance reports for :" HorizontalAlignment="Left" Margin="124,94,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="tbPerformancePeriodEnd" Text="TextBox" Margin="124,94,0,0" Width="100" Height="10" />
+    </Grid>
+</base:RHSTabViewBase>

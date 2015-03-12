@@ -1543,7 +1543,14 @@
             </CollectionType>
           </ReturnType>
         </Function>
-        <Function Name="spProject_HistoryUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spProject.HistoryUpdate" />
+        <Function Name="spProject_Admin_WeekList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spProject.Admin_WeekList" />
+        <Function Name="spProject_HistoryInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spProject.HistoryInsert">
+          <Parameter Name="ReportEnd" Type="date" Mode="In" />
+        </Function>
+        <Function Name="spProject_HistoryUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spProject.HistoryUpdate">
+          <Parameter Name="HistoryID" Type="int" Mode="In" />
+          <Parameter Name="PeriodEnd" Type="date" Mode="In" />
+        </Function>
         <Function Name="spTender_CloneActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spTender.CloneActivity">
           <Parameter Name="ComponentID" Type="int" Mode="In" />
           <Parameter Name="Factor" Type="int" Mode="In" />
@@ -2910,7 +2917,14 @@
             <Parameter Name="NTSecurityGroups" Mode="In" Type="String" />
             <Parameter Name="NTSecurityGroupsSeperator" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="spProject_HistoryUpdate" />
+          <FunctionImport Name="spProject_HistoryUpdate" >
+            <Parameter Name="HistoryID" Mode="In" Type="Int32" />
+            <Parameter Name="PeriodEnd" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spProject_Admin_WeekList" ReturnType="Collection(WalzExplorerModel.spProject_Admin_WeekList_Result)" />
+          <FunctionImport Name="spProject_HistoryInsert">
+            <Parameter Name="ReportEnd" Mode="In" Type="DateTime" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -4082,6 +4096,12 @@
           <Property Type="String" Name="Header" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Tooltip" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="spProject_Admin_WeekList_Result">
+          <Property Type="DateTime" Name="WeekStartDate" Nullable="true" />
+          <Property Type="DateTime" Name="WeekEndDate" Nullable="true" />
+          <Property Type="Boolean" Name="Selected" Nullable="true" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="255" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5039,6 +5059,17 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spProject_HistoryUpdate" FunctionName="WalzExplorerModel.Store.spProject_HistoryUpdate" />
+          <FunctionImportMapping FunctionImportName="spProject_Admin_WeekList" FunctionName="WalzExplorerModel.Store.spProject_Admin_WeekList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spProject_Admin_WeekList_Result">
+                <ScalarProperty Name="WeekStartDate" ColumnName="WeekStartDate" />
+                <ScalarProperty Name="WeekEndDate" ColumnName="WeekEndDate" />
+                <ScalarProperty Name="Selected" ColumnName="Selected" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spProject_HistoryInsert" FunctionName="WalzExplorerModel.Store.spProject_HistoryInsert" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

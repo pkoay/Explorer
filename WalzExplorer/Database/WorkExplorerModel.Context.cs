@@ -445,9 +445,31 @@ namespace WalzExplorer.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHSTabList_Result>("spWEX_RHSTabList", treeNodeTypeIDParameter, nTSecurityGroupsParameter, nTSecurityGroupsSeperatorParameter);
         }
     
-        public virtual int spProject_HistoryUpdate()
+        public virtual int spProject_HistoryUpdate(Nullable<int> historyID, Nullable<System.DateTime> periodEnd)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProject_HistoryUpdate");
+            var historyIDParameter = historyID.HasValue ?
+                new ObjectParameter("HistoryID", historyID) :
+                new ObjectParameter("HistoryID", typeof(int));
+    
+            var periodEndParameter = periodEnd.HasValue ?
+                new ObjectParameter("PeriodEnd", periodEnd) :
+                new ObjectParameter("PeriodEnd", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProject_HistoryUpdate", historyIDParameter, periodEndParameter);
+        }
+    
+        public virtual ObjectResult<spProject_Admin_WeekList_Result> spProject_Admin_WeekList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spProject_Admin_WeekList_Result>("spProject_Admin_WeekList");
+        }
+    
+        public virtual int spProject_HistoryInsert(Nullable<System.DateTime> reportEnd)
+        {
+            var reportEndParameter = reportEnd.HasValue ?
+                new ObjectParameter("ReportEnd", reportEnd) :
+                new ObjectParameter("ReportEnd", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProject_HistoryInsert", reportEndParameter);
         }
     }
 }

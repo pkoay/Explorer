@@ -6,12 +6,14 @@
              
              xmlns:WalzExplorer="clr-namespace:WalzExplorer"
              xmlns:tab="clr-namespace:WalzExplorer.Controls.RHSTabs"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="402.09" d:DesignHeight="143.881"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="1000" d:DesignHeight="143.881"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
              x:Class="WalzExplorer.Controls.RHSTabs.Project.AdminView">
     <Grid>
-        <Label Content="Performance"  FontWeight="Bold" HorizontalAlignment="Left" Margin="99,43,0,0" VerticalAlignment="Top"/>
-        <Label Content="Create Perfromance reports for :" HorizontalAlignment="Left" Margin="124,94,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="tbPerformancePeriodEnd" Text="TextBox" Margin="124,94,0,0" Width="100" Height="10" />
+        <Label Content="Performance Reports:"  FontWeight="Bold" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Create/ refresh  Performance reports for :" HorizontalAlignment="Left" Margin="44,56,0,0" VerticalAlignment="Top"/>
+        <Button Name="btnCreateRefreshPerfromanceReports"  Click="btnCreateRefreshPerfromanceReports_Click"  Content="OK" HorizontalAlignment="Left" Margin="583,58,0,0" VerticalAlignment="Top" Width="74"/>
+        <telerik:RadComboBox Name="cmbPerfromanceCreateRefreshWeekList" HorizontalAlignment="Left" Margin="277,58,0,0" VerticalAlignment="Top" Width="292"/>
+        <Label Content="Note: &#x9;This function only creates performance reports for open projects and projects that are in P6&#xA;&#x9;This function only refreshes performance reports that are unsigned" HorizontalAlignment="Left" Margin="44,87,0,0" VerticalAlignment="Top"/>
     </Grid>
 </base:RHSTabViewBase>
