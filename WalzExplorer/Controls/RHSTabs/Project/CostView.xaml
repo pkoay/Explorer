@@ -11,7 +11,7 @@
              x:Class="WalzExplorer.Controls.RHSTabs.Project.CostView">
     <Grid>
         <Grid.Resources>
-            <Style TargetType="telerik:GroupHeaderRow" BasedOn="{StaticResource GroupHeaderRowStyle}">
+            <Style x:Key="telerik:GroupHeaderRow" TargetType="telerik:GroupHeaderRow" BasedOn="{StaticResource GroupHeaderRowStyle}">
                 <Setter Property="ShowGroupHeaderColumnAggregates" Value="True" />
                 <Setter Property="ShowHeaderAggregates"  Value="False" />
             </Style>

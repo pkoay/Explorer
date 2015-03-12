@@ -15,11 +15,12 @@
 
 
                 <!--<ResourceDictionary Source="Themes/VisualStudio2013/System.Windows.xaml" />-->
-            <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.xaml" />
-            <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.Data.xaml" />
-            <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.GridView.xaml" />
-            <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.Input.xaml" />
-            <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.Navigation.xaml" />
+                <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.xaml" />
+                <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.Data.xaml" />
+                <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.Chart.xaml" />
+                <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.GridView.xaml" />
+                <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.Input.xaml" />
+                <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.Navigation.xaml" />
 
             <ResourceDictionary Source="/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>

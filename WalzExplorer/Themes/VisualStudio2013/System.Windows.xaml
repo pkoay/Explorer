@@ -70,8 +70,8 @@
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Padding" Value="4,3"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -263,8 +263,8 @@
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Padding" Value="3"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -277,8 +277,8 @@
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Padding" Value="6 0"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -695,8 +695,8 @@
     <Style BasedOn="{StaticResource ScrollBarStyle}" TargetType="ScrollBar"/>
     <Style BasedOn="{StaticResource ScrollViewerStyle}" TargetType="ScrollViewer"/>
     <Style x:Key="ToolTipStyle" TargetType="ToolTip">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
@@ -722,8 +722,8 @@
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=MainBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="Padding" Value="4 2"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -824,8 +824,8 @@
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=MainBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="Padding" Value="4 2"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -978,8 +978,8 @@
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="1"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -1015,8 +1015,8 @@
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Padding" Value="6 0"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -1204,8 +1204,8 @@
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="StatusBar">

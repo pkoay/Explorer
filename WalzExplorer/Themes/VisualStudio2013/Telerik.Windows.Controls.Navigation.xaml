@@ -22,11 +22,13 @@
         xmlns:outlookBarPrimitives="clr-namespace:Telerik.Windows.Controls.OutlookBar;assembly=Telerik.Windows.Controls.Navigation"
         xmlns:book="clr-namespace:Telerik.Windows.Controls.Book;assembly=Telerik.Windows.Controls.Navigation"
         xmlns:telerikBreadcrumb="clr-namespace:Telerik.Windows.Controls.Breadcrumb;assembly=Telerik.Windows.Controls.Navigation"
-        xmlns:carousel="clr-namespace:Telerik.Windows.Controls.Carousel;assembly=Telerik.Windows.Controls.Navigation">
+        xmlns:carousel="clr-namespace:Telerik.Windows.Controls.Carousel;assembly=Telerik.Windows.Controls.Navigation"
+        xmlns:wizard="clr-namespace:Telerik.Windows.Controls.Wizard;assembly=Telerik.Windows.Controls.Navigation">
     <ResourceDictionary.MergedDictionaries>
         <telerik:VisualStudio2013ResourceDictionary/>
     </ResourceDictionary.MergedDictionaries>
     <telerik1:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <telerik1:DoubleToThicknessConverter x:Key="DoubleToThicknessConverter"/>
     <SolidColorBrush x:Key="RadTreeView_ForbiddenDragIcon1" Color="#4C000000"/>
     <SolidColorBrush x:Key="RadTreeView_ForbiddenDragIcon2" Color="#FFFF0000"/>
     <SolidColorBrush x:Key="RadTreeView_ForbiddenDragIcon3" Color="#FFFF0000"/>
@@ -98,7 +100,6 @@
     <Thickness x:Key="TabItem_Margin">0</Thickness>
     <Thickness x:Key="TabItem_Margin_Selected">0</Thickness>
     <SolidColorBrush x:Key="WindowBorderBackground" Color="#FFCCE4FC"/>
-    <SolidColorBrush x:Key="WindowModalBackground" Color="#333333FF"/>
     <Style TargetType="telerikNavigation:RadPanelBar" x:Key="RadPanelbarBaseStyle">
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Local"/>
         <Setter Property="Padding" Value="1 0 1 1"/>
@@ -162,8 +163,8 @@
         <Setter Property="Orientation" Value="Vertical"/>
         <Setter Property="IsTabStop" Value="true"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=MainBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
@@ -626,8 +627,8 @@
     </Style>
     <Style x:Key="RadTileViewItemStyle" TargetType="telerikNavigation:RadTileViewItem">
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=MainBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Padding" Value="7"/>
@@ -713,8 +714,8 @@
         </Setter>
     </Style>
     <Style x:Key="RadTileViewStyle" TargetType="telerikNavigation:RadTileView">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -1018,8 +1019,8 @@
         <Setter Property="SubmenuHeaderTemplateKey" Value="{StaticResource DropDownMenuItemTemplate}"/>
         <Setter Property="TopLevelHeaderTemplateKey" Value="{StaticResource DropDownMenuItemTemplate}"/>
         <Setter Property="TopLevelItemTemplateKey" Value="{StaticResource DropDownMenuItemTemplate}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Padding" Value="3"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Template" Value="{StaticResource DropDownMenuItemTemplate}"/>
@@ -1203,7 +1204,7 @@
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
         <Setter Property="Padding" Value="1"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="MaxHeight" Value="500"/>
@@ -1423,8 +1424,8 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="HeaderBackground" Value="{telerik:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="ItemsPanel">
             <Setter.Value>
@@ -1583,7 +1584,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
         <Setter Property="Padding" Value="10 2"/>
         <Setter Property="Margin" Value="0 0 0 2"/>
         <Setter Property="HeaderForeground" Value="{telerik:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
@@ -1597,8 +1598,8 @@
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Padding" Value="4,3"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -1702,8 +1703,8 @@
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=MainBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="Padding" Value="4 2"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -1804,8 +1805,8 @@
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Padding" Value="6 0"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -1930,8 +1931,8 @@
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Padding" Value="6 0"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -2038,8 +2039,8 @@
     <Style TargetType="RadioButton" BasedOn="{StaticResource RadioButtonStyle}"/>
     <Style x:Key="RadButtonStyle" TargetType="telerik1:RadButton">
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
@@ -2173,7 +2174,6 @@
     </Style>
     <Style x:Key="RadPathButtonPathStyle" TargetType="Path">
         <Setter Property="Fill" Value="{telerik1:VisualStudio2013Resource ResourceKey=StrongBrush}"/>
-        <Setter Property="Margin" Value="3"/>
         <Setter Property="Stretch" Value="Fill"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -2181,8 +2181,8 @@
     </Style>
     <Style x:Key="RadPathButtonStyle" TargetType="telerik1:RadPathButton">
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
@@ -2282,17 +2282,24 @@
                             <VisualStateGroup x:Name="ContentPlacement">
                                 <VisualState x:Name="ContentPlacementAtLeft">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="(Grid.Column)">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentHost" Storyboard.TargetProperty="(Grid.Column)">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <sys:Int32>0</sys:Int32>
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="(Grid.Row)">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentHost" Storyboard.TargetProperty="(Grid.Row)">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <sys:Int32>1</sys:Int32>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentHost" Storyboard.TargetProperty="Margin" Duration="0">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Thickness>0 0 3 0</Thickness>
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
@@ -2300,17 +2307,24 @@
                                 </VisualState>
                                 <VisualState x:Name="ContentPlacementAtTop">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="(Grid.Column)">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentHost" Storyboard.TargetProperty="(Grid.Column)">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <sys:Int32>1</sys:Int32>
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="(Grid.Row)">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentHost" Storyboard.TargetProperty="(Grid.Row)">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <sys:Int32>0</sys:Int32>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentHost" Storyboard.TargetProperty="Margin" Duration="0">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Thickness>0 0 0 3</Thickness>
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
@@ -2318,17 +2332,24 @@
                                 </VisualState>
                                 <VisualState x:Name="ContentPlacementAtRight">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="(Grid.Column)">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentHost" Storyboard.TargetProperty="(Grid.Column)">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <sys:Int32>2</sys:Int32>
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="(Grid.Row)">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentHost" Storyboard.TargetProperty="(Grid.Row)">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <sys:Int32>1</sys:Int32>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentHost" Storyboard.TargetProperty="Margin" Duration="0">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Thickness>3 0 0 0</Thickness>
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
@@ -2336,17 +2357,38 @@
                                 </VisualState>
                                 <VisualState x:Name="ContentPlacementAtBottom">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="(Grid.Column)">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentHost" Storyboard.TargetProperty="(Grid.Column)">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <sys:Int32>1</sys:Int32>
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="(Grid.Row)">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentHost" Storyboard.TargetProperty="(Grid.Row)">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <sys:Int32>2</sys:Int32>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentHost" Storyboard.TargetProperty="Margin" Duration="0">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Thickness>0 3 0 0</Thickness>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="ContentVisibilityStates">
+                                <VisualState x:Name="Visible"/>
+                                <VisualState x:Name="Collapsed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentHost" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
@@ -2377,7 +2419,7 @@
                                 Visibility="Collapsed"
                                 BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=ComplementaryBrush}"
                                 Background="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}"/>
-                        <Grid>
+                        <Grid Margin="{TemplateBinding Padding}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -2389,18 +2431,18 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Path x:Name="Path" Grid.Column="1" Grid.Row="1" Style="{TemplateBinding PathStyle}" Data="{TemplateBinding PathGeometry}"/>
-                            <ContentPresenter x:Name="Content"
-                                    Grid.Column="1"
-                                    Grid.Row="2"
-                                    Margin="{TemplateBinding Padding}"
-                                    TextBlock.Foreground="{TemplateBinding Foreground}"
-                                    Content="{TemplateBinding Content}"
-                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                    RecognizesAccessKey="True"/>
+                            <Grid x:Name="ContentHost" Grid.Column="1" Grid.Row="2">
+                                <ContentPresenter x:Name="Content"
+                                        TextBlock.Foreground="{TemplateBinding Foreground}"
+                                        Margin="{TemplateBinding ContentMargin}"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                        RecognizesAccessKey="True"/>
+                            </Grid>
                         </Grid>
                         <Border x:Name="FocusVisual"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -2415,8 +2457,8 @@
     </Style>
     <Style x:Key="RadToggleButtonStyle" TargetType="telerik1:RadToggleButton">
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
@@ -2465,7 +2507,9 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="DisabledChecked">
-                                    <Storyboard/>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="Content" Storyboard.TargetProperty="Opacity" To="0.2"/>
+                                    </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="MouseOverChecked">
                                     <Storyboard>
@@ -2580,8 +2624,8 @@
     </Style>
     <Style x:Key="RadRadioButtonStyle" TargetType="telerik1:RadRadioButton">
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
@@ -2630,7 +2674,9 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="DisabledChecked">
-                                    <Storyboard/>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="Content" Storyboard.TargetProperty="Opacity" To="0.2"/>
+                                    </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="MouseOverChecked">
                                     <Storyboard>
@@ -2745,8 +2791,8 @@
     </Style>
     <Style x:Key="RadDropDownButtonStyle" TargetType="telerik1:RadDropDownButton">
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
@@ -3087,8 +3133,8 @@
         <Setter Property="TogglePartStyle" Value="{StaticResource RadToggleButtonStyle}"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
@@ -3763,15 +3809,15 @@
         </Setter>
     </Style>
     <Style x:Key="ToolBarTextBlock" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Margin" Value="1 3"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
     <Style x:Key="ToolBarTextBox2" TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Margin" Value="1 3"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -3782,8 +3828,8 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="MinWidth" Value="22"/>
@@ -3867,8 +3913,8 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="MinWidth" Value="22"/>
@@ -3962,8 +4008,8 @@
         </Setter>
     </Style>
     <Style x:Key="ToolBarRadButton" TargetType="telerik:RadButton" BasedOn="{StaticResource RadButtonStyle}">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="MinWidth" Value="22"/>
@@ -3976,8 +4022,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
     <Style x:Key="ToolBarRadToggleButton" TargetType="telerik:RadToggleButton" BasedOn="{StaticResource RadToggleButtonStyle}">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="MinWidth" Value="22"/>
@@ -3990,8 +4036,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
     <Style x:Key="ToolBarRadRadioButton" TargetType="telerik:RadRadioButton" BasedOn="{StaticResource RadRadioButtonStyle}">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="MinWidth" Value="22"/>
@@ -4004,8 +4050,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
     <Style TargetType="telerik:RadDropDownButton" x:Key="ToolBarRadDropDownButton" BasedOn="{StaticResource RadDropDownButtonStyle}">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="MinWidth" Value="22"/>
@@ -4018,8 +4064,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
     <Style x:Key="ToolBarRadSplitButton" TargetType="telerik:RadSplitButton" BasedOn="{StaticResource RadSplitButtonStyle}">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="MinWidth" Value="22"/>
@@ -4114,8 +4160,8 @@
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="FocusManager.IsFocusScope" Value="True"/>
         <Setter Property="ItemContainerStyleSelector">
             <Setter.Value>
@@ -4347,6 +4393,41 @@
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PopupGrid" Storyboard.TargetProperty="(Grid.Row)" Duration="0">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <sys:Int32>2</sys:Int32>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PopupGrid" Storyboard.TargetProperty="(Grid.Column)" Duration="0">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <sys:Int32>0</sys:Int32>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Overflow" Storyboard.TargetProperty="Placement" Duration="0">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <PlacementMode>Right</PlacementMode>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Overflow" Storyboard.TargetProperty="VerticalOffset" Duration="0">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <sys:Double>-4</sys:Double>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_Overflow" Storyboard.TargetProperty="HorizontalOffset" Duration="0">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <sys:Double>0</sys:Double>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GripOrnamentH" Storyboard.TargetProperty="Visibility" Duration="0">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
@@ -4382,7 +4463,7 @@
                                 Grid.Column="2"
                                 Grid.RowSpan="2"
                                 Width="14"/>
-                        <Grid Grid.Column="2">
+                        <Grid Grid.Column="2" x:Name="PopupGrid">
                             <Popup x:Name="PART_Overflow"
                                     AllowsTransparency="True"
                                     StaysOpen="False"
@@ -4886,7 +4967,7 @@
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             RecognizesAccessKey="True"
                             TextBlock.Foreground="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"
-                            TextBlock.FontFamily="Segoe UI"
+                            TextBlock.FontFamily="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"
                             ContentSource="Header"/>
                 </Border>
                 <ScrollViewer x:Name="PART_ScrollViewer"
@@ -5013,8 +5094,8 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
     </Style>
@@ -5066,8 +5147,8 @@
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="ItemsPanel">
@@ -5121,7 +5202,8 @@
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="FontWeight" Value="Normal"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="ContentTemplate">
             <Setter.Value>
@@ -5434,6 +5516,8 @@
     <Style x:Key="RadRadialMenuStyle" TargetType="telerikNavigation:RadRadialMenu">
         <Setter Property="NavigationMenuBackgroundStyle" Value="{StaticResource NavigationMenuStyle}"/>
         <Setter Property="ContentMenuBackgroundStyle" Value="{StaticResource ContentMenuStyle}"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="MinWidth" Value="265"/>
         <Setter Property="MinHeight" Value="265"/>
         <Setter Property="OuterBorderPadding" Value="0"/>
@@ -5450,8 +5534,8 @@
     <Style x:Key="MenuToolTipStyle" TargetType="telerikRadialMenu:MenuToolTip">
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
@@ -5470,6 +5554,8 @@
     </Style>
     <Style x:Key="RadRadialMenuItemStyle" TargetType="telerikNavigation:RadRadialMenuItem">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Foreground" Value="{telerik:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Template">
@@ -5479,7 +5565,7 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualStateGroup.Transitions>
-                                    <VisualTransition From="Loading" GeneratedDuration="0:0:0.3" To="*">
+                                    <VisualTransition From="Opening" GeneratedDuration="0:0:0.3" To="*">
                                         <Storyboard>
                                             <DoubleAnimation Duration="0:0:0.3" From="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="HeaderPresenter"/>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="HeaderPresenter" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
@@ -5509,7 +5595,7 @@
                                             </DoubleAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualTransition>
-                                    <VisualTransition From="Loading" GeneratedDuration="0:0:0.3" To="Selected">
+                                    <VisualTransition From="Opening" GeneratedDuration="0:0:0.3" To="Selected">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="HeaderPresenter">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{telerik:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
@@ -5545,7 +5631,7 @@
                                             </DoubleAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualTransition>
-                                    <VisualTransition From="Loading" GeneratedDuration="0:0:0.3" To="Disabled">
+                                    <VisualTransition From="Opening" GeneratedDuration="0:0:0.3" To="Disabled">
                                         <Storyboard>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="HeaderPresenter">
                                                 <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
@@ -5590,7 +5676,7 @@
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Loading">
+                                <VisualState x:Name="Opening">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="IconPresenter">
                                             <DiscreteObjectKeyFrame KeyTime="0">
@@ -5871,8 +5957,8 @@
                                         ContentTemplate="{TemplateBinding HeaderTemplate}"
                                         SnapsToDevicePixels="True"
                                         ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                        FontSize="12"
-                                        FontFamily="Segoe UI"
+                                        FontSize="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"
+                                        FontFamily="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"
                                         Foreground="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
                             </Grid>
                             <Border x:Name="PART_HeaderButtonsBorder" Grid.Column="1">
@@ -5948,8 +6034,9 @@
         <Setter Property="BorderThickness" Value="1 0 1 1"/>
         <Setter Property="MinHeight" Value="28"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
         <Setter Property="BorderBackground" Value="{StaticResource WindowBorderBackground}"/>
-        <Setter Property="ModalBackground" Value="{StaticResource WindowModalBackground}"/>
         <Setter Property="MinWidth" Value="100"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
@@ -5986,6 +6073,8 @@
         <Setter Property="IsTabStop" Value="false"/>
         <Setter Property="Width" Value="350"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="telerikNavigation:RadPrompt">
@@ -6006,7 +6095,7 @@
                             <TextBox IsTabStop="True" TabIndex="0" x:Name="PromptTextBox" Margin="8 0 8 8" Focusable="True"/>
                         </StackPanel>
                         <Border x:Name="HorizontalRule" Grid.Row="1" Grid.ColumnSpan="2" Height="1" VerticalAlignment="Top" Background="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
-                        <StackPanel x:Name="DialogButtons" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <StackPanel x:Name="DialogButtons" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
                             <telerik:RadButton x:Name="OK"
                                     Command="{x:Static telerik:WindowCommands.Confirm}"
                                     telerikNavigation:RadWindow.ResponseButton="Accept"
@@ -6036,6 +6125,8 @@
         <Setter Property="IsTabStop" Value="false"/>
         <Setter Property="MinWidth" Value="275"/>
         <Setter Property="MaxWidth" Value="500"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -6054,7 +6145,7 @@
                             <ContentPresenter x:Name="ConfirmText" Margin="8 8 8 0"/>
                         </ScrollViewer>
                         <Border x:Name="HorizontalRule" Grid.Row="1" Grid.ColumnSpan="2" Height="1" VerticalAlignment="Top" Background="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
-                        <StackPanel x:Name="DialogButtons" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <StackPanel x:Name="DialogButtons" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
                             <telerik:RadButton x:Name="OK"
                                     Command="{x:Static telerik:WindowCommands.Confirm}"
                                     telerikNavigation:RadWindow.ResponseButton="Accept"
@@ -6081,6 +6172,8 @@
         <Setter Property="MinWidth" Value="275"/>
         <Setter Property="MaxWidth" Value="500"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="telerikNavigation:RadAlert">
@@ -6104,7 +6197,7 @@
                         <telerik:RadButton x:Name="OK"
                                 Command="{x:Static telerik:WindowCommands.Confirm}"
                                 telerikNavigation:RadWindow.ResponseButton="Accept"
-                                Grid.Row="2"
+                                Grid.Row="1"
                                 Grid.ColumnSpan="2"
                                 MinWidth="70"
                                 HorizontalAlignment="Right"
@@ -6134,8 +6227,8 @@
         <Setter Property="IsHitTestVisible" Value="False"/>
         <Setter Property="Padding" Value="4 0"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
@@ -6240,8 +6333,8 @@
     </Style>
     <Style TargetType="treeView:TreeViewDragCue" x:Key="TreeViewDragCueStyle">
         <Setter Property="IsHitTestVisible" Value="False"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
         <Setter Property="Padding" Value="2"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
@@ -6398,8 +6491,8 @@
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Local"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -6704,8 +6797,6 @@
                                 StrokeThickness="1"/>
                     </Grid>
                 </Grid>
-                <CheckBox IsTabStop="False" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0" x:Name="CheckBoxElement" Visibility="Collapsed"/>
-                <RadioButton IsTabStop="False" Grid.Column="2" Margin="5,0,0,0" VerticalAlignment="Center" x:Name="RadioButtonElement" Visibility="Collapsed"/>
                 <Image Grid.Column="3" x:Name="Image" MaxWidth="16" MaxHeight="16" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <Rectangle x:Name="FocusVisual"
                         Visibility="Collapsed"
@@ -6732,6 +6823,8 @@
                             ContentTemplateSelector="{TemplateBinding HeaderEditTemplateSelector}"
                             ContentTemplate="{TemplateBinding HeaderEditTemplate}"/>
                 </Grid>
+                <CheckBox IsTabStop="False" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0" x:Name="CheckBoxElement" Visibility="Collapsed"/>
+                <RadioButton IsTabStop="False" Grid.Column="2" Margin="5,0,0,0" VerticalAlignment="Center" x:Name="RadioButtonElement" Visibility="Collapsed"/>
             </Grid>
             <ItemsPresenter Grid.Row="1" x:Name="ItemsHost" Visibility="Collapsed"/>
         </Grid>
@@ -6773,7 +6866,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="3"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
         <Setter Property="CornerRadius" Value="0"/>
         <Setter Property="Margin" Value="5"/>
         <Setter Property="Template">
@@ -7175,8 +7268,8 @@
         </Setter>
     </Style>
     <Style x:Key="MinimizedOutlookBarItemStyle" TargetType="outlookBarPrimitives:MinimizedOutlookBarItem">
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Padding" Value="2 0"/>
@@ -7344,8 +7437,8 @@
         <Setter Property="TopLevelItemTemplateKey" Value="{StaticResource OutlookMenuItemTemplate}"/>
         <Setter Property="SubmenuHeaderTemplateKey" Value="{StaticResource OutlookMenuItemTemplate}"/>
         <Setter Property="SubmenuItemTemplateKey" Value="{StaticResource OutlookMenuItemTemplate}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Padding" Value="7 3"/>
         <Setter Property="Margin" Value="1"/>
@@ -7360,8 +7453,8 @@
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=MainBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="MinimizedAreaMinHeight" Value="28"/>
         <Setter Property="MinimizedWidth" Value="32"/>
         <Setter Property="DropDownDisplayMode" Value="Visible"/>
@@ -7520,8 +7613,8 @@
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
@@ -7725,6 +7818,17 @@
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="DisabledVisual" Storyboard.TargetProperty="Opacity" To="0.2"/>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="DropDownIndicator" Storyboard.TargetProperty="Opacity" To="0.2"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="DisabledChecked">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="DropDownIndicatorChecked" Storyboard.TargetProperty="Opacity" To="0.2"/>
+                                    </Storyboard>
+                                </VisualState>
                                 <VisualState x:Name="MouseOverChecked">
                                     <Storyboard>
                                         <DoubleAnimation Duration="0" Storyboard.TargetName="MouseOverVisual" Storyboard.TargetProperty="Opacity" To="1"/>
@@ -7769,6 +7873,7 @@
                                 BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"
                                 BorderThickness="1"
                                 Opacity="0"/>
+                        <Border x:Name="DisabledVisual" Background="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}" BorderBrush="Transparent" BorderThickness="0" Opacity="0"/>
                         <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Path x:Name="DropDownIndicator"
                                     IsHitTestVisible="False"
@@ -7821,6 +7926,12 @@
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="DisabledVisual" Storyboard.TargetProperty="Opacity" To="0.2"/>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="Content" Storyboard.TargetProperty="Opacity" To="0.2"/>
+                                    </Storyboard>
+                                </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="MouseOverVisual"
@@ -7833,6 +7944,7 @@
                                 BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"
                                 BorderThickness="1"
                                 Opacity="0"/>
+                        <Border x:Name="DisabledVisual" Background="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}" BorderBrush="Transparent" BorderThickness="0" Opacity="0"/>
                         <ContentPresenter x:Name="Content"
                                 TextBlock.Foreground="{TemplateBinding Foreground}"
                                 Margin="{TemplateBinding Padding}"
@@ -7882,7 +7994,23 @@
                                 </VisualState>
                                 <VisualState x:Name="Pressed"/>
                                 <VisualState x:Name="Disabled">
-                                    <Storyboard/>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="OuterBorder" Storyboard.TargetProperty="Opacity" To="0.2"/>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DropDownPart" Storyboard.TargetProperty="BorderThickness" Duration="0">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Thickness>0</Thickness>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonPart" Storyboard.TargetProperty="BorderThickness" Duration="0">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Thickness>0</Thickness>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="IsCheckedState">
@@ -8120,7 +8248,12 @@
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Disabled"/>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="DropDownPart" Storyboard.TargetProperty="Opacity" To="0" Duration="0"/>
+                                        <DoubleAnimation Storyboard.TargetName="PART_DropDownIndicator" Storyboard.TargetProperty="Opacity" To="0.2" Duration="0"/>
+                                    </Storyboard>
+                                </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="IsCheckedState">
                                 <VisualState x:Name="UnChecked"/>
@@ -8618,9 +8751,9 @@
         <Border Background="Transparent" Margin="7" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="105"/>
+                    <ColumnDefinition MinWidth="105"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="105"/>
+                    <ColumnDefinition MinWidth="105"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock TextElement.FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{TemplateBinding Header}"/>
                 <ContentPresenter Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Content="{TemplateBinding Content}">
@@ -9192,11 +9325,173 @@
         <Setter Property="Template" Value="{StaticResource RadCarouselTemplate}"/>
         <Setter Property="Background" Value="{telerik:VisualStudio2013Resource ResourceKey=MainBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="ClipToBounds" Value="True"/>
     </Style>
     <Style TargetType="{x:Type telerikNavigation:RadCarousel}" BasedOn="{StaticResource RadCarouselStyle}"/>
+    <DataTemplate x:Key="FooterTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <telerik:RadButton x:Name="PART_Help"
+                    Content="{Binding HelpButtonContent, Mode=TwoWay}"
+                    MinHeight="22"
+                    Margin="9,0,0,0"
+                    MinWidth="70"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding NavigationButtonsVisibility.HelpButtonVisibility}"
+                    Command="{x:Static wizard:RadWizardCommands.Help}"/>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
+                <telerik:RadButton x:Name="PART_Previous"
+                        Content="{Binding PreviousButtonContent, Mode=TwoWay}"
+                        MinHeight="22"
+                        MinWidth="70"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding NavigationButtonsVisibility.PreviousButtonVisibility}"
+                        Command="{x:Static wizard:RadWizardCommands.MoveCurrentToPrevious}"/>
+                <telerik:RadButton x:Name="PART_Next"
+                        Content="{Binding NextButtonContent, Mode=TwoWay}"
+                        Margin="7,0,0,0"
+                        MinHeight="22"
+                        VerticalAlignment="Center"
+                        MinWidth="70"
+                        Visibility="{Binding NavigationButtonsVisibility.NextButtonVisibility}"
+                        Command="{x:Static wizard:RadWizardCommands.MoveCurrentToNext}"/>
+                <telerik:RadButton x:Name="PART_Cancel"
+                        Content="{Binding CancelButtonContent, Mode=TwoWay}"
+                        Margin="7,0,0,0"
+                        VerticalAlignment="Center"
+                        MinHeight="22"
+                        MinWidth="70"
+                        Visibility="{Binding NavigationButtonsVisibility.CancelButtonVisibility}"
+                        Command="{x:Static wizard:RadWizardCommands.Cancel}"/>
+                <telerik:RadButton x:Name="PART_Finish"
+                        Content="{Binding FinishButtonContent, Mode=TwoWay}"
+                        Margin="7,0,0,0"
+                        MinHeight="22"
+                        MinWidth="70"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding NavigationButtonsVisibility.FinishButtonVisibility}"
+                        Command="{x:Static wizard:RadWizardCommands.Finish}"/>
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+    <ControlTemplate x:Key="WizardPageTemplate" TargetType="telerikNavigation:WizardPage">
+        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Border x:Name="PART_SideHeaderBorder"
+                        Grid.RowSpan="2"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{Binding SideHeaderBorderWidth, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource DoubleToThicknessConverter}, ConverterParameter=Right}"
+                        Width="{Binding SideHeaderWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSideHeaderVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ContentPresenter x:Name="PART_SideHeaderPresenter"
+                            Margin="{TemplateBinding Padding}"
+                            Content="{TemplateBinding SideHeader}"
+                            TextBlock.Foreground="{TemplateBinding Foreground}"
+                            ContentTemplate="{TemplateBinding SideHeaderTemplate}"/>
+                </Border>
+                <Border x:Name="PART_HeaderBorder"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="1"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{Binding HeaderBorderWidth, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource DoubleToThicknessConverter}, ConverterParameter=Bottom}"
+                        Height="{Binding HeaderHeight, RelativeSource={RelativeSource TemplatedParent}}">
+                    <Grid Margin="{TemplateBinding Padding}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="PART_PageTitle"
+                                Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}"
+                                TextWrapping="Wrap"
+                                FontFamily="{telerik:VisualStudio2013Resource ResourceKey=FontFamily}"
+                                FontSize="{telerik:VisualStudio2013Resource ResourceKey=FontSizeXL}"
+                                FontWeight="Bold"
+                                Foreground="{TemplateBinding Foreground}"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsTitleVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <ContentPresenter x:Name="PART_HeaderPresenter"
+                                Grid.Row="1"
+                                Content="{TemplateBinding Header}"
+                                TextBlock.Foreground="{TemplateBinding Foreground}"
+                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsHeaderVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    </Grid>
+                </Border>
+                <ContentPresenter x:Name="PART_PagePresenter"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        TextBlock.Foreground="{TemplateBinding Foreground}"
+                        Margin="{TemplateBinding Padding}"
+                        TextBlock.FontSize="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"
+                        TextBlock.FontFamily="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+                <Border x:Name="PART_FooterBorder"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        BorderThickness="0,1,0,0"
+                        Padding="0,1,0,0"
+                        MinHeight="32"
+                        BorderBrush="{telerik:VisualStudio2013Resource ResourceKey=BasicBrush}"
+                        Background="{telerik:VisualStudio2013Resource ResourceKey=PrimaryBrush}">
+                    <ContentControl x:Name="PART_FooterContentControl"
+                            Margin="{TemplateBinding Padding}"
+                            ContentTemplate="{TemplateBinding FooterTemplate}"
+                            VerticalContentAlignment="Center"
+                            HorizontalContentAlignment="Stretch"/>
+                </Border>
+            </Grid>
+        </Border>
+    </ControlTemplate>
+    <ControlTemplate x:Key="RadWizardTemplate" TargetType="telerikNavigation:RadWizard">
+        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+            <ContentPresenter x:Name="PART_SelectedPagePresenter" Content="{Binding SelectedPage,RelativeSource={RelativeSource TemplatedParent}}"/>
+        </Border>
+    </ControlTemplate>
+    <Style x:Key="RadWizardStyle" TargetType="telerikNavigation:RadWizard">
+        <Setter Property="Template" Value="{StaticResource RadWizardTemplate}"/>
+        <Setter Property="Background" Value="{telerik:VisualStudio2013Resource ResourceKey=MainBrush}"/>
+        <Setter Property="Foreground" Value="{telerik:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
+        <Setter Property="BorderBrush" Value="{telerik:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+    </Style>
+    <Style x:Key="WizardPageStyle" TargetType="telerikNavigation:WizardPage">
+        <Setter Property="Template" Value="{StaticResource WizardPageTemplate}"/>
+        <Setter Property="FooterTemplate" Value="{StaticResource FooterTemplate}"/>
+        <Setter Property="BorderBrush" Value="{telerik:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
+        <Setter Property="PreviousButtonContent" Value="{Binding Manager.Culture, Source={StaticResource localizationManagerProvider}, Converter={StaticResource cultureToStringConverter}, ConverterParameter=Wizard_Previous}"/>
+        <Setter Property="NextButtonContent" Value="{Binding Manager.Culture, Source={StaticResource localizationManagerProvider}, Converter={StaticResource cultureToStringConverter}, ConverterParameter=Wizard_Next}"/>
+        <Setter Property="CancelButtonContent" Value="{Binding Manager.Culture, Source={StaticResource localizationManagerProvider}, Converter={StaticResource cultureToStringConverter}, ConverterParameter=Wizard_Cancel}"/>
+        <Setter Property="FinishButtonContent" Value="{Binding Manager.Culture, Source={StaticResource localizationManagerProvider}, Converter={StaticResource cultureToStringConverter}, ConverterParameter=Wizard_Finish}"/>
+        <Setter Property="HelpButtonContent" Value="{Binding Manager.Culture, Source={StaticResource localizationManagerProvider}, Converter={StaticResource cultureToStringConverter}, ConverterParameter=Wizard_Help}"/>
+        <Setter Property="Padding" Value="7,4"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+    </Style>
+    <Style TargetType="telerikNavigation:RadWizard" BasedOn="{StaticResource RadWizardStyle}"/>
+    <Style TargetType="telerikNavigation:WizardPage" BasedOn="{StaticResource WizardPageStyle}"/>
+    <Style TargetType="telerikNavigation:CompletionWizardPage" BasedOn="{StaticResource WizardPageStyle}"/>
+    <Style TargetType="telerikNavigation:WelcomeWizardPage" BasedOn="{StaticResource WizardPageStyle}"/>
 </ResourceDictionary>

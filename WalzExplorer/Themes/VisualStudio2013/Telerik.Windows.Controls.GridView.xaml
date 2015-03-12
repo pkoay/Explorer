@@ -516,11 +516,11 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Button x:Name="PART_ApplyFilterButton"
-                                    Width="87"
+                                    MinWidth="87"
                                     Visibility="{TemplateBinding FilterButtonVisibility}"
                                     Margin="0,4,4,0"
                                     telerik:LocalizationManager.ResourceKey="GridViewFilter"/>
-                            <Button x:Name="PART_ClearFilterButton" Grid.Column="1" Width="87" Margin="0,4,0,0" telerik:LocalizationManager.ResourceKey="GridViewClearFilter"/>
+                            <Button x:Name="PART_ClearFilterButton" Grid.Column="1" MinWidth="87" Margin="0,4,0,0" telerik:LocalizationManager.ResourceKey="GridViewClearFilter"/>
                         </Grid>
                     </StackPanel>
                     <telerik:RadButton x:Name="PART_FilterCloseButton"
@@ -753,7 +753,7 @@
                                     Text="{Binding}"
                                     MaxWidth="250"
                                     VerticalAlignment="Center"
-                                    FontSize="12"
+                                    FontSize="{telerik:VisualStudio2013Resource ResourceKey=FontSize}"
                                     Foreground="{telerik:VisualStudio2013Resource ResourceKey=SelectedBrush}"
                                     TextWrapping="Wrap"/>
                         </DataTemplate>
@@ -1198,7 +1198,7 @@
                         Grid.Column="1"
                         Content="{Binding SortingIndex, Converter={StaticResource SortingIndexConverter},RelativeSource={RelativeSource TemplatedParent}}"
                         Visibility="{Binding SortingIndex, Converter={StaticResource SortingIndexToVisibilityConverter},RelativeSource={RelativeSource TemplatedParent}}"
-                        FontSize="8"
+                        FontSize="{telerik:VisualStudio2013Resource ResourceKey=FontSizeXXXS}"
                         Foreground="{telerik:VisualStudio2013Resource ResourceKey=SelectedBrush}"
                         IsTabStop="{TemplateBinding IsTabStop}"
                         HorizontalAlignment="Center"
@@ -1229,7 +1229,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="Padding" Value="4,3,6,3"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="{telerik:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="DropIndicatorBrush" Value="{telerik:VisualStudio2013Resource ResourceKey=MainBrush}"/>
         <Setter Property="DropIndicatorThickness" Value="4"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -1424,8 +1424,8 @@
                         <DataTemplate>
                             <TextBlock
                                     MaxWidth="250"
-                                    FontSize="12"
-                                    FontFamily="Segoe UI"
+                                    FontSize="{telerik:VisualStudio2013Resource ResourceKey=FontSize}"
+                                    FontFamily="{telerik:VisualStudio2013Resource ResourceKey=FontFamily}"
                                     VerticalAlignment="Center"
                                     Foreground="{telerik:VisualStudio2013Resource ResourceKey=SelectedBrush}"
                                     Text="{Binding}"
@@ -1869,8 +1869,8 @@
                                     MinHeight="20"
                                     Margin="4,3"
                                     MaxWidth="250"
-                                    FontSize="12"
-                                    FontFamily="Segoe UI"
+                                    FontSize="{telerik:VisualStudio2013Resource ResourceKey=FontSize}"
+                                    FontFamily="{telerik:VisualStudio2013Resource ResourceKey=FontFamily}"
                                     Foreground="{telerik:VisualStudio2013Resource ResourceKey=SelectedBrush}"
                                     VerticalAlignment="Center"
                                     Text="{Binding}"
@@ -3038,8 +3038,8 @@
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="MinColumnWidth" Value="42"/>
         <Setter Property="RowHeight" Value="22"/>
         <Setter Property="Tag" Value="VisualStudio2013"/>
@@ -3094,7 +3094,7 @@
                 <TextBlock
                         MaxWidth="250"
                         VerticalAlignment="Center"
-                        FontSize="12"
+                        FontSize="{telerik:VisualStudio2013Resource ResourceKey=FontSize}"
                         Foreground="{telerik:VisualStudio2013Resource ResourceKey=SelectedBrush}"
                         Text="{TemplateBinding Content}"
                         TextWrapping="Wrap"/>
@@ -3301,7 +3301,7 @@
                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                         Margin="{TemplateBinding Padding}"
-                        FontSize="10"
+                        FontSize="{telerik:VisualStudio2013Resource ResourceKey=FontSizeXS}"
                         telerik:LocalizationManager.ResourceKey="GridViewGroupPanelText"
                         IsHitTestVisible="False"/>
                 <TextBlock x:Name="panelTextGrouped"
@@ -3309,7 +3309,7 @@
                         Visibility="Collapsed"
                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                        FontSize="10"
+                        FontSize="{telerik:VisualStudio2013Resource ResourceKey=FontSizeXS}"
                         telerik:LocalizationManager.ResourceKey="GridViewGroupPanelTopTextGrouped"
                         IsHitTestVisible="False"/>
                 <ItemsPresenter VerticalAlignment="Center"/>
@@ -3326,11 +3326,10 @@
         <Setter Property="BorderBrush" Value="{telerik:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Padding" Value="5"/>
         <Setter Property="MinHeight" Value="28"/>
+        <Setter Property="FontFamily" Value="{telerik:VisualStudio2013Resource ResourceKey=FontFamily}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="10"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
     <Style TargetType="grid:GridViewGroupPanel" BasedOn="{StaticResource GridViewGroupPanelStyle}"/>
@@ -3552,8 +3551,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="{telerik:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
@@ -3957,8 +3956,8 @@
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="MinColumnWidth" Value="42"/>
         <Setter Property="RowHeight" Value="22"/>
         <Setter Property="Tag" Value="VisualStudio2013"/>
@@ -4315,8 +4314,8 @@
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{telerik:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="MinColumnWidth" Value="42"/>
         <Setter Property="RowHeight" Value="22"/>
         <Setter Property="Tag" Value="VisualStudio2013"/>
@@ -4373,8 +4372,8 @@
                         <DataTemplate>
                             <TextBlock
                                     MaxWidth="250"
-                                    FontSize="12"
-                                    FontFamily="Segoe UI"
+                                    FontSize="{telerik:VisualStudio2013Resource ResourceKey=FontSize}"
+                                    FontFamily="{telerik:VisualStudio2013Resource ResourceKey=FontFamily}"
                                     VerticalAlignment="Center"
                                     Foreground="{telerik:VisualStudio2013Resource ResourceKey=SelectedBrush}"
                                     Text="{Binding}"
@@ -4923,8 +4922,8 @@
                                     Text="{Binding}"
                                     MaxWidth="250"
                                     VerticalAlignment="Center"
-                                    FontSize="12"
-                                    FontFamily="Segoe UI"
+                                    FontSize="{telerik:VisualStudio2013Resource ResourceKey=FontSize}"
+                                    FontFamily="{telerik:VisualStudio2013Resource ResourceKey=FontFamily}"
                                     Foreground="{telerik:VisualStudio2013Resource ResourceKey=SelectedBrush}"
                                     TextWrapping="Wrap"/>
                         </DataTemplate>
@@ -5132,8 +5131,8 @@
                         <DataTemplate>
                             <TextBlock
                                     MaxWidth="250"
-                                    FontSize="12"
-                                    FontFamily="Segoe UI"
+                                    FontSize="{telerik:VisualStudio2013Resource ResourceKey=FontSize}"
+                                    FontFamily="{telerik:VisualStudio2013Resource ResourceKey=FontFamily}"
                                     VerticalAlignment="Center"
                                     Foreground="{telerik:VisualStudio2013Resource ResourceKey=SelectedBrush}"
                                     Text="{Binding}"
@@ -5479,8 +5478,8 @@
                         <DataTemplate>
                             <TextBlock
                                     MaxWidth="250"
-                                    FontSize="12"
-                                    FontFamily="Segoe UI"
+                                    FontSize="{telerik:VisualStudio2013Resource ResourceKey=FontSize}"
+                                    FontFamily="{telerik:VisualStudio2013Resource ResourceKey=FontFamily}"
                                     VerticalAlignment="Center"
                                     Foreground="{telerik:VisualStudio2013Resource ResourceKey=SelectedBrush}"
                                     Text="{Binding}"
