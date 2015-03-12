@@ -323,7 +323,7 @@ namespace WalzExplorer.Database
             {
                 foreach (spWEX_RHSTabList_Result t in spWEX_RHSTabList(LHSNode.NodeTypeID, user.SecurityGroupAsString(), "|"))
                 {
-                    WEXRHSTab wt = new WEXRHSTab {ID=t.ID,Header=t.Header};
+                    WEXRHSTab wt = new WEXRHSTab {ID=t.ID,Header=t.Header,Tooltip=t.Tooltip};
                     tabs.Add(wt);
                 }
 

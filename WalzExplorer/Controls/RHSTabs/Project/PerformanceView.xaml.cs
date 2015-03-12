@@ -14,19 +14,19 @@ using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
 using WalzExplorer.Common;
 using WalzExplorer.Database;
-namespace WalzExplorer.Controls.RHSTabs.Project.Performance
+namespace WalzExplorer.Controls.RHSTabs.Project
 {
     /// <summary>
     /// Interaction logic for TenderViewer.xaml
     /// </summary>
     
      
-    public partial class SummaryView : RHSTabGridViewBase_ReadOnly
+    public partial class PerformanceView : RHSTabGridViewBase_ReadOnly
     {
-      
-        SummaryViewModel vm;
 
-        public SummaryView()
+        PerformanceViewModel vm;
+
+        public PerformanceView()
         {
             InitializeComponent();
         }
@@ -34,7 +34,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
         public override void TabLoad()
         {
             //ViewModel
-            vm = new SummaryViewModel(settings);
+            vm = new PerformanceViewModel(settings);
 
             if (vm.historyList.Count > 0)
             {

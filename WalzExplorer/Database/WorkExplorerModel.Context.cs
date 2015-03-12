@@ -367,23 +367,6 @@ namespace WalzExplorer.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_Node_TenderActivityList_Result>("spWEX_Node_TenderActivityList", tenderIDParameter);
         }
     
-        public virtual ObjectResult<spWEX_RHSTabList_Result> spWEX_RHSTabList(string treeNodeTypeID, string nTSecurityGroups, string nTSecurityGroupsSeperator)
-        {
-            var treeNodeTypeIDParameter = treeNodeTypeID != null ?
-                new ObjectParameter("TreeNodeTypeID", treeNodeTypeID) :
-                new ObjectParameter("TreeNodeTypeID", typeof(string));
-    
-            var nTSecurityGroupsParameter = nTSecurityGroups != null ?
-                new ObjectParameter("NTSecurityGroups", nTSecurityGroups) :
-                new ObjectParameter("NTSecurityGroups", typeof(string));
-    
-            var nTSecurityGroupsSeperatorParameter = nTSecurityGroupsSeperator != null ?
-                new ObjectParameter("NTSecurityGroupsSeperator", nTSecurityGroupsSeperator) :
-                new ObjectParameter("NTSecurityGroupsSeperator", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHSTabList_Result>("spWEX_RHSTabList", treeNodeTypeIDParameter, nTSecurityGroupsParameter, nTSecurityGroupsSeperatorParameter);
-        }
-    
         public virtual ObjectResult<spWEX_RHS_Project_Summary_Result> spWEX_RHS_Project_Summary(string userPersonID, string nodeTypeID, Nullable<int> projectID, Nullable<int> managerID, Nullable<int> customerID)
         {
             var userPersonIDParameter = userPersonID != null ?
@@ -443,6 +426,23 @@ namespace WalzExplorer.Database
                 new ObjectParameter("ProjectID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_Performance_History_Result>("spWEX_RHS_Project_Performance_History", projectIDParameter);
+        }
+    
+        public virtual ObjectResult<spWEX_RHSTabList_Result> spWEX_RHSTabList(string treeNodeTypeID, string nTSecurityGroups, string nTSecurityGroupsSeperator)
+        {
+            var treeNodeTypeIDParameter = treeNodeTypeID != null ?
+                new ObjectParameter("TreeNodeTypeID", treeNodeTypeID) :
+                new ObjectParameter("TreeNodeTypeID", typeof(string));
+    
+            var nTSecurityGroupsParameter = nTSecurityGroups != null ?
+                new ObjectParameter("NTSecurityGroups", nTSecurityGroups) :
+                new ObjectParameter("NTSecurityGroups", typeof(string));
+    
+            var nTSecurityGroupsSeperatorParameter = nTSecurityGroupsSeperator != null ?
+                new ObjectParameter("NTSecurityGroupsSeperator", nTSecurityGroupsSeperator) :
+                new ObjectParameter("NTSecurityGroupsSeperator", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHSTabList_Result>("spWEX_RHSTabList", treeNodeTypeIDParameter, nTSecurityGroupsParameter, nTSecurityGroupsSeperatorParameter);
         }
     }
 }

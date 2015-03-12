@@ -27,5 +27,12 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _header, value); } 
     	}
     
+        private string _tooltip;
+    	public string Tooltip 
+    	{ 
+    		get { return _tooltip; } 
+    		set { SetProperty(ref _tooltip, value); } 
+    	}
+    
     }
 }

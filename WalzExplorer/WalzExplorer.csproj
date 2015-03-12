@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>41</ApplicationRevision>
+    <ApplicationRevision>43</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -199,10 +199,14 @@
     <Compile Include="Controls\RHSTabs\Project\Performance\CostView.xaml.cs">
       <DependentUpon>CostView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RHSTabs\Project\PerformanceView.xaml.cs">
+      <DependentUpon>PerformanceView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RHSTabs\Project\Performance\SummaryView.xaml.cs">
       <DependentUpon>SummaryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Project\Performance\CostViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Project\PerformanceViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Project\Performance\SummaryViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Project\SummaryView.xaml.cs">
       <DependentUpon>SummaryView.xaml</DependentUpon>
@@ -264,6 +268,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ServicesModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_RHSTabList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\spWEX_RHS_Project_Committed_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
@@ -395,9 +402,6 @@
     <Compile Include="Database\spWEX_Node_TendersOpen_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\spWEX_RHSTabList_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Database\spWEX_TreeRootList_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -514,6 +518,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Project\Performance\CostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Project\PerformanceView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

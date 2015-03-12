@@ -672,6 +672,7 @@
           </Key>
           <Property Name="RHSTabID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tooltip" Type="varchar(max)" />
           <Property Name="Order" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tblWEX_RHSTab_Security">
@@ -2225,6 +2226,7 @@
           <Property Name="Order" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tblWEX_NTSecurityGroup" Relationship="Self.tblWEX_RHSTab_Security" FromRole="tblWEX_RHSTab" ToRole="tblWEX_NTSecurityGroup" />
           <NavigationProperty Name="tblWEX_TreeNodeType" Relationship="Self.tblWEX_TreeNodeType_RHSTab" FromRole="tblWEX_RHSTab" ToRole="tblWEX_TreeNodeType" />
+          <Property Name="Tooltip" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblWEX_Tree">
           <Key>
@@ -2695,11 +2697,6 @@
           <FunctionImport Name="spWEX_Node_TenderActivityList" ReturnType="Collection(WalzExplorerModel.spWEX_Node_TenderActivityList_Result)">
           <Parameter Name="TenderID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="spWEX_RHSTabList" ReturnType="Collection(WalzExplorerModel.spWEX_RHSTabList_Result)">
-            <Parameter Name="TreeNodeTypeID" Mode="In" Type="String" />
-            <Parameter Name="NTSecurityGroups" Mode="In" Type="String" />
-            <Parameter Name="NTSecurityGroupsSeperator" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="tblTender_Contractor" EntityType="WalzExplorerModel.tblTender_Contractor" />
           <AssociationSet Name="FK_tblTender_ComponentContractor_tblTender_Contractor" Association="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Contractor">
             <End Role="tblTender_Contractor" EntitySet="tblTender_Contractor" />
@@ -2907,6 +2904,11 @@
           <FunctionImport Name="spWEX_RHS_Project_Performance_History" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Performance_History_Result)">
           <Parameter Name="ProjectID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="spWEX_RHSTabList" ReturnType="Collection(WalzExplorerModel.spWEX_RHSTabList_Result)">
+            <Parameter Name="TreeNodeTypeID" Mode="In" Type="String" />
+            <Parameter Name="NTSecurityGroups" Mode="In" Type="String" />
+            <Parameter Name="NTSecurityGroupsSeperator" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -3022,10 +3024,6 @@
           <Property Type="String" Name="IconOpen" Nullable="false" MaxLength="16" />
           <Property Type="String" Name="IconClosed" Nullable="false" MaxLength="16" />
           <Property Type="String" Name="ChildSQL" Nullable="true" MaxLength="162" />
-        </ComplexType>
-        <ComplexType Name="spWEX_RHSTabList_Result">
-          <Property Type="String" Name="ID" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Header" Nullable="false" MaxLength="50" />
         </ComplexType>
         <EntityType Name="tblTender_Contractor">
           <Key>
@@ -4077,6 +4075,11 @@
           <Property Type="DateTime" Name="PeriodStart" Nullable="false" />
           <Property Type="DateTime" Name="PeriodEnd" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="spWEX_RHSTabList_Result">
+          <Property Type="String" Name="ID" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Header" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Tooltip" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4346,6 +4349,7 @@
           <EntitySetMapping Name="tblWEX_RHSTab">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblWEX_RHSTab">
               <MappingFragment StoreEntitySet="tblWEX_RHSTab">
+                <ScalarProperty Name="Tooltip" ColumnName="Tooltip" />
                 <ScalarProperty Name="RHSTabID" ColumnName="RHSTabID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Order" ColumnName="Order" />
@@ -4497,14 +4501,6 @@
                 <ScalarProperty Name="IconOpen" ColumnName="IconOpen" />
                 <ScalarProperty Name="IconClosed" ColumnName="IconClosed" />
                 <ScalarProperty Name="ChildSQL" ColumnName="ChildSQL" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spWEX_RHSTabList" FunctionName="WalzExplorerModel.Store.spWEX_RHSTabList">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHSTabList_Result">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Header" ColumnName="Header" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -5028,6 +5024,15 @@
                 <ScalarProperty Name="HistoryID" ColumnName="HistoryID" />
                 <ScalarProperty Name="PeriodStart" ColumnName="PeriodStart" />
                 <ScalarProperty Name="PeriodEnd" ColumnName="PeriodEnd" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHSTabList" FunctionName="WalzExplorerModel.Store.spWEX_RHSTabList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHSTabList_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
+                <ScalarProperty Name="Tooltip" ColumnName="Tooltip" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

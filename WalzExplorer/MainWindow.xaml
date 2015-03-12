@@ -148,7 +148,7 @@
                 <telerik:RadTabControl Name="tcRHS" Grid.Column="2" ItemsSource="{Binding RHSTabs}" SelectionChanged="tcRHS_SelectionChanged" Visibility="Hidden">
                     <telerik:RadTabControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Header}" FontSize="12" />
+                            <TextBlock Text="{Binding Header}" FontSize="12" ToolTip="{Binding Tooltip}"/>
                         </DataTemplate>
                     </telerik:RadTabControl.ItemTemplate>
                     <telerik:RadTabControl.ContentTemplate>

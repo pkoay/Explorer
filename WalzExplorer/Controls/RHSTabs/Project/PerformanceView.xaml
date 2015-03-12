@@ -9,7 +9,7 @@
              xmlns:perf="clr-namespace:WalzExplorer.Controls.RHSTabs.Project.Performance"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="2000" d:DesignHeight="600"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
-             x:Class="WalzExplorer.Controls.RHSTabs.Project.Performance.SummaryView">
+             x:Class="WalzExplorer.Controls.RHSTabs.Project.PerformanceView">
     <Grid>
         <Grid.Resources>
             <Style x:Key="Rating_RadComboBoxStyle"  TargetType="{x:Type telerik:RadComboBox}" BasedOn="{StaticResource RadComboBoxStyle}">

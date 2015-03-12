@@ -12,6 +12,7 @@ namespace WalzExplorer
     {
         public string ID { get; set; }
         public string Header { get; set; }
+        public string Tooltip { get; set; }
         public RHSTabViewBase Content { get; set; }
 
         public void Settings(WEXSettings s)
