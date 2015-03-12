@@ -19,9 +19,12 @@ namespace WalzExplorer.Windows
                 from p in context.tblPersons
                 join m in context.tblPerson_Mimic on p.PersonID equals m.MimicPersonID into pm
                 from m in pm.DefaultIfEmpty()
-                where (m.MimicPersonID != null && m.PersonID == settings.user.RealPerson.PersonID) 
+                where (
+                    ((m.PersonID == settings.user.RealPerson.PersonID && m.MimicPersonID != null) //Only those in mimic table 
+                    || p.PersonID == settings.user.RealPerson.PersonID))  //always have self (to mimic back to self)
+                orderby p.Name
                 select p ;
-
+            
             MimicList = new ObservableCollection<tblPerson>(query.ToList());
         }
     }

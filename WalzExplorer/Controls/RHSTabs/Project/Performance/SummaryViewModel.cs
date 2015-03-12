@@ -67,6 +67,17 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
             }
         }
 
+        public void RecalculateHistoryData()
+        {
+
+            var pHistoryID = new SqlParameter("@HistoryID", HistoryID);
+            var pPeriodEnd = new SqlParameter("@PeriodEnd", null);
+
+            context.Database.ExecuteSqlCommand("spProject.HistoryUpdate", pHistoryID, pPeriodEnd);
+            RefreshData(HistoryID);
+
+        }
+
         public void RefreshData (int HistoryID)
         {
             

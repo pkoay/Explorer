@@ -1543,6 +1543,7 @@
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="spProject_HistoryUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spProject.HistoryUpdate" />
         <Function Name="spTender_CloneActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spTender.CloneActivity">
           <Parameter Name="ComponentID" Type="int" Mode="In" />
           <Parameter Name="Factor" Type="int" Mode="In" />
@@ -2909,6 +2910,7 @@
             <Parameter Name="NTSecurityGroups" Mode="In" Type="String" />
             <Parameter Name="NTSecurityGroupsSeperator" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="spProject_HistoryUpdate" />
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -5036,6 +5038,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spProject_HistoryUpdate" FunctionName="WalzExplorerModel.Store.spProject_HistoryUpdate" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

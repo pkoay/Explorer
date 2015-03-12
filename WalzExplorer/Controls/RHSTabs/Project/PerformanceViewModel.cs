@@ -110,9 +110,16 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 TRIFR = (int?)historyData[0].SafetyTRIFR,
                 Hours = (int?)historyData[0].SafetyHours,
             });
+        }
 
-            
-            
+        public void RecalculateHistoryData()
+        {
+
+            var pHistoryID = new SqlParameter("@HistoryID", HistoryID);
+            var pPeriodEnd = new SqlParameter("@PeriodEnd",null);
+
+            context.Database.ExecuteSqlCommand("EXEC [spProject.HistoryUpdate] @HistoryID=" + HistoryID.ToString() +",@PeriodEnd=null");
+            RefreshData(HistoryID);
 
         }
     }

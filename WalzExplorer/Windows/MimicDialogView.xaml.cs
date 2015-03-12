@@ -54,8 +54,15 @@ namespace WalzExplorer.Windows
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            _settings.user.MimicedPerson = (tblPerson)cmbMimic.SelectedItem;
-            this.Close();
+            if (((tblPerson)cmbMimic.SelectedItem).Login != null)
+            {
+                _settings.user.MimicedPerson = (tblPerson)cmbMimic.SelectedItem;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("This user does not have thier login set up in AX, the login must be set up in AX before that person can be mimiced.");
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

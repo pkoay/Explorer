@@ -261,10 +261,26 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             e.Handled = true;
         }
 
-        private void btnSign_Click(object sender, RoutedEventArgs e)
+        private void btnProjectManagerSign_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnOperationsManagerSign_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            vm.RecalculateHistoryData();
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             vm.context.SaveChanges();
         }
+
 
      
       

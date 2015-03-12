@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -181,12 +182,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
                 grdSafetyDetail.DataContext = vm;
                 grdSafetyDetail.ItemsSource = vm.safetyDetailedData;
 
-
-
-
-
-
-
                 base.TabLoad();
             }
         }
@@ -262,6 +257,26 @@ namespace WalzExplorer.Controls.RHSTabs.Project.Performance
         }
 
         private void btnSign_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void btnProjectManagerSign_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnOperationsManagerSign_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             vm.context.SaveChanges();
         }

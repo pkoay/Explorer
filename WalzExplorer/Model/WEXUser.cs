@@ -120,60 +120,60 @@ namespace WalzExplorer
             return val;
         }
 
-        public List<GroupPrincipal> GetGroups(string userName)
-        {
-            List<GroupPrincipal> result = new List<GroupPrincipal>();
-            if (userName != null)
-            {
-                // establish domain context
-                PrincipalContext yourDomain = new PrincipalContext(ContextType.Domain);
+        //public List<GroupPrincipal> GetGroups(string userName)
+        //{
+        //    List<GroupPrincipal> result = new List<GroupPrincipal>();
+        //    if (userName != null)
+        //    {
+        //        // establish domain context
+        //        PrincipalContext yourDomain = new PrincipalContext(ContextType.Domain);
 
-                // find your user
-                UserPrincipal user = UserPrincipal.FindByIdentity(yourDomain, userName);
+        //        // find your user
+        //        UserPrincipal user = UserPrincipal.FindByIdentity(yourDomain, userName);
 
-                // if found - grab its groups
-                if (user != null)
-                {
-                    PrincipalSearchResult<Principal> groups = user.GetGroups(yourDomain);
-                    //PrincipalSearchResult<Principal> groups = user.GetAuthorizationGroups();
+        //        // if found - grab its groups
+        //        if (user != null)
+        //        {
+        //            PrincipalSearchResult<Principal> groups = user.GetGroups(yourDomain);
+        //            //PrincipalSearchResult<Principal> groups = user.GetAuthorizationGroups();
 
-                    //iterate over all groups
-                    foreach (Principal p in groups)
-                    {
-                        // make sure to add only group principals
-                        if (p is GroupPrincipal)
-                        {
-                            result.Add((GroupPrincipal)p);
-                            result.AddRange(GetGroups((GroupPrincipal)p, yourDomain));
-                        }
-                    }
-                }
-            }
-            return result;
-        }
+        //            //iterate over all groups
+        //            foreach (Principal p in groups)
+        //            {
+        //                // make sure to add only group principals
+        //                if (p is GroupPrincipal)
+        //                {
+        //                    result.Add((GroupPrincipal)p);
+        //                    result.AddRange(GetGroups((GroupPrincipal)p, yourDomain));
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return result;
+        //}
         
-        public List<GroupPrincipal>  GetGroups (GroupPrincipal group, PrincipalContext yourDomain)
-        {
-            List<GroupPrincipal> result = new List<GroupPrincipal>();
+        //public List<GroupPrincipal>  GetGroups (GroupPrincipal group, PrincipalContext yourDomain)
+        //{
+        //    List<GroupPrincipal> result = new List<GroupPrincipal>();
 
-            PrincipalSearchResult<Principal> groups = group.GetGroups(yourDomain);
-            //PrincipalSearchResult<Principal> groups = user.GetAuthorizationGroups();
+        //    PrincipalSearchResult<Principal> groups = group.GetGroups(yourDomain);
+        //    //PrincipalSearchResult<Principal> groups = user.GetAuthorizationGroups();
 
-            // iterate over all groups
-            foreach (Principal p in groups)
-            {
-                // make sure to add only group principals
-                if (p is GroupPrincipal)
-                {
-                    result.Add((GroupPrincipal)p);
+        //    // iterate over all groups
+        //    foreach (Principal p in groups)
+        //    {
+        //        // make sure to add only group principals
+        //        if (p is GroupPrincipal)
+        //        {
+        //            result.Add((GroupPrincipal)p);
 
-                    //Recursive
-                    result.AddRange(GetGroups((GroupPrincipal)p, yourDomain));
-                }
-            }
+        //            //Recursive
+        //            result.AddRange(GetGroups((GroupPrincipal)p, yourDomain));
+        //        }
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
 
         IEnumerable<String> xGetGroups(String samAccountName)

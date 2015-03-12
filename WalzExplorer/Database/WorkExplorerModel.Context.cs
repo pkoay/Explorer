@@ -444,5 +444,10 @@ namespace WalzExplorer.Database
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHSTabList_Result>("spWEX_RHSTabList", treeNodeTypeIDParameter, nTSecurityGroupsParameter, nTSecurityGroupsSeperatorParameter);
         }
+    
+        public virtual int spProject_HistoryUpdate()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProject_HistoryUpdate");
+        }
     }
 }

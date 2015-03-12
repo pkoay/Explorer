@@ -112,6 +112,8 @@ namespace WalzExplorer
        
         private void LoadFormForMimic()
         {
+            tcRHS.Visibility = System.Windows.Visibility.Hidden;
+        
             using (WalzExplorerEntities we = new WalzExplorerEntities(false))
             {
                 we.Database.Connection.Open();
