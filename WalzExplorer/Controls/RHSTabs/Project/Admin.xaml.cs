@@ -48,8 +48,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         {
             if (MessageBox.Show("Are you sure you want to create/refresh the Perfromance reports " + ((spProject_Admin_WeekList_Result)cmbPerfromanceCreateRefreshWeekList.SelectedItem).Title, "Performance Reports admin", MessageBoxButton.OKCancel, MessageBoxImage.Question)== MessageBoxResult.OK )
             {
+                using (WaitCursor wait= new WaitCursor())
+                {
                 vm.CreateRefreshPerformanceReports((DateTime)cmbPerfromanceCreateRefreshWeekList.SelectedValue);
+                MessageBox.Show("Perfromance reports created/refreshed " + ((spProject_Admin_WeekList_Result)cmbPerfromanceCreateRefreshWeekList.SelectedItem).Title, "Performance Reports admin", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
+
         }
      
       
