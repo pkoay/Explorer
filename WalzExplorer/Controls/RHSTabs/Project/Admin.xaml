@@ -1,4 +1,4 @@
-﻿<base:RHSTabGridViewBase_ReadOnly
+﻿<base:RHSTabViewBase
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:base="clr-namespace:WalzExplorer.Controls.RHSTabs"
@@ -8,15 +8,10 @@
              xmlns:tab="clr-namespace:WalzExplorer.Controls.RHSTabs"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="402.09" d:DesignHeight="143.881"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
-             x:Class="WalzExplorer.Controls.RHSTabs.Project.Performance.CostView">
+             x:Class="WalzExplorer.Controls.RHSTabs.Project.AdminView">
     <Grid>
-        <telerik:RadGridView  x:Name="grd" AutoGeneratingColumn="grd_AutoGeneratingColumn">
-            <telerik:RadGridView.Resources>
-                <Style TargetType="telerik:GroupHeaderRow" BasedOn="{StaticResource GroupHeaderRowStyle}">
-                    <Setter Property="ShowGroupHeaderColumnAggregates" Value="True" />
-                    <Setter Property="ShowHeaderAggregates"  Value="False" />
-                </Style>
-            </telerik:RadGridView.Resources>
-        </telerik:RadGridView>
+        <Label Content="Performance"  FontWeight="Bold" HorizontalAlignment="Left" Margin="99,43,0,0" VerticalAlignment="Top"/>
+        <Label Content="Create Perfromance reports for :" HorizontalAlignment="Left" Margin="124,94,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="tbPerformancePeriodEnd" Text="TextBox" Margin="124,94,0,0" Width="100" Height="10" />
     </Grid>
-</base:RHSTabGridViewBase_ReadOnly>
+</base:RHSTabViewBase>

@@ -7,13 +7,12 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Telerik.Charting;
 using Telerik.Windows.Controls;
-using Telerik.Windows.Controls.ChartView;
 using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
 using WalzExplorer.Common;
 using WalzExplorer.Database;
+
 namespace WalzExplorer.Controls.RHSTabs.Project
 {
     /// <summary>
@@ -80,54 +79,54 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 cmbHoursRating.SelectedValuePath = "RatingID";
                 cmbHoursRating.SetBinding(RadComboBox.SelectedValueProperty, new Binding("HoursRatingID"));
 
-                //Chart
-                chartHours.Series.Clear();
-                List<CartesianSeries> generatedSeries = new List<CartesianSeries>();
-                foreach (tblProject_EarnedValueType ev in vm.earnedValueList)
-                {
-                    SplineSeries series = new SplineSeries();
-                    string TemplateName = string.Format("EllipseTemplate{0}", ev.Title);
+                ////Chart
+                //chartHours.Series.Clear();
+                //List<CartesianSeries> generatedSeries = new List<CartesianSeries>();
+                //foreach (tblProject_EarnedValueType ev in vm.earnedValueList)
+                //{
+                //    SplineSeries series = new SplineSeries();
+                //    string TemplateName = string.Format("EllipseTemplate{0}", ev.Title);
 
 
-                    //<DataTemplate x:Key="PointTemplatePlanned">
-                    //                <Ellipse Height="6" Width="6" Fill="#FF8EC441" />
-                    //            </DataTemplate>
-                    //DataTemplate dt = new DataTemplate();
-                    ////Create the template
-                    //var ellipseFactory = new FrameworkElementFactory(typeof(Ellipse));
-                    ////ellipseFactory.SetValue(Ellipse.HeightProperty, 6);
-                    ////ellipseFactory.SetValue(Ellipse.WidthProperty, 6);
-                    //ellipseFactory.SetValue(Ellipse.FillProperty, ev.Color);
-                    //DataTemplate template = new DataTemplate {VisualTree = ellipseFactory,};
-                    //template.Seal();
-                    //chartHours.Resources.Add(TemplateName, template);
+                //    //<DataTemplate x:Key="PointTemplatePlanned">
+                //    //                <Ellipse Height="6" Width="6" Fill="#FF8EC441" />
+                //    //            </DataTemplate>
+                //    //DataTemplate dt = new DataTemplate();
+                //    ////Create the template
+                //    //var ellipseFactory = new FrameworkElementFactory(typeof(Ellipse));
+                //    ////ellipseFactory.SetValue(Ellipse.HeightProperty, 6);
+                //    ////ellipseFactory.SetValue(Ellipse.WidthProperty, 6);
+                //    //ellipseFactory.SetValue(Ellipse.FillProperty, ev.Color);
+                //    //DataTemplate template = new DataTemplate {VisualTree = ellipseFactory,};
+                //    //template.Seal();
+                //    //chartHours.Resources.Add(TemplateName, template);
 
-                    series.PointTemplate = chartHours.Resources[TemplateName] as DataTemplate;
-                    series.CategoryBinding = new PropertyNameDataPointBinding("WeekEnd");
-                    series.ValueBinding = new PropertyNameDataPointBinding("Value");
-                    var bc = new BrushConverter();
-                    series.Stroke = (Brush)bc.ConvertFrom(ev.Color);
-                    switch (ev.Title)
-                    {
-                        case "Planned":
-                            series.ItemsSource = vm.hoursPlannedData;
-                            break;
-                        case "Earned":
-                            series.ItemsSource = vm.hoursEarnedData;
-                            break;
-                        case "Actual":
-                            series.ItemsSource = vm.hoursActualData;
-                            break;
-                    }
-                    chartHours.Series.Add(series);
+                //    series.PointTemplate = chartHours.Resources[TemplateName] as DataTemplate;
+                //    series.CategoryBinding = new PropertyNameDataPointBinding("WeekEnd");
+                //    series.ValueBinding = new PropertyNameDataPointBinding("Value");
+                //    var bc = new BrushConverter();
+                //    series.Stroke = (Brush)bc.ConvertFrom(ev.Color);
+                //    switch (ev.Title)
+                //    {
+                //        case "Planned":
+                //            series.ItemsSource = vm.hoursPlannedData;
+                //            break;
+                //        case "Earned":
+                //            series.ItemsSource = vm.hoursEarnedData;
+                //            break;
+                //        case "Actual":
+                //            series.ItemsSource = vm.hoursActualData;
+                //            break;
+                //    }
+                //    chartHours.Series.Add(series);
 
-                    CategoricalAxis categoricalAxis = chartHours.HorizontalAxis as CategoricalAxis;
-                    if (categoricalAxis != null)
-                    {
-                        AxisPlotMode plotMode = AxisPlotMode.BetweenTicks;
-                        categoricalAxis.PlotMode = plotMode;
-                    }
-                }
+                //    CategoricalAxis categoricalAxis = chartHours.HorizontalAxis as CategoricalAxis;
+                //    if (categoricalAxis != null)
+                //    {
+                //        AxisPlotMode plotMode = AxisPlotMode.BetweenTicks;
+                //        categoricalAxis.PlotMode = plotMode;
+                //    }
+                //}
 
                 //Hours Summary
                 lblHoursSummary.Content = "Hours Summary (as at " + strPeriod + "):";
