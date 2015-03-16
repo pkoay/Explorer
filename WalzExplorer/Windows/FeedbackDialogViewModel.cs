@@ -11,10 +11,12 @@ namespace WalzExplorer.Windows
     class FeedbackDialogViewModel
     {
         ServicesEntities context = new ServicesEntities(false);
+        WEXSettings _settings;
         public ObservableCollection<tblFeedback_Type> TypeList { get; private set; }
 
-        public FeedbackDialogViewModel()
+        public FeedbackDialogViewModel(WEXSettings settings)
         {
+            _settings=settings;
             TypeList = new ObservableCollection<tblFeedback_Type>(context.tblFeedback_Type.ToList<tblFeedback_Type>());
         }
 
@@ -25,10 +27,10 @@ namespace WalzExplorer.Windows
             i.StatusID=1;
             i.TypeID =1 ; //type
             i.SubApplication ="";
-            i.User="";
+            i.User=_settings.user.RealPerson.Login;
             i.Title="";
             i.Notes="";
-            i.CreateDate=DateTime.Now;
+            i.CreateDate=context.ServerDateTime();
             context.tblFeedback_Item.Add(i);
         }
     }

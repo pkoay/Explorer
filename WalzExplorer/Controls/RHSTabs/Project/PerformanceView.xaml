@@ -150,14 +150,14 @@
             </telerik:RadTabItem>
 
         </telerik:RadTabControl>
-        <Button Name="btnProjectManagerSign"  Click="btnProjectManagerSign_Click" Content="Sign" HorizontalAlignment="Left" Margin="824,3,0,0" Grid.Row="2" VerticalAlignment="Top" Width="46" Height="22"/>
-        <Button Name="btnOperationsManagerSign"  Click="btnOperationsManagerSign_Click" Content="Sign" HorizontalAlignment="Left" Margin="824,36,0,-2" Grid.Row="2" VerticalAlignment="Top" Width="46" Height="22"/>
+        <Button Name="btnProjectManagerSign"  Click="btnProjectManagerSign_Click" Content="Sign" HorizontalAlignment="Left" Margin="947,2,0,0" Grid.Row="2" VerticalAlignment="Top" Width="46" Height="22"/>
+        <Button Name="btnOperationsManagerSign"  Click="btnOperationsManagerSign_Click" Content="Sign" HorizontalAlignment="Left" Margin="947,35,0,0" Grid.Row="2" VerticalAlignment="Top" Width="46" Height="22"/>
         <Button Name="btnRefresh"  Click="btnRefresh_Click" Content="Refresh" HorizontalAlignment="Left" Margin="225,20,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Height="22"/>
         <Button Name="btnSave"  Click="btnSave_Click" Content="Save" HorizontalAlignment="Left" Margin="327,20,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Height="22"/>
         <Label Content="Project Manager:" HorizontalAlignment="Left" Margin="435,4,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127" Height="26"/>
-        <TextBox Name="tbProjectMangerSignature" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="562,4,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="257"/>
+        <TextBox Name="tbProjectMangerSignature" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="562,3,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="380"/>
         <Label Content="Operations Manager:" HorizontalAlignment="Left" Margin="435,33,0,-3" Grid.Row="2" VerticalAlignment="Top" Width="127" Height="26"/>
-        <TextBox x:Name="tbOperationsMangerSignature" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="562,35,0,-2" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="257"/>
+        <TextBox x:Name="tbOperationsMangerSignature" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="562,34,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="380"/>
 
     </Grid>
 </base:RHSTabGridViewBase_ReadOnly>

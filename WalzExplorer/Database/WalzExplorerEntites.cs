@@ -71,6 +71,14 @@ namespace WalzExplorer.Database
             get { return (this as IObjectContextAdapter).ObjectContext; }
         }
 
+        public DateTime ServerDateTime()
+        {
+            DateTime? sdt = this.spExplorer_ServerDatetime().FirstOrDefault();
+            if (!sdt.HasValue)
+                throw new Exception("Cannot get server date time");
+            else
+                return sdt.Value;
+        }
         public string Verification ()
         {
             ObjectContext octx = _ObjectContext;

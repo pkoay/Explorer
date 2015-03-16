@@ -322,7 +322,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     btnProjectManagerSign.Content = "Clear";
                     btnProjectManagerSign.IsEnabled = (vm.isOperationsManager || vm.isAdministrator);
                     btnOperationsManagerSign.IsEnabled = (vm.isOperationsManager);
-                    tbProjectMangerSignature.Text = vm.projectManagerSignatureData.Name + " (on the " + ((DateTime)vm.historyData.ProjectManagerSignDate).ToString("dd/MMM/yyyy")+")";
+                    tbProjectMangerSignature.Text = vm.projectManagerSignatureData.Name + " (on the " + ((DateTime)vm.historyData.ProjectManagerSignDate).ToString("dd/MMM/yyyy hh:mm tt") + ")";
                     tbOperationsMangerSignature.Text = "";
                     break;
 
@@ -336,8 +336,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     btnProjectManagerSign.IsEnabled = false;
                     btnOperationsManagerSign.Content = "Clear";
                     btnOperationsManagerSign.IsEnabled = (vm.isAdministrator);
-                    tbProjectMangerSignature.Text = vm.projectManagerSignatureData.Name + " (on the " + ((DateTime)vm.historyData.ProjectManagerSignDate).ToString("dd/MMM/yyyy") + ")";
-                    tbOperationsMangerSignature.Text = vm.operationalManagerSignatureData.Name + " (on the " + ((DateTime)vm.historyData.ProjectManagerSignDate).ToString("dd/MMM/yyyy") + ")";
+                    tbProjectMangerSignature.Text = vm.projectManagerSignatureData.Name + " (on the " + ((DateTime)vm.historyData.ProjectManagerSignDate).ToString("dd/MMM/yyyy hh:mm tt") + ")";
+                    tbOperationsMangerSignature.Text = vm.operationalManagerSignatureData.Name + " (on the " + ((DateTime)vm.historyData.OperationsManagerSignDate).ToString("dd/MMM/yyyy hh:mm tt") + ")";
                     break;
             }
 

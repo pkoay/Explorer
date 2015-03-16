@@ -37,6 +37,15 @@ namespace WalzExplorer.Database
             this.Database.Connection.ConnectionString = providerBuilder.ToString();
         }
 
+        public DateTime ServerDateTime()
+        {
+            DateTime? sdt = this.spServices_ServerDatetime().FirstOrDefault();
+            if (!sdt.HasValue)
+                throw new Exception("Cannot get server date time");
+            else
+                return sdt.Value;
+        }
+
     }
 
 }

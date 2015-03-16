@@ -72,6 +72,7 @@
           <Parameter Name="Operation" Type="varchar" Mode="In" />
           <Parameter Name="User" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="spServices_ServerDatetime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spServices.ServerDatetime" />
         <EntityContainer Name="ServicesModelStoreContainer">
           <EntitySet Name="tblFeedback_Item" EntityType="Self.tblFeedback_Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFeedback_Status" EntityType="Self.tblFeedback_Status" Schema="dbo" store:Type="Tables" />
@@ -129,6 +130,7 @@
             <Parameter Name="Operation" Mode="In" Type="String" />
             <Parameter Name="User" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="spServices_ServerDatetime" ReturnType="Collection(DateTime)" />
           </EntityContainer>
         <EntityType Name="tblFeedback_Type">
           <Key>
@@ -227,6 +229,7 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spLogChange" FunctionName="ServicesModel.Store.spLogChange" />
           <FunctionImportMapping FunctionImportName="spLogEvent" FunctionName="ServicesModel.Store.spLogEvent" />
+          <FunctionImportMapping FunctionImportName="spServices_ServerDatetime" FunctionName="ServicesModel.Store.spServices_ServerDatetime" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -28,7 +28,7 @@ namespace WalzExplorer.Windows
         public FeedbackDialog(WEXSettings settings)
         {
             InitializeComponent();
-            viewModel = new FeedbackDialogViewModel();
+            viewModel = new FeedbackDialogViewModel(settings);
             _settings = settings;
             
             

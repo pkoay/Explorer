@@ -130,5 +130,10 @@ namespace WalzExplorer.Database
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spLogEvent", applicationParameter, operationParameter, userParameter);
         }
+    
+        public virtual ObjectResult<Nullable<System.DateTime>> spServices_ServerDatetime()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<System.DateTime>>("spServices_ServerDatetime");
+        }
     }
 }

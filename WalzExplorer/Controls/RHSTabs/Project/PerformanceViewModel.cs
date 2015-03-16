@@ -145,14 +145,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
         }
 
-        private DateTime ServerDateTime()
-        {
-            DateTime? sdt= context.spExplorer_ServerDatetime().FirstOrDefault();
-            if (!sdt.HasValue)
-                 throw new Exception ("Cannot get server date time");
-            else
-                return sdt.Value;
-        }
+       
 
         public void Sign ()
         {
@@ -162,7 +155,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     if (isProjectManager)
                     {
                         historyData.ProjectManagerSignID = _settings.user.RealPerson.PersonID;
-                        historyData.ProjectManagerSignDate = ServerDateTime();
+                        historyData.ProjectManagerSignDate = context.ServerDateTime();
                         historyData.StatusID = 2;
                     }
                     else
@@ -172,7 +165,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     if (isOperationsManager)
                     {
                         historyData.OperationsManagerSignID = _settings.user.RealPerson.PersonID;
-                        historyData.OperationsManagerSignDate = ServerDateTime();
+                        historyData.OperationsManagerSignDate = context.ServerDateTime();
                         historyData.StatusID = 3;
                     }
                     else
