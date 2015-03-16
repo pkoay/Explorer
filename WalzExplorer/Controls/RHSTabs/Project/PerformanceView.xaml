@@ -28,12 +28,12 @@
             <RowDefinition Height="449*"/>
             <RowDefinition Height="68*"/>
         </Grid.RowDefinitions>
-        
+
         <!--SUMMARY-->
         <Label Content="Summary Rating" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" Height="26" Width="99" Grid.Row="0"/>
         <telerik:RadComboBox  Name="cmbSummaryRating" Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}" HorizontalAlignment="Left" Margin="114,47,0,0" VerticalAlignment="Top" Width="120" Height="26" Grid.Row="0"/>
         <Label Content="Period (end)" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="26" Width="99" Grid.Row="0"/>
-        <telerik:RadComboBox  Name="cmbPeriodEnd"  HorizontalAlignment="Left" Margin="114,10,0,0" VerticalAlignment="Top" Width="120" Height="26" Grid.Row="0"/>
+        <telerik:RadComboBox  Name="cmbPeriodEnd"  SelectionChanged="cmbPeriodEnd_SelectionChanged" HorizontalAlignment="Left" Margin="114,10,0,0" VerticalAlignment="Top" Width="120" Height="26" Grid.Row="0"/>
         <TextBox Name="tbSummaryPMComments" HorizontalAlignment="Left" Height="68" Margin="375,5,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="1037" Grid.Row="0"/>
         <Label Content="Comments" HorizontalAlignment="Left" Margin="251,10,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>
 
@@ -42,7 +42,7 @@
             <telerik:RadTabItem x:Name="RadTabItem" Header="Time" Height="24" Margin="0">
                 <Grid Background="Transparent"/>
             </telerik:RadTabItem>
-            
+
             <!--COST TAB-->
             <telerik:RadTabItem Header="Cost" Margin="0">
                 <Grid Background="Transparent">
@@ -53,7 +53,7 @@
                     </Grid.RowDefinitions>
                 </Grid>
             </telerik:RadTabItem>
-            
+
             <!--HOURS TAB-->
             <telerik:RadTabItem Header="Hours" Margin="0">
                 <Grid Background="Transparent">
@@ -63,15 +63,15 @@
                         <RowDefinition Height="68*"/>
                         <RowDefinition Height="68*"/>
                     </Grid.RowDefinitions>
-                    
+
                     <!--Rating-->
                     <Label Content="Hours Rating" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Height="26" Width="80" Grid.Row="0"/>
                     <telerik:RadComboBox Name="cmbHoursRating" SelectedItem="{Binding Path=SafetyRatingID}" Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}"  HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="194" Height="26" Grid.Row="0"/>
-                    <TextBox Name="tbHoursComments" Text="{Binding Source= historyData, Path=PMSummaryNotes}" HorizontalAlignment="Left" Height="76" Margin="407,5,5,5" TextWrapping="Wrap"  VerticalAlignment="Top" Width="689" Grid.Row="0"/>
+                    <TextBox Name="tbHoursComments" HorizontalAlignment="Left" Height="76" Margin="407,5,5,5" TextWrapping="Wrap"  VerticalAlignment="Top" Width="689" Grid.Row="0"/>
                     <Label Content="Comments" HorizontalAlignment="Left" Margin="297,3,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>
-                    
+
                     <!--Chart-->
-                    
+
                     <telerik:RadCartesianChart Name="chartHours"  Grid.Row="1">
                         <telerik:RadCartesianChart.Resources>
                             <DataTemplate x:Key="EllipseTemplatePlanned">
@@ -94,7 +94,7 @@
                             <telerik:CartesianChartGrid MajorLinesVisibility="Y"/>
                         </telerik:RadCartesianChart.Grid>
                     </telerik:RadCartesianChart>
-                    
+
                     <!--Chart Legend-->
                     <telerik:RadLegend Margin="100,20,100,20" Grid.Row="1" FontSize="12"  >
                         <telerik:RadLegend.ItemsPanel>
@@ -110,19 +110,19 @@
                             </telerik:LegendItemCollection>
                         </telerik:RadLegend.Items>
                     </telerik:RadLegend>
-                    
+
                     <!--Incident Summary-->
                     <Label Name="lblHoursSummary"  HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="2" VerticalAlignment="Top" Width="600"/>
                     <telerik:RadGridView Grid.Row="3" x:Name="grdHoursSummary" AutoGeneratingColumn="grd_AutoGeneratingColumn"/>
                 </Grid>
-                
+
             </telerik:RadTabItem>
-            
+
             <!--CASHFLOW TAB-->
             <telerik:RadTabItem Header="Cashflow" Margin="0">
                 <Grid Background="Transparent"/>
             </telerik:RadTabItem>
-            
+
             <!--SAFETY TAB-->
             <telerik:RadTabItem Header="Safety" Margin="0">
                 <Grid Background="Transparent">
@@ -144,16 +144,20 @@
                     <!--Incident Detail-->
                     <Label  Grid.Row="3"  Content="Incidents:" />
                     <telerik:RadGridView Grid.Row="4" x:Name="grdSafetyDetail" AutoGeneratingColumn="grd_AutoGeneratingColumn"/>
-                    
-                   
+
+
                 </Grid>
             </telerik:RadTabItem>
-            
+
         </telerik:RadTabControl>
-        <Button Name="btnProjectManagerSign"  Click="btnProjectManagerSign_Click" Content="Project manager sign" HorizontalAlignment="Left" Margin="899,22,0,0" Grid.Row="2" VerticalAlignment="Top" Width="138"/>
-        <Button Name="btnOperationsManagerSign"  Click="btnOperationsManagerSign_Click" Content="Operational manager sign" HorizontalAlignment="Left" Margin="1042,22,0,0" Grid.Row="2" VerticalAlignment="Top" Width="187"/>
-        <Button Name="btnRefresh"  Click="btnRefresh_Click" Content="Refresh" HorizontalAlignment="Left" Margin="674,22,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75"/>
-        <Button Name="btnSave"  Click="btnSave_Click" Content="Save" HorizontalAlignment="Left" Margin="776,22,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75"/>
+        <Button Name="btnProjectManagerSign"  Click="btnProjectManagerSign_Click" Content="Sign" HorizontalAlignment="Left" Margin="824,3,0,0" Grid.Row="2" VerticalAlignment="Top" Width="46"/>
+        <Button Name="btnOperationsManagerSign"  Click="btnOperationsManagerSign_Click" Content="Sign" HorizontalAlignment="Left" Margin="824,36,0,0" Grid.Row="2" VerticalAlignment="Top" Width="46"/>
+        <Button Name="btnRefresh"  Click="btnRefresh_Click" Content="Refresh" HorizontalAlignment="Left" Margin="225,20,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75"/>
+        <Button Name="btnSave"  Click="btnSave_Click" Content="Save" HorizontalAlignment="Left" Margin="327,20,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75"/>
+        <Label Content="Project Manager:" HorizontalAlignment="Left" Margin="435,4,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127"/>
+        <TextBox Name="tbProjectMangerSignature" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="562,4,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="257"/>
+        <Label Content="Operations Manager:" HorizontalAlignment="Left" Margin="435,33,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127"/>
+        <TextBox x:Name="tbOperationsMangerSignature" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="562,35,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="257"/>
 
     </Grid>
 </base:RHSTabGridViewBase_ReadOnly>

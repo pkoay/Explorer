@@ -51,7 +51,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 // GENERAL
 
                 //Period End list
-                cmbPeriodEnd.ItemsSource = vm.historyList;
+               
+                cmbPeriodEnd.SelectedValuePath = "HistoryID";
                 cmbPeriodEnd.DisplayMemberPath = "PeriodEnd";
                 cmbPeriodEnd.ItemStringFormat = "dd-MMM-yyyy";
                 cmbPeriodEnd.SelectedIndex = 0;
@@ -59,7 +60,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 string strPeriod = ((spWEX_RHS_Project_Performance_History_Result)cmbPeriodEnd.SelectedItem).PeriodEnd.ToString("dd-MMM-yyyy");
 
                 //Rating
-                cmbSummaryRating.ItemsSource = vm.ratingList;
+                
                 cmbSummaryRating.DisplayMemberPath = "Title";
                 cmbSummaryRating.DataContext = vm.historyData;
                 cmbSummaryRating.SelectedValuePath = "RatingID";
@@ -74,7 +75,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 //HOURS
 
                 //Rating
-                cmbHoursRating.ItemsSource = vm.ratingList;
+                
                 cmbHoursRating.DisplayMemberPath = "Title";
                 cmbHoursRating.DataContext = vm.historyData;
                 cmbHoursRating.SelectedValuePath = "RatingID";
@@ -82,45 +83,35 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
                 ////Chart
                 chartHours.Series.Clear();
+                
                 List<CartesianSeries> generatedSeries = new List<CartesianSeries>();
                 foreach (tblProject_EarnedValueType ev in vm.earnedValueList)
                 {
                     SplineSeries series = new SplineSeries();
+                    series.Name = ev.Title;
+                    series.DataContext = vm;
                     string TemplateName = string.Format("EllipseTemplate{0}", ev.Title);
-
-
-                    //<DataTemplate x:Key="PointTemplatePlanned">
-                    //                <Ellipse Height="6" Width="6" Fill="#FF8EC441" />
-                    //            </DataTemplate>
-                    //DataTemplate dt = new DataTemplate();
-                    ////Create the template
-                    //var ellipseFactory = new FrameworkElementFactory(typeof(Ellipse));
-                    ////ellipseFactory.SetValue(Ellipse.HeightProperty, 6);
-                    ////ellipseFactory.SetValue(Ellipse.WidthProperty, 6);
-                    //ellipseFactory.SetValue(Ellipse.FillProperty, ev.Color);
-                    //DataTemplate template = new DataTemplate {VisualTree = ellipseFactory,};
-                    //template.Seal();
-                    //chartHours.Resources.Add(TemplateName, template);
 
                     series.PointTemplate = chartHours.Resources[TemplateName] as DataTemplate;
                     series.CategoryBinding = new PropertyNameDataPointBinding("WeekEnd");
                     series.ValueBinding = new PropertyNameDataPointBinding("Value");
                     var bc = new BrushConverter();
                     series.Stroke = (Brush)bc.ConvertFrom(ev.Color);
-                    switch (ev.Title)
-                    {
-                        case "Planned":
-                            series.ItemsSource = vm.hoursPlannedData;
-                            break;
-                        case "Earned":
-                            series.ItemsSource = vm.hoursEarnedData;
-                            break;
-                        case "Actual":
-                            series.ItemsSource = vm.hoursActualData;
-                            break;
-                    }
+                    //switch (ev.Title)
+                    //{
+                    //    case "Planned":
+                    //        series.ItemsSource = vm.hoursPlannedData;
+                            
+                    //        break;
+                    //    case "Earned":
+                    //        series.ItemsSource = vm.hoursEarnedData;
+                    //        break;
+                    //    case "Actual":
+                    //        series.ItemsSource = vm.hoursActualData;
+                    //        break;
+                    //}
                     chartHours.Series.Add(series);
-
+                    
                     //CategoricalAxis categoricalAxis = chartHours.HorizontalAxis as CategoricalAxis;
                     //if (categoricalAxis != null)
                     //{
@@ -140,14 +131,14 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 grdHoursSummary.CanUserFreezeColumns = false;
                 grdHoursSummary.IsFilteringAllowed = false;
                 grdHoursSummary.DataContext = vm;
-                grdHoursSummary.ItemsSource = vm.hoursSummaryData;
+                
 
 
                 //***********************
                 //SAFETY
 
                 //SafetyRating
-                cmbSafetyRating.ItemsSource = vm.ratingList;
+                
                 cmbSafetyRating.DisplayMemberPath = "Title";
                 cmbSafetyRating.DataContext = vm.historyData;
                 cmbSafetyRating.SelectedValuePath = "RatingID";
@@ -161,7 +152,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 grdSafetySummary.CanUserFreezeColumns = false;
                 grdSafetySummary.IsFilteringAllowed = false;
                 grdSafetySummary.DataContext = vm;
-                grdSafetySummary.ItemsSource = vm.safteySummaryData;
+                
 
                 //Detail Grid
                 base.SetGrid(grdSafetyDetail);
@@ -179,14 +170,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     }
                 }
                 grdSafetyDetail.DataContext = vm;
-                grdSafetyDetail.ItemsSource = vm.safetyDetailedData;
 
-
-
-
-
-
-
+                setItemSource();
                 base.TabLoad();
             }
         }
@@ -251,8 +236,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     }
                     break;
             }
-           
-           
         }
 
         private void tcHistory_SelectionChanged(object sender, RadSelectionChangedEventArgs e)
@@ -263,22 +246,158 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
         private void btnProjectManagerSign_Click(object sender, RoutedEventArgs e)
         {
-
+            switch (vm.historyData.StatusID)
+            {
+                case 1:
+                    if (MessageBox.Show("Are you sure you want to sign this report as complete?","Sign as Project Manager", MessageBoxButton.OKCancel, MessageBoxImage.Question)==  MessageBoxResult.OK       ) 
+                        vm.Sign();
+                    break;
+                case 2:
+                    if (MessageBox.Show("Are you sure you want to clear the Project Mannagers signature?", "Clear Project Manager signature", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
+                        vm.ClearSignature();
+                    break;
+            }
+            SetTabControlsOnStatusChange();
+            
         }
 
         private void btnOperationsManagerSign_Click(object sender, RoutedEventArgs e)
         {
+            switch (vm.historyData.StatusID)
+            {
+                case 2:
+                    if (MessageBox.Show("Are you sure you want to sign this report as complete?", "Sign as Operations Manager", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
+                        vm.Sign();
+                    break;
+                case 3:
+                    if (MessageBox.Show("Are you sure you want to clear the Operational Mannagers signature?", "Clear Operational Manager signature", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
+                        vm.ClearSignature();
+                    break;
+            }
+            SetTabControlsOnStatusChange();
+        }
+
+        private void SetTabControlsOnStatusChange()
+        {
+
+            switch (vm.historyData.StatusID)
+            {
+                case 1:
+                    //Fields
+                    ProjectManagerDataEntryFieldsEnabled(vm.isProjectManager);
+
+                    //Buttons
+                    btnSave.IsEnabled = (vm.isProjectManager);
+                    btnRefresh.IsEnabled = (vm.isProjectManager);
+                    btnProjectManagerSign.Content = "Sign";
+                    btnProjectManagerSign.IsEnabled = (vm.isProjectManager);
+                    btnOperationsManagerSign.IsEnabled = false;
+                    tbProjectMangerSignature.Text = "";
+                    tbOperationsMangerSignature.Text = "";
+                    break;
+
+                case 2:
+                    //Fields
+                    ProjectManagerDataEntryFieldsEnabled(false);
+
+                    //Buttons
+                    btnSave.IsEnabled = false;
+                    btnRefresh.IsEnabled = false;
+                    btnProjectManagerSign.Content = "Clear";
+                    btnProjectManagerSign.IsEnabled = (vm.isOperationsManager || vm.isAdministrator);
+                    btnOperationsManagerSign.IsEnabled = (vm.isOperationsManager);
+                    tbProjectMangerSignature.Text = vm.projectManagerSignatureData.Name + " (on the " + ((DateTime)vm.historyData.ProjectManagerSignDate).ToString("dd/MMM/yyyy")+")";
+                    tbOperationsMangerSignature.Text = "";
+                    break;
+
+                case 3:
+                    //Fields
+                    ProjectManagerDataEntryFieldsEnabled(false);
+
+                    //Buttons
+                    btnSave.IsEnabled = false;
+                    btnRefresh.IsEnabled = false;
+                    btnProjectManagerSign.IsEnabled = false;
+                    btnOperationsManagerSign.Content = "Clear";
+                    btnOperationsManagerSign.IsEnabled = (vm.isAdministrator);
+                    tbProjectMangerSignature.Text = vm.projectManagerSignatureData.Name + " (on the " + ((DateTime)vm.historyData.ProjectManagerSignDate).ToString("dd/MMM/yyyy") + ")";
+                    tbOperationsMangerSignature.Text = vm.operationalManagerSignatureData.Name + " (on the " + ((DateTime)vm.historyData.ProjectManagerSignDate).ToString("dd/MMM/yyyy") + ")";
+                    break;
+            }
 
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            vm.RecalculateHistoryData();
+            using (WaitCursor wc = new WaitCursor())
+            {
+                vm.context.SaveChanges();
+                vm.RecalculateHistoryData();
+                
+                //Learnt something new here
+                // Observable collection is obviously useful for flagging Add/Update/Deletes, so they can be sent to entity framework
+                //However if we want to "place different data" into the same grid (e.g. change from one project to another) and in the process we create a new observable collection
+                // then the grid does not see this observable collection (still pointing at the old one)
+                // to update this we need to reset the itemsource. WE CANNOT CLEAR THE EXISTING collection and add the new collection, because that is pretty much deleteing the old data and adding the new data to the OLD object. 
+                // Find it strange there is no command from the View model side that says "hey I have changed data that I'm pointing to", and thus refresh the thing that is pointing to the observable collection (and lose changes)
+                setItemSource();
+
+               
+            }
+        }
+
+        private void ProjectManagerDataEntryFieldsEnabled (bool ro)
+        {
+            this.tbHoursComments.IsReadOnly = !ro;
+            this.tbSafetyComments.IsReadOnly = !ro;
+            this.tbSummaryPMComments.IsReadOnly = !ro;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             vm.context.SaveChanges();
+        }
+
+        private void setItemSource()
+        {
+            //summary
+            
+            cmbSummaryRating.ItemsSource = vm.ratingList;
+            
+            //hours
+            cmbHoursRating.ItemsSource = vm.ratingList;
+            foreach (CartesianSeries series in chartHours.Series)
+            {
+                switch (series.Name)
+                {
+                    case "Planned":
+                        series.ItemsSource = vm.hoursPlannedData;
+                        break;
+                    case "Earned":
+                        series.ItemsSource = vm.hoursEarnedData;
+                        break;
+                    case "Actual":
+                        series.ItemsSource = vm.hoursActualData;
+                        break;
+                }
+            }
+            grdHoursSummary.ItemsSource = vm.hoursSummaryData;
+
+            //safety
+            cmbSafetyRating.ItemsSource = vm.ratingList;
+            grdSafetyDetail.ItemsSource = vm.safetyDetailedData;
+            grdSafetySummary.ItemsSource = vm.safteySummaryData;
+
+           
+        }
+
+        private void cmbPeriodEnd_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            vm.LoadHistory((int)cmbPeriodEnd.SelectedValue);
+
+            //relink data beacuse we create new observable collection-- this is bullshit really, they say observable collection only for micro changes, what a load of bullshit.. they should have a bulk load option with commit
+            setItemSource();
+            SetTabControlsOnStatusChange();
         }
 
 

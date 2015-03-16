@@ -471,5 +471,10 @@ namespace WalzExplorer.Database
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProject_HistoryInsert", reportEndParameter);
         }
+    
+        public virtual ObjectResult<Nullable<System.DateTime>> spExplorer_ServerDatetime()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<System.DateTime>>("spExplorer_ServerDatetime");
+        }
     }
 }

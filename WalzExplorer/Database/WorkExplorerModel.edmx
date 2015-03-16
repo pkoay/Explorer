@@ -1543,6 +1543,7 @@
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="spExplorer_ServerDatetime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spExplorer.ServerDatetime" />
         <Function Name="spProject_Admin_WeekList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spProject.Admin_WeekList" />
         <Function Name="spProject_HistoryInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spProject.HistoryInsert">
           <Parameter Name="ReportEnd" Type="date" Mode="In" />
@@ -2923,8 +2924,9 @@
           </FunctionImport>
           <FunctionImport Name="spProject_Admin_WeekList" ReturnType="Collection(WalzExplorerModel.spProject_Admin_WeekList_Result)" />
           <FunctionImport Name="spProject_HistoryInsert">
-            <Parameter Name="ReportEnd" Mode="In" Type="DateTime" />
+          <Parameter Name="ReportEnd" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="spExplorer_ServerDatetime" ReturnType="Collection(DateTime)" />
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -5070,6 +5072,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spProject_HistoryInsert" FunctionName="WalzExplorerModel.Store.spProject_HistoryInsert" />
+          <FunctionImportMapping FunctionImportName="spExplorer_ServerDatetime" FunctionName="WalzExplorerModel.Store.spExplorer_ServerDatetime" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
