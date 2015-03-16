@@ -34,7 +34,7 @@
         <telerik:RadComboBox  Name="cmbSummaryRating"  Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}" HorizontalAlignment="Left" Margin="114,47,0,0" VerticalAlignment="Top" Width="120" Height="26" Grid.Row="0"/>
         <Label Content="Period (end)" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="26" Width="99" Grid.Row="0"/>
         <telerik:RadComboBox  Name="cmbPeriodEnd"  SelectionChanged="cmbPeriodEnd_SelectionChanged" HorizontalAlignment="Left" Margin="114,10,0,0" VerticalAlignment="Top" Width="120" Height="26" Grid.Row="0"/>
-        <TextBox Name="tbSummaryPMComments"  MouseDoubleClick="tbSummaryPMComments_MouseDoubleClick" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" TextWrapping="Wrap"  Height="68" Margin="327,5,10,0"  Text="TextBox" VerticalAlignment="Top" Grid.Row="0"/>
+        <TextBox Name="tbSummaryPMComments"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" TextWrapping="Wrap"  Height="68" Margin="327,5,10,0"  Text="TextBox" VerticalAlignment="Top" Grid.Row="0"/>
         <Label Content="Comments" HorizontalAlignment="Left" Margin="251,10,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>
 
         <!--TABCONTROL-->

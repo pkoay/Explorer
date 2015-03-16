@@ -70,7 +70,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 //Comments
                 tbSummaryPMComments.DataContext = vm.historyData;
                 tbSummaryPMComments.SetBinding(TextBox.TextProperty, new Binding("PMSummaryNotes"));
-                
+                tbSummaryPMComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
              
                 //***********************
                 //HOURS
@@ -88,6 +88,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 //Comments
                 tbHoursComments.DataContext = vm.historyData;
                 tbHoursComments.SetBinding(TextBox.TextProperty, new Binding("HoursComments"));
+                tbHoursComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
 
                 //Chart
                 chartHours.Series.Clear();
@@ -157,6 +158,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 //Comments
                 tbSafetyComments.DataContext = vm.historyData;
                 tbSafetyComments.SetBinding(TextBox.TextProperty, new Binding("SafetyComments"));
+                tbSafetyComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
 
                 //Summary Grid
                 base.SetGrid(grdSafetySummary);
@@ -419,14 +421,26 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             }
         }
 
-        private void tbSummaryPMComments_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void MouseDoubleClick_TextDialog(object sender, MouseButtonEventArgs e)
         {
-            Window winFeedBack = new Windows.TextDialog("Summary Comments",tbSummaryPMComments);
+            TextBox tb = (TextBox)sender;
+            string title="";
+            switch (tb.Name)
+            {
+                case "tbSummaryPMComments": title = "Summary Comments";
+                    break;
+                case "tbHoursComments": title = "Hours Comments";
+                    break;
+                case "tbSafetyComments": title = "Safety Comments";
+                    break;
+
+            }
+            Window winFeedBack = new Windows.TextDialog(title,tb);
             winFeedBack.Owner = Application.Current.MainWindow;
             winFeedBack.ShowDialog();
         }
 
-     
+       
       
     }
 

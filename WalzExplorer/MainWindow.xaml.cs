@@ -339,13 +339,15 @@ namespace WalzExplorer
                     MessageBox.Show("This appliaction was developed for the Walz Group." + Environment.NewLine + "Developed by Phil Koay (0419233605).", "About", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;
                 case "miMimic":
+                    int OriginalMimic = settings.user.MimicedPerson.PersonID;
                     Window window = new Windows.MimicDialog(settings);
                     window.Owner = Application.Current.MainWindow;
                     window.ShowDialog();
                     //sbUserMimicName.Text = "Mimic: " + settings.user.MimicedPerson.Name;
-                    LoadFormForMimic();
+                    if (OriginalMimic != settings.user.MimicedPerson.PersonID)
+                        LoadFormForMimic();
                     break;
-               
+
                 default:
                     MessageBox.Show(mi.Header.ToString(), "Configuration menu", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;
