@@ -48,6 +48,7 @@ namespace WalzExplorer
         {
             InitializeComponent();
             this.PreviewMouseLeftButtonDown += MainWindow_PreviewMouseLeftButtonDown;
+            
         }
 
         void MainWindow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

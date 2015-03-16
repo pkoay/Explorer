@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -35,16 +36,22 @@ namespace WalzExplorer.Windows
             i.CreateDate = context.ServerDateTime();
             context.tblFeedbacks.Add(i);
             context.SaveChanges();
-
+            
             //Email
-            MailMessage mail = new MailMessage("ITAdmin@walzconstruction.com.au", "pkoay@walzconstruction.com.au");
+            MailMessage mail = new MailMessage(ConfigurationManager.AppSettings["Feedback_Email_From"],ConfigurationManager.AppSettings["Feedback_Email_To"]);
             SmtpClient client = new SmtpClient();
             client.Port = 25;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
-            client.Host = "WALZ-EXCH-01";
+            client.Host = ConfigurationManager.AppSettings["EmailServer"];
             mail.Subject = "WalzExplorer-Feedback";
-            mail.Body = "this is my test email body";
+            string body = "";
+            body = body + "Type: " + typeList.Where(x => x.TypeID == type).FirstOrDefault().Title + Environment.NewLine;
+            body = body + "Tab: " + tabName + Environment.NewLine;
+            body = body + "User: " + _settings.user.RealPerson.Login +Environment.NewLine;
+            body = body + "Title: " + title + Environment.NewLine;
+            body = body + "Notes: " + notes + Environment.NewLine;
+            mail.Body = body;
             client.Send(mail);
 
         }
