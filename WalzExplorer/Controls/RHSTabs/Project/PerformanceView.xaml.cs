@@ -419,6 +419,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             }
         }
 
+        private void tbSummaryPMComments_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Window winFeedBack = new Windows.TextDialog("Summary Comments",tbSummaryPMComments);
+            winFeedBack.Owner = Application.Current.MainWindow;
+            winFeedBack.ShowDialog();
+        }
+
      
       
     }

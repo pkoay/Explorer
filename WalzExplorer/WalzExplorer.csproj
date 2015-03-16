@@ -530,6 +530,9 @@
     <Compile Include="Windows\FeedbackDialogView.xaml.cs">
       <DependentUpon>FeedbackDialogView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\TextDialogView.xaml.cs">
+      <DependentUpon>TextDialogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\MimicDialogView.xaml.cs">
       <DependentUpon>MimicDialogView.xaml</DependentUpon>
     </Compile>
@@ -627,6 +630,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\FeedbackDialogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\TextDialogView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

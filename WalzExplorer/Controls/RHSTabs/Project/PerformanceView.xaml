@@ -34,17 +34,17 @@
         <telerik:RadComboBox  Name="cmbSummaryRating"  Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}" HorizontalAlignment="Left" Margin="114,47,0,0" VerticalAlignment="Top" Width="120" Height="26" Grid.Row="0"/>
         <Label Content="Period (end)" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="26" Width="99" Grid.Row="0"/>
         <telerik:RadComboBox  Name="cmbPeriodEnd"  SelectionChanged="cmbPeriodEnd_SelectionChanged" HorizontalAlignment="Left" Margin="114,10,0,0" VerticalAlignment="Top" Width="120" Height="26" Grid.Row="0"/>
-        <TextBox Name="tbSummaryPMComments" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" TextWrapping="Wrap"  Height="68" Margin="327,5,10,0"  Text="TextBox" VerticalAlignment="Top" Grid.Row="0"/>
+        <TextBox Name="tbSummaryPMComments"  MouseDoubleClick="tbSummaryPMComments_MouseDoubleClick" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" TextWrapping="Wrap"  Height="68" Margin="327,5,10,0"  Text="TextBox" VerticalAlignment="Top" Grid.Row="0"/>
         <Label Content="Comments" HorizontalAlignment="Left" Margin="251,10,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>
 
         <!--TABCONTROL-->
         <telerik:RadTabControl Name="tcHistory" HorizontalAlignment="Stretch" Margin="10" Grid.Row="1" VerticalAlignment="Stretch" Background="Transparent" SelectionChanged="tcHistory_SelectionChanged">
-            <telerik:RadTabItem x:Name="RadTabItem" Header="Time" Height="24" Margin="0">
+            <!--<telerik:RadTabItem x:Name="RadTabItem" Header="Time" Height="24" Margin="0">
                 <Grid Background="Transparent"/>
-            </telerik:RadTabItem>
+            </telerik:RadTabItem>-->
 
             <!--COST TAB-->
-            <telerik:RadTabItem Header="Cost" Margin="0">
+            <!--<telerik:RadTabItem Header="Cost" Margin="0">
                 <Grid Background="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="83*"/>
@@ -52,7 +52,7 @@
                         <RowDefinition Height="68*"/>
                     </Grid.RowDefinitions>
                 </Grid>
-            </telerik:RadTabItem>
+            </telerik:RadTabItem>-->
 
             <!--HOURS TAB-->
             <telerik:RadTabItem Header="Hours" Margin="0">
@@ -119,9 +119,9 @@
             </telerik:RadTabItem>
 
             <!--CASHFLOW TAB-->
-            <telerik:RadTabItem Header="Cashflow" Margin="0">
+            <!--<telerik:RadTabItem Header="Cashflow" Margin="0">
                 <Grid Background="Transparent"/>
-            </telerik:RadTabItem>
+            </telerik:RadTabItem>-->
 
             <!--SAFETY TAB-->
             <telerik:RadTabItem Header="Safety" Margin="0">
