@@ -585,6 +585,41 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _operationsManagerSignDate, value); } 
     	}
     
+        private string _timeComments;
+    	public string TimeComments 
+    	{ 
+    		get { return _timeComments; } 
+    		set { SetProperty(ref _timeComments, value); } 
+    	}
+    
+        private string _hoursComments;
+    	public string HoursComments 
+    	{ 
+    		get { return _hoursComments; } 
+    		set { SetProperty(ref _hoursComments, value); } 
+    	}
+    
+        private string _costComments;
+    	public string CostComments 
+    	{ 
+    		get { return _costComments; } 
+    		set { SetProperty(ref _costComments, value); } 
+    	}
+    
+        private string _safetyComments;
+    	public string SafetyComments 
+    	{ 
+    		get { return _safetyComments; } 
+    		set { SetProperty(ref _safetyComments, value); } 
+    	}
+    
+        private string _qualityComments;
+    	public string QualityComments 
+    	{ 
+    		get { return _qualityComments; } 
+    		set { SetProperty(ref _qualityComments, value); } 
+    	}
+    
     
         public virtual tblProject_HistoryStatus tblProject_HistoryStatus { get; set; }
         public virtual ICollection<tblProject_HistoryCritical> tblProject_HistoryCritical { get; set; }

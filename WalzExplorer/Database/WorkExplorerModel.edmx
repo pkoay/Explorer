@@ -116,6 +116,11 @@
           <Property Name="CostRatingID" Type="int" />
           <Property Name="SafetyRatingID" Type="int" />
           <Property Name="QualityRatingID" Type="int" />
+          <Property Name="TimeComments" Type="varchar(max)" />
+          <Property Name="HoursComments" Type="varchar(max)" />
+          <Property Name="CostComments" Type="varchar(max)" />
+          <Property Name="SafetyComments" Type="varchar(max)" />
+          <Property Name="QualityComments" Type="varchar(max)" />
           <Property Name="PMSummaryNotes" Type="varchar(max)" />
           <Property Name="OMSummaryNotes" Type="varchar(max)" />
           <Property Name="WeekEnding" Type="datetime" />
@@ -3285,6 +3290,11 @@
           <NavigationProperty Name="tblProject_HistoryHours" Relationship="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_History" FromRole="tblProject_History" ToRole="tblProject_HistoryHours" />
           <NavigationProperty Name="tblProject_HistoryNCR" Relationship="WalzExplorerModel.FK_tblProject_HistoryNCR_tblProject_History" FromRole="tblProject_History" ToRole="tblProject_HistoryNCR" />
           <NavigationProperty Name="tblProject_HistoryRFI" Relationship="WalzExplorerModel.FK_tblProject_HistoryRFI_tblProject_History" FromRole="tblProject_History" ToRole="tblProject_HistoryRFI" />
+          <Property Name="TimeComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="HoursComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CostComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SafetyComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="QualityComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblProject_HistoryMilestone">
           <Key>
@@ -4610,6 +4620,11 @@
           <EntitySetMapping Name="tblProject_History">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_History">
               <MappingFragment StoreEntitySet="tblProject_History">
+                <ScalarProperty Name="QualityComments" ColumnName="QualityComments" />
+                <ScalarProperty Name="SafetyComments" ColumnName="SafetyComments" />
+                <ScalarProperty Name="CostComments" ColumnName="CostComments" />
+                <ScalarProperty Name="HoursComments" ColumnName="HoursComments" />
+                <ScalarProperty Name="TimeComments" ColumnName="TimeComments" />
                 <ScalarProperty Name="OperationsManagerSignDate" ColumnName="OperationsManagerSignDate" />
                 <ScalarProperty Name="OperationsManagerSignID" ColumnName="OperationsManagerSignID" />
                 <ScalarProperty Name="ProjectManagerSignDate" ColumnName="ProjectManagerSignDate" />

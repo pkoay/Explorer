@@ -55,33 +55,41 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 cmbPeriodEnd.SelectedValuePath = "HistoryID";
                 cmbPeriodEnd.DisplayMemberPath = "PeriodEnd";
                 cmbPeriodEnd.ItemStringFormat = "dd-MMM-yyyy";
-                cmbPeriodEnd.SelectedIndex = 0;
                 cmbPeriodEnd.ItemsSource = vm.historyList;
+                cmbPeriodEnd.SelectedIndex = 0;
                 string strPeriod = ((spWEX_RHS_Project_Performance_History_Result)cmbPeriodEnd.SelectedItem).PeriodEnd.ToString("dd-MMM-yyyy");
 
                 //Rating
-                
+                cmbSummaryRating.EmptyText = "<No Rating>";
                 cmbSummaryRating.DisplayMemberPath = "Title";
                 cmbSummaryRating.DataContext = vm.historyData;
                 cmbSummaryRating.SelectedValuePath = "RatingID";
                 cmbSummaryRating.SetBinding(RadComboBox.SelectedIndexProperty, new Binding("SummaryRatingID"));
-                //cmbSummaryRating.style = Rating_RadComboItemStyle;
+                cmbSummaryRating.IsEnabled = false;
 
                 //Comments
                 tbSummaryPMComments.DataContext = vm.historyData;
                 tbSummaryPMComments.SetBinding(TextBox.TextProperty, new Binding("PMSummaryNotes"));
-
+                
+             
                 //***********************
                 //HOURS
 
                 //Rating
-                
+                cmbHoursRating.ItemsSource = vm.ratingList;
                 cmbHoursRating.DisplayMemberPath = "Title";
-                cmbHoursRating.DataContext = vm.historyData;
                 cmbHoursRating.SelectedValuePath = "RatingID";
+                cmbHoursRating.EmptyText = "<No Rating>";
+                cmbHoursRating.DataContext = vm.historyData;
                 cmbHoursRating.SetBinding(RadComboBox.SelectedValueProperty, new Binding("HoursRatingID"));
+                cmbHoursRating.IsEnabled = false;
+               
 
-                ////Chart
+                //Comments
+                tbHoursComments.DataContext = vm.historyData;
+                tbHoursComments.SetBinding(TextBox.TextProperty, new Binding("HoursComments"));
+
+                //Chart
                 chartHours.Series.Clear();
                 
                 List<CartesianSeries> generatedSeries = new List<CartesianSeries>();
@@ -138,11 +146,17 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 //SAFETY
 
                 //SafetyRating
-                
+                cmbSafetyRating.ItemsSource = vm.ratingList;
                 cmbSafetyRating.DisplayMemberPath = "Title";
-                cmbSafetyRating.DataContext = vm.historyData;
                 cmbSafetyRating.SelectedValuePath = "RatingID";
+                cmbSafetyRating.EmptyText = "<No Rating>";
+                cmbSafetyRating.DataContext = vm.historyData;
                 cmbSafetyRating.SetBinding(RadComboBox.SelectedValueProperty, new Binding("SafetyRatingID"));
+                cmbSafetyRating.IsEnabled = false;
+
+                //Comments
+                tbSafetyComments.DataContext = vm.historyData;
+                tbSafetyComments.SetBinding(TextBox.TextProperty, new Binding("SafetyComments"));
 
                 //Summary Grid
                 base.SetGrid(grdSafetySummary);
@@ -341,8 +355,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 // to update this we need to reset the itemsource. WE CANNOT CLEAR THE EXISTING collection and add the new collection, because that is pretty much deleteing the old data and adding the new data to the OLD object. 
                 // Find it strange there is no command from the View model side that says "hey I have changed data that I'm pointing to", and thus refresh the thing that is pointing to the observable collection (and lose changes)
                 setItemSource();
-
-               
             }
         }
 
@@ -361,11 +373,15 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         private void setItemSource()
         {
             //summary
-            
             cmbSummaryRating.ItemsSource = vm.ratingList;
+            tbSummaryPMComments.DataContext = vm.historyData;
             
             //hours
-            cmbHoursRating.ItemsSource = vm.ratingList;
+            cmbHoursRating.DataContext = vm.historyData;
+            //cmbHoursRating.SelectedValuePath = "RatingID";
+            //cmbHoursRating.SetBinding(RadComboBox.SelectedValueProperty, new Binding("HoursRatingID"));
+
+            tbHoursComments.DataContext = vm.historyData;
             foreach (CartesianSeries series in chartHours.Series)
             {
                 switch (series.Name)
@@ -384,7 +400,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grdHoursSummary.ItemsSource = vm.hoursSummaryData;
 
             //safety
-            cmbSafetyRating.ItemsSource = vm.ratingList;
+            cmbSafetyRating.DataContext = vm.historyData;
+            tbSafetyComments.DataContext = vm.historyData;
             grdSafetyDetail.ItemsSource = vm.safetyDetailedData;
             grdSafetySummary.ItemsSource = vm.safteySummaryData;
 
@@ -393,13 +410,14 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
         private void cmbPeriodEnd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            vm.LoadHistory((int)cmbPeriodEnd.SelectedValue);
+            if (cmbPeriodEnd.SelectedValue != null)
+            {
+                vm.LoadHistory((int)cmbPeriodEnd.SelectedValue);
 
-            //relink data beacuse we create new observable collection-- this is bullshit really, they say observable collection only for micro changes, what a load of bullshit.. they should have a bulk load option with commit
-            setItemSource();
-            SetTabControlsOnStatusChange();
+                setItemSource();
+                SetTabControlsOnStatusChange();
+            }
         }
-
 
      
       

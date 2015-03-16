@@ -80,6 +80,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
         public void LoadHistory(int HistoryID)
         {
+            //Save any data first
+            context.SaveChanges();
 
             //Summary
             historyData = context.tblProject_History.Where(x => x.HistoryID == HistoryID).First();
@@ -135,10 +137,10 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         public void RecalculateHistoryData()
         {
 
-            var pHistoryID = new SqlParameter("@HistoryID", historyData.HistoryID);
-            var pPeriodEnd = new SqlParameter("@PeriodEnd",null);
+            //var pHistoryID = new SqlParameter("@HistoryID", historyData.HistoryID);
+            //var pPeriodEnd = new SqlParameter("@PeriodEnd",null);
 
-            context.Database.ExecuteSqlCommand("EXEC [spProject.HistoryUpdate]",pHistoryID,pPeriodEnd);
+            context.Database.ExecuteSqlCommand("EXEC [spProject.HistoryUpdate] @HistoryID=" + historyData.HistoryID + ",@PeriodEnd=null ");
             RefreshHistory();
 
         }
