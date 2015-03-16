@@ -5,7 +5,7 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ServicesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="tblFeedback_Item">
+        <EntityType Name="tblFeedback">
           <Key>
             <PropertyRef Name="ItemID" />
           </Key>
@@ -20,6 +20,13 @@
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CompletedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="tblFeedback_Application">
+          <Key>
+            <PropertyRef Name="ApplicationID" />
+          </Key>
+          <Property Name="ApplicationID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblFeedback_Status">
           <Key>
             <PropertyRef Name="StatusID" />
@@ -34,39 +41,42 @@
           <Property Name="TypeID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="FK_tblFeedback_Item_tblFeedback_Application">
+          <End Role="tblFeedback_Application" Type="Self.tblFeedback_Application" Multiplicity="1" />
+          <End Role="tblFeedback" Type="Self.tblFeedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblFeedback_Application">
+              <PropertyRef Name="ApplicationID" />
+            </Principal>
+            <Dependent Role="tblFeedback">
+              <PropertyRef Name="ApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblFeedback_Item_tblFeedback_Type">
           <End Role="tblFeedback_Type" Type="Self.tblFeedback_Type" Multiplicity="1" />
-          <End Role="tblFeedback_Item" Type="Self.tblFeedback_Item" Multiplicity="*" />
+          <End Role="tblFeedback" Type="Self.tblFeedback" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblFeedback_Type">
               <PropertyRef Name="TypeID" />
             </Principal>
-            <Dependent Role="tblFeedback_Item">
+            <Dependent Role="tblFeedback">
               <PropertyRef Name="TypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblFeedback_Item_tblFeedbackStatus">
           <End Role="tblFeedback_Status" Type="Self.tblFeedback_Status" Multiplicity="1" />
-          <End Role="tblFeedback_Item" Type="Self.tblFeedback_Item" Multiplicity="*" />
+          <End Role="tblFeedback" Type="Self.tblFeedback" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblFeedback_Status">
               <PropertyRef Name="StatusID" />
             </Principal>
-            <Dependent Role="tblFeedback_Item">
+            <Dependent Role="tblFeedback">
               <PropertyRef Name="StatusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="spLogChange" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Database" Type="varchar" Mode="In" />
-          <Parameter Name="Table" Type="varchar" Mode="In" />
-          <Parameter Name="Column" Type="varchar" Mode="In" />
-          <Parameter Name="User" Type="varchar" Mode="In" />
-          <Parameter Name="Row" Type="varchar" Mode="In" />
-          <Parameter Name="Operation" Type="varchar" Mode="In" />
-          <Parameter Name="NewValue" Type="varchar(max)" Mode="In" />
-        </Function>
         <Function Name="spLogEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Application" Type="varchar" Mode="In" />
           <Parameter Name="Operation" Type="varchar" Mode="In" />
@@ -74,16 +84,21 @@
         </Function>
         <Function Name="spServices_ServerDatetime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spServices.ServerDatetime" />
         <EntityContainer Name="ServicesModelStoreContainer">
-          <EntitySet Name="tblFeedback_Item" EntityType="Self.tblFeedback_Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFeedback" EntityType="Self.tblFeedback" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFeedback_Application" EntityType="Self.tblFeedback_Application" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFeedback_Status" EntityType="Self.tblFeedback_Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFeedback_Type" EntityType="Self.tblFeedback_Type" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblFeedback_Item_tblFeedback_Application" Association="Self.FK_tblFeedback_Item_tblFeedback_Application">
+            <End Role="tblFeedback_Application" EntitySet="tblFeedback_Application" />
+            <End Role="tblFeedback" EntitySet="tblFeedback" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblFeedback_Item_tblFeedback_Type" Association="Self.FK_tblFeedback_Item_tblFeedback_Type">
             <End Role="tblFeedback_Type" EntitySet="tblFeedback_Type" />
-            <End Role="tblFeedback_Item" EntitySet="tblFeedback_Item" />
+            <End Role="tblFeedback" EntitySet="tblFeedback" />
           </AssociationSet>
           <AssociationSet Name="FK_tblFeedback_Item_tblFeedbackStatus" Association="Self.FK_tblFeedback_Item_tblFeedbackStatus">
             <End Role="tblFeedback_Status" EntitySet="tblFeedback_Status" />
-            <End Role="tblFeedback_Item" EntitySet="tblFeedback_Item" />
+            <End Role="tblFeedback" EntitySet="tblFeedback" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -91,40 +106,22 @@
     <edmx:ConceptualModels>
       <Schema Namespace="ServicesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ServicesEntities" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="spEventLogEntry">
-            <Parameter Name="Application" Mode="In" Type="String" />
-            <Parameter Name="Operation" Mode="In" Type="String" />
-            <Parameter Name="User" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="spChangeLogEntry">
-            <Parameter Name="Database" Mode="In" Type="String" />
-            <Parameter Name="Table" Mode="In" Type="String" />
-            <Parameter Name="Column" Mode="In" Type="String" />
-            <Parameter Name="User" Mode="In" Type="String" />
-            <Parameter Name="Row" Mode="In" Type="String" />
-            <Parameter Name="Operation" Mode="In" Type="String" />
-            <Parameter Name="NewValue" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="tblFeedback_Type" EntityType="ServicesModel.tblFeedback_Type" />
-          <EntitySet Name="tblFeedback_Item" EntityType="ServicesModel.tblFeedback_Item" />
+          <EntitySet Name="tblFeedbacks" EntityType="ServicesModel.tblFeedback" />
+          <EntitySet Name="tblFeedback_Application" EntityType="ServicesModel.tblFeedback_Application" />
+          <AssociationSet Name="FK_tblFeedback_Item_tblFeedback_Application" Association="ServicesModel.FK_tblFeedback_Item_tblFeedback_Application">
+            <End Role="tblFeedback_Application" EntitySet="tblFeedback_Application" />
+            <End Role="tblFeedback" EntitySet="tblFeedbacks" />
+          </AssociationSet>
           <EntitySet Name="tblFeedback_Status" EntityType="ServicesModel.tblFeedback_Status" />
+          <EntitySet Name="tblFeedback_Type" EntityType="ServicesModel.tblFeedback_Type" />
           <AssociationSet Name="FK_tblFeedback_Item_tblFeedback_Type" Association="ServicesModel.FK_tblFeedback_Item_tblFeedback_Type">
             <End Role="tblFeedback_Type" EntitySet="tblFeedback_Type" />
-            <End Role="tblFeedback_Item" EntitySet="tblFeedback_Item" />
+            <End Role="tblFeedback" EntitySet="tblFeedbacks" />
           </AssociationSet>
           <AssociationSet Name="FK_tblFeedback_Item_tblFeedbackStatus" Association="ServicesModel.FK_tblFeedback_Item_tblFeedbackStatus">
             <End Role="tblFeedback_Status" EntitySet="tblFeedback_Status" />
-            <End Role="tblFeedback_Item" EntitySet="tblFeedback_Item" />
+            <End Role="tblFeedback" EntitySet="tblFeedbacks" />
           </AssociationSet>
-          <FunctionImport Name="spLogChange">
-            <Parameter Name="Database" Mode="In" Type="String" />
-            <Parameter Name="Table" Mode="In" Type="String" />
-            <Parameter Name="Column" Mode="In" Type="String" />
-            <Parameter Name="User" Mode="In" Type="String" />
-            <Parameter Name="Row" Mode="In" Type="String" />
-            <Parameter Name="Operation" Mode="In" Type="String" />
-            <Parameter Name="NewValue" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="spLogEvent">
             <Parameter Name="Application" Mode="In" Type="String" />
             <Parameter Name="Operation" Mode="In" Type="String" />
@@ -132,15 +129,7 @@
           </FunctionImport>
           <FunctionImport Name="spServices_ServerDatetime" ReturnType="Collection(DateTime)" />
           </EntityContainer>
-        <EntityType Name="tblFeedback_Type">
-          <Key>
-            <PropertyRef Name="TypeID" />
-          </Key>
-          <Property Name="TypeID" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblFeedback_Item" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedback_Type" FromRole="tblFeedback_Type" ToRole="tblFeedback_Item" />
-        </EntityType>
-        <EntityType Name="tblFeedback_Item">
+        <EntityType Name="tblFeedback">
           <Key>
             <PropertyRef Name="ItemID" />
           </Key>
@@ -154,37 +143,66 @@
           <Property Name="Notes" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CompletedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblFeedback_Type" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedback_Type" FromRole="tblFeedback_Item" ToRole="tblFeedback_Type" />
-          <NavigationProperty Name="tblFeedback_Status" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedbackStatus" FromRole="tblFeedback_Item" ToRole="tblFeedback_Status" />
+          <NavigationProperty Name="tblFeedback_Application" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedback_Application" FromRole="tblFeedback" ToRole="tblFeedback_Application" />
+          <NavigationProperty Name="tblFeedback_Type" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedback_Type" FromRole="tblFeedback" ToRole="tblFeedback_Type" />
+          <NavigationProperty Name="tblFeedback_Status" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedbackStatus" FromRole="tblFeedback" ToRole="tblFeedback_Status" />
         </EntityType>
+        <EntityType Name="tblFeedback_Application">
+          <Key>
+            <PropertyRef Name="ApplicationID" />
+          </Key>
+          <Property Name="ApplicationID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblFeedbacks" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedback_Application" FromRole="tblFeedback_Application" ToRole="tblFeedback" />
+        </EntityType>
+        <Association Name="FK_tblFeedback_Item_tblFeedback_Application">
+          <End Type="ServicesModel.tblFeedback_Application" Role="tblFeedback_Application" Multiplicity="1" />
+          <End Type="ServicesModel.tblFeedback" Role="tblFeedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblFeedback_Application">
+              <PropertyRef Name="ApplicationID" />
+            </Principal>
+            <Dependent Role="tblFeedback">
+              <PropertyRef Name="ApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="tblFeedback_Status">
           <Key>
             <PropertyRef Name="StatusID" />
           </Key>
           <Property Name="StatusID" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblFeedback_Item" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedbackStatus" FromRole="tblFeedback_Status" ToRole="tblFeedback_Item" />
+          <NavigationProperty Name="tblFeedbacks" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedbackStatus" FromRole="tblFeedback_Status" ToRole="tblFeedback" />
+        </EntityType>
+        <EntityType Name="tblFeedback_Type">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblFeedbacks" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedback_Type" FromRole="tblFeedback_Type" ToRole="tblFeedback" />
         </EntityType>
         <Association Name="FK_tblFeedback_Item_tblFeedback_Type">
           <End Type="ServicesModel.tblFeedback_Type" Role="tblFeedback_Type" Multiplicity="1" />
-          <End Type="ServicesModel.tblFeedback_Item" Role="tblFeedback_Item" Multiplicity="*" />
+          <End Type="ServicesModel.tblFeedback" Role="tblFeedback" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblFeedback_Type">
               <PropertyRef Name="TypeID" />
             </Principal>
-            <Dependent Role="tblFeedback_Item">
+            <Dependent Role="tblFeedback">
               <PropertyRef Name="TypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblFeedback_Item_tblFeedbackStatus">
           <End Type="ServicesModel.tblFeedback_Status" Role="tblFeedback_Status" Multiplicity="1" />
-          <End Type="ServicesModel.tblFeedback_Item" Role="tblFeedback_Item" Multiplicity="*" />
+          <End Type="ServicesModel.tblFeedback" Role="tblFeedback" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblFeedback_Status">
               <PropertyRef Name="StatusID" />
             </Principal>
-            <Dependent Role="tblFeedback_Item">
+            <Dependent Role="tblFeedback">
               <PropertyRef Name="StatusID" />
             </Dependent>
           </ReferentialConstraint>
@@ -195,17 +213,9 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ServicesModelStoreContainer" CdmEntityContainer="ServicesEntities">
-          <EntitySetMapping Name="tblFeedback_Type">
-            <EntityTypeMapping TypeName="ServicesModel.tblFeedback_Type">
-              <MappingFragment StoreEntitySet="tblFeedback_Type">
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblFeedback_Item">
-            <EntityTypeMapping TypeName="ServicesModel.tblFeedback_Item">
-              <MappingFragment StoreEntitySet="tblFeedback_Item">
+          <EntitySetMapping Name="tblFeedbacks">
+            <EntityTypeMapping TypeName="ServicesModel.tblFeedback">
+              <MappingFragment StoreEntitySet="tblFeedback">
                 <ScalarProperty Name="CompletedDate" ColumnName="CompletedDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
@@ -219,6 +229,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblFeedback_Application">
+            <EntityTypeMapping TypeName="ServicesModel.tblFeedback_Application">
+              <MappingFragment StoreEntitySet="tblFeedback_Application">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ApplicationID" ColumnName="ApplicationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblFeedback_Status">
             <EntityTypeMapping TypeName="ServicesModel.tblFeedback_Status">
               <MappingFragment StoreEntitySet="tblFeedback_Status">
@@ -227,10 +245,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spLogChange" FunctionName="ServicesModel.Store.spLogChange" />
+          <EntitySetMapping Name="tblFeedback_Type">
+            <EntityTypeMapping TypeName="ServicesModel.tblFeedback_Type">
+              <MappingFragment StoreEntitySet="tblFeedback_Type">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spLogEvent" FunctionName="ServicesModel.Store.spLogEvent" />
           <FunctionImportMapping FunctionImportName="spServices_ServerDatetime" FunctionName="ServicesModel.Store.spServices_ServerDatetime" />
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

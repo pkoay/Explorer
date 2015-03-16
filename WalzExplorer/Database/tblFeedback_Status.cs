@@ -16,12 +16,12 @@ namespace WalzExplorer.Database
     {
         public tblFeedback_Status()
         {
-            this.tblFeedback_Item = new HashSet<tblFeedback_Item>();
+            this.tblFeedbacks = new HashSet<tblFeedback>();
         }
     
         public int StatusID { get; set; }
         public string Title { get; set; }
     
-        public virtual ICollection<tblFeedback_Item> tblFeedback_Item { get; set; }
+        public virtual ICollection<tblFeedback> tblFeedbacks { get; set; }
     }
 }

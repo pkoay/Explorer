@@ -320,7 +320,10 @@
     <Compile Include="Database\tblCustomer.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\tblFeedback_Item.cs">
+    <Compile Include="Database\tblFeedback.cs">
+      <DependentUpon>ServicesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblFeedback_Application.cs">
       <DependentUpon>ServicesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblFeedback_Status.cs">

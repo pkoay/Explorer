@@ -12,14 +12,14 @@ namespace WalzExplorer.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class tblFeedback_Type
+    public partial class tblFeedback_Application
     {
-        public tblFeedback_Type()
+        public tblFeedback_Application()
         {
             this.tblFeedbacks = new HashSet<tblFeedback>();
         }
     
-        public int TypeID { get; set; }
+        public int ApplicationID { get; set; }
         public string Title { get; set; }
     
         public virtual ICollection<tblFeedback> tblFeedbacks { get; set; }
