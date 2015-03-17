@@ -46,8 +46,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.DataContext = vm;
             grd.ItemsSource = vm.data;
             
-
-           
             base.TabLoad();
             
         }

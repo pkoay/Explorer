@@ -49,7 +49,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         int ProjectID;
         //int HistoryID;
         string NodeTypeID;
-        string UserPersonID;
+        //string UserPersonID;
 
         public PerformanceViewModel(WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {

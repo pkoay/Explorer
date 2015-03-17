@@ -13,15 +13,19 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 {
     public class InvoicedViewModel 
     {
-        public ObservableCollection<spWEX_RHS_Project_Summary_Result> data;
+        public ObservableCollection<spWEX_RHS_Project_Committed_Result> data;
         public WalzExplorerEntities context = new WalzExplorerEntities(false);
         int ProjectID;
         
 
         public InvoicedViewModel (WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
-            ProjectID = ConvertLibrary.StringToInt(settings.node.ID, -1);
-            //data = new ObservableCollection<spWEX_RHS_Project_Summary_Result>(context.spWEX_RHS_Project_Summary(UserPersonID, NodeTypeID, ManagerID, CustomerID));  
+            ProjectID = ConvertLibrary.StringToInt(settings.node.FindID("PROJECT", "-2"), -1);
+            //CustomerID = ConvertLibrary.StringToInt(settings.node.FindID("CUSTOMER", "-2"), -1).ToString();
+            //NodeTypeID = settings.node.TypeID;
+            //UserPersonID=settings.user.MimicedPerson.PersonID.ToString();
+
+            data = new ObservableCollection<spWEX_RHS_Project_Committed_Result>(context.spWEX_RHS_Project_Committed(ProjectID));    
         }
     }
 }
