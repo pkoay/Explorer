@@ -44,7 +44,7 @@ namespace WalzExplorer.Controls.Grid
             public Dictionary<string, columnFormat> format = new Dictionary<string, columnFormat>();
             public Dictionary<string, string> toolTip = new Dictionary<string, string>();
             //public Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
-            public List<string> readOnlyDeveloper = new List<string>();
+            public List<string> developer = new List<string>();
             public void Dispose()
             {
             }
@@ -186,7 +186,7 @@ namespace WalzExplorer.Controls.Grid
 
 
             //Ignore Columns for developers only while not in development mode
-            if (columnSettings.readOnlyDeveloper.Contains(c.UniqueName) && !_settings.DeveloperMode) { e.Cancel = true; return; }
+            if (columnSettings.developer.Contains(c.UniqueName) && !_settings.DeveloperMode) { e.Cancel = true; return; }
 
             //Rename 
             if (columnSettings.rename.ContainsKey(c.UniqueName))
