@@ -16,7 +16,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
     /// </summary>
 
 
-    public partial class SummaryView : RHSTabGridViewBase_ReadOnly
+    public partial class SummaryView : RHSTabViewBase
     {
       
         SummaryViewModel vm;
@@ -28,62 +28,66 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         
         public override void TabLoad()
         {
-            base.SetGrid(grd);
-            base.Reset(grd);
-
-            if (!gridColumnSettings.ContainsKey(grd))
-            {
-                using (GridColumnSettings setting = new GridColumnSettings())
-                {
-                    setting.columnReadOnlyDeveloper.Add("RowVersion");
-                    setting.columnReadOnlyDeveloper.Add("ProjectID");
-                    setting.columnRename.Add("AXProjectID", "ID");
-                    setting.columnRename.Add("OperationsManager", "Ops Manager");
-                    setting.columnReadOnlyDeveloper.Add("AXDataAreaID");
-                    setting.columnReadOnlyDeveloper.Add("SortOrder");
-                    setting.columnReadOnlyDeveloper.Add("UpdatedBy");
-                    setting.columnReadOnlyDeveloper.Add("UpdatedDate");
-                    gridColumnSettings.Add(grd, setting);
-                }
-            }
-
-            // set grid data
             vm = new SummaryViewModel(settings);
-            grd.DataContext = vm;
-            grd.ItemsSource = vm.data;
-           
-            base.TabLoad();
+            grd.grd.DataContext = vm;
+            grd.grd.ItemsSource = vm.data;
+
+            grd.SetGrid(settings);
+            grd.Reset();
+            grd.columnSettings.developer.Add("RowVersion");
+            grd.columnSettings.developer.Add("ProjectID");
+            grd.columnSettings.developer.Add("AXDataAreaID");
+            grd.columnSettings.developer.Add("SortOrder");
+            grd.columnSettings.developer.Add("UpdatedBy");
+            grd.columnSettings.developer.Add("UpdatedDate");
+
+            grd.columnSettings.rename.Add("AXProjectID", "ID");
+            grd.columnSettings.rename.Add("OperationsManager", "Ops Manager");
+
+            grd.columnSettings.format.Add("AXProjectID", Grid.Grid_Read.columnFormat.COUNT);
+            grd.columnSettings.format.Add("Contract", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("Cost", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("Committed", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("Invoiced", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+          
+            grd.columnSettings.toolTip.Add("Contract", "Contract Value including all approved variations");
+            grd.columnSettings.toolTip.Add("Cost", "Costs to date (Includes Overheads) (Excludes Committed Costs)");
+            grd.columnSettings.toolTip.Add("Committed", "Committed Costs to date (Open purchase orders)");
+            grd.columnSettings.toolTip.Add("Invoiced", "Invoiced to client to date");
 
         }
-
-        private void grd_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
+        public override string IssueIfClosed()
         {
-           
-            GridViewDataColumn column = e.Column as GridViewDataColumn;
-            switch (e.Column.Header.ToString())
-            {
-                case "AXProjectID":
-                    e.Column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
-                    column.ShowColumnWhenGrouped = false;
-                    break;
-                case "Contract":
-                    SetColumn(column, "TWO_DECIMAL");
-                    ColumnToolTipStatic(grd, column, "Contract Value including all approved variations");
-                    break;
-                case "Cost":
-                    SetColumn(column, "TWO_DECIMAL");
-                    ColumnToolTipStatic(grd,column, "Costs to date (Includes Overheads) (Excludes Committed Costs)");
-                    break;
-                case "Committed":
-                    SetColumn(column, "TWO_DECIMAL");
-                    ColumnToolTipStatic(grd, column, "Committed Costs to date (Open purchase orders)");
-                    break;
-                case "Invoiced":
-                    SetColumn(column, "TWO_DECIMAL");
-                    ColumnToolTipStatic(grd, column, "Invoiced to client to date");
-                    break;
-            }
+            return "";
         }
+        //private void grd_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
+        //{
+           
+        //    GridViewDataColumn column = e.Column as GridViewDataColumn;
+        //    switch (e.Column.Header.ToString())
+        //    {
+        //        case "AXProjectID":
+        //            e.Column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
+        //            column.ShowColumnWhenGrouped = false;
+        //            break;
+        //        case "Contract":
+        //            SetColumn(column, "TWO_DECIMAL");
+        //            ColumnToolTipStatic(grd, column, );
+        //            break;
+        //        case "Cost":
+        //            SetColumn(column, "TWO_DECIMAL");
+        //            ColumnToolTipStatic(grd,column, );
+        //            break;
+        //        case "Committed":
+        //            SetColumn(column, "TWO_DECIMAL");
+        //            ColumnToolTipStatic(grd, column, );
+        //            break;
+        //        case "Invoiced":
+        //            SetColumn(column, "TWO_DECIMAL");
+        //            ColumnToolTipStatic(grd, column,);
+        //            break;
+        //    }
+        //}
 
      
       
