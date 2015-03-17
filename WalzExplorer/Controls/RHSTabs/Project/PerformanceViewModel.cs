@@ -101,9 +101,14 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             hoursActualData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 3));
             hoursEarnedData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 2));
             hoursPlannedData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 1));
-            double dPlanned = hoursPlannedData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
-            double dEarned = hoursEarnedData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
-            double dActual = hoursActualData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
+            //tblProject_HistoryHours p = hoursPlannedData.Where(x => x.WeekEnd == dtPeriodEnd).First();
+            //tblProject_HistoryHours e = hoursEarnedData.Where(x => x.WeekEnd == dtPeriodEnd).First();
+            //tblProject_HistoryHours a = hoursActualData.Where(x => x.WeekEnd == dtPeriodEnd).First();
+
+            double dPlanned = (hoursPlannedData.Count == 0) ? 0 : hoursPlannedData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
+            double dEarned = (hoursEarnedData.Count == 0) ? 0 : hoursEarnedData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
+            double dActual = (hoursActualData.Count == 0) ? 0 : hoursActualData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
+            
             hoursSummaryData.Clear();
             hoursSummaryData.Add(new EarnedValueSummarydata()
             {

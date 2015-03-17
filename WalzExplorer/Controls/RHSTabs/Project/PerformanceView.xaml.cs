@@ -19,9 +19,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
     /// <summary>
     /// Interaction logic for TenderViewer.xaml
     /// </summary>
-    
-     
-    public partial class PerformanceView : RHSTabGridViewBase_ReadOnly
+
+
+    public partial class PerformanceView : RHSTabViewBase
     {
 
         PerformanceViewModel vm;
@@ -30,7 +30,12 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         {
             InitializeComponent();
         }
-        
+
+        public override string IssueIfClosed()
+        {
+            return "";
+        }
+
         public override void TabLoad()
         {
             //ViewModel
@@ -51,7 +56,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 // GENERAL
 
                 //Period End list
-               
+
                 cmbPeriodEnd.SelectedValuePath = "HistoryID";
                 cmbPeriodEnd.DisplayMemberPath = "PeriodEnd";
                 cmbPeriodEnd.ItemStringFormat = "dd-MMM-yyyy";
@@ -71,7 +76,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 tbSummaryPMComments.DataContext = vm.historyData;
                 tbSummaryPMComments.SetBinding(TextBox.TextProperty, new Binding("PMSummaryNotes"));
                 tbSummaryPMComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
-             
+
                 //***********************
                 //HOURS
 
@@ -83,7 +88,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 cmbHoursRating.DataContext = vm.historyData;
                 cmbHoursRating.SetBinding(RadComboBox.SelectedValueProperty, new Binding("HoursRatingID"));
                 cmbHoursRating.IsEnabled = false;
-               
+
 
                 //Comments
                 tbHoursComments.DataContext = vm.historyData;
@@ -92,7 +97,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
                 //Chart
                 chartHours.Series.Clear();
-                
+
                 List<CartesianSeries> generatedSeries = new List<CartesianSeries>();
                 foreach (tblProject_EarnedValueType ev in vm.earnedValueList)
                 {
@@ -110,7 +115,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     //{
                     //    case "Planned":
                     //        series.ItemsSource = vm.hoursPlannedData;
-                            
+
                     //        break;
                     //    case "Earned":
                     //        series.ItemsSource = vm.hoursEarnedData;
@@ -120,7 +125,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     //        break;
                     //}
                     chartHours.Series.Add(series);
-                    
+
                     //CategoricalAxis categoricalAxis = chartHours.HorizontalAxis as CategoricalAxis;
                     //if (categoricalAxis != null)
                     //{
@@ -133,15 +138,22 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 lblHoursSummary.Content = "Hours Summary (as at " + strPeriod + "):";
 
                 //Summary Grid
-                base.SetGrid(grdHoursSummary);
-                base.Reset(grdHoursSummary);
-                grdHoursSummary.ShowGroupPanel = false;
-                grdHoursSummary.ShowColumnFooters = false;
-                grdHoursSummary.CanUserFreezeColumns = false;
-                grdHoursSummary.IsFilteringAllowed = false;
-                grdHoursSummary.DataContext = vm;
+                grdHoursSummary.SetGrid(settings);
+                //grdHoursSummary.Reset();
+                grdHoursSummary.grd.ShowGroupPanel = false;
+                grdHoursSummary.grd.ShowColumnFooters = false;
+                grdHoursSummary.grd.CanUserFreezeColumns = false;
+                grdHoursSummary.grd.IsFilteringAllowed = false;
+                grdHoursSummary.grd.DataContext = vm;
                 
-
+                grdHoursSummary.columnSettings.format.Add("Planned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+                grdHoursSummary.columnSettings.format.Add("Earned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+                grdHoursSummary.columnSettings.format.Add("Actual", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+                grdHoursSummary.columnSettings.format.Add("ScheduleVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+                grdHoursSummary.columnSettings.format.Add("CostVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+                grdHoursSummary.columnSettings.format.Add("SPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+                grdHoursSummary.columnSettings.format.Add("CPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+                
 
                 //***********************
                 //SAFETY
@@ -161,34 +173,37 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 tbSafetyComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
 
                 //Summary Grid
-                base.SetGrid(grdSafetySummary);
-                base.Reset(grdSafetySummary);
-                grdSafetySummary.ShowGroupPanel = false;
-                grdSafetySummary.ShowColumnFooters = false;
-                grdSafetySummary.CanUserFreezeColumns = false;
-                grdSafetySummary.IsFilteringAllowed = false;
-                grdSafetySummary.DataContext = vm;
-                
+                grdSafetySummary.SetGrid(settings);
+                //grdSafetySummary.Reset();
+                grdSafetySummary.grd.ShowGroupPanel = false;
+                grdSafetySummary.grd.ShowColumnFooters = false;
+                grdSafetySummary.grd.CanUserFreezeColumns = false;
+                grdSafetySummary.grd.IsFilteringAllowed = false;
+                grdSafetySummary.grd.DataContext = vm;
+                grdSafetySummary.columnSettings.format.Add("FAI",  Grid.Grid_Read.columnFormat.INT);
+                grdSafetySummary.columnSettings.format.Add("MTI",  Grid.Grid_Read.columnFormat.INT);
+                grdSafetySummary.columnSettings.format.Add("LTI",  Grid.Grid_Read.columnFormat.INT);
+                grdSafetySummary.columnSettings.format.Add("NearMiss",  Grid.Grid_Read.columnFormat.INT);
+                grdSafetySummary.columnSettings.format.Add("LTIFR",  Grid.Grid_Read.columnFormat.INT);
+                grdSafetySummary.columnSettings.format.Add("TRIFR",  Grid.Grid_Read.columnFormat.INT);
+                grdSafetySummary.columnSettings.format.Add("Hours",  Grid.Grid_Read.columnFormat.INT);
 
                 //Detail Grid
-                base.SetGrid(grdSafetyDetail);
-                base.Reset(grdSafetyDetail);
-                if (!gridColumnSettings.ContainsKey(grdSafetyDetail))
-                {
-                    using (GridColumnSettings setting = new GridColumnSettings())
-                    {
-                        setting.columnReadOnlyDeveloper.Add("RowVersion");
-                        setting.columnReadOnlyDeveloper.Add("HistoryID");
-                        setting.columnReadOnlyDeveloper.Add("SortOrder");
-                        setting.columnReadOnlyDeveloper.Add("UpdatedBy");
-                        setting.columnReadOnlyDeveloper.Add("UpdatedDate");
-                        gridColumnSettings.Add(grdSafetyDetail, setting);
-                    }
-                }
-                grdSafetyDetail.DataContext = vm;
+                grdSafetyDetail.SetGrid(settings);
+                //grdSafetyDetail.Reset();
+
+                grdSafetyDetail.columnSettings.developer.Add("RowVersion");
+                grdSafetyDetail.columnSettings.developer.Add("HistoryID");
+                grdSafetyDetail.columnSettings.developer.Add("SortOrder");
+                grdSafetyDetail.columnSettings.developer.Add("UpdatedBy");
+                grdSafetyDetail.columnSettings.developer.Add("UpdatedDate");
+
+                grdSafetyDetail.grd.DataContext = vm;
+                grdSafetySummary.columnSettings.format.Add("IncidentID",  Grid.Grid_Read.columnFormat.COUNT);
+                grdSafetySummary.columnSettings.format.Add("ReportedDate",  Grid.Grid_Read.columnFormat.DATE);
+              
 
                 setItemSource();
-                base.TabLoad();
             }
         }
 
@@ -204,55 +219,55 @@ namespace WalzExplorer.Controls.RHSTabs.Project
           
         //}
 
-        private void grd_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
-        {
-            RadGridView grd = (RadGridView) sender;
-            GridViewDataColumn column = e.Column as GridViewDataColumn;
+        //private void grd_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
+        //{
+        //    RadGridView grd = (RadGridView) sender;
+        //    GridViewDataColumn column = e.Column as GridViewDataColumn;
 
-            switch (grd.Name)
-            {
-                case "grdSafetySummary":
-                    switch (e.Column.Header.ToString())
-                    {
-                        case "FAI":
-                        case "MTI":
-                        case "LTI":
-                        case "NearMiss":
-                        case "LTIFR":
-                        case "TRIFR":
-                        case "Hours":
-                            SetColumn(column, "INT");
-                            break;
-                    }
-                    break;
-                case "grdHoursSummary":
-                    switch (e.Column.Header.ToString())
-                    {
-                        case "Planned":
-                        case "Earned":
-                        case "Actual":
-                        case "ScheduleVariance":
-                        case "CostVariance":
-                        case "SPI":
-                        case "CPI":
-                            SetColumn(column, "TWO_DECIMAL");
-                            break;
-                    }
-                    break;
-                case "grdSafetyDetail":
-                    switch (e.Column.Header.ToString())
-                    {
-                        case "IncidentID":
-                            e.Column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
-                            column.ShowColumnWhenGrouped = false;
-                            break;
-                        case "ReportedDate":
-                            SetColumn(column, "DATE");
-                            break;
-                    }
-                    break;
-            }
-        }
+        //    switch (grd.Name)
+        //    {
+        //        case "grdSafetySummary":
+        //            switch (e.Column.Header.ToString())
+        //            {
+        //                case "FAI":
+        //                case "MTI":
+        //                case "LTI":
+        //                case "NearMiss":
+        //                case "LTIFR":
+        //                case "TRIFR":
+        //                case "Hours":
+        //                    SetColumn(column, "INT");
+        //                    break;
+        //            }
+        //            break;
+        //        case "grdHoursSummary":
+        //            switch (e.Column.Header.ToString())
+        //            {
+        //                case "Planned":
+        //                case "Earned":
+        //                case "Actual":
+        //                case "ScheduleVariance":
+        //                case "CostVariance":
+        //                case "SPI":
+        //                case "CPI":
+        //                    SetColumn(column, "TWO_DECIMAL");
+        //                    break;
+        //            }
+        //            break;
+        //        case "grdSafetyDetail":
+        //            switch (e.Column.Header.ToString())
+        //            {
+        //                case "IncidentID":
+        //                    e.Column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
+        //                    column.ShowColumnWhenGrouped = false;
+        //                    break;
+        //                case "ReportedDate":
+        //                    SetColumn(column, "DATE");
+        //                    break;
+        //            }
+        //            break;
+        //    }
+        //}
 
         private void tcHistory_SelectionChanged(object sender, RadSelectionChangedEventArgs e)
         {
@@ -399,13 +414,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                         break;
                 }
             }
-            grdHoursSummary.ItemsSource = vm.hoursSummaryData;
+            grdHoursSummary.grd.ItemsSource = vm.hoursSummaryData;
 
             //safety
             cmbSafetyRating.DataContext = vm.historyData;
             tbSafetyComments.DataContext = vm.historyData;
-            grdSafetyDetail.ItemsSource = vm.safetyDetailedData;
-            grdSafetySummary.ItemsSource = vm.safteySummaryData;
+            grdSafetyDetail.grd.ItemsSource = vm.safetyDetailedData;
+            grdSafetySummary.grd.ItemsSource = vm.safteySummaryData;
 
            
         }

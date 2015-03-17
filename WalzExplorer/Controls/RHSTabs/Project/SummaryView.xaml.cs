@@ -33,7 +33,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.grd.ItemsSource = vm.data;
 
             grd.SetGrid(settings);
-            grd.Reset();
+            //grd.Reset();
             grd.columnSettings.developer.Add("RowVersion");
             grd.columnSettings.developer.Add("ProjectID");
             grd.columnSettings.developer.Add("AXDataAreaID");

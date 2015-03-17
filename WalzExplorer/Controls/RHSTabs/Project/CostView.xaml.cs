@@ -36,7 +36,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.grd.ItemsSource = vm.data;
 
             grd.SetGrid(settings);
-            grd.Reset();
+            //grd.Reset();
             grd.columnSettings.developer.Add("DataAreaID");
             grd.columnSettings.developer.Add("Invoiced");
             grd.columnSettings.format.Add("ProjId", Grid.Grid_Read.columnFormat.COUNT);

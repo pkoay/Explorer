@@ -50,7 +50,7 @@ namespace WalzExplorer.Controls.Grid
             }
         }
 
-        public  GridColumnSettings columnSettings = new GridColumnSettings();
+        public  GridColumnSettings columnSettings;
         protected GridViewRow ContextMenuRow;
         protected WEXSettings _settings;
         
@@ -95,13 +95,11 @@ namespace WalzExplorer.Controls.Grid
                 style.Seal();
                 grd.Resources.Add(typeof(GroupHeaderRow), style);
             }
+
+            columnSettings = new GridColumnSettings();
         }
 
-        public void Reset()
-        {
-            columnSettings.rename.Clear();
-            
-        }
+      
 
 
         private ContextMenu GenerateContextMenu()
