@@ -22,6 +22,7 @@ namespace WalzExplorer
         public string TypeID { get; set; } // type of node 'Workgroup List header'
         public string IconOpen { get; set; }
         public string IconClosed { get; set; }
+        public string ToolTip { get; set; }
         public string ChildSQL { get; set; }
         public bool HasChildren ()
         {

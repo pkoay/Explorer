@@ -30,7 +30,7 @@
           DataType="{x:Type local:NodeViewModel}" 
           ItemsSource="{Binding Children}"
           >
-                <StackPanel Orientation="Horizontal" Margin="2,2,2,2">
+                <StackPanel Orientation="Horizontal" Margin="2,2,2,2" ToolTip="{Binding NodeToolTip}">
                     <Rectangle Width="12" Height="12" Fill="White" Margin="0,0,10,0" >
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill" Visual="{Binding NodeIcon,Converter={StaticResource CanvasFromString}}" />

@@ -28,7 +28,10 @@ namespace WalzExplorer.Controls.TreeView.ViewModel
         {
             get { return _node.Name; }
         }
-
+        public string NodeToolTip
+        {
+            get { return _node.ToolTip; }
+        }
         public WEXNode Node
         {
             get { return _node; }
