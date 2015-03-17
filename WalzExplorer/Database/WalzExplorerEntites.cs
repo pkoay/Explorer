@@ -17,6 +17,7 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data.Common;
+using WalzExplorer.Common;
 
 namespace WalzExplorer.Database
 {
@@ -149,27 +150,13 @@ namespace WalzExplorer.Database
             }
             return result.Any() ? result : null;
         }
-        private void LogChanges (List<DbEntityEntry>  changes)
-        {
-            // foreach (var entry in changes)
-            //{
-            //     switch (entry.State)
-            //     {
-            //         case EntityState.Added:
-            //             foreach (string name in entry.CurrentValues.PropertyNames)
-            //             {
-            //                 var NewValue=  entry.CurrentValues.ToObject
-
-            //             }
-            //             break;
-
-            //     }
-            //}
-        }
+       
         public override int SaveChanges()
         {
-            List<DbEntityEntry> LogEntries = ChangeTracker.Entries().ToList();
-            
+            List<DbEntityEntry> LogEntries =  this.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified).ToList();
+            Logging.LogChanges(LogEntries,this._ObjectContext);
+
+            //Add logging info
             var modifiedEntries = ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
                 .ToList();
@@ -191,8 +178,9 @@ namespace WalzExplorer.Database
             }
             try
             {
+                
                 return base.SaveChanges();
-                //LogChanges(LogEntries);
+                
             }
             catch (DbEntityValidationException ex)
             {
@@ -297,7 +285,7 @@ namespace WalzExplorer.Database
 
             foreach (spWEX_TreeRootList_Result tr in spWEX_TreeRootList(strLHSTabID, user.SecurityGroupAsString(), "|"))
             {
-                foreach (WEXNode n in (GetNodes(null,tr.RootSQL, dicSQLSubsitutes)))
+                foreach (WEXNode n in (GetNodes(null, tr.RootSQL, dicSQLSubsitutes)))
                 {
                     nodes.Add(n);
                 }

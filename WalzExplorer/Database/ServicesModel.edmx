@@ -77,6 +77,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="spLogChange" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Database" Type="varchar" Mode="In" />
+          <Parameter Name="Table" Type="varchar" Mode="In" />
+          <Parameter Name="Column" Type="varchar" Mode="In" />
+          <Parameter Name="User" Type="varchar" Mode="In" />
+          <Parameter Name="Row" Type="varchar" Mode="In" />
+          <Parameter Name="Operation" Type="varchar" Mode="In" />
+          <Parameter Name="NewValue" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="spLogEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Application" Type="varchar" Mode="In" />
           <Parameter Name="Operation" Type="varchar" Mode="In" />
@@ -128,6 +137,15 @@
             <Parameter Name="User" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spServices_ServerDatetime" ReturnType="Collection(DateTime)" />
+          <FunctionImport Name="spLogChange">
+            <Parameter Name="Database" Mode="In" Type="String" />
+            <Parameter Name="Table" Mode="In" Type="String" />
+            <Parameter Name="Column" Mode="In" Type="String" />
+            <Parameter Name="User" Mode="In" Type="String" />
+            <Parameter Name="Row" Mode="In" Type="String" />
+            <Parameter Name="Operation" Mode="In" Type="String" />
+            <Parameter Name="NewValue" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="tblFeedback">
           <Key>
@@ -255,6 +273,7 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spLogEvent" FunctionName="ServicesModel.Store.spLogEvent" />
           <FunctionImportMapping FunctionImportName="spServices_ServerDatetime" FunctionName="ServicesModel.Store.spServices_ServerDatetime" />
+          <FunctionImportMapping FunctionImportName="spLogChange" FunctionName="ServicesModel.Store.spLogChange" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
