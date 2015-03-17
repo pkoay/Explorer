@@ -15,9 +15,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
     /// <summary>
     /// Interaction logic for TenderViewer.xaml
     /// </summary>
-    
-     
-    public partial class CostView : RHSTabGridViewBase_ReadOnly
+
+
+    public partial class CostView : RHSTabViewBase
     {
       
         CostViewModel vm;
@@ -30,82 +30,32 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
         public override void TabLoad()
         {
-            base.SetGrid(grd);
-            base.Reset(grd);
 
-
-            GridColumnSettings setting = new GridColumnSettings();
-            setting.columnReadOnlyDeveloper.Add("DataAreaID");
-            setting.columnReadOnlyDeveloper.Add("Invoiced");
-            gridColumnSettings.Add(grd, setting);
-
-            // set grid data
             vm = new CostViewModel(settings);
-            grd.DataContext = vm;
-            grd.ItemsSource = vm.data;
-            
-            base.TabLoad();
-            
-        }
+            grd.grd.DataContext = vm;
+            grd.grd.ItemsSource = vm.data;
 
-        private void grd_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
+            grd.SetGrid(settings);
+            grd.Reset();
+            grd.columnSettings.developer.Add("DataAreaID");
+            grd.columnSettings.developer.Add("Invoiced");
+            grd.columnSettings.format.Add("ProjId", Grid.Grid_Read.columnFormat.COUNT);
+            grd.columnSettings.format.Add("Date", Grid.Grid_Read.columnFormat.DATE);
+            grd.columnSettings.format.Add("CostAmount", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("CostOverhead", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("CostTotal", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("Hours", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("Quantity", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("Employee", Grid.Grid_Read.columnFormat.TEXT);
+            grd.columnSettings.format.Add("CategoryGroup", Grid.Grid_Read.columnFormat.TEXT);
+            grd.columnSettings.format.Add("CategoryName", Grid.Grid_Read.columnFormat.TEXT);
+            grd.columnSettings.format.Add("PurchQtyPrice", Grid.Grid_Read.columnFormat.TWO_DECIMAL_NO_TOTAL);
+
+        }
+        public override string IssueIfClosed()
         {
-            GridViewDataColumn column = e.Column as GridViewDataColumn;
-            switch (e.Column.Header.ToString())
-            {
-                case "ProjId":
-                    e.Column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
-                    column.ShowColumnWhenGrouped = false;
-                    break;
-                case "Date":
-                    SetColumn(column, "DATE");
-                    break;
-                case "CostAmount":
-                    SetColumn(column, "TWO_DECIMAL");
-                    break;
-                case "CostOverhead":
-                    SetColumn(column, "TWO_DECIMAL");
-                    break;
-                case "CostTotal":
-                    SetColumn(column, "TWO_DECIMAL");
-                    break;
-                case "Hours":
-                    SetColumn(column, "TWO_DECIMAL");
-                    break;
-                case "Quantity":
-                    SetColumn(column, "TWO_DECIMAL");
-                    break;
-                case "Employee":
-                    SetColumn(column, "TEXT");
-                    break;
-                case "CategoryGroup":
-                    SetColumn(column, "TEXT");
-                    break;
-                case "CategoryName":
-                    SetColumn(column, "TEXT");
-                    break;
-                case "PurchQtyPrice":
-                    SetColumn(column, "TWO_DECIMAL_NO_TOTAL");
-                    break;
-            }
+            return "";
         }
-
-        private void grd_Initialized(object sender, EventArgs e)
-        {
-          
-
-            //grd.GroupDescriptors.Add(new GroupDescriptor() { Member = "ProjId" });
-        }
-
-        private void grd_DataLoaded(object sender, EventArgs e)
-        {
-            
-               // grd.GroupDescriptors.Add(new GroupDescriptor() { Member = "ProjId" });
-           
-        }
-
-     
-      
     }
 
 }
