@@ -27,17 +27,15 @@ namespace WalzExplorer.Common
 
         public static void LogChanges(List<DbEntityEntry> changes,ObjectContext oc)
         {
-            
             foreach (var entry in changes)
             {
-                GetAuditRecordsForChange(entry, WindowsIdentity.GetCurrent().Name,oc);
-                    
+                GetAuditRecordsForChange(entry,oc);
             }
-            
          }
 
-        private static void GetAuditRecordsForChange(DbEntityEntry dbEntry, string userId, ObjectContext oc)
+        private static void GetAuditRecordsForChange(DbEntityEntry dbEntry, ObjectContext oc)
         {
+            List<string> PropertiesToSkip = new List<string> () {"RowVersion", "UpdatedDate", "UpdatedBy" };
 
             // Get table name (if it has a Table attribute, use that, otherwise get the pluralized name)
             //string tableName = dbEntry.Entity.GetType().Name; not useful due to proxies add guid at end
@@ -45,26 +43,64 @@ namespace WalzExplorer.Common
             // Determine ID string for change (potentially multiple keys
             EntityKey entityKey = oc.ObjectStateManager.GetObjectStateEntry(dbEntry.Entity).EntityKey;
             string keyName = "";
-            foreach ( EntityKeyMember key in entityKey.EntityKeyValues)
+            if (entityKey.EntityKeyValues == null)
             {
-                keyName = key.Key + "=" + key.Value.ToString() + ",";
+                keyName = "NEW IDENTITY";
             }
-            if (keyName!="") keyName = keyName.TrimEnd(',');
+            else
+            {
+                foreach (EntityKeyMember key in entityKey.EntityKeyValues)
+                {
+                    keyName = key.Key + "=" + key.Value.ToString() + ",";
+                }
+                if (keyName != "") keyName = keyName.TrimEnd(',');
+            }
 
+            //determine reference fro values (original,
             using (ServicesEntities db = new ServicesEntities(false))
             {
-
-                foreach (string propertyName in dbEntry.OriginalValues.PropertyNames)
+                //DbPropertyValues values = dbEntry.OriginalValues;
+                switch (dbEntry.State)
                 {
-                    if (!object.Equals(dbEntry.OriginalValues.GetValue<object>(propertyName), dbEntry.CurrentValues.GetValue<object>(propertyName)))
-                    {
-                        string NewValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString();
-                        db.spLogChange("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), NewValue);
-                    }
+                    case EntityState.Added:
+                        foreach (string propertyName in dbEntry.CurrentValues.PropertyNames)
+                        {
+                            if (!PropertiesToSkip.Contains(propertyName))
+                            {
+                                string AddedValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString();
+                                db.spLogChange("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), AddedValue);
+                            }
+                        }
+                        break;
+                    case EntityState.Deleted:
+                        foreach (string propertyName in dbEntry.OriginalValues.PropertyNames)
+                        {
+                            if (!PropertiesToSkip.Contains(propertyName))
+                            {
+                                string DeletedValue = dbEntry.OriginalValues.GetValue<object>(propertyName) == null ? null : dbEntry.OriginalValues.GetValue<object>(propertyName).ToString();
+                                db.spLogChange("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), DeletedValue);
+                            }
+                        }
+                        break;
+                    case EntityState.Modified:
+                        foreach (string propertyName in dbEntry.OriginalValues.PropertyNames)
+                        {
+                            if (!PropertiesToSkip.Contains(propertyName))
+                            {
+                                if (!object.Equals(dbEntry.OriginalValues.GetValue<object>(propertyName), dbEntry.CurrentValues.GetValue<object>(propertyName)))
+                                {
+                                    string NewValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString();
+                                    db.spLogChange("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), NewValue);
+                                }
+                            }
+                        }
+                        break;
                 }
+
             }
 
         }
+
         private static string GetTableName(DbEntityEntry ent,ObjectContext oc)
         {
            // ObjectContext objectContext = ((IObjectContextAdapter)this).ObjectContext;

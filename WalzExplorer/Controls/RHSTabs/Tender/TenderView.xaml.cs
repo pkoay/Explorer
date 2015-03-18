@@ -42,6 +42,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
             switch (settings.node.TypeID)
             {
+                case "TendersMyOpen":
                 case "TendersMy":
                     gridAdd = true;
                     gridEdit = true;
@@ -57,7 +58,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
             // set grid data
 
-            vm = new TenderViewModel(settings.node.TypeID, settings.user.RealPerson.PersonID, settings.node.IDAsInt());
+            vm = new TenderViewModel(settings.node.TypeID, settings.user.MimicedPerson.PersonID, settings.node.IDAsInt());
             viewModel = vm;
             grd.DataContext = viewModel;
             grd.ItemsSource = viewModel.data;
