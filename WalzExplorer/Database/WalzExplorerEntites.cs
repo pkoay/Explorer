@@ -153,6 +153,7 @@ namespace WalzExplorer.Database
        
         public override int SaveChanges()
         {
+            
             List<DbEntityEntry> LogEntries =  this.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified).ToList();
             Logging.LogChanges(LogEntries,this._ObjectContext);
 

@@ -24,9 +24,10 @@ namespace WalzExplorer.Common
             }
         }
 
-
+        //Note issue that on an ADD it does not save the new Identity values these are not know until after save. 
         public static void LogChanges(List<DbEntityEntry> changes,ObjectContext oc)
         {
+
             foreach (var entry in changes)
             {
                 GetAuditRecordsForChange(entry,oc);

@@ -84,11 +84,11 @@
                                 <Ellipse Height="10" Width="10" Fill="#FFFF0000" />
                             </DataTemplate>
                         </telerik:RadCartesianChart.Resources>
-                        <telerik:RadCartesianChart.HorizontalAxis >
-                            <telerik:DateTimeCategoricalAxis ElementBrush ="{DynamicResource TextBrush}" LabelFormat="dd-MMM-yy"/>
+                        <telerik:RadCartesianChart.HorizontalAxis>
+                            <telerik:DateTimeCategoricalAxis   ElementBrush ="{DynamicResource TextBrush}" LabelFormat="dd-MMM-yy"/>
                         </telerik:RadCartesianChart.HorizontalAxis>
                         <telerik:RadCartesianChart.VerticalAxis>
-                            <telerik:LinearAxis ElementBrush="{DynamicResource TextBrush}"/>
+                            <telerik:LinearAxis Title="HOURS"  ElementBrush="{DynamicResource TextBrush}"/>
                         </telerik:RadCartesianChart.VerticalAxis>
                         <telerik:RadCartesianChart.Grid>
                             <telerik:CartesianChartGrid MajorLinesVisibility="Y"/>

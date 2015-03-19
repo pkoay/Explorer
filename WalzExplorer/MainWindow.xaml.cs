@@ -360,6 +360,11 @@ namespace WalzExplorer
             Logging.LogEvent("Logout");
         }
 
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            LoadFormForMimic();
+        }
+
        
 
 

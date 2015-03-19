@@ -34,6 +34,14 @@
                     </Rectangle>
                 </Button>
             </StackPanel>-->
+            <Button Name="btnRefresh" Click="btnRefresh_Click" ToolTip="Refresh" >
+                <Rectangle Width="16" Height="13"
+                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_refresh}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
             <Button Name="btnFeedback" Click="btnFeedback_Click" ToolTip="FeedBack" >
                 <Rectangle Width="16" Height="13"
                    Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
@@ -49,7 +57,7 @@
                         <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cog}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
-            </Button>
+            </Button> 
         </MahApps:WindowCommands>
     </MahApps:MetroWindow.RightWindowCommands>
 
