@@ -47,6 +47,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.columnSettings.format.Add("Hours", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grd.columnSettings.format.Add("Quantity", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grd.columnSettings.format.Add("Employee", Grid.Grid_Read.columnFormat.TEXT);
+            grd.columnSettings.format.Add("Description", Grid.Grid_Read.columnFormat.TEXT_NO_GROUP);
             grd.columnSettings.format.Add("CategoryGroup", Grid.Grid_Read.columnFormat.TEXT);
             grd.columnSettings.format.Add("CategoryName", Grid.Grid_Read.columnFormat.TEXT);
             grd.columnSettings.format.Add("PurchQtyPrice", Grid.Grid_Read.columnFormat.TWO_DECIMAL_NO_TOTAL);

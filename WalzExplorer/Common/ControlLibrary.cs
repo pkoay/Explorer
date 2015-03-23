@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace WalzExplorer.Common
@@ -77,5 +78,25 @@ namespace WalzExplorer.Common
             //if it's not a ContentElement/FrameworkElement, rely on VisualTreeHelper
             return VisualTreeHelper.GetParent(child);
         }
+
+        public static List<Control> GetChildControls(Visual p_vParent, int p_nLevel)
+        {
+            List<Control> lstChildren=new List<Control> ();
+            int nChildCount = VisualTreeHelper.GetChildrenCount(p_vParent);
+
+            for (int i = 0; i <= nChildCount - 1; i++)
+            {
+                Visual v = (Visual)VisualTreeHelper.GetChild(p_vParent, i);
+
+                if (v is Control) lstChildren.Add((Control)v);
+
+                if (VisualTreeHelper.GetChildrenCount(v) > 0)
+                {
+                    GetChildControls(v, p_nLevel + 1);
+                }
+            }
+            return lstChildren;
+        }
+
     }
 }

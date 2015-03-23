@@ -145,7 +145,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 grdHoursSummary.grd.CanUserFreezeColumns = false;
                 grdHoursSummary.grd.IsFilteringAllowed = false;
                 grdHoursSummary.grd.DataContext = vm;
-                
+
                 grdHoursSummary.columnSettings.format.Add("Planned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
                 grdHoursSummary.columnSettings.format.Add("Earned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
                 grdHoursSummary.columnSettings.format.Add("Actual", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
@@ -153,7 +153,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 grdHoursSummary.columnSettings.format.Add("CostVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
                 grdHoursSummary.columnSettings.format.Add("SPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
                 grdHoursSummary.columnSettings.format.Add("CPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
-                
+
 
                 //***********************
                 //SAFETY
@@ -180,13 +180,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 grdSafetySummary.grd.CanUserFreezeColumns = false;
                 grdSafetySummary.grd.IsFilteringAllowed = false;
                 grdSafetySummary.grd.DataContext = vm;
-                grdSafetySummary.columnSettings.format.Add("FAI",  Grid.Grid_Read.columnFormat.INT);
-                grdSafetySummary.columnSettings.format.Add("MTI",  Grid.Grid_Read.columnFormat.INT);
-                grdSafetySummary.columnSettings.format.Add("LTI",  Grid.Grid_Read.columnFormat.INT);
-                grdSafetySummary.columnSettings.format.Add("NearMiss",  Grid.Grid_Read.columnFormat.INT);
-                grdSafetySummary.columnSettings.format.Add("LTIFR",  Grid.Grid_Read.columnFormat.INT);
-                grdSafetySummary.columnSettings.format.Add("TRIFR",  Grid.Grid_Read.columnFormat.INT);
-                grdSafetySummary.columnSettings.format.Add("Hours",  Grid.Grid_Read.columnFormat.INT);
+                grdSafetySummary.columnSettings.format.Add("FAI", Grid.Grid_Read.columnFormat.INT);
+                grdSafetySummary.columnSettings.format.Add("MTI", Grid.Grid_Read.columnFormat.INT);
+                grdSafetySummary.columnSettings.format.Add("LTI", Grid.Grid_Read.columnFormat.INT);
+                grdSafetySummary.columnSettings.format.Add("NearMiss", Grid.Grid_Read.columnFormat.INT);
+                grdSafetySummary.columnSettings.format.Add("LTIFR", Grid.Grid_Read.columnFormat.INT);
+                grdSafetySummary.columnSettings.format.Add("TRIFR", Grid.Grid_Read.columnFormat.INT);
+                grdSafetySummary.columnSettings.format.Add("Hours", Grid.Grid_Read.columnFormat.INT);
 
                 //Detail Grid
                 grdSafetyDetail.SetGrid(settings);
@@ -199,11 +199,33 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 grdSafetyDetail.columnSettings.developer.Add("UpdatedDate");
 
                 grdSafetyDetail.grd.DataContext = vm;
-                grdSafetySummary.columnSettings.format.Add("IncidentID",  Grid.Grid_Read.columnFormat.COUNT);
-                grdSafetySummary.columnSettings.format.Add("ReportedDate",  Grid.Grid_Read.columnFormat.DATE);
-              
+                grdSafetySummary.columnSettings.format.Add("IncidentID", Grid.Grid_Read.columnFormat.COUNT);
+                grdSafetySummary.columnSettings.format.Add("ReportedDate", Grid.Grid_Read.columnFormat.DATE);
+
 
                 setItemSource();
+
+                ////if no performance report exists then make it look blank
+                ////if (!cmbPeriodEnd.HasItems)
+
+                //{
+
+                //    f
+                //    //foreach (Control ctrl in Content this.cont)
+                //    //{
+
+                //    //}
+                //cmbPeriodEnd.Visibility = System.Windows.Visibility.Hidden;
+                //cmbSummaryRating.Visibility = System.Windows.Visibility.Hidden;
+                //tcHistory.Visibility = System.Windows.Visibility.Hidden;
+            }
+
+            else
+            {
+                foreach (Control ctr in Common.ControlLibrary.GetChildControls(this, 1))
+                {
+                    ctr.Visibility = System.Windows.Visibility.Hidden;
+                }
             }
         }
 
@@ -362,16 +384,19 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         {
             using (WaitCursor wc = new WaitCursor())
             {
-                vm.context.SaveChanges();
-                vm.RecalculateHistoryData();
+               
+                    vm.context.SaveChanges();
+                    vm.RecalculateHistoryData();
+
+                    //Learnt something new here
+                    // Observable collection is obviously useful for flagging Add/Update/Deletes, so they can be sent to entity framework
+                    //However if we want to "place different data" into the same grid (e.g. change from one project to another) and in the process we create a new observable collection
+                    // then the grid does not see this observable collection (still pointing at the old one)
+                    // to update this we need to reset the itemsource. WE CANNOT CLEAR THE EXISTING collection and add the new collection, because that is pretty much deleteing the old data and adding the new data to the OLD object. 
+                    // Find it strange there is no command from the View model side that says "hey I have changed data that I'm pointing to", and thus refresh the thing that is pointing to the observable collection (and lose changes)
+                    setItemSource();
                 
-                //Learnt something new here
-                // Observable collection is obviously useful for flagging Add/Update/Deletes, so they can be sent to entity framework
-                //However if we want to "place different data" into the same grid (e.g. change from one project to another) and in the process we create a new observable collection
-                // then the grid does not see this observable collection (still pointing at the old one)
-                // to update this we need to reset the itemsource. WE CANNOT CLEAR THE EXISTING collection and add the new collection, because that is pretty much deleteing the old data and adding the new data to the OLD object. 
-                // Find it strange there is no command from the View model side that says "hey I have changed data that I'm pointing to", and thus refresh the thing that is pointing to the observable collection (and lose changes)
-                setItemSource();
+               
             }
         }
 

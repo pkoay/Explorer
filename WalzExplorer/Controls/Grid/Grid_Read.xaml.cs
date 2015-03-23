@@ -32,6 +32,7 @@ namespace WalzExplorer.Controls.Grid
             COUNT,
             DATE,
             TEXT,
+            TEXT_NO_GROUP,
             INT,
             INT_NO_TOTAL,
             TWO_DECIMAL_NO_TOTAL,
@@ -52,6 +53,8 @@ namespace WalzExplorer.Controls.Grid
 
         public  GridColumnSettings columnSettings;
         protected GridViewRow ContextMenuRow;
+        protected Telerik.Windows.Controls.GridView.GridViewCell ContextMenuCell;
+        protected Telerik.Windows.Controls.GridView.GridViewHeaderCell ContextMenuColumnHeader;
         protected WEXSettings _settings;
         
 
@@ -76,6 +79,7 @@ namespace WalzExplorer.Controls.Grid
             grd.ClipboardCopyMode = GridViewClipboardCopyMode.Cells;
             grd.ValidatesOnDataErrors = GridViewValidationMode.Default;
             grd.AutoGeneratingColumn += g_AutoGeneratingColumn;
+            
             grd.ShowColumnHeaders = true;
             grd.ShowGroupPanel = true;
             grd.ShowColumnFooters = true;
@@ -110,10 +114,13 @@ namespace WalzExplorer.Controls.Grid
 
             MenuItem mi;
 
-            mi = new MenuItem() { Name = "miCopy", Header = "Copy", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_copy", 16, 16) };
-            cm.Items.Add(mi);
+            
+            cm.Items.Add(new MenuItem() { Name = "miCopy", Header = "Copy", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_copy", 16, 16) });
             cm.Items.Add(new Separator());
-            cm.Items.Add(new MenuItem() { Name = "miExportExcel", Header = "Export to Excel", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
+            cm.Items.Add(new MenuItem() { Name = "miExportExcelRaw", Header = "Export to Excel (Raw Data)", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
+            cm.Items.Add(new MenuItem() { Name = "miExportExcelDisplayed", Header = "Export to Excel (as Displayed)", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
+            cm.Items.Add(new Separator());
+            cm.Items.Add(new MenuItem() { Name = "miHide", Header = "Hide Column", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_cancel", 16, 16) });
             foreach (object o in cm.Items)
             {
                 if (!(o is Separator))
@@ -129,39 +136,103 @@ namespace WalzExplorer.Controls.Grid
         {
             //store the grid row the contextmenu was open over
             var element = e.OriginalSource;
-            ContextMenuRow = (element as FrameworkElement).ParentOfType<GridViewRow>(); 
+            ContextMenuRow = (element as FrameworkElement).ParentOfType<GridViewRow>();
+            //ContextMenuColumn = (element as FrameworkElement).ParentOfType<Telerik.Windows.Controls.GridViewColumn>();
+            ContextMenuCell = (element as FrameworkElement).ParentOfType<GridViewCell>();
+            ContextMenuColumnHeader = (element as FrameworkElement).ParentOfType<GridViewHeaderCell>();
+            
         }
        
         // context menu actions
         public void cm_ItemClick(object sender, RoutedEventArgs e)
         {
             MenuItem mi = (MenuItem)sender;
+            string fileName;
             switch (mi.Name)
             {
                 case "miCopy":
                     ApplicationCommands.Copy.Execute(this, null);
                     break;
-                
-
-                case "miExportExcel":
-                    string fileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".xml";
-                    using (Stream stream = File.Create(fileName))
+                case "miHide":
+                    if (ContextMenuCell != null)
                     {
-
-                        RadGridView g = ContextMenuRow.ParentOfType<RadGridView>();
-                        g.Export(stream,
-                         new GridViewExportOptions()
-                         {
-                             Format = ExportFormat.ExcelML,
-                             ShowColumnHeaders = true,
-                             ShowColumnFooters = true,
-                             ShowGroupFooters = false,
-                         });
+                        ContextMenuCell.Column.IsVisible = false;
                     }
-                    Process excel = new Process();
-                    excel.StartInfo.FileName = fileName;
-                    excel.Start();
+                    else
+                    {
+                        if (ContextMenuColumnHeader != null)
+                        {
+                            ContextMenuColumnHeader.Column.IsVisible = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Need to right click on a column, then select hide column from the context menu", "No column found", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
                     break;
+
+                case "miExportExcelRaw":
+                    using (WaitCursor wc = new WaitCursor())
+                    {
+                        fileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".xml";
+                        using (Stream stream = File.Create(fileName))
+                        {
+                            grd.Export(stream,
+                             new GridViewExportOptions()
+                             {
+                                 Format = ExportFormat.ExcelML,
+                                 ShowColumnHeaders = true,
+                                 ShowColumnFooters = true,
+                                 ShowGroupFooters = false,
+                             });
+
+
+                        }
+                        using (Process excel = new Process())
+                        {
+                            excel.StartInfo.FileName = fileName;
+                            excel.Start();
+                        }
+                    }
+                    break;
+
+                case "miExportExcelDisplayed":
+
+                    //fileName = "C:\\Users\\pkoay\\AppData\\Local\\Temp\\cc4158a3-9687-4bac-879e-62afa77ab7f7.xlsx";
+                    fileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".xlsx";
+                    //fileName = "C:\\temp\\" +  Guid.NewGuid().ToString() + ".xlsx";
+
+                    try
+                    {
+                        using (WaitCursor wc = new WaitCursor())
+                        {
+                            using (Stream stream = File.Create(fileName))
+                            {
+
+                                grd.ExportToXlsx(stream, new GridViewDocumentExportOptions()
+                                {
+                                    ShowColumnHeaders = true,
+                                    ShowColumnFooters = true,
+                                    ShowGroupFooters = true,
+                                    ExportDefaultStyles = true
+                                });
+                            }
+                            using (Process excel = new Process())
+                            {
+                                excel.StartInfo.FileName = fileName;
+                                excel.Start();
+                            }
+                        }
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Try raw export to get basic data or try hiding description type columns. \nThe error was: " + ex.Message, "Export Failed", MessageBoxButton.OK);
+                    }
+                    break;
+
+
                 default:
                     MessageBox.Show(mi.Header.ToString(), "Configuration menu", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;
@@ -256,13 +327,21 @@ namespace WalzExplorer.Controls.Grid
                     column.FooterTextAlignment = TextAlignment.Right;
                     column.IsGroupable = false;
                     break;
-
+                    
                 case columnFormat.TEXT:
                     column.DataFormatString = "";
                     column.TextAlignment = TextAlignment.Left;
                     column.HeaderTextAlignment = TextAlignment.Left;
                     column.FooterTextAlignment = TextAlignment.Left;
                     column.IsGroupable = true;
+                    break;
+
+                case columnFormat.TEXT_NO_GROUP:
+                    column.DataFormatString = "";
+                    column.TextAlignment = TextAlignment.Left;
+                    column.HeaderTextAlignment = TextAlignment.Left;
+                    column.FooterTextAlignment = TextAlignment.Left;
+                    column.IsGroupable = false;
                     break;
 
                 case columnFormat.INT:
