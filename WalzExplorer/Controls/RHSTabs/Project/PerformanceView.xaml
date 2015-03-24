@@ -6,6 +6,7 @@
              xmlns:grid="clr-namespace:WalzExplorer.Controls.Grid"
              xmlns:WalzExplorer="clr-namespace:WalzExplorer"
              xmlns:tab="clr-namespace:WalzExplorer.Controls.RHSTabs"
+             xmlns:common="clr-namespace:WalzExplorer.Common"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
             
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="1800" d:DesignHeight="497.333"
@@ -74,13 +75,23 @@
                     <!--Chart-->
                     <telerik:RadCartesianChart Name="chartHours"  Grid.Row="1" >
                         <telerik:RadCartesianChart.Resources>
-                        
+                            <!--<common:LinePointTemplateSelector x:Key="linePointTemplateSelector">
+                                <common:LinePointTemplateSelector.MinPointTemplate>
+                                    <DataTemplate>
+                                        <Ellipse Width="5" Height="5" Fill="#FFCC0000" />
+                                    </DataTemplate>
+                                </common:LinePointTemplateSelector.MinPointTemplate>
+                            </common:LinePointTemplateSelector>
+                            <sys:String x:Key="PlannedFormatString">Planned - {0:0},000</sys:String>
+                            <sys:String x:Key="EarnedFormatString">Earned - {0:0},000</sys:String>
+                            <sys:String x:Key="ActualFormatString">Actual - {0:0},000</sys:String>
 
+                            <Thickness x:Key="trackballItemMargin">6,0</Thickness>
                             <DataTemplate x:Key="seriesTrackBallInfoTemplate">
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="{Binding Path=DataPoint.Value,     StringFormat='Value: {0}'}"/>
                                 </StackPanel>
-                            </DataTemplate>
+                            </DataTemplate>-->
                     
                             
                             <DataTemplate x:Key="EllipseTemplatePlanned">
@@ -96,7 +107,48 @@
                         <telerik:RadCartesianChart.Behaviors>
                             <telerik:ChartTrackBallBehavior ShowIntersectionPoints="True" ShowTrackInfo="True"  />
                         </telerik:RadCartesianChart.Behaviors>
-                        <telerik:SplineSeries TrackBallInfoTemplate="{StaticResource seriesTrackBallInfoTemplate}"/>
+
+                        <!--<telerik:LineSeries ItemsSource="{Binding hoursPlannedData}"
+                                ValueBinding="Value" CategoryBinding="WeekEnd"
+                                PointTemplateSelector="{StaticResource linePointTemplateSelector}">
+                            <telerik:LineSeries.TrackBallInfoTemplate>
+                                <DataTemplate>
+                                    <StackPanel Background="Transparent">
+                                        <TextBlock Text="{Binding Path=DataPoint.Value, StringFormat={StaticResource PlannedFormatString}}"
+                                       Margin="{StaticResource trackballItemMargin}" FontFamily="Segoe UI" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </telerik:LineSeries.TrackBallInfoTemplate>
+                          
+                        </telerik:LineSeries>
+                        <telerik:LineSeries ItemsSource="{Binding hoursEarnedData}" 
+                                ValueBinding="Value" CategoryBinding="WeekEnd"
+                                PointTemplateSelector="{StaticResource linePointTemplateSelector}">
+                            <telerik:LineSeries.TrackBallInfoTemplate>
+                                <DataTemplate>
+                                    <StackPanel Background="Transparent">
+                                        <TextBlock Text="{Binding Path=DataPoint.Value, StringFormat={StaticResource EarnedFormatString}}"
+                                       Margin="{StaticResource trackballItemMargin}" FontFamily="Segoe UI" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </telerik:LineSeries.TrackBallInfoTemplate>
+                            
+                        </telerik:LineSeries>
+                        <telerik:LineSeries ItemsSource="{Binding hoursActualData}"
+                                ValueBinding="Value" CategoryBinding="WeekEnd"
+                                PointTemplateSelector="{StaticResource linePointTemplateSelector}">
+                            <telerik:LineSeries.TrackBallInfoTemplate>
+                                <DataTemplate>
+                                    <StackPanel Background="Transparent">
+                                        <TextBlock Text="{Binding Path=DataPoint.Value, StringFormat={StaticResource ActualFormatString}}"
+                                       Margin="{StaticResource trackballItemMargin}" FontFamily="Segoe UI" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </telerik:LineSeries.TrackBallInfoTemplate>
+                     
+                        </telerik:LineSeries>-->
+                        
+                        <!--<telerik:SplineSeries TrackBallInfoTemplate="{StaticResource seriesTrackBallInfoTemplate}"/>-->
                            
                    
                         <telerik:RadCartesianChart.HorizontalAxis>

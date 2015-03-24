@@ -1,10 +1,13 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Telerik.Windows.Controls;
@@ -111,6 +114,33 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     series.ValueBinding = new PropertyNameDataPointBinding("Value");
                     var bc = new BrushConverter();
                     series.Stroke = (Brush)bc.ConvertFrom(ev.Color);
+
+                    string dataTemplateString = @"     
+                             
+                                <DataTemplate>
+                                    <StackPanel Background=""Transparent"">
+                                        <TextBlock Text=""{Binding Path=DataPoint.Value, StringFormat='"+ ev.Title + @" {0}'}""
+                                       FontFamily=""Segoe UI"" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            ";
+
+                    MemoryStream sr = null;
+                    ParserContext pc = null;
+                    sr = new MemoryStream(Encoding.ASCII.GetBytes(dataTemplateString));
+                    pc = new ParserContext();
+                    pc.XmlnsDictionary.Add("", "http://schemas.microsoft.com/winfx/2006/xaml/presentation");
+                    pc.XmlnsDictionary.Add("x", "http://schemas.microsoft.com/winfx/2006/xaml");
+                    pc.XmlnsDictionary.Add("telerik", "http://schemas.telerik.com/2008/xaml/presentation");
+
+                    DataTemplate datatemplate = (DataTemplate)XamlReader.Load(sr, pc);
+                    series.TrackBallInfoTemplate = datatemplate;
+
+                   
+
+
+
+
                     //switch (ev.Title)
                     //{
                     //    case "Planned":
