@@ -6,6 +6,7 @@
              xmlns:grid="clr-namespace:WalzExplorer.Controls.Grid"
              xmlns:WalzExplorer="clr-namespace:WalzExplorer"
              xmlns:tab="clr-namespace:WalzExplorer.Controls.RHSTabs"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
             
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="1800" d:DesignHeight="497.333"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
@@ -71,9 +72,17 @@
                     <Label Content="Comments" HorizontalAlignment="Left" Margin="242,4,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>
 
                     <!--Chart-->
-
-                    <telerik:RadCartesianChart Name="chartHours"  Grid.Row="1">
+                    <telerik:RadCartesianChart Name="chartHours"  Grid.Row="1" >
                         <telerik:RadCartesianChart.Resources>
+                        
+
+                            <DataTemplate x:Key="seriesTrackBallInfoTemplate">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Path=DataPoint.Value,     StringFormat='Value: {0}'}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                    
+                            
                             <DataTemplate x:Key="EllipseTemplatePlanned">
                                 <Ellipse Height="10" Width="10" Fill="#FF0000FF" />
                             </DataTemplate>
@@ -84,6 +93,12 @@
                                 <Ellipse Height="10" Width="10" Fill="#FFFF0000" />
                             </DataTemplate>
                         </telerik:RadCartesianChart.Resources>
+                        <telerik:RadCartesianChart.Behaviors>
+                            <telerik:ChartTrackBallBehavior ShowIntersectionPoints="True" ShowTrackInfo="True"  />
+                        </telerik:RadCartesianChart.Behaviors>
+                        <telerik:SplineSeries TrackBallInfoTemplate="{StaticResource seriesTrackBallInfoTemplate}"/>
+                           
+                   
                         <telerik:RadCartesianChart.HorizontalAxis>
                             <telerik:DateTimeCategoricalAxis   ElementBrush ="{DynamicResource TextBrush}" LabelFormat="dd-MMM-yy"/>
                         </telerik:RadCartesianChart.HorizontalAxis>
