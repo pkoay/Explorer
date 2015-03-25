@@ -554,7 +554,7 @@
           <Key>
             <PropertyRef Name="StatusID" />
           </Key>
-          <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
@@ -718,6 +718,15 @@
           </Key>
           <Property Name="TreeNodeTypeID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="RHSTabID" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblWEX_Variables">
+          <Key>
+            <PropertyRef Name="Section" />
+            <PropertyRef Name="Variable" />
+          </Key>
+          <Property Name="Section" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Variable" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Value" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_tblPerson_Mimic_tblPerson">
           <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="1" />
@@ -1662,6 +1671,7 @@
           <EntitySet Name="tblWEX_Tree_Security" EntityType="Self.tblWEX_Tree_Security" Schema="dbo" Table="tblWEX.Tree_Security" store:Type="Tables" />
           <EntitySet Name="tblWEX_TreeNodeType" EntityType="Self.tblWEX_TreeNodeType" Schema="dbo" Table="tblWEX.TreeNodeType" store:Type="Tables" />
           <EntitySet Name="tblWEX_TreeNodeType_RHSTab" EntityType="Self.tblWEX_TreeNodeType_RHSTab" Schema="dbo" Table="tblWEX.TreeNodeType_RHSTab" store:Type="Tables" />
+          <EntitySet Name="tblWEX_Variables" EntityType="Self.tblWEX_Variables" Schema="dbo" Table="tblWEX.Variables" store:Type="Tables" />
           <AssociationSet Name="FK_tblPerson_Mimic_tblPerson" Association="Self.FK_tblPerson_Mimic_tblPerson">
             <End Role="tblPerson" EntitySet="tblPerson" />
             <End Role="tblPerson_Mimic" EntitySet="tblPerson_Mimic" />
@@ -2932,6 +2942,7 @@
           <Parameter Name="ReportEnd" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="spExplorer_ServerDatetime" ReturnType="Collection(DateTime)" />
+          <EntitySet Name="tblWEX_Variables" EntityType="WalzExplorerModel.tblWEX_Variables" />
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -4114,6 +4125,15 @@
           <Property Type="Boolean" Name="Selected" Nullable="true" />
           <Property Type="String" Name="Title" Nullable="true" MaxLength="255" />
         </ComplexType>
+        <EntityType Name="tblWEX_Variables">
+          <Key>
+            <PropertyRef Name="Section" />
+            <PropertyRef Name="Variable" />
+          </Key>
+          <Property Name="Section" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Variable" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5088,6 +5108,15 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spProject_HistoryInsert" FunctionName="WalzExplorerModel.Store.spProject_HistoryInsert" />
           <FunctionImportMapping FunctionImportName="spExplorer_ServerDatetime" FunctionName="WalzExplorerModel.Store.spExplorer_ServerDatetime" />
+          <EntitySetMapping Name="tblWEX_Variables">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblWEX_Variables">
+              <MappingFragment StoreEntitySet="tblWEX_Variables">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Variable" ColumnName="Variable" />
+                <ScalarProperty Name="Section" ColumnName="Section" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

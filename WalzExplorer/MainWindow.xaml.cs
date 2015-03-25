@@ -346,7 +346,7 @@ namespace WalzExplorer
                     tcLHS_SelectionChanged(tcLHS, null);
                     break;
                 case "miAbout":
-                    MessageBox.Show("This appliaction was developed for the Walz Group." + Environment.NewLine + "Developed by Phil Koay (0419233605).", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("This appliaction was developed for the Walz Group." + Environment.NewLine + "Developed by Phil Koay (Mobile:0419233605).", "About", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;
                 case "miMimic":
                     int OriginalMimic = settings.user.MimicedPerson.PersonID;

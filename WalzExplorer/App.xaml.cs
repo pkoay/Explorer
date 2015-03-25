@@ -19,33 +19,38 @@ namespace WalzExplorer
     {
         public App()
         {
-            
-
-            //UtilityTest ut = new UtilityTest();
-            //ut.FindConflictingReferences();
-           VisualStudio2013Palette.LoadPreset(VisualStudio2013Palette.ColorVariation.Dark);
-           this.InitializeComponent();
+            if (DatabseVariable.Read("System", "Enable_Login") != "N")
+            {
+                //UtilityTest ut = new UtilityTest();
+                //ut.FindConflictingReferences();
+                VisualStudio2013Palette.LoadPreset(VisualStudio2013Palette.ColorVariation.Dark);
+                this.InitializeComponent();
 
 #if DEBUG
-           string user = WindowsIdentity.GetCurrent().Name;
+                string user = WindowsIdentity.GetCurrent().Name;
 
-           //Check database issues
-            if (user.ToUpper()=="WALZ\\PKOAY")
-            { 
-               WalzExplorerEntities e = new WalzExplorerEntities(false);
-               string s = e.Verification();
-               if (s != "")
-               {
-                   MessageBox.Show(s, "Database Issues", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                   this.Shutdown();
-               }
-            }
+                //Check database issues
+                if (user.ToUpper() == "WALZ\\PKOAY")
+                {
+                    WalzExplorerEntities e = new WalzExplorerEntities(false);
+                    string s = e.Verification();
+                    if (s != "")
+                    {
+                        MessageBox.Show(s, "Database Issues", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        this.Shutdown();
+                    }
+                }
 
-         
+
 #else
            Console.WriteLine("Mode=Release"); 
 #endif
-           
+            }
+            else
+            {
+                MessageBox.Show("Walz Explorer is unavaliable at the moment. For more information contact Phil Koay on 0419233605", "Logins Disabled", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                this.Shutdown();
+            }
         }
       
         private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

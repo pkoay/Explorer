@@ -211,6 +211,7 @@
     </ApplicationDefinition>
     <Compile Include="Common\ChartViewLibrary.cs" />
     <Compile Include="Common\ControlLibrary.cs" />
+    <Compile Include="Common\DatabseVariable.cs" />
     <Compile Include="Common\FindConflictingReferences.cs" />
     <Compile Include="Common\GraphicsLibrary.cs" />
     <Compile Include="Common\GridLibrary.cs" />
@@ -401,6 +402,9 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblTender_WorkgroupItem.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblWEX_Variables.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Validation.cs" />

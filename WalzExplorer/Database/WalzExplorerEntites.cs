@@ -88,7 +88,7 @@ namespace WalzExplorer.Database
             string v="";
 
             List<string> ColumnsToVerify = new List<string> () {"RowVersion","UpdatedBy","UpdatedDate"};
-            List<string> ExcludeTables = new List<string>() { "tblWEX_LHSTab", "tblWEX_NTSecurityGroup", "tblWEX_RHSTab", "tblWEX_RHSTab_Security", "tblWEX_Tree", "tblWEX_Tree_Security", "tblWEX_TreeNodeType", "tblWEX_TreeNodeType_RHSTab" };
+            List<string> ExcludeTables = new List<string>() { "tblWEX_Variables", "tblWEX_LHSTab", "tblWEX_NTSecurityGroup", "tblWEX_RHSTab", "tblWEX_RHSTab_Security", "tblWEX_Tree", "tblWEX_Tree_Security", "tblWEX_TreeNodeType", "tblWEX_TreeNodeType_RHSTab" };
 
             el = octx.MetadataWorkspace.GetItemCollection(DataSpace.CSpace).OfType<EntityType>().ToList();
             foreach (EntityType e in el)

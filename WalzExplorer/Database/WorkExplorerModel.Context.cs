@@ -71,6 +71,7 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblProject_HistoryRating> tblProject_HistoryRating { get; set; }
         public virtual DbSet<tblProject_HistoryRFI> tblProject_HistoryRFI { get; set; }
         public virtual DbSet<tblProject_Portfolio> tblProject_Portfolio { get; set; }
+        public virtual DbSet<tblWEX_Variables> tblWEX_Variables { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)
