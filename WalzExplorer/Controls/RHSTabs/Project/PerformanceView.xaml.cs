@@ -115,12 +115,15 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     var bc = new BrushConverter();
                     series.Stroke = (Brush)bc.ConvertFrom(ev.Color);
 
+
+                    //TrackBall template
                     string dataTemplateString = @"     
                              
                                 <DataTemplate>
-                                    <StackPanel Background=""Transparent"">
-                                        <TextBlock Text=""{Binding Path=DataPoint.Value, StringFormat='"+ ev.Title + @" {0}'}""
-                                       FontFamily=""Segoe UI"" />
+                                    <StackPanel Orientation=""Horizontal"" Margin=""5,5,10,5"" Background=""#FF1E1E1E"">
+                                        <Rectangle Height=""10"" Width=""10"" Fill=""" + ev.Color + @""" Margin=""5,5,5,5"" />
+                                        <TextBlock Text=""{Binding Path=DataPoint.Value, StringFormat='" + ev.Title + @" {0}'}""
+                                       FontFamily=""Segoe UI""  Foreground=""#FFF1F1F1""/>
                                     </StackPanel>
                                 </DataTemplate>
                             ";
@@ -135,6 +138,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
                     DataTemplate datatemplate = (DataTemplate)XamlReader.Load(sr, pc);
                     series.TrackBallInfoTemplate = datatemplate;
+                    
 
                    
 

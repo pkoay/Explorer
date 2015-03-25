@@ -19,6 +19,8 @@ namespace WalzExplorer
     {
         public App()
         {
+            
+
             //UtilityTest ut = new UtilityTest();
             //ut.FindConflictingReferences();
            VisualStudio2013Palette.LoadPreset(VisualStudio2013Palette.ColorVariation.Dark);
