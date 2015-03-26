@@ -69,32 +69,18 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _status, value); } 
     	}
     
-        private string _updatedBy;
-    	public string UpdatedBy 
-    	{ 
-    		get { return _updatedBy; } 
-    		set { SetProperty(ref _updatedBy, value); } 
-    	}
-    
-        private Nullable<System.DateTime> _updatedDate;
-    	public Nullable<System.DateTime> UpdatedDate 
-    	{ 
-    		get { return _updatedDate; } 
-    		set { SetProperty(ref _updatedDate, value); } 
-    	}
-    
-        private byte[] _rowVersion;
-    	public byte[] RowVersion 
-    	{ 
-    		get { return _rowVersion; } 
-    		set { SetProperty(ref _rowVersion, value); } 
-    	}
-    
         private Nullable<double> _contract;
     	public Nullable<double> Contract 
     	{ 
     		get { return _contract; } 
     		set { SetProperty(ref _contract, value); } 
+    	}
+    
+        private Nullable<double> _costBudget;
+    	public Nullable<double> CostBudget 
+    	{ 
+    		get { return _costBudget; } 
+    		set { SetProperty(ref _costBudget, value); } 
     	}
     
         private Nullable<double> _cost;
@@ -116,6 +102,27 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _invoiced; } 
     		set { SetProperty(ref _invoiced, value); } 
+    	}
+    
+        private string _updatedBy;
+    	public string UpdatedBy 
+    	{ 
+    		get { return _updatedBy; } 
+    		set { SetProperty(ref _updatedBy, value); } 
+    	}
+    
+        private Nullable<System.DateTime> _updatedDate;
+    	public Nullable<System.DateTime> UpdatedDate 
+    	{ 
+    		get { return _updatedDate; } 
+    		set { SetProperty(ref _updatedDate, value); } 
+    	}
+    
+        private byte[] _rowVersion;
+    	public byte[] RowVersion 
+    	{ 
+    		get { return _rowVersion; } 
+    		set { SetProperty(ref _rowVersion, value); } 
     	}
     
     }

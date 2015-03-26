@@ -46,11 +46,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
             grd.columnSettings.format.Add("AXProjectID", Grid.Grid_Read.columnFormat.COUNT);
             grd.columnSettings.format.Add("Contract", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("CostBudget", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grd.columnSettings.format.Add("Cost", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grd.columnSettings.format.Add("Committed", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grd.columnSettings.format.Add("Invoiced", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
           
             grd.columnSettings.toolTip.Add("Contract", "Contract Value including all approved variations");
+            grd.columnSettings.toolTip.Add("CostBudget", "Cost Budget including all approved variations");
             grd.columnSettings.toolTip.Add("Cost", "Costs to date (Includes Overheads) (Excludes Committed Costs)");
             grd.columnSettings.toolTip.Add("Committed", "Committed Costs to date (Open purchase orders)");
             grd.columnSettings.toolTip.Add("Invoiced", "Invoiced to client to date");

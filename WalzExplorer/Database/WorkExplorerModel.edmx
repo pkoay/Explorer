@@ -3724,23 +3724,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="spWEX_RHS_Project_Summary_Result">
-          <Property Type="Int32" Name="ProjectID" Nullable="false" />
-          <Property Type="String" Name="AXProjectID" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="AXDataAreaID" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Manager" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="OperationsManager" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Customer" Nullable="false" MaxLength="60" />
-          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="UpdatedBy" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
-          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" />
-          <Property Type="Double" Name="Contract" Nullable="true" />
-          <Property Type="Double" Name="Cost" Nullable="true" />
-          <Property Type="Double" Name="Committed" Nullable="true" />
-          <Property Type="Double" Name="Invoiced" Nullable="true" />
-        </ComplexType>
         <EntityType Name="tblCustomer">
           <Key>
             <PropertyRef Name="CustomerID" />
@@ -4134,6 +4117,24 @@
           <Property Name="Variable" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Value" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="spWEX_RHS_Project_Summary_Result">
+          <Property Type="Int32" Name="ProjectID" Nullable="false" />
+          <Property Type="String" Name="AXProjectID" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="AXDataAreaID" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Manager" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="OperationsManager" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Customer" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+          <Property Type="Double" Name="Contract" Nullable="true" />
+          <Property Type="Double" Name="CostBudget" Nullable="true" />
+          <Property Type="Double" Name="Cost" Nullable="true" />
+          <Property Type="Double" Name="Committed" Nullable="true" />
+          <Property Type="Double" Name="Invoiced" Nullable="true" />
+          <Property Type="String" Name="UpdatedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4880,13 +4881,14 @@
                 <ScalarProperty Name="OperationsManager" ColumnName="OperationsManager" />
                 <ScalarProperty Name="Customer" ColumnName="Customer" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="Contract" ColumnName="Contract" />
+                <ScalarProperty Name="CostBudget" ColumnName="CostBudget" />
                 <ScalarProperty Name="Cost" ColumnName="Cost" />
                 <ScalarProperty Name="Committed" ColumnName="Committed" />
                 <ScalarProperty Name="Invoiced" ColumnName="Invoiced" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
