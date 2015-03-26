@@ -31,6 +31,8 @@ using Telerik.Windows.Controls.TabControl;
 using Telerik.Windows.Controls.Input;
 using Telerik.Windows.Data;
 using WalzExplorer.Common;
+using System.Diagnostics;
+using System.Windows.Threading;
 
 namespace WalzExplorer
 {
@@ -40,7 +42,7 @@ namespace WalzExplorer
     public partial class MainWindow : MetroWindow
     {
         private WEXSettings settings=new WEXSettings ();
-        private Window splashWindow;
+        private SplashScreen splashWindow;
 
         //private WEXUser user = new WEXUser();
         private Dictionary<string, string> dicSQLSubsitutes = new Dictionary<string, string>();
@@ -115,7 +117,9 @@ namespace WalzExplorer
                 btnConfigure.ContextMenu = cm;
                 cm.PlacementTarget = btnConfigure;
                 cm.Placement = System.Windows.Controls.Primitives.PlacementMode.AbsolutePoint;
-                splashWindow.Close();
+
+                //Wait for window to render
+                splashWindow.CloseAfterCount(2.5);
             }
 
         }
