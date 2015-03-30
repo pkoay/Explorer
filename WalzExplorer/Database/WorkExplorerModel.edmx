@@ -283,6 +283,7 @@
           <Property Name="RatingID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Color" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HoursCPISPI" Type="float" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -3831,6 +3832,7 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <Property Name="HoursCPISPI" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="tblProject_HistoryRFI">
           <Key>
@@ -4979,6 +4981,7 @@
           <EntitySetMapping Name="tblProject_HistoryRating">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_HistoryRating">
               <MappingFragment StoreEntitySet="tblProject_HistoryRating">
+                <ScalarProperty Name="HoursCPISPI" ColumnName="HoursCPISPI" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />

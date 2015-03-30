@@ -65,6 +65,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
+        private double _hoursCPISPI;
+    	public double HoursCPISPI 
+    	{ 
+    		get { return _hoursCPISPI; } 
+    		set { SetProperty(ref _hoursCPISPI, value); } 
+    	}
+    
     
         public virtual ICollection<tblProject_History> tblProject_History { get; set; }
         public virtual ICollection<tblProject_History> tblProject_History1 { get; set; }

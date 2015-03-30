@@ -32,15 +32,32 @@ namespace WalzExplorer
             //run it as a background thread so that it shows after load completes
 
             BackgroundWorker bw = new BackgroundWorker();
-
+            bw.WorkerReportsProgress = true;
 
             // what to do in the background thread
             bw.DoWork += new DoWorkEventHandler(
             delegate(object o, DoWorkEventArgs args)
             {
+                // wait for all but one second.
+                Thread.Sleep((int)(1000 * (seconds-0.5)));
                 
-                System.Threading.Thread.Sleep((int)(1000 * seconds));
-               
+                //Fade out last second
+                BackgroundWorker b = o as BackgroundWorker;
+                int step = 10;
+                for (int i = 1; i <= step; i++)
+                {
+                    // report the progress in percent
+                    b.ReportProgress(i * step);
+                    Thread.Sleep((int)(500 / step));
+                }
+            });
+            // what to do when progress changed (update the progress bar for example)
+            bw.ProgressChanged += new ProgressChangedEventHandler(
+            delegate(object o, ProgressChangedEventArgs args)
+            {
+                double x=1.0- 1.0 * args.ProgressPercentage / 100.0;
+                this.Opacity = x;
+                
             });
 
             // what to do when worker completes its task 
@@ -51,7 +68,7 @@ namespace WalzExplorer
             });
 
             bw.RunWorkerAsync();
-           
+
 
         }
     }

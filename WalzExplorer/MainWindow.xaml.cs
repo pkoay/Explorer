@@ -33,6 +33,7 @@ using Telerik.Windows.Data;
 using WalzExplorer.Common;
 using System.Diagnostics;
 using System.Windows.Threading;
+using System.Threading;
 
 namespace WalzExplorer
 {
@@ -51,7 +52,7 @@ namespace WalzExplorer
         {
             InitializeComponent();
             this.PreviewMouseLeftButtonDown += MainWindow_PreviewMouseLeftButtonDown;
-            
+            this.AllowsTransparency = true;
         }
 
         void MainWindow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -88,7 +89,7 @@ namespace WalzExplorer
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-
+            
             //Splasher.Splash = new SplashScreen();
             //Splasher.ShowSplash();
             splashWindow = new SplashScreen();
@@ -376,6 +377,36 @@ namespace WalzExplorer
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             LoadFormForMimic();
+        }
+
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+           
+            //this.Opacity = 0.5;
+            
+            //Thread.Sleep((int)(5000 ));
+
+
+            // fade out for a second
+            int step = 10;
+            for (int i = 1; i <= step; i++)
+            {
+                
+                double x = 1.0 - 1.0 * i / step;
+                this.Opacity = x+.1;
+                DoEvents();
+                Thread.Sleep((int)(200/step));
+                Console.WriteLine(x);
+            }
+        }
+        public static void DoEvents()
+        {
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Background,
+                                                  new Action(delegate { }));
+        }
+        private void MetroWindow_Unloaded(object sender, RoutedEventArgs e)
+        {
+           
         }
 
        

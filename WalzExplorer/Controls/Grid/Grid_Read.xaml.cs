@@ -42,6 +42,8 @@ namespace WalzExplorer.Controls.Grid
         public class GridColumnSettings : IDisposable
         {
             public Dictionary<string, string> rename = new Dictionary<string, string>();
+            public Dictionary<string, string> background = new Dictionary<string, string>();
+            public Dictionary<string, string> foreground = new Dictionary<string, string>();
             public Dictionary<string, columnFormat> format = new Dictionary<string, columnFormat>();
             public Dictionary<string, string> toolTip = new Dictionary<string, string>();
             //public Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
@@ -51,23 +53,23 @@ namespace WalzExplorer.Controls.Grid
             }
         }
 
-        public  GridColumnSettings columnSettings;
+        public GridColumnSettings columnSettings;
         protected GridViewRow ContextMenuRow;
         protected Telerik.Windows.Controls.GridView.GridViewCell ContextMenuCell;
         protected Telerik.Windows.Controls.GridView.GridViewHeaderCell ContextMenuColumnHeader;
         protected WEXSettings _settings;
-        
+
 
         public Grid_Read()
         {
             InitializeComponent();
         }
 
-     
+
         public void SetGrid(WEXSettings settings)
         {
             _settings = settings;
-            
+
             //set basic grid properties
             grd.AutoGenerateColumns = true;
             grd.GroupRenderMode = GroupRenderMode.Flat;
@@ -79,7 +81,7 @@ namespace WalzExplorer.Controls.Grid
             grd.ClipboardCopyMode = GridViewClipboardCopyMode.Cells;
             grd.ValidatesOnDataErrors = GridViewValidationMode.Default;
             grd.AutoGeneratingColumn += g_AutoGeneratingColumn;
-            
+
             grd.ShowColumnHeaders = true;
             grd.ShowGroupPanel = true;
             grd.ShowColumnFooters = true;
@@ -103,7 +105,7 @@ namespace WalzExplorer.Controls.Grid
             columnSettings = new GridColumnSettings();
         }
 
-      
+
 
 
         private ContextMenu GenerateContextMenu()
@@ -114,7 +116,7 @@ namespace WalzExplorer.Controls.Grid
 
             MenuItem mi;
 
-            
+
             cm.Items.Add(new MenuItem() { Name = "miCopy", Header = "Copy", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_copy", 16, 16) });
             cm.Items.Add(new Separator());
             cm.Items.Add(new MenuItem() { Name = "miExportExcelRaw", Header = "Export to Excel (Raw Data)", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
@@ -131,7 +133,7 @@ namespace WalzExplorer.Controls.Grid
             }
             return cm;
         }
-        
+
         public void g_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             //store the grid row the contextmenu was open over
@@ -140,9 +142,9 @@ namespace WalzExplorer.Controls.Grid
             //ContextMenuColumn = (element as FrameworkElement).ParentOfType<Telerik.Windows.Controls.GridViewColumn>();
             ContextMenuCell = (element as FrameworkElement).ParentOfType<GridViewCell>();
             ContextMenuColumnHeader = (element as FrameworkElement).ParentOfType<GridViewHeaderCell>();
-            
+
         }
-       
+
         // context menu actions
         public void cm_ItemClick(object sender, RoutedEventArgs e)
         {
@@ -238,10 +240,10 @@ namespace WalzExplorer.Controls.Grid
                     break;
             }
         }
-       
+
         public void g_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
         {
-            
+
             Telerik.Windows.Controls.GridViewColumn c = e.Column;
             GridViewDataColumn dc = e.Column as GridViewDataColumn;
 
@@ -274,7 +276,7 @@ namespace WalzExplorer.Controls.Grid
             if (columnSettings.toolTip.ContainsKey(c.UniqueName))
             {
                 //Rename from the dictionary
-                string s  = columnSettings.toolTip[c.UniqueName];
+                string s = columnSettings.toolTip[c.UniqueName];
                 ColumnToolTipStatic(dc, s);
             }
 
@@ -285,8 +287,27 @@ namespace WalzExplorer.Controls.Grid
                 columnFormat f = columnSettings.format[c.UniqueName];
                 FormatColumn(dc, f);
             }
+            //Background
+            if (columnSettings.background.ContainsKey(c.UniqueName))
+            {
+                //Rename from the dictionary
+                string f = columnSettings.background[c.UniqueName];
+                dc.Background = Common.GraphicsLibrary.BrushFromHex(f);
+            }
+            //Foreground
+            if (columnSettings.foreground.ContainsKey(c.UniqueName))
+            {
+                //Rename from the dictionary
+                string f = columnSettings.foreground[c.UniqueName];
+                Style cstyle = new Style(typeof(GridViewCell));
+                cstyle.BasedOn = (Style)FindResource("GridViewCellStyle");
+                cstyle.Setters.Add(new Setter(GridViewCell.ForegroundProperty, Common.GraphicsLibrary.BrushFromHex(f)));
+                cstyle.Seal();
+                dc.CellStyle = cstyle;
+            }
+
             e.Column.IsReadOnly = true;
-           
+
 
             grd.Rebind();
         }
@@ -312,11 +333,13 @@ namespace WalzExplorer.Controls.Grid
             column.ToolTipTemplate = this.Resources[TemplateName] as DataTemplate;
         }
 
+
+
         public void FormatColumn(GridViewDataColumn column, columnFormat type)
         {
             switch (type)
             {
-                case  columnFormat.COUNT:
+                case columnFormat.COUNT:
                     column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
                     break;
 
@@ -327,7 +350,7 @@ namespace WalzExplorer.Controls.Grid
                     column.FooterTextAlignment = TextAlignment.Right;
                     column.IsGroupable = false;
                     break;
-                    
+
                 case columnFormat.TEXT:
                     column.DataFormatString = "";
                     column.TextAlignment = TextAlignment.Left;
@@ -361,7 +384,7 @@ namespace WalzExplorer.Controls.Grid
                     column.IsGroupable = false;
                     break;
 
-                case columnFormat.TWO_DECIMAL_NO_TOTAL :
+                case columnFormat.TWO_DECIMAL_NO_TOTAL:
                     column.DataFormatString = "#,##0.00";
                     column.TextAlignment = TextAlignment.Right;
                     column.HeaderTextAlignment = TextAlignment.Right;
@@ -369,7 +392,7 @@ namespace WalzExplorer.Controls.Grid
                     column.IsGroupable = false;
                     break;
 
-                case  columnFormat.TWO_DECIMAL :
+                case columnFormat.TWO_DECIMAL:
                     column.DataFormatString = "#,##0.00";
                     column.TextAlignment = TextAlignment.Right;
                     column.HeaderTextAlignment = TextAlignment.Right;
@@ -378,8 +401,8 @@ namespace WalzExplorer.Controls.Grid
                     column.IsGroupable = false;
                     break;
             }
-           
+
         }
     }
-    
+
 }

@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.ChartView;
 using Telerik.Windows.Controls.GridView;
+using Telerik.Windows.Controls.Legend;
 using Telerik.Windows.Data;
 using WalzExplorer.Common;
 using WalzExplorer.Database;
@@ -26,7 +27,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
     public partial class PerformanceView : RHSTabViewBase
     {
-
+        bool isTabLoad = false;
         PerformanceViewModel vm;
 
         public PerformanceView()
@@ -41,6 +42,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
         public override void TabLoad()
         {
+            isTabLoad = true;
             //ViewModel
             vm = new PerformanceViewModel(settings);
 
@@ -68,12 +70,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 string strPeriod = ((spWEX_RHS_Project_Performance_History_Result)cmbPeriodEnd.SelectedItem).PeriodEnd.ToString("dd-MMM-yyyy");
 
                 //Rating
-                cmbSummaryRating.EmptyText = "<No Rating>";
-                cmbSummaryRating.DisplayMemberPath = "Title";
-                cmbSummaryRating.DataContext = vm.historyData;
-                cmbSummaryRating.SelectedValuePath = "RatingID";
-                cmbSummaryRating.SetBinding(RadComboBox.SelectedIndexProperty, new Binding("SummaryRatingID"));
-                cmbSummaryRating.IsEnabled = false;
+                //cmbSummaryRating.EmptyText = "<No Rating>";
+                //cmbSummaryRating.DisplayMemberPath = "Title";
+                //cmbSummaryRating.DataContext = vm.historyData;
+                //cmbSummaryRating.SelectedValuePath = "RatingID";
+                //cmbSummaryRating.SetBinding(RadComboBox.SelectedIndexProperty, new Binding("SummaryRatingID"));
+                //cmbSummaryRating.IsEnabled = false;
+                tbSummaryRating.Focusable = false;
 
                 //Comments
                 tbSummaryPMComments.DataContext = vm.historyData;
@@ -84,13 +87,14 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 //HOURS
 
                 //Rating
-                cmbHoursRating.ItemsSource = vm.ratingList;
-                cmbHoursRating.DisplayMemberPath = "Title";
-                cmbHoursRating.SelectedValuePath = "RatingID";
-                cmbHoursRating.EmptyText = "<No Rating>";
-                cmbHoursRating.DataContext = vm.historyData;
-                cmbHoursRating.SetBinding(RadComboBox.SelectedValueProperty, new Binding("HoursRatingID"));
-                cmbHoursRating.IsEnabled = false;
+                //cmbHoursRating.ItemsSource = vm.ratingList;
+                //cmbHoursRating.DisplayMemberPath = "Title";
+                //cmbHoursRating.SelectedValuePath = "RatingID";
+                //cmbHoursRating.EmptyText = "<No Rating>";
+                //cmbHoursRating.DataContext = vm.historyData;
+                //cmbHoursRating.SetBinding(RadComboBox.SelectedValueProperty, new Binding("HoursRatingID"));
+                //cmbHoursRating.IsReadOnly = true;
+                tbHoursRating.Focusable = false;
 
 
                 //Comments
@@ -168,6 +172,26 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     //}
                 }
 
+                //TextBlock textBlock = new TextBlock();
+                //textBlock.Foreground = Brushes.White;
+                //textBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                //textBlock.VerticalAlignment = VerticalAlignment.Center;
+                //textBlock.Text = "Overlaying Image Text";
+
+                //ToolTip x=new ToolTip ();
+                lgdHours.DataContext = vm;
+                
+                //Common.ControlLibrary.FindChild<ToolTip>(lgdHours, "tt_lgdHours_Earned").Content = "HI there!";
+                //foreach (LegendItem legendItem in lgdHours.Items)
+                //{
+                //    switch (legendItem.Title)
+                //    {
+                //        case "Earned":
+                //            ToolTipService.
+                //            ToolTipService.SetToolTip(legendItem.VisualState, textBlock);
+                //            break;
+                //    }
+                //}
                 //Hours Summary
                 lblHoursSummary.Content = "Hours Summary (as at " + strPeriod + "):";
 
@@ -187,6 +211,85 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 grdHoursSummary.columnSettings.format.Add("CostVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
                 grdHoursSummary.columnSettings.format.Add("SPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
                 grdHoursSummary.columnSettings.format.Add("CPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+
+                grdHoursSummary.columnSettings.background.Add("SPI", vm.hoursSPIcolor);
+                grdHoursSummary.columnSettings.background.Add("CPI", vm.hoursCPIcolor);
+                grdHoursSummary.columnSettings.foreground.Add("SPI", "#FF000000");
+
+
+                string planned = String.Join(
+                   Environment.NewLine,
+                   "Planned",
+                   "",
+                   "This figure is how many 'Direct hours' we planned to have done",
+                   "",
+                   "This figure is calcuated from the project's P6 schedule (Latest Approved Baseline)");
+                grdHoursSummary.columnSettings.toolTip.Add("Planned",planned  );
+                string earned = String.Join(
+                   Environment.NewLine,
+                   "Earned",
+                   "",
+                   "This figure is how many 'Direct hours' we have earned",
+                   "",
+                   "This figure is calcuated from the project's P6 schedule (the recorded progress of tasks)");
+                grdHoursSummary.columnSettings.toolTip.Add("Earned", earned);
+                string actual = String.Join(
+                   Environment.NewLine,
+                   "Actual",
+                   "",
+                   "This figure is how many 'Direct hours' we have done",
+                   "",
+                   "This figure is calcuated from AX's project costs (see the cost tab for more detail)");
+                grdHoursSummary.columnSettings.toolTip.Add("Actual", actual);
+                string scheduleVariance = String.Join(
+                   Environment.NewLine,
+                   "Schedule Variance",
+                   "",
+                   "This figure calculated by Earned - Planned",
+                   "",
+                   "This figure is shows the 'Direct Hours' we are in front (if positive) or behind (if negative) from our plan",
+                   "");
+                grdHoursSummary.columnSettings.toolTip.Add("ScheduleVariance", scheduleVariance);
+                string costVariance = String.Join(
+                 Environment.NewLine,
+                 "Cost Variance",
+                 "",
+                 "This figure calculated by Earned - Actual",
+                 "",
+                 "This figure is shows the 'Direct Hours' we are in front (if positive) or behind (if negative) from our actual spend",
+                 "");
+                grdHoursSummary.columnSettings.toolTip.Add("CostVariance", costVariance);
+                string spi= String.Join(
+                    Environment.NewLine,
+                    "Schedule Performance Indicator",
+                    "",
+                    "This value is calculated by Earned/Planned",
+                    "",
+                    "The colours are calculated by:",
+                    "   Greater than 1.10        Light green (Very good) ",
+                    "   Between 1.10 and 1.00    Green (Good)",
+                    "   Between 1.00 and 0.95    Yellow (Concern)",
+                    "   Between 0.95 and 0.900   Red (Bad)",
+                    "   Lower than  0.90         Light Red (Very bad)",
+                    "");
+                grdHoursSummary.columnSettings.toolTip.Add("SPI", spi);
+
+                string cpi = String.Join(
+                   Environment.NewLine,
+                   "Cost Performance Indicator",
+                   "",
+                   "This value is calculated by Earned/Actual",
+                   "",
+                   "The colours are calculated by:",
+                   "   Greater than 1.10        Light green (Very good) ",
+                   "   Between 1.10 and 1.00    Green (Good)",
+                   "   Between 1.00 and 0.95    Yellow (Concern)",
+                   "   Between 0.95 and 0.900   Red (Bad)",
+                   "   Lower than  0.90         Light Red (Very bad)",
+                   "");
+                grdHoursSummary.columnSettings.toolTip.Add("CPI", cpi);
+
+                //cmbHoursRating.SelectionChanged += cmbHoursRating_SelectionChanged;
 
 
                 //***********************
@@ -237,7 +340,18 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 grdSafetySummary.columnSettings.format.Add("ReportedDate", Grid.Grid_Read.columnFormat.DATE);
 
 
+
+                //data binding
                 setItemSource();
+
+                //cmbHoursRating.SelectedValue = vm.hoursRating;
+                tbHoursRating.Text = vm.hoursRating.Title;
+                tbHoursRating.Background = Common.GraphicsLibrary.BrushFromHex(vm.hoursRating.Color);
+                tbHoursRating.Foreground = Common.GraphicsLibrary.BrushFromHex("#FF000000");
+
+                tbSummaryRating.Text = vm.summaryRating.Title;
+                tbSummaryRating.Background = Common.GraphicsLibrary.BrushFromHex(vm.summaryRating.Color);
+                tbSummaryRating.Foreground = Common.GraphicsLibrary.BrushFromHex("#FF000000");
 
                 ////if no performance report exists then make it look blank
                 ////if (!cmbPeriodEnd.HasItems)
@@ -261,7 +375,14 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     ctr.Visibility = System.Windows.Visibility.Hidden;
                 }
             }
+            isTabLoad = false;
         }
+
+        //void cmbHoursRating_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    cmbHoursRating.Background = Common.GraphicsLibrary.BrushFromHex(vm.hoursRatingColor);
+        //    cmbHoursRating.Foreground = Common.GraphicsLibrary.BrushFromHex("#FF000000");
+        //}
 
         //private void ComboColor(RadComboBox cmb)
         //{
@@ -443,6 +564,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            vm.historyData.HoursRatingID = vm.hoursRating.RatingID;
             vm.context.SaveChanges();
         }
 
@@ -453,9 +575,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             tbSummaryPMComments.DataContext = vm.historyData;
             
             //hours
-            cmbHoursRating.DataContext = vm.historyData;
-            //cmbHoursRating.SelectedValuePath = "RatingID";
-            //cmbHoursRating.SetBinding(RadComboBox.SelectedValueProperty, new Binding("HoursRatingID"));
+            //cmbHoursRating.DataContext = vm.historyData;
+            lgdHours.DataContext = vm.hoursLegendData;
+            //lgdHours.Items.s
 
             tbHoursComments.DataContext = vm.historyData;
             foreach (CartesianSeries series in chartHours.Series)
@@ -486,7 +608,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
         private void cmbPeriodEnd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cmbPeriodEnd.SelectedValue != null)
+            if (cmbPeriodEnd.SelectedValue != null && isTabLoad!=true)
             {
                 vm.LoadHistory((int)cmbPeriodEnd.SelectedValue);
 

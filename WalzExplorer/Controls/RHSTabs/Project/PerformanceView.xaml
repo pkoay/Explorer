@@ -34,6 +34,7 @@
         <!--SUMMARY-->
         <Label Content="Summary Rating" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" Height="26" Width="99" Grid.Row="0"/>
         <telerik:RadComboBox  Name="cmbSummaryRating"  Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}" HorizontalAlignment="Left" Margin="114,47,0,0" VerticalAlignment="Top" Width="120" Height="26" Grid.Row="0"/>
+        <TextBox Name="tbSummaryRating"   HorizontalAlignment="Left" Margin="114,47,0,0" VerticalAlignment="Top" Width="120" Height="26" Grid.Row="0"/>
         <Label Content="Period (end)" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="26" Width="99" Grid.Row="0"/>
         <telerik:RadComboBox  Name="cmbPeriodEnd"  SelectionChanged="cmbPeriodEnd_SelectionChanged" HorizontalAlignment="Left" Margin="114,10,0,0" VerticalAlignment="Top" Width="120" Height="26" Grid.Row="0"/>
         <TextBox Name="tbSummaryPMComments"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" TextWrapping="Wrap"  Height="68" Margin="327,5,10,0"  Text="TextBox" VerticalAlignment="Top" Grid.Row="0"/>
@@ -46,7 +47,7 @@
             </telerik:RadTabItem>-->
 
             <!--COST TAB-->
-            <!--<telerik:RadTabItem Header="Cost" Margin="0">
+            <telerik:RadTabItem Header="Cost" Margin="0">
                 <Grid Background="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="83*"/>
@@ -54,7 +55,7 @@
                         <RowDefinition Height="68*"/>
                     </Grid.RowDefinitions>
                 </Grid>
-            </telerik:RadTabItem>-->
+            </telerik:RadTabItem>
 
             <!--HOURS TAB-->
             <telerik:RadTabItem Header="Hours" Margin="0">
@@ -69,7 +70,8 @@
 
                     <!--Rating-->
                     <Label Content="Hours Rating" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Height="26" Width="80" Grid.Row="0"/>
-                    <telerik:RadComboBox Name="cmbHoursRating" Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}" HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="129" Height="26" Grid.Row="0"/>
+                    <TextBox Name="tbHoursRating"  HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="129" Height="26" Grid.Row="0"/>
+                    <!--<telerik:RadComboBox Name="cmbHoursRating" Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}" HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="129" Height="26" Grid.Row="0"/>-->
                     <TextBox Name="tbHoursComments" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch"  Height="76" Margin="317,5,10,0" TextWrapping="Wrap"  VerticalAlignment="Top" Grid.Row="0"/>
                     <Label Content="Comments" HorizontalAlignment="Left" Margin="242,4,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>
 
@@ -200,7 +202,7 @@
             </telerik:RadTabItem>-->
 
             <!--SAFETY TAB-->
-            <telerik:RadTabItem Header="Safety" Margin="0">
+            <telerik:RadTabItem Header="Safety" Margin="0" Visibility="Hidden">
                 <Grid Background="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="90"/>

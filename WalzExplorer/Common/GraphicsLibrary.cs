@@ -27,5 +27,10 @@ namespace WalzExplorer.Common
             r.Fill = vb;
             return r;
         }
+
+        public static SolidColorBrush BrushFromHex(string hex)
+        {
+         return   (SolidColorBrush)(new BrushConverter().ConvertFrom(hex));
+        }
     }
 }

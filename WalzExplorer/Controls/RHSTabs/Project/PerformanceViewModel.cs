@@ -24,6 +24,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         public tblProject projectData;
         public tblPerson projectManagerSignatureData;
         public tblPerson operationalManagerSignatureData;
+        public tblProject_HistoryRating summaryRating;
 
 
         //Flags
@@ -41,7 +42,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         public ObservableCollection<tblProject_HistoryHours> hoursEarnedData;
         public ObservableCollection<tblProject_HistoryHours> hoursActualData;
         public ObservableCollection<EarnedValueSummarydata> hoursSummaryData = new ObservableCollection<EarnedValueSummarydata>();
-
+        public ObservableCollection<HoursLegend> hoursLegendData = new ObservableCollection<HoursLegend>();
+        public string hoursSPIcolor;
+        public string hoursCPIcolor;
+        //public int hoursRating;
+        //public string hoursRatingColor;
+        //public string hoursRatingText;
+        public tblProject_HistoryRating hoursRating;
         //safety
         public ObservableCollection<spWEX_RHS_Project_Performance_Safety_Result> safetyDetailedData;
         public ObservableCollection<SafetySummarydata> safteySummaryData = new ObservableCollection<SafetySummarydata>();
@@ -88,6 +95,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             projectData = context.tblProjects.Where(x => x.ProjectID == historyData.ProjectID).First();
             projectManagerSignatureData = context.tblPersons.Where(x => x.PersonID == historyData.ProjectManagerSignID).FirstOrDefault();
             operationalManagerSignatureData = context.tblPersons.Where(x => x.PersonID == historyData.OperationsManagerSignID).FirstOrDefault();
+            
 
             //Set flags
             isProjectManager = (_settings.user.MimicedPerson.PersonID==projectData.ManagerID);
@@ -101,10 +109,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             hoursActualData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 3));
             hoursEarnedData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 2));
             hoursPlannedData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 1));
-            //tblProject_HistoryHours p = hoursPlannedData.Where(x => x.WeekEnd == dtPeriodEnd).First();
-            //tblProject_HistoryHours e = hoursEarnedData.Where(x => x.WeekEnd == dtPeriodEnd).First();
-            //tblProject_HistoryHours a = hoursActualData.Where(x => x.WeekEnd == dtPeriodEnd).First();
-
+           
             double dPlanned = (hoursPlannedData.Count == 0) ? 0 : hoursPlannedData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
             double dEarned = (hoursEarnedData.Count == 0) ? 0 : hoursEarnedData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
             double dActual = (hoursActualData.Count == 0) ? 0 : hoursActualData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
@@ -120,8 +125,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 SPI = dEarned / dPlanned,
                 CPI = dEarned / dActual,
             });
-
-
+         
+            hoursSPIcolor = GetRating(dEarned / dPlanned, "HoursCPISPI").Color;
+            hoursCPIcolor = GetRating(dEarned / dActual, "HoursCPISPI").Color;
+            hoursRating=GetRating(dEarned / Math.Max(dPlanned, dActual), "HoursCPISPI");
+            //hoursRating = hoursRatingInfo.RatingID;
+            //hoursRatingColor = hoursRatingInfo.Color;
+            //hoursRatingText=hoursRatingInfo.teext
             //Set safety data
             safetyDetailedData = new ObservableCollection<spWEX_RHS_Project_Performance_Safety_Result>(context.spWEX_RHS_Project_Performance_Safety(HistoryID));
             safteySummaryData.Clear();
@@ -137,6 +147,36 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 TRIFR = (int?)historyData.SafetyTRIFR,
                 Hours = (int?)historyData.SafetyHours,
             });
+
+
+            //HoursLegend
+            foreach (tblProject_EarnedValueType evt in earnedValueList)
+            {
+                HoursLegend hoursLegendItem = new HoursLegend(){Title=evt.Title,Color=evt.Color,ToolTip= "hello there!?!?"};
+                hoursLegendData.Add(hoursLegendItem);
+            }
+
+
+
+            // summary rating =lowest rating
+            int LowestRating = new int[] {hoursRating.RatingID,5}.Min(); // add more here!
+            summaryRating=context.tblProject_HistoryRating.Where(x => x.RatingID==LowestRating).First();
+        }
+
+        private tblProject_HistoryRating GetRating(double value, string column)
+        {
+            tblProject_HistoryRating result = null;
+            switch (column)
+            {
+                case "HoursCPISPI":
+                    IOrderedQueryable<tblProject_HistoryRating> Q = context.tblProject_HistoryRating.Where(x => x.HoursCPISPI <= value || x.RatingID == 0).OrderByDescending(x => x.RatingID);
+                    result = (context.tblProject_HistoryRating.Where(x => x.HoursCPISPI <= value || x.RatingID == 0).OrderByDescending(x => x.RatingID)).First();
+                    break;
+                default:
+                    break;
+
+            }
+            return result;
         }
 
         public void RecalculateHistoryData()
@@ -212,6 +252,16 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             RefreshHistory();
         }
     }
+
+
+    public class HoursLegend
+    {
+        public String Title { get; set; }
+        public String Color { get; set; }
+        public String ToolTip { get; set; }
+    }
+
+
 
     public class SafetySummarydata
     {
