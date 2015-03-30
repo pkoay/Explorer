@@ -247,8 +247,8 @@ namespace WalzExplorer.Controls.Grid
             Telerik.Windows.Controls.GridViewColumn c = e.Column;
             GridViewDataColumn dc = e.Column as GridViewDataColumn;
 
-            Style style = new Style();
-            style.Setters.Add(new Setter(GridViewRow.ForegroundProperty, new SolidColorBrush(Colors.Red)));
+            //Style style = new Style();
+            //style.Setters.Add(new Setter(GridViewRow.ForegroundProperty, new SolidColorBrush(Colors.Red)));
             //Ignore Error Columns
             if (c.UniqueName == "Error" || c.UniqueName == "HasError") { e.Cancel = true; return; }
 

@@ -77,6 +77,12 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 //cmbSummaryRating.SetBinding(RadComboBox.SelectedIndexProperty, new Binding("SummaryRatingID"));
                 //cmbSummaryRating.IsEnabled = false;
                 tbSummaryRating.Focusable = false;
+                tbSummaryRating.ToolTip= String.Join(
+                  Environment.NewLine,
+                  "Summary Rating",
+                  "",
+                  "This rating is calculated by taking the lowest of all other ratings (e.g. Cost rating, Hours Rating etc)",
+                  "");
 
                 //Comments
                 tbSummaryPMComments.DataContext = vm.historyData;
@@ -95,7 +101,12 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 //cmbHoursRating.SetBinding(RadComboBox.SelectedValueProperty, new Binding("HoursRatingID"));
                 //cmbHoursRating.IsReadOnly = true;
                 tbHoursRating.Focusable = false;
-
+                tbHoursRating.ToolTip = String.Join(
+                    Environment.NewLine,
+                    "Hours Rating",
+                    "",
+                    "This rating is calculated by taking the lowest of the hours SPI or CPI rating",
+                    "");
 
                 //Comments
                 tbHoursComments.DataContext = vm.historyData;
@@ -142,9 +153,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
                     DataTemplate datatemplate = (DataTemplate)XamlReader.Load(sr, pc);
                     series.TrackBallInfoTemplate = datatemplate;
-                    
 
-                   
+
+
 
 
 
@@ -215,7 +226,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 grdHoursSummary.columnSettings.background.Add("SPI", vm.hoursSPIcolor);
                 grdHoursSummary.columnSettings.background.Add("CPI", vm.hoursCPIcolor);
                 grdHoursSummary.columnSettings.foreground.Add("SPI", "#FF000000");
-
+                grdHoursSummary.columnSettings.foreground.Add("CPI", "#FF000000");
 
                 string planned = String.Join(
                    Environment.NewLine,
@@ -366,6 +377,20 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 //cmbPeriodEnd.Visibility = System.Windows.Visibility.Hidden;
                 //cmbSummaryRating.Visibility = System.Windows.Visibility.Hidden;
                 //tcHistory.Visibility = System.Windows.Visibility.Hidden;
+
+
+                //Buttons
+                btnSave.ToolTip = "Save the data you have entered for this Performance report.";
+                btnRefresh.ToolTip = "Reloads the data from AX, P6, and WalzApps. Your manually entered data will remain unchanged";
+                btnProjectManagerSign.ToolTip = String.Join(
+                   Environment.NewLine,
+                   "Signs off Performance report as the project manager",
+                   "This can only be done by the project manager, operations manager, or a project administrator");
+                btnOperationsManagerSign.ToolTip = String.Join(
+                  Environment.NewLine,
+                  "Signs off Performance report as the operations manager",
+                  "This can only be done by the operations manager");
+
                 SetControlsOnStatusChange();
             }
 
@@ -503,13 +528,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             {
                 case 1:
                     //Fields
-                    ProjectManagerDataEntryFieldsEnabled(vm.isProjectManager);
+                    ProjectManagerDataEntryFieldsEnabled(vm.isProjectManager || vm.isOperationsManager || vm.isAdministrator);
 
                     //Buttons
-                    btnSave.IsEnabled = (vm.isProjectManager);
-                    btnRefresh.IsEnabled = (vm.isProjectManager);
+                    btnSave.IsEnabled = (vm.isProjectManager || vm.isOperationsManager || vm.isAdministrator);
+                    btnRefresh.IsEnabled = (vm.isProjectManager || vm.isOperationsManager || vm.isAdministrator);
                     btnProjectManagerSign.Content = "Sign";
-                    btnProjectManagerSign.IsEnabled = (vm.isProjectManager);
+                    btnProjectManagerSign.IsEnabled = (vm.isProjectManager || vm.isOperationsManager || vm.isAdministrator);
                     btnOperationsManagerSign.IsEnabled = false;
                     tbProjectMangerSignature.Text = "";
                     tbOperationsMangerSignature.Text = "";

@@ -33,27 +33,29 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             {
                 case "TendersMyOpen":
                 case "TendersMy":
-                    grd.gridAdd = true;
-                    grd.gridEdit = true;
-                    grd.gridDelete = true;
+                    //grd._canAdd = true;
+                    //grd._canEdit = true;
+                    //grd._canDelete = true;
+                    grd.SetGrid(settings,true,true,true);
                     break;
                 default:
-                    grd.gridAdd = false;
-                    grd.gridEdit = false;
-                    grd.gridDelete = false;
+                    //grd._canAdd = false;
+                    //grd._canEdit = false;
+                    //grd._canDelete = false;
+                    grd.SetGrid(settings, false, false, false);
                     break;
             }
             
-            grd.SetGrid(settings);
+            //grd.SetGrid(settings);
 
-            grd.columnReadOnlyDeveloper.Add("RowVersion");
-            grd.columnReadOnlyDeveloper.Add("TenderID");
-            grd.columnReadOnlyDeveloper.Add("Comments");
-            grd.columnRename.Add("TenderID", "ID");
+            //grd.columnReadOnlyDeveloper.Add("RowVersion");
+            //grd.columnReadOnlyDeveloper.Add("TenderID");
+            //grd.columnReadOnlyDeveloper.Add("Comments");
+            //grd.columnRename.Add("TenderID", "ID");
 
-            grd.columnReadOnlyDeveloper.Add("SortOrder");
-            grd.columnReadOnlyDeveloper.Add("UpdatedBy");
-            grd.columnReadOnlyDeveloper.Add("UpdatedDate");
+            //grd.columnReadOnlyDeveloper.Add("SortOrder");
+            //grd.columnReadOnlyDeveloper.Add("UpdatedBy");
+            //grd.columnReadOnlyDeveloper.Add("UpdatedDate");
 
             // set grid data
 

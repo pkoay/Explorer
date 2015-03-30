@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.Dynamic;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Telerik.Windows.Data;
 
 namespace WalzExplorer.Controls.Grid
 {
@@ -29,18 +30,51 @@ namespace WalzExplorer.Controls.Grid
     public partial class GridEditViewBase : UserControl
     {
         public GridEditViewModelBase vm;
-        
+
+        public enum columnFormat
+        {
+            COUNT,
+            DATE,
+            TEXT,
+            TEXT_NO_GROUP,
+            INT,
+            INT_NO_TOTAL,
+            TWO_DECIMAL_NO_TOTAL,
+            TWO_DECIMAL
+        };
+
+        public class GridColumnSettings : IDisposable
+        {
+            public HashSet<string> readOnly = new HashSet<string>();
+            
+            public Dictionary<string, string> rename = new Dictionary<string, string>();
+            public Dictionary<string, string> background = new Dictionary<string, string>();
+            public Dictionary<string, string> foreground = new Dictionary<string, string>();
+            public Dictionary<string, columnFormat> format = new Dictionary<string, columnFormat>();
+            public Dictionary<string, string> toolTip = new Dictionary<string, string>();
+            //public Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
+            public HashSet<string> developer = new HashSet<string>();
+            public void Dispose()
+            {
+            }
+        }
+
+
+        public GridColumnSettings columnSettings;
 
         //Grid Formatting
-        public bool gridAdd;
-        public bool gridEdit;
-        public bool gridDelete;
+        private bool _canAdd;
+        private bool _canEdit;
+        private bool _canDelete;
 
         public WEXSettings _settings;
+
         public Dictionary<string, string> columnRename = new Dictionary<string, string>();
+        //public List<string> columnReadOnly = new List<string>();
+        //public List<string> columnReadOnlyDeveloper = new List<string>();
+
         public Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
-        public List<string> columnReadOnly = new List<string>();
-        public List<string> columnReadOnlyDeveloper = new List<string>();
+     
         protected GridViewRow ContextMenuRow;
 
 
@@ -58,13 +92,12 @@ namespace WalzExplorer.Controls.Grid
 
         public void Reset()
         {
-            gridAdd = false;
-            gridEdit = false;
-            gridDelete = false;
+            _canAdd = false;
+            _canEdit = false;
+            _canDelete = false;
 
-            columnRename.Clear();
-            columnCombo.Clear();
-            columnReadOnly.Clear();
+            columnSettings = new GridColumnSettings();
+           
         }
 
         //public  GridViewComboBoxColumn CreateCombo(string uniqueName, string header, List<object> list, string listIDColumn, string listDisplayColumn)
@@ -85,9 +118,9 @@ namespace WalzExplorer.Controls.Grid
             isEditing = false;
         }
 
-       
 
-        public void SetGrid(WEXSettings settings)
+
+        public void SetGrid(WEXSettings settings, bool canAdd, bool canEdit, bool canDelete)
         {
             _settings = settings;
 
@@ -106,16 +139,21 @@ namespace WalzExplorer.Controls.Grid
             grd.ContextMenuOpening += g_ContextMenuOpening;
 
 
-            grd.CanUserInsertRows = gridAdd;
-            grd.CanUserDeleteRows = gridDelete;
+            grd.CanUserInsertRows = canAdd;
+            grd.CanUserDeleteRows = canDelete;
 
-            if (gridAdd)
+
+            _canAdd = canAdd;
+            _canEdit = canEdit;
+            _canDelete = canDelete;
+
+            if (canAdd)
             {
 
                 grd.NewRowPosition = GridViewNewRowPosition.Top;
                 grd.AddingNewDataItem += g_AddingNewDataItem;
             }
-            if (gridEdit)
+            if (canEdit)
             {
                 // Cell edit
                 grd.BeginningEdit += g_BeginningEdit;
@@ -131,7 +169,7 @@ namespace WalzExplorer.Controls.Grid
                 grd.Drop += g_Drop;
                 grd.DragEnter += g_DragEnter;
             }
-            if (gridDelete)
+            if (canDelete)
             {
                 grd.Deleted += g_Deleted;
             }
@@ -145,18 +183,18 @@ namespace WalzExplorer.Controls.Grid
             mi = new MenuItem() { Name = "miCopy", Header = "Copy", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_copy", 16, 16) };
             cm.Items.Add(mi);
             mi = new MenuItem() { Name = "miPaste", Header = "Paste <over selected rows>", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_clipboard_paste", 16, 16) };
-            if (!gridEdit) mi.IsEnabled = false;
+            if (!canEdit) mi.IsEnabled = false;
             cm.Items.Add(mi);
             cm.Items.Add(new Separator());
             mi = new MenuItem() { Name = "miDelete", Header = "Delete", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_scissor", 16, 16) };
-            if (!gridDelete) mi.IsEnabled = false;
+            if (!canDelete) mi.IsEnabled = false;
             cm.Items.Add(mi);
             cm.Items.Add(new Separator());
             mi = new MenuItem() { Name = "miInsert", Header = "Insert <New line>", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_cell_insert_above", 16, 16) };
-            if (!gridAdd) mi.IsEnabled = false;
+            if (!canAdd) mi.IsEnabled = false;
             cm.Items.Add(mi);
             mi = new MenuItem() { Name = "miInsertPaste", Header = "Insert <Paste>" };
-            if (!gridAdd) mi.IsEnabled = false;
+            if (!canAdd) mi.IsEnabled = false;
             cm.Items.Add(mi);
             cm.Items.Add(new Separator());
             cm.Items.Add(new MenuItem() { Name = "miExportExcel", Header = "Export to Excel", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
@@ -172,6 +210,8 @@ namespace WalzExplorer.Controls.Grid
                 }
             }
             grd.ContextMenu = cm;
+
+            columnSettings = new GridColumnSettings();
         }
 
 
@@ -243,7 +283,7 @@ namespace WalzExplorer.Controls.Grid
             if (e.Data.GetDataPresent(GridDragData))
             {
 
-                GridViewRow row = FindAnchestor<GridViewRow>((DependencyObject)e.OriginalSource);
+                GridViewRow row = Common.ControlLibrary.FindAnchestor<GridViewRow>((DependencyObject)e.OriginalSource);
                 if (row != null)
                 {
                     if (!grd.SelectedItems.Contains(row.Item))
@@ -264,21 +304,7 @@ namespace WalzExplorer.Controls.Grid
         }
 
 
-        // Helper to search up the VisualTree
-        private static T FindAnchestor<T>(DependencyObject current)
-            where T : DependencyObject
-        {
-            do
-            {
-                if (current is T)
-                {
-                    return (T)current;
-                }
-                current = VisualTreeHelper.GetParent(current);
-            }
-            while (current != null);
-            return null;
-        }
+       
 
         public void g_Deleted(object sender, GridViewDeletedEventArgs e)
         {
@@ -415,6 +441,7 @@ namespace WalzExplorer.Controls.Grid
         public void g_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
         {
             Telerik.Windows.Controls.GridViewColumn c = e.Column;
+            GridViewDataColumn dc = e.Column as GridViewDataColumn;
 
             //Ignore Error Columns
             if (c.UniqueName == "Error" || c.UniqueName == "HasError") { e.Cancel = true; return; }
@@ -422,14 +449,15 @@ namespace WalzExplorer.Controls.Grid
             //Ignore foreign key all columns
             if (c.UniqueName.StartsWith("tbl")) { e.Cancel = true; return; }
 
+
             //Ignore Columns for developers only while not in development mode
-            if (columnReadOnlyDeveloper.Contains(c.UniqueName) && !_settings.DeveloperMode) { e.Cancel = true; return; }
+            if (columnSettings.developer.Contains(c.UniqueName) && !_settings.DeveloperMode) { e.Cancel = true; return; }
 
             //Rename 
-            if (columnRename.ContainsKey(c.UniqueName))
+            if (columnSettings.rename.ContainsKey(c.UniqueName))
             {
                 //Rename from the dictionary
-                c.Header = columnRename[c.UniqueName];
+                c.Header = columnSettings.rename[c.UniqueName];
             }
             else
             {
@@ -439,9 +467,9 @@ namespace WalzExplorer.Controls.Grid
             }
 
             //Read Only
-            if (columnReadOnly.Contains(c.UniqueName) || !gridEdit || (columnReadOnlyDeveloper.Contains(c.UniqueName) && _settings.DeveloperMode))
+            if (columnSettings.readOnly.Contains(c.UniqueName) || !_canEdit || (columnSettings.developer.Contains(c.UniqueName) && _settings.DeveloperMode))
             {
-                e.Column.CellStyle = style;
+                //e.Column.CellStyle = style;
                 e.Column.IsReadOnly = true;
 
                 // changing foregound makes the text invisible!?!?
@@ -451,6 +479,41 @@ namespace WalzExplorer.Controls.Grid
                 e.Column.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
 
             }
+
+            //ToolTip 
+            if (columnSettings.toolTip.ContainsKey(c.UniqueName))
+            {
+                //Rename from the dictionary
+                string s = columnSettings.toolTip[c.UniqueName];
+                ColumnToolTipStatic(dc, s);
+            }
+
+            //format
+            if (columnSettings.format.ContainsKey(c.UniqueName))
+            {
+                //Rename from the dictionary
+                columnFormat f = columnSettings.format[c.UniqueName];
+                FormatColumn(dc, f);
+            }
+            //Background
+            if (columnSettings.background.ContainsKey(c.UniqueName))
+            {
+                //Rename from the dictionary
+                string f = columnSettings.background[c.UniqueName];
+                dc.Background = Common.GraphicsLibrary.BrushFromHex(f);
+            }
+            //Foreground
+            if (columnSettings.foreground.ContainsKey(c.UniqueName))
+            {
+                //Rename from the dictionary
+                string f = columnSettings.foreground[c.UniqueName];
+                Style cstyle = new Style(typeof(GridViewCell));
+                cstyle.BasedOn = (Style)FindResource("GridViewCellStyle");
+                cstyle.Setters.Add(new Setter(GridViewCell.ForegroundProperty, Common.GraphicsLibrary.BrushFromHex(f)));
+                cstyle.Seal();
+                dc.CellStyle = cstyle;
+            }
+
 
             //Add combos
             if (columnCombo.ContainsKey(c.UniqueName))
@@ -476,7 +539,97 @@ namespace WalzExplorer.Controls.Grid
             grd.Rebind();
 
         }
+        public void ColumnToolTipStatic(GridViewDataColumn column, string ToolTipString)
+        {
+            //Create the template
+            var rectangleFactory = new FrameworkElementFactory(typeof(TextBlock));
+            rectangleFactory.SetValue(TextBlock.TextProperty, ToolTipString);
+            DataTemplate template = new DataTemplate
+            {
+                VisualTree = rectangleFactory,
+            };
+            template.Seal();
 
+            //Name of template
+            string TemplateName = grd.Name + "_" + column.UniqueName;
+
+            //Add the template to resources
+            this.Resources.Add(TemplateName, template);
+
+            //Apply template to column
+            column.ToolTipTemplate = this.Resources[TemplateName] as DataTemplate;
+        }
+
+
+
+        public void FormatColumn(GridViewDataColumn column, columnFormat type)
+        {
+            switch (type)
+            {
+                case columnFormat.COUNT:
+                    column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
+                    break;
+
+                case columnFormat.DATE:
+                    column.DataFormatString = "dd-MMM-yyyy";
+                    column.TextAlignment = TextAlignment.Right;
+                    column.HeaderTextAlignment = TextAlignment.Right;
+                    column.FooterTextAlignment = TextAlignment.Right;
+                    column.IsGroupable = false;
+                    break;
+
+                case columnFormat.TEXT:
+                    column.DataFormatString = "";
+                    column.TextAlignment = TextAlignment.Left;
+                    column.HeaderTextAlignment = TextAlignment.Left;
+                    column.FooterTextAlignment = TextAlignment.Left;
+                    column.IsGroupable = true;
+                    break;
+
+                case columnFormat.TEXT_NO_GROUP:
+                    column.DataFormatString = "";
+                    column.TextAlignment = TextAlignment.Left;
+                    column.HeaderTextAlignment = TextAlignment.Left;
+                    column.FooterTextAlignment = TextAlignment.Left;
+                    column.IsGroupable = false;
+                    break;
+
+                case columnFormat.INT:
+                    column.DataFormatString = "#,##0";
+                    column.TextAlignment = TextAlignment.Right;
+                    column.HeaderTextAlignment = TextAlignment.Right;
+                    column.FooterTextAlignment = TextAlignment.Right;
+                    column.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = "{0:#,0}" });
+                    column.IsGroupable = false;
+                    break;
+
+                case columnFormat.INT_NO_TOTAL:
+                    column.DataFormatString = "#,##0";
+                    column.TextAlignment = TextAlignment.Right;
+                    column.HeaderTextAlignment = TextAlignment.Right;
+                    column.FooterTextAlignment = TextAlignment.Right;
+                    column.IsGroupable = false;
+                    break;
+
+                case columnFormat.TWO_DECIMAL_NO_TOTAL:
+                    column.DataFormatString = "#,##0.00";
+                    column.TextAlignment = TextAlignment.Right;
+                    column.HeaderTextAlignment = TextAlignment.Right;
+                    column.FooterTextAlignment = TextAlignment.Right;
+                    column.IsGroupable = false;
+                    break;
+
+                case columnFormat.TWO_DECIMAL:
+                    column.DataFormatString = "#,##0.00";
+                    column.TextAlignment = TextAlignment.Right;
+                    column.HeaderTextAlignment = TextAlignment.Right;
+                    column.FooterTextAlignment = TextAlignment.Right;
+                    column.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = "{0:#,0.00}" });
+                    column.IsGroupable = false;
+                    break;
+            }
+
+        }
         void cmb_Initialized(object sender, EventArgs e)
         {
             throw new NotImplementedException();

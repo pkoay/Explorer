@@ -39,6 +39,7 @@
           </Key>
           <Property Name="PersonID" Type="int" Nullable="false" />
           <Property Name="MimicPersonID" Type="int" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -3700,6 +3701,7 @@
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="tblPerson" Relationship="WalzExplorerModel.FK_tblPerson_Mimic_tblPerson" FromRole="tblPerson_Mimic" ToRole="tblPerson" />
           <NavigationProperty Name="tblPerson1" Relationship="WalzExplorerModel.FK_tblPerson_Mimic_tblPerson1" FromRole="tblPerson_Mimic" ToRole="tblPerson" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_tblPerson_Mimic_tblPerson">
           <End Type="WalzExplorerModel.tblPerson" Role="tblPerson" Multiplicity="1" />
@@ -4864,6 +4866,7 @@
           <EntitySetMapping Name="tblPerson_Mimic">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblPerson_Mimic">
               <MappingFragment StoreEntitySet="tblPerson_Mimic">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />

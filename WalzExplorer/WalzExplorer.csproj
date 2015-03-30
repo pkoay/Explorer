@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>59</ApplicationRevision>
+    <ApplicationRevision>61</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -225,6 +225,10 @@
     <Compile Include="Controls\Grid\Grid_Read.xaml.cs">
       <DependentUpon>Grid_Read.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RHSTabs\Explorer\MimicView.xaml.cs">
+      <DependentUpon>MimicView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Explorer\MimicViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Project\Admin.xaml.cs">
       <DependentUpon>Admin.xaml</DependentUpon>
     </Compile>
@@ -563,6 +567,10 @@
     <Page Include="Controls\Grid\Grid_Read.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RHSTabs\Explorer\MimicView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Project\Admin.xaml">
       <Generator>MSBuild:Compile</Generator>
