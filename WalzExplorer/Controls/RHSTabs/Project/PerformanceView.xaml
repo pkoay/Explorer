@@ -58,7 +58,7 @@
             </telerik:RadTabItem>
 
             <!--HOURS TAB-->
-            <telerik:RadTabItem Header="Hours" Margin="0">
+            <telerik:RadTabItem Header="Hours" Margin="0" ToolTip="Performance of projects direct hours">
                 <Grid Background="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="91"/>
@@ -166,7 +166,7 @@
                             <telerik:DateTimeCategoricalAxis   ElementBrush ="{DynamicResource TextBrush}" LabelFormat="dd-MMM-yy"/>
                         </telerik:RadCartesianChart.HorizontalAxis>
                         <telerik:RadCartesianChart.VerticalAxis>
-                            <telerik:LinearAxis Title="HOURS"  ElementBrush="{DynamicResource TextBrush}"/>
+                            <telerik:LinearAxis Title="DIRECT HOURS"  ElementBrush="{DynamicResource TextBrush}"/>
                         </telerik:RadCartesianChart.VerticalAxis>
                         <telerik:RadCartesianChart.Grid>
                             <telerik:CartesianChartGrid MajorLinesVisibility="Y"/>
@@ -233,9 +233,9 @@
         <Button Name="btnRefresh"  Click="btnRefresh_Click" Content="Refresh" HorizontalAlignment="Left" Margin="225,20,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Height="22"/>
         <Button Name="btnSave"  Click="btnSave_Click" Content="Save" HorizontalAlignment="Left" Margin="327,20,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Height="22"/>
         <Label Content="Project Manager:" HorizontalAlignment="Left" Margin="435,4,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127" Height="26"/>
-        <TextBox Name="tbProjectMangerSignature" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="562,3,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="380"/>
+        <TextBox Name="tbProjectMangerSignature" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="562,3,0,0" Grid.Row="2" TextWrapping="Wrap"  VerticalAlignment="Top" Width="380"/>
         <Label Content="Operations Manager:" HorizontalAlignment="Left" Margin="435,33,0,-3" Grid.Row="2" VerticalAlignment="Top" Width="127" Height="26"/>
-        <TextBox x:Name="tbOperationsMangerSignature" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="562,34,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="380"/>
+        <TextBox x:Name="tbOperationsMangerSignature" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="562,34,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="380"/>
 
     </Grid>
 </base:RHSTabViewBase>

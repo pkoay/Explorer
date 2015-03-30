@@ -197,29 +197,33 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             switch (historyData.StatusID)
             {
                 case 1:
-                    if (isProjectManager)
+                    if (isProjectManager || isOperationsManager||isAdministrator)
                     {
+                        
                         historyData.ProjectManagerSignID = _settings.user.RealPerson.PersonID;
                         historyData.ProjectManagerSignDate = context.ServerDateTime();
                         historyData.StatusID = 2;
+                        context.SaveChanges();
+                        RefreshHistory();
                     }
                     else
                         throw new Exception("Should not be able to sign as Project manager");
                     break;
                 case 2:
-                    if (isOperationsManager)
+                    if (isOperationsManager || isAdministrator)
                     {
                         historyData.OperationsManagerSignID = _settings.user.RealPerson.PersonID;
                         historyData.OperationsManagerSignDate = context.ServerDateTime();
                         historyData.StatusID = 3;
+                        context.SaveChanges();
+                        RefreshHistory();
                     }
                     else
                         throw new Exception("Should not be able to sign as Operational manager");
                     break;
 
             }
-            context.SaveChanges();
-            RefreshHistory();
+           
         }
 
         public void ClearSignature()

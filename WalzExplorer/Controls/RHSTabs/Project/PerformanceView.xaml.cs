@@ -179,7 +179,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 //textBlock.Text = "Overlaying Image Text";
 
                 //ToolTip x=new ToolTip ();
-                lgdHours.DataContext = vm;
+                //lgdHours.DataContext = vm;
                 
                 //Common.ControlLibrary.FindChild<ToolTip>(lgdHours, "tt_lgdHours_Earned").Content = "HI there!";
                 //foreach (LegendItem legendItem in lgdHours.Items)
@@ -366,6 +366,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 //cmbPeriodEnd.Visibility = System.Windows.Visibility.Hidden;
                 //cmbSummaryRating.Visibility = System.Windows.Visibility.Hidden;
                 //tcHistory.Visibility = System.Windows.Visibility.Hidden;
+                SetControlsOnStatusChange();
             }
 
             else
@@ -457,6 +458,16 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             switch (vm.historyData.StatusID)
             {
                 case 1:
+                    if (vm.hoursRating.RatingID < 3 && (vm.historyData.HoursComments==null ||vm.historyData.HoursComments.Trim().Length == 0))
+                    {
+                        MessageBox.Show("Hours Rating requires a comment to be made","Project manager sign failed" ,MessageBoxButton.OK, MessageBoxImage.Stop);
+                        return;
+                    }
+                    if (vm.summaryRating.RatingID < 3 && (vm.historyData.PMSummaryNotes == null || vm.historyData.PMSummaryNotes.Trim().Length == 0))
+                    {
+                        MessageBox.Show("Summary Rating requires a comment to be made","Project manager sign failed" ,MessageBoxButton.OK ,MessageBoxImage.Stop);
+                        return;
+                    }
                     if (MessageBox.Show("Are you sure you want to sign this report as complete?","Sign as Project Manager", MessageBoxButton.OKCancel, MessageBoxImage.Question)==  MessageBoxResult.OK       ) 
                         vm.Sign();
                     break;
@@ -465,7 +476,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                         vm.ClearSignature();
                     break;
             }
-            SetTabControlsOnStatusChange();
+            SetControlsOnStatusChange();
             
         }
 
@@ -482,10 +493,10 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                         vm.ClearSignature();
                     break;
             }
-            SetTabControlsOnStatusChange();
+            SetControlsOnStatusChange();
         }
 
-        private void SetTabControlsOnStatusChange()
+        private void SetControlsOnStatusChange()
         {
 
             switch (vm.historyData.StatusID)
@@ -576,7 +587,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             
             //hours
             //cmbHoursRating.DataContext = vm.historyData;
-            lgdHours.DataContext = vm.hoursLegendData;
+            //lgdHours.DataContext = vm.hoursLegendData;
             //lgdHours.Items.s
 
             tbHoursComments.DataContext = vm.historyData;
@@ -613,7 +624,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 vm.LoadHistory((int)cmbPeriodEnd.SelectedValue);
 
                 setItemSource();
-                SetTabControlsOnStatusChange();
+                SetControlsOnStatusChange();
             }
         }
 
