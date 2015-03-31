@@ -21,13 +21,6 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _historyID, value); } 
     	}
     
-        private System.DateTime _week;
-    	public System.DateTime Week 
-    	{ 
-    		get { return _week; } 
-    		set { SetProperty(ref _week, value); } 
-    	}
-    
         private int _earnedValueTypeID;
     	public int EarnedValueTypeID 
     	{ 
@@ -61,6 +54,13 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _rowVersion; } 
     		set { SetProperty(ref _rowVersion, value); } 
+    	}
+    
+        private System.DateTime _weekEnd;
+    	public System.DateTime WeekEnd 
+    	{ 
+    		get { return _weekEnd; } 
+    		set { SetProperty(ref _weekEnd, value); } 
     	}
     
     

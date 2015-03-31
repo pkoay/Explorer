@@ -69,6 +69,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _toolTipHours, value); } 
     	}
     
+        private string _toolTipCost;
+    	public string ToolTipCost 
+    	{ 
+    		get { return _toolTipCost; } 
+    		set { SetProperty(ref _toolTipCost, value); } 
+    	}
+    
     
         public virtual ICollection<tblProject_HistoryDollars> tblProject_HistoryDollars { get; set; }
         public virtual ICollection<tblProject_HistoryHours> tblProject_HistoryHours { get; set; }

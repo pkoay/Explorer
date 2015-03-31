@@ -49,18 +49,97 @@
             </telerik:RadTabItem>-->
 
             <!--COST TAB-->
-            <!--<telerik:RadTabItem Header="Cost" Margin="0" >
+            <telerik:RadTabItem Name="TabCost" Header="Cost" Margin="0">
+
                 <Grid Background="Transparent">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="83*"/>
-                        <RowDefinition Height="449*"/>
-                        <RowDefinition Height="68*"/>
+                        <RowDefinition Height="91"/>
+                        <RowDefinition Height="39"/>
+                        <RowDefinition Height="76*"/>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="70"/>
                     </Grid.RowDefinitions>
+
+                    <!--Rating-->
+                    <Label Content="Cost Rating" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Height="26" Width="80" Grid.Row="0"/>
+                    <TextBox Name="tbCostRating"  HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="129" Height="26" Grid.Row="0"/>
+                    <!--<telerik:RadComboBox Name="cmbHoursRating" Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}" HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="129" Height="26" Grid.Row="0"/>-->
+                    <TextBox Name="tbCostComments" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch"  Height="76" Margin="317,5,10,0" TextWrapping="Wrap"  VerticalAlignment="Top" Grid.Row="0"/>
+                    <Label Content="Comments" HorizontalAlignment="Left" Margin="242,4,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>
+
+                    <!--Chart Legend-->
+                    <telerik:RadLegend Name="lgdCost" Margin="100,0,100,0" Grid.Row="1" FontSize="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <telerik:RadLegend.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <telerik:RadWrapPanel Orientation="Horizontal" ItemWidth="120" />
+                            </ItemsPanelTemplate>
+                        </telerik:RadLegend.ItemsPanel>
+                        <telerik:RadLegend.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="2" ToolTipService.ToolTip="{Binding Title, Converter={StaticResource splitDataConverter}, ConverterParameter=1}">
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Path Data="{Binding MarkerGeometry}"
+                                              Fill="{Binding MarkerFill}" 
+                                              Stroke="{Binding MarkerStroke}" 
+                                              StrokeThickness="1" 
+                                              Margin="0 0 5 0" />
+                                        <TextBlock Text="{Binding Title, Converter={StaticResource splitDataConverter}, ConverterParameter=0}" TextAlignment="Left" />
+
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </telerik:RadLegend.ItemTemplate>
+                    </telerik:RadLegend>
+
+                    <!--Chart-->
+                    <telerik:RadCartesianChart Name="chartCost"  Grid.Row="2"  >
+                        <telerik:RadCartesianChart.Resources>
+
+                            <DataTemplate x:Key="EllipseTemplatePlanned">
+                                <Ellipse Height="10" Width="10" Fill="#FF0000FF" />
+                            </DataTemplate>
+                            <DataTemplate x:Key="EllipseTemplateEarned">
+                                <Ellipse Height="10" Width="10" Fill="#FF00FF00" />
+                            </DataTemplate>
+                            <DataTemplate x:Key="EllipseTemplateActual">
+                                <Ellipse Height="10" Width="10" Fill="#FFFF0000" />
+
+                            </DataTemplate>
+                        </telerik:RadCartesianChart.Resources>
+                        <telerik:RadCartesianChart.Behaviors>
+                            <telerik:ChartTrackBallBehavior ShowIntersectionPoints="True" ShowTrackInfo="True"  />
+                        </telerik:RadCartesianChart.Behaviors>
+                        <telerik:RadCartesianChart.TrackBallInfoStyle>
+                            <Style TargetType="telerik:TrackBallInfoControl"  BasedOn="{StaticResource TrackBallInfoControlStyle}">
+                                <Setter Property="Background" Value="#FF1E1E1E"/>
+                            </Style>
+                        </telerik:RadCartesianChart.TrackBallInfoStyle>
+
+
+                        <telerik:RadCartesianChart.HorizontalAxis>
+                            <telerik:DateTimeCategoricalAxis   ElementBrush ="{DynamicResource TextBrush}" LabelFormat="dd-MMM-yy"/>
+                        </telerik:RadCartesianChart.HorizontalAxis>
+                        <telerik:RadCartesianChart.VerticalAxis>
+                            <telerik:LinearAxis Title="DIRECT HOURS"  ElementBrush="{DynamicResource TextBrush}"/>
+                        </telerik:RadCartesianChart.VerticalAxis>
+                        <telerik:RadCartesianChart.Grid>
+                            <telerik:CartesianChartGrid MajorLinesVisibility="Y"/>
+                        </telerik:RadCartesianChart.Grid>
+                    </telerik:RadCartesianChart>
+
+
+
+                    <!--Cost Summary-->
+                    <Label Name="lblCostSummary"  HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="3" VerticalAlignment="Top" Width="600" Height="10"/>
+                    <grid:Grid_Read Grid.Row="4" x:Name="grdCostSummary" />
                 </Grid>
-            </telerik:RadTabItem>-->
+
+            </telerik:RadTabItem>
 
             <!--HOURS TAB-->
-            <telerik:RadTabItem Header="Hours" Margin="0" ToolTip="Performance of projects direct hours">
+            <telerik:RadTabItem Name="TabHours" Header="Hours" Margin="0">
+
                 <Grid Background="Transparent">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="91"/>
@@ -152,7 +231,7 @@
 
                    
 
-                    <!--Incident Summary-->
+                    <!--Hours Summary-->
                     <Label Name="lblHoursSummary"  HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="3" VerticalAlignment="Top" Width="600" Height="10"/>
                     <grid:Grid_Read Grid.Row="4" x:Name="grdHoursSummary" />
                 </Grid>
