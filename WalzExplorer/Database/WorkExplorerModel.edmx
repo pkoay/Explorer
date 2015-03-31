@@ -92,6 +92,7 @@
           <Property Name="EarnedValueTypeID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Color" Type="varchar" MaxLength="50" />
+          <Property Name="ToolTipHours" Type="varchar(max)" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -3349,6 +3350,7 @@
           <NavigationProperty Name="tblProject_HistoryDollars" Relationship="WalzExplorerModel.FK_tblProject_HistoryDollars_tblProject_EarnedValueType" FromRole="tblProject_EarnedValueType" ToRole="tblProject_HistoryDollars" />
           <NavigationProperty Name="tblProject_HistoryHours" Relationship="WalzExplorerModel.FK_tblProject_HistoryManHours_tblProject_EarnedValueType" FromRole="tblProject_EarnedValueType" ToRole="tblProject_HistoryHours" />
           <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ToolTipHours" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblProject_HistoryCritical">
           <Key>
@@ -4764,6 +4766,7 @@
           <EntitySetMapping Name="tblProject_EarnedValueType">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_EarnedValueType">
               <MappingFragment StoreEntitySet="tblProject_EarnedValueType">
+                <ScalarProperty Name="ToolTipHours" ColumnName="ToolTipHours" />
                 <ScalarProperty Name="Color" ColumnName="Color" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />

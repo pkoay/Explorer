@@ -45,6 +45,11 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         public ObservableCollection<HoursLegend> hoursLegendData = new ObservableCollection<HoursLegend>();
         public string hoursSPIcolor;
         public string hoursCPIcolor;
+
+        public string hoursToolTipPlanned;
+        public string hoursToolTipEarned;
+        public string hoursToolTipActual;
+
         //public int hoursRating;
         //public string hoursRatingColor;
         //public string hoursRatingText;
@@ -78,6 +83,27 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             {
                 LoadHistory(historyList.FirstOrDefault().HistoryID);
             }
+            //hoursToolTipPlanned = String.Join(
+            //       Environment.NewLine,
+            //       "Planned",
+            //       "",
+            //       "This figure is how many 'Direct hours' we planned to have done",
+            //       "",
+            //       "This figure is calcuated from the project's P6 schedule (Latest Approved Baseline)");
+            //string earned = String.Join(
+            //       Environment.NewLine,
+            //       "Earned",
+            //       "",
+            //       "This figure is how many 'Direct hours' we have earned",
+            //       "",
+            //       "This figure is calcuated from the project's P6 schedule (the recorded progress of tasks)");
+            //string actual = String.Join(
+            //       Environment.NewLine,
+            //       "Actual",
+            //       "",
+            //       "This figure is how many 'Direct hours' we have done",
+            //       "",
+            //       "This figure is calcuated from AX's project costs (see the cost tab for more detail)");
         }
 
         public void RefreshHistory()
@@ -109,7 +135,10 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             hoursActualData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 3));
             hoursEarnedData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 2));
             hoursPlannedData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 1));
-           
+            hoursToolTipPlanned = earnedValueList.Where(x => x.Title == "Planned").First().ToolTipHours;
+            hoursToolTipEarned = earnedValueList.Where(x => x.Title == "Earned").First().ToolTipHours;
+            hoursToolTipActual = earnedValueList.Where(x => x.Title == "Actual").First().ToolTipHours;
+         
             double dPlanned = (hoursPlannedData.Count == 0) ? 0 : hoursPlannedData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
             double dEarned = (hoursEarnedData.Count == 0) ? 0 : hoursEarnedData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
             double dActual = (hoursActualData.Count == 0) ? 0 : hoursActualData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
@@ -152,7 +181,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             //HoursLegend
             foreach (tblProject_EarnedValueType evt in earnedValueList)
             {
-                HoursLegend hoursLegendItem = new HoursLegend(){Title=evt.Title,Color=evt.Color,ToolTip= "hello there!?!?"};
+                HoursLegend hoursLegendItem = new HoursLegend() { Title = evt.Title, Color = evt.Color, ToolTip = evt.ToolTipHours};
                 hoursLegendData.Add(hoursLegendItem);
             }
 

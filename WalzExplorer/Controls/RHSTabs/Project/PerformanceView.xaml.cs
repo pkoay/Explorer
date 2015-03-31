@@ -68,7 +68,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 cmbPeriodEnd.ItemsSource = vm.historyList;
                 cmbPeriodEnd.SelectedIndex = 0;
                 string strPeriod = ((spWEX_RHS_Project_Performance_History_Result)cmbPeriodEnd.SelectedItem).PeriodEnd.ToString("dd-MMM-yyyy");
+                string strTooltipPeriodend = String.Join(
+                   Environment.NewLine,
+                   "Period End",
+                   "This is the report end date of the perfromacne information",
+                   "Histiory id is " + vm.historyData.HistoryID);
 
+                cmbPeriodEnd.ToolTip= strTooltipPeriodend;
                 //Rating
                 //cmbSummaryRating.EmptyText = "<No Rating>";
                 //cmbSummaryRating.DisplayMemberPath = "Title";
@@ -112,6 +118,22 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 tbHoursComments.DataContext = vm.historyData;
                 tbHoursComments.SetBinding(TextBox.TextProperty, new Binding("HoursComments"));
                 tbHoursComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
+
+
+                //Legend
+                var legendItems = new LegendItemCollection();
+                string dataSeparator = ";";
+                foreach (var item in vm.hoursLegendData)
+                {
+                    legendItems.Add(new LegendItem()
+                    {
+                        MarkerFill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(item.Color)),
+                        Title = item.Title + dataSeparator + item.ToolTip,
+                        MarkerGeometry = new RectangleGeometry() { Rect = new Rect(0, 0, 15, 15) },
+                    });
+                }
+                lgdHours.Items = legendItems;
+
 
                 //Chart
                 chartHours.Series.Clear();
@@ -228,30 +250,11 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 grdHoursSummary.columnSettings.foreground.Add("SPI", "#FF000000");
                 grdHoursSummary.columnSettings.foreground.Add("CPI", "#FF000000");
 
-                string planned = String.Join(
-                   Environment.NewLine,
-                   "Planned",
-                   "",
-                   "This figure is how many 'Direct hours' we planned to have done",
-                   "",
-                   "This figure is calcuated from the project's P6 schedule (Latest Approved Baseline)");
-                grdHoursSummary.columnSettings.toolTip.Add("Planned",planned  );
-                string earned = String.Join(
-                   Environment.NewLine,
-                   "Earned",
-                   "",
-                   "This figure is how many 'Direct hours' we have earned",
-                   "",
-                   "This figure is calcuated from the project's P6 schedule (the recorded progress of tasks)");
-                grdHoursSummary.columnSettings.toolTip.Add("Earned", earned);
-                string actual = String.Join(
-                   Environment.NewLine,
-                   "Actual",
-                   "",
-                   "This figure is how many 'Direct hours' we have done",
-                   "",
-                   "This figure is calcuated from AX's project costs (see the cost tab for more detail)");
-                grdHoursSummary.columnSettings.toolTip.Add("Actual", actual);
+
+                grdHoursSummary.columnSettings.toolTip.Add("Planned", vm.hoursToolTipPlanned);
+                grdHoursSummary.columnSettings.toolTip.Add("Earned",  vm.hoursToolTipEarned);
+                grdHoursSummary.columnSettings.toolTip.Add("Actual",  vm.hoursToolTipActual);
+
                 string scheduleVariance = String.Join(
                    Environment.NewLine,
                    "Schedule Variance",
@@ -260,6 +263,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                    "",
                    "This figure is shows the 'Direct Hours' we are in front (if positive) or behind (if negative) from our plan",
                    "");
+
                 grdHoursSummary.columnSettings.toolTip.Add("ScheduleVariance", scheduleVariance);
                 string costVariance = String.Join(
                  Environment.NewLine,
@@ -269,6 +273,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                  "",
                  "This figure is shows the 'Direct Hours' we are in front (if positive) or behind (if negative) from our actual spend",
                  "");
+
                 grdHoursSummary.columnSettings.toolTip.Add("CostVariance", costVariance);
                 string spi= String.Join(
                     Environment.NewLine,
