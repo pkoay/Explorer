@@ -779,7 +779,26 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             //summary
             cmbSummaryRating.ItemsSource = vm.ratingList;
             tbSummaryPMComments.DataContext = vm.historyData;
-            
+
+            //Cost
+            tbCostComments.DataContext = vm.historyData;
+            foreach (CartesianSeries series in chartCost.Series)
+            {
+                switch (series.Name)
+                {
+                    case "Planned":
+                        series.ItemsSource = vm.costPlannedData;
+                        break;
+                    case "Earned":
+                        series.ItemsSource = vm.costEarnedData;
+                        break;
+                    case "Actual":
+                        series.ItemsSource = vm.costActualData;
+                        break;
+                }
+            }
+            grdCostSummary.grd.ItemsSource = vm.costSummaryData;
+
             //hours
             //cmbHoursRating.DataContext = vm.historyData;
             //lgdHours.DataContext = vm.hoursLegendData;

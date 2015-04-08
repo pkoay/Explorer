@@ -42,6 +42,14 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
+            <Button Name="btnInfo" Click="btnInfo_Click" ToolTip="Information" >
+                <Rectangle Width="16" Height="13"
+                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_information_circle}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
             <Button Name="btnFeedback" Click="btnFeedback_Click" ToolTip="FeedBack" >
                 <Rectangle Width="16" Height="13"
                    Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">

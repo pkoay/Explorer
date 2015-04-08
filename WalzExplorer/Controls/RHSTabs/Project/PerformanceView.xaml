@@ -121,7 +121,7 @@
                             <telerik:DateTimeCategoricalAxis   ElementBrush ="{DynamicResource TextBrush}" LabelFormat="dd-MMM-yy"/>
                         </telerik:RadCartesianChart.HorizontalAxis>
                         <telerik:RadCartesianChart.VerticalAxis>
-                            <telerik:LinearAxis Title="DIRECT HOURS"  ElementBrush="{DynamicResource TextBrush}"/>
+                            <telerik:LinearAxis Title="COST DOLLARS"  ElementBrush="{DynamicResource TextBrush}"/>
                         </telerik:RadCartesianChart.VerticalAxis>
                         <telerik:RadCartesianChart.Grid>
                             <telerik:CartesianChartGrid MajorLinesVisibility="Y"/>
@@ -133,6 +133,7 @@
                     <!--Cost Summary-->
                     <Label Name="lblCostSummary"  HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="3" VerticalAlignment="Top" Width="600" Height="10"/>
                     <grid:Grid_Read Grid.Row="4" x:Name="grdCostSummary" />
+
                 </Grid>
 
             </telerik:RadTabItem>
@@ -155,7 +156,7 @@
                     <!--<telerik:RadComboBox Name="cmbHoursRating" Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}" HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="129" Height="26" Grid.Row="0"/>-->
                     <TextBox Name="tbHoursComments" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch"  Height="76" Margin="317,5,10,0" TextWrapping="Wrap"  VerticalAlignment="Top" Grid.Row="0"/>
                     <Label Content="Comments" HorizontalAlignment="Left" Margin="242,4,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>
-                    
+
                     <!--Chart Legend-->
                     <telerik:RadLegend Name="lgdHours" Margin="100,0,100,0" Grid.Row="1" FontSize="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <telerik:RadLegend.ItemsPanel>
@@ -166,7 +167,7 @@
                         <telerik:RadLegend.ItemTemplate>
                             <DataTemplate>
                                 <Border Padding="2" ToolTipService.ToolTip="{Binding Title, Converter={StaticResource splitDataConverter}, ConverterParameter=1}">
-                                    
+
                                     <StackPanel Orientation="Horizontal">
                                         <Path Data="{Binding MarkerGeometry}"
                                               Fill="{Binding MarkerFill}" 
@@ -174,7 +175,7 @@
                                               StrokeThickness="1" 
                                               Margin="0 0 5 0" />
                                         <TextBlock Text="{Binding Title, Converter={StaticResource splitDataConverter}, ConverterParameter=0}" TextAlignment="Left" />
-                                        
+
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
@@ -192,11 +193,11 @@
                             </telerik:LegendItemCollection>
                         </telerik:RadLegend.Items>-->
                     </telerik:RadLegend>
-                    
+
                     <!--Chart-->
                     <telerik:RadCartesianChart Name="chartHours"  Grid.Row="2"  >
                         <telerik:RadCartesianChart.Resources>
-                           
+
                             <DataTemplate x:Key="EllipseTemplatePlanned">
                                 <Ellipse Height="10" Width="10" Fill="#FF0000FF" />
                             </DataTemplate>
@@ -229,7 +230,7 @@
                         </telerik:RadCartesianChart.Grid>
                     </telerik:RadCartesianChart>
 
-                   
+
 
                     <!--Hours Summary-->
                     <Label Name="lblHoursSummary"  HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="3" VerticalAlignment="Top" Width="600" Height="10"/>

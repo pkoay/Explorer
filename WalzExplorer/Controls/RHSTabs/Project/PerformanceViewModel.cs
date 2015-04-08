@@ -171,9 +171,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             costToolTipEarned = earnedValueList.Where(x => x.Title == "Earned").First().ToolTipCost;
             costToolTipActual = earnedValueList.Where(x => x.Title == "Actual").First().ToolTipCost;
 
-             dPlanned = (costPlannedData.Count == 0) ? 0 : costPlannedData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
-             dEarned = (costEarnedData.Count == 0) ? 0 : costEarnedData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
-             dActual = (costActualData.Count == 0) ? 0 : costActualData.Where(x => x.WeekEnd == dtPeriodEnd).First().Value;
+             dPlanned = (costPlannedData.Count == 0) ? 0 : costPlannedData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
+             dEarned = (costEarnedData.Count == 0) ? 0 : costEarnedData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
+             //dActual = (costActualData.Count == 0) ? 0 : costActualData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
 
             costSummaryData.Clear();
             costSummaryData.Add(new EarnedValueSummarydata()
@@ -224,17 +224,23 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             summaryRating=context.tblProject_HistoryRating.Where(x => x.RatingID==LowestRating).First();
         }
 
+
+        //private tblProject_HistoryHours GetFirstValue (ObservableCollection<tblProject_HistoryDollars> c)
+        //{
+        //    c.
+        //}
+
         private tblProject_HistoryRating GetRating(double value, string column)
         {
+            if (double.IsPositiveInfinity(value)) value = 99999999999;
+            if (double.IsNaN(value)) value = 0;
             tblProject_HistoryRating result = null;
             switch (column)
             {
                 case "CostCPISPI":
-                    //IOrderedQueryable<tblProject_HistoryRating> Q = context.tblProject_HistoryRating.Where(x => x.CostCPISPI <= value || x.RatingID == 0).OrderByDescending(x => x.RatingID);
                     result = (context.tblProject_HistoryRating.Where(x => x.CostCPISPI <= value || x.RatingID == 0).OrderByDescending(x => x.RatingID)).First();
                     break;
                 case "HoursCPISPI":
-                    //IOrderedQueryable<tblProject_HistoryRating> Q = context.tblProject_HistoryRating.Where(x => x.HoursCPISPI <= value || x.RatingID == 0).OrderByDescending(x => x.RatingID);
                     result = (context.tblProject_HistoryRating.Where(x => x.HoursCPISPI <= value || x.RatingID == 0).OrderByDescending(x => x.RatingID)).First();
                     break;
                 default:

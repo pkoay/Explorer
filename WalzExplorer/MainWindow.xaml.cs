@@ -409,8 +409,18 @@ namespace WalzExplorer
            
         }
 
-       
-
+        private void btnInfo_Click(object sender, RoutedEventArgs e)
+        {
+              WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
+              if (CurrentTab == null)
+              {
+                  System.Diagnostics.Process.Start("http://gldsp01/Wiki/Explorer.aspx"); 
+              }
+              else
+              {
+                  System.Diagnostics.Process.Start("http://gldsp01/Wiki/Explorer%20" + CurrentTab.ID.Replace(".", "%20") + "%20Tab.aspx"); 
+              }
+        }
 
     }
 }
