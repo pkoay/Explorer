@@ -620,6 +620,41 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _qualityComments, value); } 
     	}
     
+        private Nullable<int> _basicRatingID;
+    	public Nullable<int> BasicRatingID 
+    	{ 
+    		get { return _basicRatingID; } 
+    		set { SetProperty(ref _basicRatingID, value); } 
+    	}
+    
+        private string _basicComments;
+    	public string BasicComments 
+    	{ 
+    		get { return _basicComments; } 
+    		set { SetProperty(ref _basicComments, value); } 
+    	}
+    
+        private Nullable<double> _basicCostBudget;
+    	public Nullable<double> BasicCostBudget 
+    	{ 
+    		get { return _basicCostBudget; } 
+    		set { SetProperty(ref _basicCostBudget, value); } 
+    	}
+    
+        private Nullable<double> _basicCostToReportDate;
+    	public Nullable<double> BasicCostToReportDate 
+    	{ 
+    		get { return _basicCostToReportDate; } 
+    		set { SetProperty(ref _basicCostToReportDate, value); } 
+    	}
+    
+        private Nullable<double> _basicCostAtCompletion;
+    	public Nullable<double> BasicCostAtCompletion 
+    	{ 
+    		get { return _basicCostAtCompletion; } 
+    		set { SetProperty(ref _basicCostAtCompletion, value); } 
+    	}
+    
     
         public virtual tblProject_HistoryStatus tblProject_HistoryStatus { get; set; }
         public virtual ICollection<tblProject_HistoryCritical> tblProject_HistoryCritical { get; set; }

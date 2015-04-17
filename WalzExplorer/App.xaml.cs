@@ -19,6 +19,24 @@ namespace WalzExplorer
     {
         public App()
         {
+            //test server is there
+            using (WalzExplorerEntities db = new WalzExplorerEntities(false))
+            {
+
+                if (!db.Database.Exists())
+                {
+                    MessageBox.Show(string.Join(Environment.NewLine,
+                        "Failed to connect to the database",
+                        "Check your computer is on the network (try accessing P drive).",
+                        "If you are on the network (you can access P drive) and you still get this error contact IT."),
+                        "Failed to connect to database", MessageBoxButton.OK, MessageBoxImage.Error);
+                    this.Shutdown();
+
+                }
+
+            }
+
+
             if (DatabseVariable.Read("System", "Enable_Login") != "N")
             {
                 //UtilityTest ut = new UtilityTest();

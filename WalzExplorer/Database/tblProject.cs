@@ -187,6 +187,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _contractTypeID, value); } 
     	}
     
+        private double _hoursActual;
+    	public double HoursActual 
+    	{ 
+    		get { return _hoursActual; } 
+    		set { SetProperty(ref _hoursActual, value); } 
+    	}
+    
     
         public virtual tblPerson tblPerson { get; set; }
         public virtual tblPerson tblPerson1 { get; set; }

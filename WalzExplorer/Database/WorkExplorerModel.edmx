@@ -69,6 +69,7 @@
           <Property Name="CostAmount" Type="float" Nullable="false" />
           <Property Name="CostOverheadAmount" Type="float" Nullable="false" />
           <Property Name="InvoicedAmount" Type="float" Nullable="false" />
+          <Property Name="HoursActual" Type="float" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -180,6 +181,11 @@
           <Property Name="QualityForeseenIssuesActions" Type="varchar(max)" />
           <Property Name="EnvironmentForeseenIssuesActions" Type="varchar(max)" />
           <Property Name="Other" Type="varchar(max)" />
+          <Property Name="BasicRatingID" Type="int" />
+          <Property Name="BasicComments" Type="varchar(max)" />
+          <Property Name="BasicCostBudget" Type="float" />
+          <Property Name="BasicCostToReportDate" Type="float" />
+          <Property Name="BasicCostAtCompletion" Type="float" />
           <Property Name="ProjectManagerSignID" Type="int" />
           <Property Name="ProjectManagerSignDate" Type="datetime" />
           <Property Name="OperationsManagerSignID" Type="int" />
@@ -3311,6 +3317,11 @@
           <Property Name="CostComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="SafetyComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="QualityComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="BasicRatingID" Type="Int32" />
+          <Property Name="BasicComments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="BasicCostBudget" Type="Double" />
+          <Property Name="BasicCostToReportDate" Type="Double" />
+          <Property Name="BasicCostAtCompletion" Type="Double" />
         </EntityType>
         <EntityType Name="tblProject_HistoryMilestone">
           <Key>
@@ -3473,6 +3484,7 @@
           <NavigationProperty Name="tblProject_ContractType" Relationship="WalzExplorerModel.FK_tblProject_tblProject_ContractType" FromRole="tblProject" ToRole="tblProject_ContractType" />
           <NavigationProperty Name="tblProject_Portfolio" Relationship="WalzExplorerModel.FK_tblProject_tblProject_Portfolio" FromRole="tblProject" ToRole="tblProject_Portfolio" />
           <NavigationProperty Name="tblCustomer" Relationship="WalzExplorerModel.FK_tblProject_tblCustomer" FromRole="tblProject" ToRole="tblCustomer" />
+          <Property Name="HoursActual" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender">
           <Key>
@@ -4651,6 +4663,11 @@
           <EntitySetMapping Name="tblProject_History">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblProject_History">
               <MappingFragment StoreEntitySet="tblProject_History">
+                <ScalarProperty Name="BasicCostAtCompletion" ColumnName="BasicCostAtCompletion" />
+                <ScalarProperty Name="BasicCostToReportDate" ColumnName="BasicCostToReportDate" />
+                <ScalarProperty Name="BasicCostBudget" ColumnName="BasicCostBudget" />
+                <ScalarProperty Name="BasicComments" ColumnName="BasicComments" />
+                <ScalarProperty Name="BasicRatingID" ColumnName="BasicRatingID" />
                 <ScalarProperty Name="QualityComments" ColumnName="QualityComments" />
                 <ScalarProperty Name="SafetyComments" ColumnName="SafetyComments" />
                 <ScalarProperty Name="CostComments" ColumnName="CostComments" />
@@ -4827,6 +4844,7 @@
           <EntitySetMapping Name="tblProjects">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblProject">
               <MappingFragment StoreEntitySet="tblProject">
+                <ScalarProperty Name="HoursActual" ColumnName="HoursActual" />
                 <ScalarProperty Name="ContractTypeID" ColumnName="ContractTypeID" />
                 <ScalarProperty Name="HoursBudget" ColumnName="HoursBudget" />
                 <ScalarProperty Name="CostBudget" ColumnName="CostBudget" />

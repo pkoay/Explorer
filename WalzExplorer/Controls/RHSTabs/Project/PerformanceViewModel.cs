@@ -38,7 +38,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         public ObservableCollection<tblProject_EarnedValueType> earnedValueList;
 
 
-        //Hours
+        //Cost
         public ObservableCollection<tblProject_HistoryDollars> costPlannedData;
         public ObservableCollection<tblProject_HistoryDollars> costEarnedData;
         public ObservableCollection<tblProject_HistoryDollars> costActualData;
@@ -64,9 +64,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         public string hoursToolTipEarned;
         public string hoursToolTipActual;
         public tblProject_HistoryRating hoursRating;
-
-
-
 
 
         //safety
@@ -230,7 +227,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         //    c.
         //}
 
-        private tblProject_HistoryRating GetRating(double value, string column)
+        public tblProject_HistoryRating GetRating(double value, string column)
         {
             if (double.IsPositiveInfinity(value)) value = 99999999999;
             if (double.IsNaN(value)) value = 0;

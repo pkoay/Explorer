@@ -17,5 +17,14 @@ namespace WalzExplorer.Common
             else
                 return FailValue;
         }
+        public static float StringToFloat(string s, float FailValue)
+        {
+            float i;
+            if (float.TryParse(s, out i))
+                return i;
+            else
+                return FailValue;
+        }
+
     }
 }

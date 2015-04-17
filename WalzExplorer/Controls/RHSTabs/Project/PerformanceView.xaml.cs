@@ -45,6 +45,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         public override void TabLoad()
         {
             isTabLoad = true;
+           
             //ViewModel
             vm = new PerformanceViewModel(settings);
 
@@ -70,13 +71,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 cmbPeriodEnd.ItemsSource = vm.historyList;
                 cmbPeriodEnd.SelectedIndex = 0;
                 string strPeriod = ((spWEX_RHS_Project_Performance_History_Result)cmbPeriodEnd.SelectedItem).PeriodEnd.ToString("dd-MMM-yyyy");
-                string strTooltipPeriodend = String.Join(
-                   Environment.NewLine,
-                   "Period End",
-                   "This is the report end date of the perfromacne information",
-                   "Histiory id is " + vm.historyData.HistoryID);
+               
 
-                cmbPeriodEnd.ToolTip= strTooltipPeriodend;
+                
                 //Rating
                 //cmbSummaryRating.EmptyText = "<No Rating>";
                 //cmbSummaryRating.DisplayMemberPath = "Title";
@@ -97,11 +94,105 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 tbSummaryPMComments.SetBinding(TextBox.TextProperty, new Binding("PMSummaryNotes"));
                 tbSummaryPMComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
 
+                //***********************
+                //BASIC
+
+                //Rating
+                tbBasicRating.Focusable = false;
+                tbBasicRating.ToolTip = String.Join(
+                    Environment.NewLine,
+                    "Basic Rating",
+                    "",
+                    "This rating is calculated by taking the lowest of the cost SPI or CPI rating",
+                    "");
+
+                //Comments
+                tbBasicComments.DataContext = vm.historyData;
+                tbBasicComments.SetBinding(TextBox.TextProperty, new Binding("BasicComments"));
+                tbBasicComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
+
+                //Budget
+                tbBasicBudget.DataContext = vm.historyData;
+                tbBasicBudget.SetBinding(TextBox.TextProperty, new Binding("BasicCostBudget") { StringFormat="#,##0.00"});
+                tbBasicBudget.Focusable = false;
+                tbBasicBudget.ToolTip = String.Join(
+                  Environment.NewLine,
+                  "Cost Budget",
+                  "",
+                  "This the cost budget from AX",
+                  "");
+
+                
+                //Actual
+                lblBasicActual.Content = "Actual (as at " + ((spWEX_RHS_Project_Performance_History_Result)cmbPeriodEnd.SelectedItem).PeriodEnd.ToString("dd-MMM") +")";
+                tbBasicActual.DataContext = vm.historyData;
+                tbBasicActual.SetBinding(TextBox.TextProperty, new Binding("BasicCostToReportDate") { StringFormat = "#,##0.00" });
+                tbBasicActual.Focusable = false;
+                tbBasicActual.ToolTip = String.Join(
+                  Environment.NewLine,
+                  "Actual Cost",
+                  "",
+                  "This the actual costs as at " + strPeriod + " from AX",
+                  "This includes overheads",
+                  "");
+
+                //Cost At Completion
+                niBasicCostAtCompletion.IsClearButtonVisible = false;
+                niBasicCostAtCompletion.DataContext = vm.historyData;
+                niBasicCostAtCompletion.SetBinding(RadMaskedNumericInput.ValueProperty, new Binding("BasicCostAtCompletion"));
+                niBasicCostAtCompletion.LostFocus += niBasicCostAtCompletion_LostFocus;
+                niBasicCostAtCompletion_LostFocus(null, null); //calculate %Comp, Earned, CPI
+                niBasicCostAtCompletion.ToolTip = String.Join(
+                 Environment.NewLine,
+                 "Cost At Completion",
+                 "",
+                 "Enter in the value you estimate will be the cost of the project when it is complete.",
+                 "Note: if you enter a 'Percent complete' this figure will be recalculated based on the calculation: Actual/PercentComplete",
+                 "");
+
+                //Percent Complete
+                niBasicPercentComplete.IsClearButtonVisible = false;
+                niBasicPercentComplete.LostFocus += niBasicPercentComplete_LostFocus;
+                niBasicPercentComplete.ToolTip = String.Join(
+                 Environment.NewLine,
+                 "Percent complete",
+                 "",
+                 "Enter in the percentage that you beleive the project is complete.",
+                 "Note: if you enter a 'Cost at complete' this figure will be recalculated based on the calculation: Actual/Cost At Complete",
+                 "");
+
+
+                //Earned
+                tbBasicEarned.Focusable = false;
+                tbBasicEarned.ToolTip = String.Join(
+                  Environment.NewLine,
+                  "Earned",
+                  "",
+                  "This value is calculated by PercentComplete * Budget",
+                  "");
+                
+                //CPI
+                tbBasicCPI.Focusable = false;
+                tbBasicCPI.ToolTip = String.Join(
+                  Environment.NewLine,
+                  "Cost Performance Indicator",
+                  "",
+                  "This value is calculated by Earned/Actual",
+                  "",
+                  "The colours are calculated by:",
+                  "   Greater than 1.10        Light green (Very good) ",
+                  "   Between 1.10 and 1.00    Green (Good)",
+                  "   Between 1.00 and 0.95    Yellow (Concern)",
+                  "   Between 0.95 and 0.900   Red (Bad)",
+                  "   Lower than  0.90         Light Red (Very bad)",
+                  "");
+                
+
 
                 //***********************
                 //COST
 
-
+                //Rating
                 tbCostRating.Focusable = false;
                 tbCostRating.ToolTip = String.Join(
                     Environment.NewLine,
@@ -551,6 +642,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
                 //Buttons
                 btnSave.ToolTip = "Save the data you have entered for this Performance report.";
+                
                 btnRefresh.ToolTip = "Reloads the data from AX, P6, and WalzApps. Your manually entered data will remain unchanged";
                 btnProjectManagerSign.ToolTip = String.Join(
                    Environment.NewLine,
@@ -573,6 +665,59 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             }
             isTabLoad = false;
         }
+
+        void niBasicPercentComplete_LostFocus(object sender, RoutedEventArgs e)
+        {
+            float actual = ConvertLibrary.StringToFloat(tbBasicActual.Text, 0);
+            if (niBasicPercentComplete.Value == 0)
+                niBasicCostAtCompletion.Value = 0;
+            else
+                niBasicCostAtCompletion.Value = actual / niBasicPercentComplete.Value * 100;
+            CalculateEarnedandCPI();
+        }
+
+        void niBasicCostAtCompletion_LostFocus(object sender, RoutedEventArgs e)
+        {
+            float actual = ConvertLibrary.StringToFloat(tbBasicActual.Text, 0);
+            if (niBasicCostAtCompletion.Value == 0)
+                niBasicPercentComplete.Value = 0;
+            else
+            niBasicPercentComplete.Value = actual / niBasicCostAtCompletion.Value *100;
+            CalculateEarnedandCPI();
+        }
+
+        void CalculateEarnedandCPI()
+        {
+            // clear everything set
+            tbBasicEarned.Text = "";
+            tbBasicCPI.Text = "";
+            tbBasicCPI.Background = Common.GraphicsLibrary.BrushFromHex("#FF1E1E1E");
+            tbBasicCPI.Foreground = Common.GraphicsLibrary.BrushFromHex("#FFFFFFFF");
+            if (niBasicCostAtCompletion.Value != null)
+            {
+                double earned = ConvertLibrary.StringToFloat(tbBasicBudget.Text, 0) * niBasicPercentComplete.Value.GetValueOrDefault(0)/100;
+                float actual = ConvertLibrary.StringToFloat(tbBasicActual.Text, 0);
+                tbBasicEarned.Text = earned.ToString("#,##0.00");
+                if (actual != 0)
+                {
+                    tbBasicCPI.Text = (earned / actual).ToString("#,##0.00");
+                    tbBasicCPI.Background = Common.GraphicsLibrary.BrushFromHex(vm.GetRating(earned / actual, "CostCPISPI").Color);
+                    tbBasicCPI.Foreground = Common.GraphicsLibrary.BrushFromHex("#FF000000");
+
+                }
+            }
+        }
+        //void niBasicCostAtCompletion_ValueChanged(object sender, Telerik.Windows.RadRoutedEventArgs e)
+        //{
+        //    float actual=ConvertLibrary.StringToFloat(tbBasicActual.Text,0);
+        //    niBasicPercentComplete.Value = actual / niBasicCostAtCompletion.Value;
+        //}
+
+        //void niBasicPercentComplete_ValueChanged(object sender, Telerik.Windows.RadRoutedEventArgs e)
+        //{
+        //    float actual = ConvertLibrary.StringToFloat(tbBasicActual.Text, 0);
+        //    niBasicCostAtCompletion.Value = actual / niBasicPercentComplete.Value *100;
+        //}
 
         //void cmbHoursRating_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
@@ -745,19 +890,21 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         {
             using (WaitCursor wc = new WaitCursor())
             {
-               
-                    vm.context.SaveChanges();
-                    vm.RecalculateHistoryData();
 
-                    //Learnt something new here
-                    // Observable collection is obviously useful for flagging Add/Update/Deletes, so they can be sent to entity framework
-                    //However if we want to "place different data" into the same grid (e.g. change from one project to another) and in the process we create a new observable collection
-                    // then the grid does not see this observable collection (still pointing at the old one)
-                    // to update this we need to reset the itemsource. WE CANNOT CLEAR THE EXISTING collection and add the new collection, because that is pretty much deleteing the old data and adding the new data to the OLD object. 
-                    // Find it strange there is no command from the View model side that says "hey I have changed data that I'm pointing to", and thus refresh the thing that is pointing to the observable collection (and lose changes)
-                    setItemSource();
-                
-               
+                vm.context.SaveChanges();
+                vm.RecalculateHistoryData();
+
+                //Learnt something new here
+                // Observable collection is obviously useful for flagging Add/Update/Deletes, so they can be sent to entity framework
+                //However if we want to "place different data" into the same grid (e.g. change from one project to another) and in the process we create a new observable collection
+                // then the grid does not see this observable collection (still pointing at the old one)
+                // to update this we need to reset the itemsource. WE CANNOT CLEAR THE EXISTING collection and add the new collection, because that is pretty much deleteing the old data and adding the new data to the OLD object. 
+                // Find it strange there is no command from the View model side that says "hey I have changed data that I'm pointing to", and thus refresh the thing that is pointing to the observable collection (and lose changes)
+                vm = new PerformanceViewModel(settings);
+                vm.LoadHistory((int)cmbPeriodEnd.SelectedValue);
+                setItemSource();
+
+
             }
         }
 
@@ -780,6 +927,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             cmbSummaryRating.ItemsSource = vm.ratingList;
             tbSummaryPMComments.DataContext = vm.historyData;
 
+            //Basic
+            tbBasicComments.DataContext = vm.historyData;
+            tbBasicBudget.DataContext = vm.historyData;
+            tbBasicActual.DataContext = vm.historyData;
+            niBasicCostAtCompletion.DataContext = vm.historyData;
+            niBasicCostAtCompletion_LostFocus(null, null); //calculate %Comp, Earned, CPI
+                
             //Cost
             tbCostComments.DataContext = vm.historyData;
             foreach (CartesianSeries series in chartCost.Series)
@@ -839,6 +993,11 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
                 setItemSource();
                 SetControlsOnStatusChange();
+                cmbPeriodEnd.ToolTip = String.Join(
+                  Environment.NewLine,
+                  "Period End",
+                  "This is the report end date of the performance information",
+                  "Histiory id is " + vm.historyData.HistoryID);
             }
         }
 

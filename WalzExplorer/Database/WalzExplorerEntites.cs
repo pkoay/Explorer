@@ -38,6 +38,8 @@ namespace WalzExplorer.Database
             this.Database.Connection.ConnectionString = providerBuilder.ToString();
         }
 
+     
+
         protected override DbEntityValidationResult ValidateEntity(System.Data.Entity.Infrastructure.DbEntityEntry entityEntry, IDictionary<object, object> items)
         {
             var result = new DbEntityValidationResult(entityEntry, new List<DbValidationError>());

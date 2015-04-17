@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>61</ApplicationRevision>
+    <ApplicationRevision>62</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -56,7 +56,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Walz.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\WalzIcon2.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>11016FC7795881BF10CADE94318D99F4001B1A5F</ManifestCertificateThumbprint>
@@ -213,6 +213,7 @@
     <Compile Include="Common\ControlLibrary.cs" />
     <Compile Include="Common\DatabseVariable.cs" />
     <Compile Include="Common\FindConflictingReferences.cs" />
+    <Compile Include="Common\BindingLibrary.cs" />
     <Compile Include="Common\GraphicsLibrary.cs" />
     <Compile Include="Common\GridLibrary.cs" />
     <Compile Include="Common\ConvertLibrary.cs" />
@@ -1049,6 +1050,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\WalzIcon2.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
