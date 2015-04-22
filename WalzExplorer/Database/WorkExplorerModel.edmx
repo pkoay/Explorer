@@ -1611,11 +1611,17 @@
         <Function Name="spWEX_RHS_Project_Cost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Cost">
           <Parameter Name="ProjectID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spWEX_RHS_Project_Invoiced" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Invoiced">
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
+        </Function>
         <Function Name="spWEX_RHS_Project_Performance_History" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Performance_History">
           <Parameter Name="ProjectID" Type="int" Mode="In" />
         </Function>
         <Function Name="spWEX_RHS_Project_Performance_Safety" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Performance_Safety">
           <Parameter Name="HistoryID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spWEX_RHS_Project_PurchaseOrderSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_PurchaseOrderSummary">
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
         </Function>
         <Function Name="spWEX_RHS_Project_Summary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Summary">
           <Parameter Name="UserPersonID" Type="nvarchar" Mode="In" />
@@ -2954,6 +2960,12 @@
           </FunctionImport>
           <FunctionImport Name="spExplorer_ServerDatetime" ReturnType="Collection(DateTime)" />
           <EntitySet Name="tblWEX_Variables" EntityType="WalzExplorerModel.tblWEX_Variables" />
+          <FunctionImport Name="spWEX_RHS_Project_Invoiced" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Invoiced_Result)">
+            <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_RHS_Project_PurchaseOrderSummary" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_PurchaseOrderSummary_Result)">
+            <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -4156,6 +4168,28 @@
           <Property Type="String" Name="UpdatedBy" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
           <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="ContractType" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="spWEX_RHS_Project_Invoiced_Result">
+          <Property Type="String" Name="DataAreaID" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="ProjID" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="InvoiceDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ProjTransType" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="TransId" Nullable="false" MaxLength="20" />
+          <Property Type="Decimal" Name="Invoiced" Nullable="false" Precision="28" Scale="12" />
+        </ComplexType>
+        <ComplexType Name="spWEX_RHS_Project_PurchaseOrderSummary_Result">
+          <Property Type="String" Name="DATAAREAID" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="PurchaseOrderID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Requisitioner" Nullable="false" MaxLength="51" />
+          <Property Type="String" Name="PurchasePlacer" Nullable="false" MaxLength="51" />
+          <Property Type="String" Name="VendorName" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="PurchaseName" Nullable="false" MaxLength="60" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" />
+          <Property Type="Decimal" Name="OrderAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="CommittedAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="PaidAmount" Nullable="true" Precision="38" Scale="12" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -4920,6 +4954,7 @@
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="ContractType" ColumnName="ContractType" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -5152,6 +5187,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_Invoiced" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_Invoiced">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_Invoiced_Result">
+                <ScalarProperty Name="DataAreaID" ColumnName="DataAreaID" />
+                <ScalarProperty Name="ProjID" ColumnName="ProjID" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="ProjTransType" ColumnName="ProjTransType" />
+                <ScalarProperty Name="TransId" ColumnName="TransId" />
+                <ScalarProperty Name="Invoiced" ColumnName="Invoiced" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_PurchaseOrderSummary" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_PurchaseOrderSummary" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_PurchaseOrderSummary_Result">
+                <ScalarProperty Name="DATAAREAID" ColumnName="DATAAREAID" />
+                <ScalarProperty Name="PurchaseOrderID" ColumnName="PurchaseOrderID" />
+                <ScalarProperty Name="ProjID" ColumnName="ProjID" />
+                <ScalarProperty Name="Requisitioner" ColumnName="Requisitioner" />
+                <ScalarProperty Name="PurchasePlacer" ColumnName="PurchasePlacer" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="PurchaseName" ColumnName="PurchaseName" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="OrderAmount" ColumnName="OrderAmount" />
+                <ScalarProperty Name="CommittedAmount" ColumnName="CommittedAmount" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

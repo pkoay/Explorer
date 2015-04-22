@@ -59,9 +59,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 //Rating_RadComboItemStyle.Seal();
                 //this.Resources.Add("Rating_RadComboItemStyle", Rating_RadComboItemStyle); 
 
-
+                #region Summary area
                 //***********************
-                // GENERAL
+                // SUMMARY
 
                 //Period End list
 
@@ -88,33 +88,61 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                   "",
                   "This rating is calculated by taking the lowest of all other ratings (e.g. Cost rating, Hours Rating etc)",
                   "");
+                tbSummaryRating.Text = vm.summaryRating.Title;
+                tbSummaryRating.Background = Common.GraphicsLibrary.BrushFromHex(vm.summaryRating.Color);
+                tbSummaryRating.Foreground = Common.GraphicsLibrary.BrushFromHex("#FF000000");
+
 
                 //Comments
                 tbSummaryPMComments.DataContext = vm.historyData;
                 tbSummaryPMComments.SetBinding(TextBox.TextProperty, new Binding("PMSummaryNotes"));
                 tbSummaryPMComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
 
+                //Buttons
+                btnSave.ToolTip = "Save the data you have entered for this Performance report.";
+                btnRefresh.ToolTip = "Reloads the data from AX, P6, and WalzApps. Your manually entered data will remain unchanged";
+                btnProjectManagerSign.ToolTip = String.Join(
+                   Environment.NewLine,
+                   "Signs off Performance report as the project manager",
+                   "This can only be done by the project manager, operations manager, or a project administrator");
+                btnOperationsManagerSign.ToolTip = String.Join(
+                  Environment.NewLine,
+                  "Signs off Performance report as the operations manager",
+                  "This can only be done by the operations manager");
+
+                #endregion
+
+                #region Basic Tab
                 //***********************
                 //BASIC
 
                 //Rating
-                tbBasicRating.Focusable = false;
-                tbBasicRating.ToolTip = String.Join(
-                    Environment.NewLine,
-                    "Basic Rating",
-                    "",
-                    "This rating is calculated by taking the lowest of the cost SPI or CPI rating",
-                    "");
-
+                //tbBasicRating.Focusable = false;
+                //tbBasicRating.ToolTip = String.Join(
+                //  Environment.NewLine,
+                //  "Basic Rating:",
+                //  "",
+                //  "This value is calculated by Cost Performance Indicator (i.e Earned/Actual) ",
+                //  "",
+                //  "The colours/rating is calculated by:",
+                //  "   Greater than 1.10        Light green (Very good) ",
+                //  "   Between 1.10 and 1.00    Green (Good)",
+                //  "   Between 1.00 and 0.95    Yellow (Concern)",
+                //  "   Between 0.95 and 0.900   Red (Bad)",
+                //  "   Lower than  0.90         Light Red (Very bad)",
+                //  "");
+              
+                
                 //Comments
-                tbBasicComments.DataContext = vm.historyData;
-                tbBasicComments.SetBinding(TextBox.TextProperty, new Binding("BasicComments"));
-                tbBasicComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
+                //tbBasicComments.DataContext = vm.historyData;
+                //tbBasicComments.SetBinding(TextBox.TextProperty, new Binding("BasicComments"));
+                //tbBasicComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
 
                 //Budget
                 tbBasicBudget.DataContext = vm.historyData;
                 tbBasicBudget.SetBinding(TextBox.TextProperty, new Binding("BasicCostBudget") { StringFormat="#,##0.00"});
-                tbBasicBudget.Focusable = false;
+                //tbBasicBudget.Focusable = false;
+                tbBasicBudget.IsReadOnly = true;
                 tbBasicBudget.ToolTip = String.Join(
                   Environment.NewLine,
                   "Cost Budget",
@@ -127,7 +155,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 lblBasicActual.Content = "Actual (as at " + ((spWEX_RHS_Project_Performance_History_Result)cmbPeriodEnd.SelectedItem).PeriodEnd.ToString("dd-MMM") +")";
                 tbBasicActual.DataContext = vm.historyData;
                 tbBasicActual.SetBinding(TextBox.TextProperty, new Binding("BasicCostToReportDate") { StringFormat = "#,##0.00" });
-                tbBasicActual.Focusable = false;
+                //tbBasicActual.IsEnabled = false;
+                tbBasicActual.IsReadOnly = true;
                 tbBasicActual.ToolTip = String.Join(
                   Environment.NewLine,
                   "Actual Cost",
@@ -146,7 +175,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                  Environment.NewLine,
                  "Cost At Completion",
                  "",
-                 "Enter in the value you estimate will be the cost of the project when it is complete.",
+                 "Enter in the value you estimate will be the cost of the project when it is complete (For all approved work).",
                  "Note: if you enter a 'Percent complete' this figure will be recalculated based on the calculation: Actual/PercentComplete",
                  "");
 
@@ -157,13 +186,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                  Environment.NewLine,
                  "Percent complete",
                  "",
-                 "Enter in the percentage that you beleive the project is complete.",
+                 "Enter in the percentage from the P6 Schedule (For all approved work).",
                  "Note: if you enter a 'Cost at complete' this figure will be recalculated based on the calculation: Actual/Cost At Complete",
                  "");
 
 
                 //Earned
-                tbBasicEarned.Focusable = false;
+                tbBasicEarned.IsReadOnly = true; 
                 tbBasicEarned.ToolTip = String.Join(
                   Environment.NewLine,
                   "Earned",
@@ -186,9 +215,10 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                   "   Between 0.95 and 0.900   Red (Bad)",
                   "   Lower than  0.90         Light Red (Very bad)",
                   "");
-                
 
+                #endregion
 
+                #region Cost Tab
                 //***********************
                 //COST
 
@@ -345,11 +375,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                    "   Lower than  0.90         Light Red (Very bad)",
                    "");
                 grdCostSummary.columnSettings.toolTip.Add("CPI", cpi);
+                #endregion
 
-               
-
-
-
+                #region Hours Tab
                 //***********************
                 //HOURS
 
@@ -369,6 +397,10 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     "",
                     "This rating is calculated by taking the lowest of the hours SPI or CPI rating",
                     "");
+                //cmbHoursRating.SelectedValue = vm.hoursRating;
+                tbHoursRating.Text = vm.hoursRating.Title;
+                tbHoursRating.Background = Common.GraphicsLibrary.BrushFromHex(vm.hoursRating.Color);
+                tbHoursRating.Foreground = Common.GraphicsLibrary.BrushFromHex("#FF000000");
 
                 //Comments
                 tbHoursComments.DataContext = vm.historyData;
@@ -431,12 +463,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
                     DataTemplate datatemplate = (DataTemplate)XamlReader.Load(sr, pc);
                     series.TrackBallInfoTemplate = datatemplate;
-
-
-
-
-
-
 
                     //switch (ev.Title)
                     //{
@@ -559,10 +585,12 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                    "   Between 0.95 and 0.900   Red (Bad)",
                    "   Lower than  0.90         Light Red (Very bad)",
                    ""));
-                 
+
 
                 //cmbHoursRating.SelectionChanged += cmbHoursRating_SelectionChanged;
+                #endregion
 
+                #region Safety Tab
 
                 //***********************
                 //SAFETY
@@ -610,21 +638,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 grdSafetyDetail.grd.DataContext = vm;
                 grdSafetySummary.columnSettings.format.Add("IncidentID", Grid.Grid_Read.columnFormat.COUNT);
                 grdSafetySummary.columnSettings.format.Add("ReportedDate", Grid.Grid_Read.columnFormat.DATE);
-
+                #endregion
 
 
                 //data binding
                 setItemSource();
 
-                //cmbHoursRating.SelectedValue = vm.hoursRating;
-                tbHoursRating.Text = vm.hoursRating.Title;
-                tbHoursRating.Background = Common.GraphicsLibrary.BrushFromHex(vm.hoursRating.Color);
-                tbHoursRating.Foreground = Common.GraphicsLibrary.BrushFromHex("#FF000000");
-
-                tbSummaryRating.Text = vm.summaryRating.Title;
-                tbSummaryRating.Background = Common.GraphicsLibrary.BrushFromHex(vm.summaryRating.Color);
-                tbSummaryRating.Foreground = Common.GraphicsLibrary.BrushFromHex("#FF000000");
-
+               
                 ////if no performance report exists then make it look blank
                 ////if (!cmbPeriodEnd.HasItems)
 
@@ -640,19 +660,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 //tcHistory.Visibility = System.Windows.Visibility.Hidden;
 
 
-                //Buttons
-                btnSave.ToolTip = "Save the data you have entered for this Performance report.";
                 
-                btnRefresh.ToolTip = "Reloads the data from AX, P6, and WalzApps. Your manually entered data will remain unchanged";
-                btnProjectManagerSign.ToolTip = String.Join(
-                   Environment.NewLine,
-                   "Signs off Performance report as the project manager",
-                   "This can only be done by the project manager, operations manager, or a project administrator");
-                btnOperationsManagerSign.ToolTip = String.Join(
-                  Environment.NewLine,
-                  "Signs off Performance report as the operations manager",
-                  "This can only be done by the operations manager");
-
+            
                 SetControlsOnStatusChange();
             }
 
@@ -673,7 +682,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 niBasicCostAtCompletion.Value = 0;
             else
                 niBasicCostAtCompletion.Value = actual / niBasicPercentComplete.Value * 100;
-            CalculateEarnedandCPI();
+            CalculateEarnedandCPIandRating();
         }
 
         void niBasicCostAtCompletion_LostFocus(object sender, RoutedEventArgs e)
@@ -683,29 +692,51 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 niBasicPercentComplete.Value = 0;
             else
             niBasicPercentComplete.Value = actual / niBasicCostAtCompletion.Value *100;
-            CalculateEarnedandCPI();
+            CalculateEarnedandCPIandRating();
         }
 
-        void CalculateEarnedandCPI()
+        void CalculateEarnedandCPIandRating()
         {
-            // clear everything set
-            tbBasicEarned.Text = "";
-            tbBasicCPI.Text = "";
-            tbBasicCPI.Background = Common.GraphicsLibrary.BrushFromHex("#FF1E1E1E");
-            tbBasicCPI.Foreground = Common.GraphicsLibrary.BrushFromHex("#FFFFFFFF");
-            if (niBasicCostAtCompletion.Value != null)
+            vm.BasicSetEarnedAndCPIAndRating();
+            if (vm.basicEarned==null)
             {
-                double earned = ConvertLibrary.StringToFloat(tbBasicBudget.Text, 0) * niBasicPercentComplete.Value.GetValueOrDefault(0)/100;
-                float actual = ConvertLibrary.StringToFloat(tbBasicActual.Text, 0);
-                tbBasicEarned.Text = earned.ToString("#,##0.00");
-                if (actual != 0)
-                {
-                    tbBasicCPI.Text = (earned / actual).ToString("#,##0.00");
-                    tbBasicCPI.Background = Common.GraphicsLibrary.BrushFromHex(vm.GetRating(earned / actual, "CostCPISPI").Color);
-                    tbBasicCPI.Foreground = Common.GraphicsLibrary.BrushFromHex("#FF000000");
-
-                }
+                tbBasicEarned.Text = "";
+                tbBasicCPI.Text = "";
+                //tbBasicRating.Text = "";
+                tbBasicCPI.Background = Common.GraphicsLibrary.BrushFromHex("#FF1E1E1E");
+                tbBasicCPI.Foreground = Common.GraphicsLibrary.BrushFromHex("#FFFFFFFF");
+                //tbBasicRating.Background = Common.GraphicsLibrary.BrushFromHex("#FF1E1E1E");
+                //tbBasicRating.Foreground = Common.GraphicsLibrary.BrushFromHex("#FFFFFFFF");
             }
+            else
+            {
+                tbBasicEarned.Text = vm.basicEarned.GetValueOrDefault(0).ToString("#,##0.00");
+                tbBasicCPI.Text = vm.basicCPI.GetValueOrDefault(0).ToString("#,##0.00");
+                tbBasicCPI.Background = Common.GraphicsLibrary.BrushFromHex(vm.basicRating.Color);
+                tbBasicCPI.Foreground = Common.GraphicsLibrary.BrushFromHex("#FF000000");
+                //tbBasicRating.Background = Common.GraphicsLibrary.BrushFromHex(vm.basicRating.Color);
+                //tbBasicRating.Foreground = Common.GraphicsLibrary.BrushFromHex("#FF000000");
+                //tbBasicRating.Text = vm.basicRating.Title;
+            }
+            //// clear everything set
+           
+            //if (niBasicCostAtCompletion.Value != null)
+            //{
+            //    double earned = ConvertLibrary.StringToFloat(tbBasicBudget.Text, 0) * niBasicPercentComplete.Value.GetValueOrDefault(0)/100;
+            //    float actual = ConvertLibrary.StringToFloat(tbBasicActual.Text, 0);
+            //    tbBasicEarned.Text = earned.ToString("#,##0.00");
+            //    if (actual != 0)
+            //    {
+            //        tbBasicCPI.Text = (earned / actual).ToString("#,##0.00");
+            //        tbBasicCPI.Background = Common.GraphicsLibrary.BrushFromHex(vm.GetRating(earned / actual, "CostCPISPI").Color);
+            //        tbBasicCPI.Foreground = Common.GraphicsLibrary.BrushFromHex("#FF000000");
+
+            //        tbBasicRating.Text = vm.GetRating(earned / actual, "CostCPISPI").Title;
+            //        tbBasicRating.Background = Common.GraphicsLibrary.BrushFromHex(vm.GetRating(earned / actual, "CostCPISPI").Color);
+            //        tbBasicRating.Foreground = Common.GraphicsLibrary.BrushFromHex("#FF000000");
+
+            //    }
+            //}
         }
         //void niBasicCostAtCompletion_ValueChanged(object sender, Telerik.Windows.RadRoutedEventArgs e)
         //{
@@ -910,6 +941,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
         private void ProjectManagerDataEntryFieldsEnabled (bool ro)
         {
+            this.niBasicCostAtCompletion.IsReadOnly = !ro;
+            this.niBasicPercentComplete.IsReadOnly = !ro;
             this.tbHoursComments.IsReadOnly = !ro;
             this.tbSafetyComments.IsReadOnly = !ro;
             this.tbSummaryPMComments.IsReadOnly = !ro;
@@ -918,6 +951,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             vm.historyData.HoursRatingID = vm.hoursRating.RatingID;
+            vm.historyData.BasicRatingID = vm.basicRating.RatingID;
             vm.context.SaveChanges();
         }
 
@@ -928,7 +962,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             tbSummaryPMComments.DataContext = vm.historyData;
 
             //Basic
-            tbBasicComments.DataContext = vm.historyData;
+            //tbBasicComments.DataContext = vm.historyData;
             tbBasicBudget.DataContext = vm.historyData;
             tbBasicActual.DataContext = vm.historyData;
             niBasicCostAtCompletion.DataContext = vm.historyData;

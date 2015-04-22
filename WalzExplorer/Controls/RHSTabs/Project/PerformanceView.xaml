@@ -53,25 +53,21 @@
 
                 <Grid Background="Transparent">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="163"/>
-
-
-
-                        <RowDefinition Height="70*"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="200*"/>
                     </Grid.RowDefinitions>
 
-                    <!--Rating-->
-                    <Label Content="Basic Rating" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Height="26" Width="80" Grid.Row="0"/>
-                    <TextBox Name="tbBasicRating"  HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="129" Height="26" Grid.Row="0"/>
-                    <!--<telerik:RadComboBox Name="cmbHoursRating" Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}" HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="129" Height="26" Grid.Row="0"/>-->
-                    <TextBox Name="tbBasicComments" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch"  Height="148" Margin="317,5,10,0" TextWrapping="Wrap"  VerticalAlignment="Top" Grid.Row="0"/>
-                    <Label Content="Comments" HorizontalAlignment="Left" Margin="242,4,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>
+                    <!--Rating--><!--
+                    <Label Content="Basic Rating" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Height="26" Width="80" Grid.Row="0" Visibility="Hidden"/>
+                    <TextBox Name="tbBasicRating"  HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="129" Height="26" Grid.Row="0" Visibility="Hidden"/>
+                    --><!--<telerik:RadComboBox Name="cmbHoursRating" Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}" HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="129" Height="26" Grid.Row="0"/>--><!--
+                    <TextBox Name="tbBasicComments" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch"  Height="148" Margin="317,5,10,0" TextWrapping="Wrap"  VerticalAlignment="Top" Grid.Row="0" Visibility="Hidden"/>
+                    <Label Content="Comments" HorizontalAlignment="Left" Margin="242,4,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0" Visibility="Hidden"/>-->
                     <TextBox Name="tbBasicBudget" HorizontalAlignment="Left" Height="23" Margin="77,36,0,0" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" TextAlignment="Right"/>
-                    <Label Content="Costs" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-                    <Label Content="Budget:" HorizontalAlignment="Left" Margin="77,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
-                    <TextBox Name="tbBasicActual" HorizontalAlignment="Left" Height="23" Margin="197,36,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextAlignment="Right"/>
+                    <Label Content="Costs:" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold"/>
+                    <Label Content="Budget" HorizontalAlignment="Left" Margin="77,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+                    <TextBox Name="tbBasicActual"  HorizontalAlignment="Left" Height="23" Margin="197,36,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextAlignment="Right"/>
                     <!--<TextBox Name="tbBasicCostAtCompletion" HorizontalAlignment="Left" Height="23" Margin="317,36,0,0" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>-->
-                    <Label Content="Budget:" HorizontalAlignment="Left" Margin="77,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
                     <Label Name="lblBasicActual" Content="Actual as at ##/###" HorizontalAlignment="Left" Margin="197,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
                     <Label Content="Cost at completion" HorizontalAlignment="Left" Margin="317,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
                     <!--<TextBox Name="tbBasicPercentComplete" HorizontalAlignment="Left" Height="23" Margin="437,36,0,0" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>-->
@@ -311,14 +307,14 @@
             </telerik:RadTabItem>
 
         </telerik:RadTabControl>
-        <Button Name="btnProjectManagerSign" ToolTipService.ShowOnDisabled="True" Click="btnProjectManagerSign_Click" Content="Sign" HorizontalAlignment="Left" Margin="774,1,0,0" Grid.Row="2" VerticalAlignment="Top" Width="46" Height="22"/>
-        <Button Name="btnOperationsManagerSign" ToolTipService.ShowOnDisabled="True" Click="btnOperationsManagerSign_Click" Content="Sign" HorizontalAlignment="Left" Margin="774,34,0,0" Grid.Row="2" VerticalAlignment="Top" Width="46" Height="22"/>
-        <Button Name="btnRefresh"  ToolTipService.ShowOnDisabled="True"  Click="btnRefresh_Click" Content="Refresh" HorizontalAlignment="Left" Margin="10,14,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Height="22"/>
-        <Button Name="btnSave"  ToolTipService.ShowOnDisabled="True" Click="btnSave_Click" Content="Save" HorizontalAlignment="Left" Margin="108,14,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Height="22"/>
-        <Label Content="Project Manager:" ToolTipService.ShowOnDisabled="True" HorizontalAlignment="Left" Margin="262,3,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127" Height="26"/>
-        <TextBox Name="tbProjectMangerSignature"  ToolTipService.ShowOnDisabled="True" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="389,2,0,0" Grid.Row="2" TextWrapping="Wrap"  VerticalAlignment="Top" Width="380"/>
-        <Label Content="Operations Manager:" ToolTipService.ShowOnDisabled="True" HorizontalAlignment="Left" Margin="262,32,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127" Height="26"/>
-        <TextBox x:Name="tbOperationsMangerSignature" ToolTipService.ShowOnDisabled="True" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="389,33,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="380"/>
+        <Button Name="btnProjectManagerSign" Click="btnProjectManagerSign_Click" Content="Sign" HorizontalAlignment="Left" Margin="774,1,0,0" Grid.Row="2" VerticalAlignment="Top" Width="46" Height="22"/>
+        <Button Name="btnOperationsManagerSign" Click="btnOperationsManagerSign_Click" Content="Sign" HorizontalAlignment="Left" Margin="774,34,0,0" Grid.Row="2" VerticalAlignment="Top" Width="46" Height="22"/>
+        <Button Name="btnRefresh"   Click="btnRefresh_Click" Content="Refresh" HorizontalAlignment="Left" Margin="10,14,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Height="22"/>
+        <Button Name="btnSave"  Click="btnSave_Click" Content="Save" HorizontalAlignment="Left" Margin="108,14,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Height="22"/>
+        <Label Content="Project Manager:" HorizontalAlignment="Left" Margin="262,3,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127" Height="26"/>
+        <TextBox Name="tbProjectMangerSignature"  IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="389,2,0,0" Grid.Row="2" TextWrapping="Wrap"  VerticalAlignment="Top" Width="380"/>
+        <Label Content="Operations Manager:" HorizontalAlignment="Left" Margin="262,32,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127" Height="26"/>
+        <TextBox x:Name="tbOperationsMangerSignature" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="389,33,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="380"/>
 
     </Grid>
 </base:RHSTabViewBase>

@@ -9,6 +9,7 @@ using Telerik.Windows.Controls;
 using WalzExplorer.Database;
 using WalzExplorer.Common;
 using System.Security.Principal;
+using System.Windows.Controls;
 
 namespace WalzExplorer
 {
@@ -19,6 +20,8 @@ namespace WalzExplorer
     {
         public App()
         {
+
+
             //test server is there
             using (WalzExplorerEntities db = new WalzExplorerEntities(false))
             {
@@ -63,6 +66,11 @@ namespace WalzExplorer
 #else
            Console.WriteLine("Mode=Release"); 
 #endif
+                //default tooltips to show on disabled controls
+                ToolTipService.ShowOnDisabledProperty.OverrideMetadata(typeof(Control), new FrameworkPropertyMetadata(true));
+                
+                //default tooltips to show for a very long duration
+                ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));
             }
             else
             {

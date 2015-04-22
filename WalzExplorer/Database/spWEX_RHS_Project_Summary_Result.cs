@@ -125,5 +125,12 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
+        private string _contractType;
+    	public string ContractType 
+    	{ 
+    		get { return _contractType; } 
+    		set { SetProperty(ref _contractType, value); } 
+    	}
+    
     }
 }

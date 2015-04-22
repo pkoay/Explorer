@@ -66,6 +66,11 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         public tblProject_HistoryRating hoursRating;
 
 
+        //Basic
+        public tblProject_HistoryRating basicRating;
+        public double? basicEarned;
+        public double? basicCPI;
+
         //safety
         public ObservableCollection<spWEX_RHS_Project_Performance_Safety_Result> safetyDetailedData;
         public ObservableCollection<SafetySummarydata> safteySummaryData = new ObservableCollection<SafetySummarydata>();
@@ -125,6 +130,10 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             double dPlanned;
             double dEarned;
             double dActual;
+
+            ////Basic
+            //dEarned=
+            // dActual=
 
             //Hours
             hoursActualData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 3));
@@ -227,7 +236,26 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         //    c.
         //}
 
-        public tblProject_HistoryRating GetRating(double value, string column)
+
+        public void BasicSetEarnedAndCPIAndRating()
+        {
+            if (historyData.BasicCostAtCompletion != null &&  historyData.BasicCostAtCompletion != 0)
+            {
+                double earned = historyData.BasicCostBudget.GetValueOrDefault(0) * (historyData.BasicCostToReportDate.GetValueOrDefault(0) / historyData.BasicCostAtCompletion.GetValueOrDefault(0));
+                double actual = historyData.BasicCostToReportDate.GetValueOrDefault(0);
+                basicEarned =earned;
+                basicCPI= earned/actual;
+                basicRating =GetRating(earned / actual, "CostCPISPI");
+            }
+            else
+            {
+                basicEarned=null;
+                basicRating=null;
+                basicCPI=null;
+            }
+        }
+
+        private tblProject_HistoryRating GetRating(double value, string column)
         {
             if (double.IsPositiveInfinity(value)) value = 99999999999;
             if (double.IsNaN(value)) value = 0;

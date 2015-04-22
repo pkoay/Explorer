@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>62</ApplicationRevision>
+    <ApplicationRevision>65</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -233,6 +233,10 @@
     <Compile Include="Controls\RHSTabs\Project\Admin.xaml.cs">
       <DependentUpon>Admin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RHSTabs\Project\PurchaseOrderSummaryView.xaml.cs">
+      <DependentUpon>PurchaseOrderSummaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Project\PurchaseOrderSummaryViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Project\CommittedViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Project\CommittedView.xaml.cs">
       <DependentUpon>CommittedView.xaml</DependentUpon>
@@ -322,10 +326,16 @@
     <Compile Include="Database\spWEX_RHS_Project_Cost_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\spWEX_RHS_Project_Invoiced_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\spWEX_RHS_Project_Performance_History_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\spWEX_RHS_Project_Performance_Safety_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_RHS_Project_PurchaseOrderSummary_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\spWEX_RHS_Project_Summary_Result.cs">
@@ -574,6 +584,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Project\Admin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Project\PurchaseOrderSummaryView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

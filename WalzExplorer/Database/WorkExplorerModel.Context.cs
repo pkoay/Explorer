@@ -477,5 +477,23 @@ namespace WalzExplorer.Database
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<System.DateTime>>("spExplorer_ServerDatetime");
         }
+    
+        public virtual ObjectResult<spWEX_RHS_Project_Invoiced_Result> spWEX_RHS_Project_Invoiced(Nullable<int> projectID)
+        {
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_Invoiced_Result>("spWEX_RHS_Project_Invoiced", projectIDParameter);
+        }
+    
+        public virtual ObjectResult<spWEX_RHS_Project_PurchaseOrderSummary_Result> spWEX_RHS_Project_PurchaseOrderSummary(Nullable<int> projectID)
+        {
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_PurchaseOrderSummary_Result>("spWEX_RHS_Project_PurchaseOrderSummary", projectIDParameter);
+        }
     }
 }
