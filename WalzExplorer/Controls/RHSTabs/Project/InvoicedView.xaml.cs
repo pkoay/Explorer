@@ -27,22 +27,19 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
         public override void TabLoad()
         {
-            
-            //grd2.grd.DataContext = vm;
-            //grd2.grd.ItemsSource = vm.data;
 
-            //grd2.SetGrid(settings);
-            //grd2.Reset();
-            //grd2.columnSettings.developer.Add("DataAreaId");
-            //grd2.columnSettings.format.Add("ProjId", Grid.Grid_Read.columnFormat.COUNT);
-            //grd2.columnSettings.format.Add("Date", Grid.Grid_Read.columnFormat.DATE);
-            //grd2.columnSettings.format.Add("CommCostAmount", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
-            //grd2.columnSettings.format.Add("Quantity", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
-            //grd2.columnSettings.format.Add("CategoryGroup", Grid.Grid_Read.columnFormat.TEXT);
-            //grd2.columnSettings.format.Add("CategoryName", Grid.Grid_Read.columnFormat.TEXT);
-            //grd2.columnSettings.format.Add("PurchQtyPrice", Grid.Grid_Read.columnFormat.TWO_DECIMAL_NO_TOTAL);
+            vm = new InvoicedViewModel(settings);
+            grd.grd.DataContext = vm;
+            grd.grd.ItemsSource = vm.data;
 
-
+            grd.SetGrid(settings);
+            grd.columnSettings.developer.Add("DataAreaID");
+            grd.columnSettings.format.Add("PurchaseOrderID", Grid.Grid_Read.columnFormat.COUNT);
+            grd.columnSettings.format.Add("ProjID", Grid.Grid_Read.columnFormat.TEXT);
+            grd.columnSettings.format.Add("InvoiceDate", Grid.Grid_Read.columnFormat.DATE);
+            grd.columnSettings.format.Add("ProjTransType", Grid.Grid_Read.columnFormat.TEXT);
+            grd.columnSettings.format.Add("TransId", Grid.Grid_Read.columnFormat.TEXT);
+            grd.columnSettings.format.Add("Invoiced", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
         }
         public override string IssueIfClosed()
         {
