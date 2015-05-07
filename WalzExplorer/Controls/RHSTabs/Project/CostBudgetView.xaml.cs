@@ -36,6 +36,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.SetGrid(settings);
             grd.columnSettings.developer.Add("DataAreaID");
             grd.columnSettings.format.Add("ProjID", Grid.Grid_Read.columnFormat.COUNT);
+            grd.columnSettings.format.Add("Name", Grid.Grid_Read.columnFormat.TEXT);
+            grd.columnSettings.rename.Add("NAME","Project Name");
             grd.columnSettings.format.Add("BudgetType", Grid.Grid_Read.columnFormat.TEXT);
             grd.columnSettings.format.Add("Category", Grid.Grid_Read.columnFormat.TEXT);
             grd.columnSettings.format.Add("TotalAmount", Grid.Grid_Read.columnFormat.TWO_DECIMAL);

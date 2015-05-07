@@ -27,8 +27,15 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _projID, value); } 
     	}
     
-        private System.DateTime _invoiceDate;
-    	public System.DateTime InvoiceDate 
+        private string _projectName;
+    	public string ProjectName 
+    	{ 
+    		get { return _projectName; } 
+    		set { SetProperty(ref _projectName, value); } 
+    	}
+    
+        private Nullable<System.DateTime> _invoiceDate;
+    	public Nullable<System.DateTime> InvoiceDate 
     	{ 
     		get { return _invoiceDate; } 
     		set { SetProperty(ref _invoiceDate, value); } 
@@ -41,18 +48,18 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _projTransType, value); } 
     	}
     
-        private string _transId;
-    	public string TransId 
+        private string _invoiceNo;
+    	public string InvoiceNo 
     	{ 
-    		get { return _transId; } 
-    		set { SetProperty(ref _transId, value); } 
+    		get { return _invoiceNo; } 
+    		set { SetProperty(ref _invoiceNo, value); } 
     	}
     
-        private decimal _invoiced;
-    	public decimal Invoiced 
+        private decimal _invoicedAmount;
+    	public decimal InvoicedAmount 
     	{ 
-    		get { return _invoiced; } 
-    		set { SetProperty(ref _invoiced, value); } 
+    		get { return _invoicedAmount; } 
+    		set { SetProperty(ref _invoicedAmount, value); } 
     	}
     
     }

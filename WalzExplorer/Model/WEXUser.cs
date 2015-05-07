@@ -66,51 +66,10 @@ namespace WalzExplorer
                 SecurityGroups.Add(group);
             }
 
-            //foreach (GroupPrincipal group in GetGroups(MimicedPerson.Login))
-            //{
-            //    SecurityGroups.Add(group.Name);
-            //}
-
-
-
-            //switch (MimicedPerson.AXPersonID) //Login.ToUpper())
-            //{
-            //    case "2640"://"WALZ\\IPARUGAO":
-            //    case "3125"://"WALZ\\SGIVNEY":
-            //        SecurityGroups.Add("WD_Project");
-            //        break;
-            //    case "WRID": //"WALZ\\DWRIGHT":
-            //    case "HYNEJ": //"WALZ\\JHYNES":
-            //        SecurityGroups.Add("WD_Project");
-            //        SecurityGroups.Add("WP_Project_Manager");
-            //        break;
-            //    case "1908": // "WALZ\\TRIGBY":
-            //        SecurityGroups.Add("WD_Tender");
-            //        SecurityGroups.Add("WP_Tender_Manager");
-            //        break;
-
-            //}
+          
         }
 
-        //public string LoginID // derived from windows
-        //{
-        //    get
-        //    {
-        //        return _loginID;
-        //    }
-        //    set
-        //    {
-        //        _loginID = value;
-        //        ////Set security groups
-        //        //foreach (GroupPrincipal group in GetGroups(_loginID))
-        //        //{
-        //        //    SecurityGroups.Add(group.Name);
-        //        //}
-
-        //        //RealPerson = db.tblPersons.Where(x => x.Login == _loginID).FirstOrDefault();
-        //        //MimicedPerson = RealPerson;     
-        //    }
-        //}
+    
         
         public string SecurityGroupAsString ()
         {

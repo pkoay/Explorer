@@ -33,4 +33,21 @@ namespace WalzExplorer.Common
 
         }
     }
+
+    public class SplitDataConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            var valuesString = (string)value;
+            var values = valuesString.Split(';');
+
+            return values[int.Parse((string)parameter)];
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

@@ -19,6 +19,7 @@ using System.Security.Principal;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using WalzExplorer.Database;
+using System.Deployment;
 
 using WalzExplorer.Controls.TreeView;
 using WalzExplorer.Controls.TreeView.ViewModel;
@@ -34,6 +35,7 @@ using WalzExplorer.Common;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.Threading;
+using System.Deployment.Application;
 
 namespace WalzExplorer
 {
@@ -351,7 +353,20 @@ namespace WalzExplorer
                     tcLHS_SelectionChanged(tcLHS, null);
                     break;
                 case "miAbout":
-                    MessageBox.Show("This appliaction was developed for the Walz Group." + Environment.NewLine + "Developed by Phil Koay (Mobile:0419233605).", "About", MessageBoxButton.OK, MessageBoxImage.Information);
+                    string version;
+                    if (ApplicationDeployment.IsNetworkDeployed)
+                        version = ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+                    else
+                        version="<not network deployed>";
+                    
+                    MessageBox.Show(
+                        string.Join(Environment.NewLine,
+                            "Current version is " + version,
+                            "",
+                            "This appliaction was developed for the Walz Group.",
+                            "",
+                            "Developed by Phil Koay (Mobile:0419233605)."
+                            ), "About", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;
                 case "miMimic":
                     int OriginalMimic = settings.user.MimicedPerson.PersonID;

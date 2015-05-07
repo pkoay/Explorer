@@ -27,11 +27,25 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _projID, value); } 
     	}
     
+        private string _nAME;
+    	public string NAME 
+    	{ 
+    		get { return _nAME; } 
+    		set { SetProperty(ref _nAME, value); } 
+    	}
+    
         private string _budgetType;
     	public string BudgetType 
     	{ 
     		get { return _budgetType; } 
     		set { SetProperty(ref _budgetType, value); } 
+    	}
+    
+        private Nullable<decimal> _totalAmount;
+    	public Nullable<decimal> TotalAmount 
+    	{ 
+    		get { return _totalAmount; } 
+    		set { SetProperty(ref _totalAmount, value); } 
     	}
     
         private Nullable<decimal> _directLabourHours;
@@ -60,13 +74,6 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _materialAmount; } 
     		set { SetProperty(ref _materialAmount, value); } 
-    	}
-    
-        private Nullable<decimal> _totalAmount;
-    	public Nullable<decimal> TotalAmount 
-    	{ 
-    		get { return _totalAmount; } 
-    		set { SetProperty(ref _totalAmount, value); } 
     	}
     
     }

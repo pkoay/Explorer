@@ -38,8 +38,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.columnSettings.format.Add("ProjID", Grid.Grid_Read.columnFormat.TEXT);
             grd.columnSettings.format.Add("InvoiceDate", Grid.Grid_Read.columnFormat.DATE);
             grd.columnSettings.format.Add("ProjTransType", Grid.Grid_Read.columnFormat.TEXT);
-            grd.columnSettings.format.Add("TransId", Grid.Grid_Read.columnFormat.TEXT);
-            grd.columnSettings.format.Add("Invoiced", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("InvoiceNo", Grid.Grid_Read.columnFormat.TEXT);
+            grd.columnSettings.format.Add("InvoicedAmount", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
         }
         public override string IssueIfClosed()
         {

@@ -13,18 +13,11 @@ namespace WalzExplorer.Database
     using System.Collections.Generic;
     public partial class spWEX_RHS_Project_PurchaseOrderSummary_Result : ModelBase
     {
-        private string _dATAAREAID;
-    	public string DATAAREAID 
+        private string _dataAreaID;
+    	public string DataAreaID 
     	{ 
-    		get { return _dATAAREAID; } 
-    		set { SetProperty(ref _dATAAREAID, value); } 
-    	}
-    
-        private string _purchaseOrderID;
-    	public string PurchaseOrderID 
-    	{ 
-    		get { return _purchaseOrderID; } 
-    		set { SetProperty(ref _purchaseOrderID, value); } 
+    		get { return _dataAreaID; } 
+    		set { SetProperty(ref _dataAreaID, value); } 
     	}
     
         private string _projID;
@@ -32,6 +25,20 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _projID; } 
     		set { SetProperty(ref _projID, value); } 
+    	}
+    
+        private string _projectName;
+    	public string ProjectName 
+    	{ 
+    		get { return _projectName; } 
+    		set { SetProperty(ref _projectName, value); } 
+    	}
+    
+        private string _purchaseOrderID;
+    	public string PurchaseOrderID 
+    	{ 
+    		get { return _purchaseOrderID; } 
+    		set { SetProperty(ref _purchaseOrderID, value); } 
     	}
     
         private string _requisitioner;

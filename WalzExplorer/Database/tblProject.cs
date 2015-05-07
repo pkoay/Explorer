@@ -194,6 +194,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _hoursActual, value); } 
     	}
     
+        private Nullable<int> _p6ProjID;
+    	public Nullable<int> P6ProjID 
+    	{ 
+    		get { return _p6ProjID; } 
+    		set { SetProperty(ref _p6ProjID, value); } 
+    	}
+    
     
         public virtual tblPerson tblPerson { get; set; }
         public virtual tblPerson tblPerson1 { get; set; }

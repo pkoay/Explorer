@@ -36,7 +36,9 @@ namespace WalzExplorer.Controls.Grid
             INT,
             INT_NO_TOTAL,
             TWO_DECIMAL_NO_TOTAL,
-            TWO_DECIMAL
+            TWO_DECIMAL,
+            PERCENT_NO_TOTAL,
+            PERCENT_NO_TOTAL_TWO_DECIMAL,
         };
 
         public class GridColumnSettings : IDisposable
@@ -257,7 +259,7 @@ namespace WalzExplorer.Controls.Grid
 
 
             //Ignore Columns for developers only while not in development mode
-            if (columnSettings.developer.Contains(c.UniqueName) && !_settings.DeveloperMode) { e.Cancel = true; return; }
+            if (columnSettings.developer.Contains(c.UniqueName, StringComparer.OrdinalIgnoreCase) && !_settings.DeveloperMode) { e.Cancel = true; return; }
 
             //Rename 
             if (columnSettings.rename.ContainsKey(c.UniqueName))
@@ -392,12 +394,28 @@ namespace WalzExplorer.Controls.Grid
                     column.IsGroupable = false;
                     break;
 
+
                 case columnFormat.TWO_DECIMAL:
                     column.DataFormatString = "#,##0.00";
                     column.TextAlignment = TextAlignment.Right;
                     column.HeaderTextAlignment = TextAlignment.Right;
                     column.FooterTextAlignment = TextAlignment.Right;
                     column.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = "{0:#,0.00}" });
+                    column.IsGroupable = false;
+                    break;
+
+                case columnFormat.PERCENT_NO_TOTAL:
+                    column.DataFormatString = "#,##0%";
+                    column.TextAlignment = TextAlignment.Right;
+                    column.HeaderTextAlignment = TextAlignment.Right;
+                    column.FooterTextAlignment = TextAlignment.Right;
+                    column.IsGroupable = false;
+                    break;
+                case columnFormat.PERCENT_NO_TOTAL_TWO_DECIMAL:
+                    column.DataFormatString = "#,##0.00%";
+                    column.TextAlignment = TextAlignment.Right;
+                    column.HeaderTextAlignment = TextAlignment.Right;
+                    column.FooterTextAlignment = TextAlignment.Right;
                     column.IsGroupable = false;
                     break;
             }

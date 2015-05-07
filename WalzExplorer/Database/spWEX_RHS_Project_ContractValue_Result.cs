@@ -27,6 +27,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _projID, value); } 
     	}
     
+        private string _projectName;
+    	public string ProjectName 
+    	{ 
+    		get { return _projectName; } 
+    		set { SetProperty(ref _projectName, value); } 
+    	}
+    
         private string _budgetType;
     	public string BudgetType 
     	{ 
