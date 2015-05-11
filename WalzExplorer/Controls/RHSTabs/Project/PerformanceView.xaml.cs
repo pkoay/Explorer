@@ -276,7 +276,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                                 <DataTemplate>
                                     <StackPanel Orientation=""Horizontal"" Margin=""5,5,10,5"" Background=""#FF1E1E1E"">
                                         <Rectangle Height=""10"" Width=""10"" Fill=""" + ev.Color + @""" Margin=""5,5,5,5"" />
-                                        <TextBlock Text=""{Binding Path=DataPoint.Value, StringFormat='" + ev.Title + @" {0}'}""
+                                        <TextBlock Text=""{Binding Path=DataPoint.Value, StringFormat='" + ev.Title + @" {0:#,##0}'}""
                                        FontFamily=""Segoe UI""  Foreground=""#FFF1F1F1""/>
                                     </StackPanel>
                                 </DataTemplate>
