@@ -218,29 +218,29 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
                 #endregion
 
-                #region Cost Tab
+                #region Revenue Tab
                 //***********************
-                //COST
+                //REVENUE
 
                 //Rating
-                tbCostRating.Focusable = false;
-                tbCostRating.ToolTip = String.Join(
-                    Environment.NewLine,
-                    "Cost Rating",
-                    "",
-                    "This rating is calculated by taking the lowest of the cost SPI or CPI rating",
-                    "");
+                //tbCostRating.Focusable = false;
+                //tbCostRating.ToolTip = String.Join(
+                //    Environment.NewLine,
+                //    "Cost Rating",
+                //    "",
+                //    "This rating is calculated by taking the lowest of the cost SPI or CPI rating",
+                //    "");
 
-                //Comments
-                tbCostComments.DataContext = vm.historyData;
-                tbCostComments.SetBinding(TextBox.TextProperty, new Binding("CostComments"));
-                tbCostComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
+                ////Comments
+                //tbCostComments.DataContext = vm.historyData;
+                //tbCostComments.SetBinding(TextBox.TextProperty, new Binding("CostComments"));
+                //tbCostComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
 
 
                 //Legend
                 var legendItems = new LegendItemCollection();
                 //string dataSeparator = ";";
-                foreach (var item in vm.costLegendData)
+                foreach (var item in vm.revenueLegendData)
                 {
                     legendItems.Add(new LegendItem()
                     {
@@ -249,11 +249,11 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                         MarkerGeometry = new RectangleGeometry() { Rect = new Rect(0, 0, 15, 15) },
                     });
                 }
-                lgdCost.Items = legendItems;
+                lgdRevenue.Items = legendItems;
 
 
                 //Chart
-                chartCost.Series.Clear();
+                chartRevenue.Series.Clear();
 
                 //List<CartesianSeries> generatedSeries = new List<CartesianSeries>();
                 foreach (tblProject_EarnedValueType ev in vm.earnedValueList)
@@ -263,7 +263,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     series.DataContext = vm;
                     string TemplateName = string.Format("EllipseTemplate{0}", ev.Title);
 
-                    series.PointTemplate = chartCost.Resources[TemplateName] as DataTemplate;
+                    series.PointTemplate = chartRevenue.Resources[TemplateName] as DataTemplate;
                     series.CategoryBinding = new PropertyNameDataPointBinding("WeekEnd");
                     series.ValueBinding = new PropertyNameDataPointBinding("Value");
                     var bc = new BrushConverter();
@@ -293,38 +293,38 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     DataTemplate datatemplate = (DataTemplate)XamlReader.Load(sr, pc);
                     series.TrackBallInfoTemplate = datatemplate;
 
-                    chartCost.Series.Add(series);
+                    chartRevenue.Series.Add(series);
                 }
 
                 //Cost Summary
-                lblCostSummary.Content = "Cost Summary (as at " + strPeriod + "):";
+                lblRevenueSummary.Content = "Cost Summary (as at " + strPeriod + "):";
 
                 //Summary Grid
-                grdCostSummary.SetGrid(settings);
+                grdRevenueSummary.SetGrid(settings);
                 //grdCostSummary.Reset();
-                grdCostSummary.grd.ShowGroupPanel = false;
-                grdCostSummary.grd.ShowColumnFooters = false;
-                grdCostSummary.grd.CanUserFreezeColumns = false;
-                grdCostSummary.grd.IsFilteringAllowed = false;
-                grdCostSummary.grd.DataContext = vm;
+                grdRevenueSummary.grd.ShowGroupPanel = false;
+                grdRevenueSummary.grd.ShowColumnFooters = false;
+                grdRevenueSummary.grd.CanUserFreezeColumns = false;
+                grdRevenueSummary.grd.IsFilteringAllowed = false;
+                grdRevenueSummary.grd.DataContext = vm;
 
-                grdCostSummary.columnSettings.format.Add("Planned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
-                grdCostSummary.columnSettings.format.Add("Earned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
-                grdCostSummary.columnSettings.format.Add("Actual", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
-                grdCostSummary.columnSettings.format.Add("ScheduleVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
-                grdCostSummary.columnSettings.format.Add("CostVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
-                grdCostSummary.columnSettings.format.Add("SPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
-                grdCostSummary.columnSettings.format.Add("CPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+                grdRevenueSummary.columnSettings.format.Add("Planned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+                grdRevenueSummary.columnSettings.format.Add("Earned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+                grdRevenueSummary.columnSettings.format.Add("Actual", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+                grdRevenueSummary.columnSettings.format.Add("ScheduleVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+                grdRevenueSummary.columnSettings.format.Add("CostVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+                grdRevenueSummary.columnSettings.format.Add("SPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+                grdRevenueSummary.columnSettings.format.Add("CPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
 
-                grdCostSummary.columnSettings.background.Add("SPI", vm.costSPIcolor);
-                grdCostSummary.columnSettings.background.Add("CPI", vm.costCPIcolor);
-                grdCostSummary.columnSettings.foreground.Add("SPI", "#FF000000");
-                grdCostSummary.columnSettings.foreground.Add("CPI", "#FF000000");
+                grdRevenueSummary.columnSettings.background.Add("SPI", vm.revenueSPIcolor);
+                grdRevenueSummary.columnSettings.background.Add("CPI", vm.revenueCPIcolor);
+                grdRevenueSummary.columnSettings.foreground.Add("SPI", "#FF000000");
+                grdRevenueSummary.columnSettings.foreground.Add("CPI", "#FF000000");
 
 
-                grdCostSummary.columnSettings.toolTip.Add("Planned", vm.costToolTipPlanned);
-                grdCostSummary.columnSettings.toolTip.Add("Earned", vm.costToolTipEarned);
-                grdCostSummary.columnSettings.toolTip.Add("Actual", vm.costToolTipActual);
+                grdRevenueSummary.columnSettings.toolTip.Add("Planned", vm.revenueToolTipPlanned);
+                grdRevenueSummary.columnSettings.toolTip.Add("Earned", vm.revenueToolTipEarned);
+                grdRevenueSummary.columnSettings.toolTip.Add("Actual", vm.revenueToolTipActual);
 
                 string scheduleVariance = String.Join(
                    Environment.NewLine,
@@ -335,7 +335,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                    "This figure is shows the 'Direct Cost' we are in front (if positive) or behind (if negative) from our plan",
                    "");
 
-                grdCostSummary.columnSettings.toolTip.Add("ScheduleVariance", scheduleVariance);
+                grdRevenueSummary.columnSettings.toolTip.Add("ScheduleVariance", scheduleVariance);
                 string costVariance = String.Join(
                  Environment.NewLine,
                  "Cost Variance",
@@ -345,7 +345,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                  "This figure is shows the 'Direct Cost' we are in front (if positive) or behind (if negative) from our actual spend",
                  "");
 
-                grdCostSummary.columnSettings.toolTip.Add("CostVariance", costVariance);
+                grdRevenueSummary.columnSettings.toolTip.Add("CostVariance", costVariance);
                 string spi = String.Join(
                     Environment.NewLine,
                     "Schedule Performance Indicator",
@@ -359,7 +359,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     "   Between 0.95 and 0.900   Red (Bad)",
                     "   Lower than  0.90         Light Red (Very bad)",
                     "");
-                grdCostSummary.columnSettings.toolTip.Add("SPI", spi);
+                grdRevenueSummary.columnSettings.toolTip.Add("SPI", spi);
 
                 string cpi = String.Join(
                    Environment.NewLine,
@@ -374,7 +374,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                    "   Between 0.95 and 0.900   Red (Bad)",
                    "   Lower than  0.90         Light Red (Very bad)",
                    "");
-                grdCostSummary.columnSettings.toolTip.Add("CPI", cpi);
+                grdRevenueSummary.columnSettings.toolTip.Add("CPI", cpi);
                 #endregion
 
                 #region Hours Tab
@@ -968,24 +968,24 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             niBasicCostAtCompletion.DataContext = vm.historyData;
             niBasicCostAtCompletion_LostFocus(null, null); //calculate %Comp, Earned, CPI
                 
-            //Cost
-            tbCostComments.DataContext = vm.historyData;
-            foreach (CartesianSeries series in chartCost.Series)
+            //Revenue
+            //tbCostComments.DataContext = vm.historyData;
+            foreach (CartesianSeries series in chartRevenue.Series)
             {
                 switch (series.Name)
                 {
                     case "Planned":
-                        series.ItemsSource = vm.costPlannedData;
+                        series.ItemsSource = vm.revenuePlannedData;
                         break;
                     case "Earned":
-                        series.ItemsSource = vm.costEarnedData;
+                        series.ItemsSource = vm.revenueEarnedData;
                         break;
                     case "Actual":
-                        series.ItemsSource = vm.costActualData;
+                        series.ItemsSource = vm.revenueActualData;
                         break;
                 }
             }
-            grdCostSummary.grd.ItemsSource = vm.costSummaryData;
+            grdRevenueSummary.grd.ItemsSource = vm.revenueSummaryData;
 
             //hours
             //cmbHoursRating.DataContext = vm.historyData;

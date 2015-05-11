@@ -84,8 +84,8 @@
 
 
 
-            <!--COST TAB-->
-            <telerik:RadTabItem Name="TabCost" Header="Cost" Margin="0">
+            <!--REVENUE TAB-->
+            <telerik:RadTabItem Name="TabRevenue" Header="Revenue" Margin="0">
 
                 <Grid Background="Transparent">
                     <Grid.RowDefinitions>
@@ -97,14 +97,14 @@
                     </Grid.RowDefinitions>
 
                     <!--Rating-->
-                    <Label Content="Cost Rating" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Height="26" Width="80" Grid.Row="0"/>
+                    <!--<Label Content="Cost Rating" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Height="26" Width="80" Grid.Row="0"/>
                     <TextBox Name="tbCostRating"  HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="129" Height="26" Grid.Row="0"/>
-                    <!--<telerik:RadComboBox Name="cmbHoursRating" Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}" HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="129" Height="26" Grid.Row="0"/>-->
+                    --><!--<telerik:RadComboBox Name="cmbHoursRating" Style="{StaticResource Rating_RadComboBoxStyle}" ItemContainerStyle="{StaticResource Rating_RadComboBoxItemStyle}" HorizontalAlignment="Left" Margin="95,4,0,0" VerticalAlignment="Top" Width="129" Height="26" Grid.Row="0"/>--><!--
                     <TextBox Name="tbCostComments" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch"  Height="76" Margin="317,5,10,0" TextWrapping="Wrap"  VerticalAlignment="Top" Grid.Row="0"/>
-                    <Label Content="Comments" HorizontalAlignment="Left" Margin="242,4,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>
+                    <Label Content="Comments" HorizontalAlignment="Left" Margin="242,4,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.Row="0"/>-->
 
                     <!--Chart Legend-->
-                    <telerik:RadLegend Name="lgdCost" Margin="100,0,100,0" Grid.Row="1" FontSize="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <telerik:RadLegend Name="lgdRevenue" Margin="100,0,100,0" Grid.Row="1" FontSize="12" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <telerik:RadLegend.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <telerik:RadWrapPanel Orientation="Horizontal" ItemWidth="120" />
@@ -129,7 +129,7 @@
                     </telerik:RadLegend>
 
                     <!--Chart-->
-                    <telerik:RadCartesianChart Name="chartCost"  Grid.Row="2"  >
+                    <telerik:RadCartesianChart Name="chartRevenue"  Grid.Row="2"  >
                         <telerik:RadCartesianChart.Resources>
 
                             <DataTemplate x:Key="EllipseTemplatePlanned">
@@ -157,7 +157,7 @@
                             <telerik:DateTimeCategoricalAxis   ElementBrush ="{DynamicResource TextBrush}" LabelFormat="dd-MMM-yy"/>
                         </telerik:RadCartesianChart.HorizontalAxis>
                         <telerik:RadCartesianChart.VerticalAxis>
-                            <telerik:LinearAxis Title="COST DOLLARS"  ElementBrush="{DynamicResource TextBrush}"/>
+                            <telerik:LinearAxis Title="REVENUE DOLLARS"  ElementBrush="{DynamicResource TextBrush}" LabelFormat="#,##0"/>
                         </telerik:RadCartesianChart.VerticalAxis>
                         <telerik:RadCartesianChart.Grid>
                             <telerik:CartesianChartGrid MajorLinesVisibility="Y"/>
@@ -167,15 +167,15 @@
 
 
                     <!--Cost Summary-->
-                    <Label Name="lblCostSummary"  HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="3" VerticalAlignment="Top" Width="600" Height="10"/>
-                    <grid:Grid_Read Grid.Row="4" x:Name="grdCostSummary" />
+                    <Label Name="lblRevenueSummary"  HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="3" VerticalAlignment="Top" Width="600" Height="10"/>
+                    <grid:Grid_Read Grid.Row="4" x:Name="grdRevenueSummary" />
 
                 </Grid>
 
             </telerik:RadTabItem>
 
             <!--HOURS TAB-->
-            <telerik:RadTabItem Name="TabHours" Header="Hours" Margin="0">
+            <telerik:RadTabItem Name="TabHours" Header="Hours" Margin="0" Visibility="Hidden">
 
                 <Grid Background="Transparent">
                     <Grid.RowDefinitions>

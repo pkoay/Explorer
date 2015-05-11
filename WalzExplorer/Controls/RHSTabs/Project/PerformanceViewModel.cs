@@ -38,18 +38,18 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         public ObservableCollection<tblProject_EarnedValueType> earnedValueList;
 
 
-        //Cost
-        public ObservableCollection<tblProject_HistoryDollars> costPlannedData;
-        public ObservableCollection<tblProject_HistoryDollars> costEarnedData;
-        public ObservableCollection<tblProject_HistoryDollars> costActualData;
-        public ObservableCollection<EarnedValueSummarydata> costSummaryData = new ObservableCollection<EarnedValueSummarydata>();
-        public ObservableCollection<CustomLegendItem> costLegendData = new ObservableCollection<CustomLegendItem>();
-        public string costSPIcolor;
-        public string costCPIcolor;
-        public string costToolTipPlanned;
-        public string costToolTipEarned;
-        public string costToolTipActual;
-        public tblProject_HistoryRating costRating;
+        //Revenue
+        public ObservableCollection<tblProject_HistoryDollars> revenuePlannedData;
+        public ObservableCollection<tblProject_HistoryDollars> revenueEarnedData;
+        public ObservableCollection<tblProject_HistoryDollars> revenueActualData;
+        public ObservableCollection<EarnedValueSummarydata> revenueSummaryData = new ObservableCollection<EarnedValueSummarydata>();
+        public ObservableCollection<CustomLegendItem> revenueLegendData = new ObservableCollection<CustomLegendItem>();
+        public string revenueSPIcolor;
+        public string revenueCPIcolor;
+        public string revenueToolTipPlanned;
+        public string revenueToolTipEarned;
+        public string revenueToolTipActual;
+        public tblProject_HistoryRating revenueRating;
 
 
         //Hours
@@ -170,19 +170,19 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             }
 
             //Cost
-            costActualData = new ObservableCollection<tblProject_HistoryDollars>(context.tblProject_HistoryDollars.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 3));
-            costEarnedData = new ObservableCollection<tblProject_HistoryDollars>(context.tblProject_HistoryDollars.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 2));
-            costPlannedData = new ObservableCollection<tblProject_HistoryDollars>(context.tblProject_HistoryDollars.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 1));
-            costToolTipPlanned = earnedValueList.Where(x => x.Title == "Planned").First().ToolTipCost;
-            costToolTipEarned = earnedValueList.Where(x => x.Title == "Earned").First().ToolTipCost;
-            costToolTipActual = earnedValueList.Where(x => x.Title == "Actual").First().ToolTipCost;
+            revenueActualData = new ObservableCollection<tblProject_HistoryDollars>(context.tblProject_HistoryDollars.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 3));
+            revenueEarnedData = new ObservableCollection<tblProject_HistoryDollars>(context.tblProject_HistoryDollars.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 2));
+            revenuePlannedData = new ObservableCollection<tblProject_HistoryDollars>(context.tblProject_HistoryDollars.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 1));
+            revenueToolTipPlanned = earnedValueList.Where(x => x.Title == "Planned").First().ToolTipCost;
+            revenueToolTipEarned = earnedValueList.Where(x => x.Title == "Earned").First().ToolTipCost;
+            revenueToolTipActual = earnedValueList.Where(x => x.Title == "Actual").First().ToolTipCost;
 
-             dPlanned = (costPlannedData.Count == 0) ? 0 : costPlannedData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
-             dEarned = (costEarnedData.Count == 0) ? 0 : costEarnedData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
-             //dActual = (costActualData.Count == 0) ? 0 : costActualData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
+             dPlanned = (revenuePlannedData.Count == 0) ? 0 : revenuePlannedData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
+             dEarned = (revenueEarnedData.Count == 0) ? 0 : revenueEarnedData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
+             dActual = (revenueActualData.Count == 0) ? 0 : revenueActualData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
 
-            costSummaryData.Clear();
-            costSummaryData.Add(new EarnedValueSummarydata()
+            revenueSummaryData.Clear();
+            revenueSummaryData.Add(new EarnedValueSummarydata()
             {
                 Planned = dPlanned,
                 Earned = dEarned,
@@ -193,14 +193,14 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 CPI = dEarned / dActual,
             });
 
-            costSPIcolor = GetRating(dEarned / dPlanned, "CostCPISPI").Color;
-            costCPIcolor = GetRating(dEarned / dActual, "CostCPISPI").Color;
-            costRating = GetRating(dEarned / Math.Max(dPlanned, dActual), "CostCPISPI");
+            revenueSPIcolor = GetRating(dEarned / dPlanned, "CostCPISPI").Color;
+            revenueCPIcolor = GetRating(dEarned / dActual, "CostCPISPI").Color;
+            revenueRating = GetRating(dEarned / Math.Max(dPlanned, dActual), "CostCPISPI");
             //CostLegend
             foreach (tblProject_EarnedValueType evt in earnedValueList)
             {
                 CustomLegendItem costLegendItem = new CustomLegendItem() { Title = evt.Title, Color = evt.Color, ToolTip = evt.ToolTipCost };
-                costLegendData.Add(costLegendItem);
+                revenueLegendData.Add(costLegendItem);
             }
 
 
