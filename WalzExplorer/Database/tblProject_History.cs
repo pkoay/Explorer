@@ -655,6 +655,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _basicCostAtCompletion, value); } 
     	}
     
+        private int _typeID;
+    	public int TypeID 
+    	{ 
+    		get { return _typeID; } 
+    		set { SetProperty(ref _typeID, value); } 
+    	}
+    
     
         public virtual tblProject_HistoryStatus tblProject_HistoryStatus { get; set; }
         public virtual ICollection<tblProject_HistoryCritical> tblProject_HistoryCritical { get; set; }

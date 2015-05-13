@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>76</ApplicationRevision>
+    <ApplicationRevision>82</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -241,6 +241,10 @@
       <DependentUpon>CostBudgetView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Project\ContractValueViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Project\CostBudgetVsActualView.xaml.cs">
+      <DependentUpon>CostBudgetVsActualView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Project\CostBudgetVsActualViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Project\P6EarnedValueView.xaml.cs">
       <DependentUpon>P6EarnedValueView.xaml</DependentUpon>
     </Compile>
@@ -337,6 +341,9 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\spWEX_RHS_Project_ContractValue_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_RHS_Project_CostBudgetVsActual_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\spWEX_RHS_Project_CostBudget_Result.cs">
@@ -614,6 +621,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Project\CostBudgetView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Project\CostBudgetVsActualView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

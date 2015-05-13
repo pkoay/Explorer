@@ -34,18 +34,18 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _projectName, value); } 
     	}
     
-        private string _categoryGroup;
-    	public string CategoryGroup 
+        private string _purchOrderID;
+    	public string PurchOrderID 
     	{ 
-    		get { return _categoryGroup; } 
-    		set { SetProperty(ref _categoryGroup, value); } 
+    		get { return _purchOrderID; } 
+    		set { SetProperty(ref _purchOrderID, value); } 
     	}
     
-        private string _categoryName;
-    	public string CategoryName 
+        private string _purchVendor;
+    	public string PurchVendor 
     	{ 
-    		get { return _categoryName; } 
-    		set { SetProperty(ref _categoryName, value); } 
+    		get { return _purchVendor; } 
+    		set { SetProperty(ref _purchVendor, value); } 
     	}
     
         private Nullable<System.DateTime> _date;
@@ -76,20 +76,6 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _description, value); } 
     	}
     
-        private string _purchOrderID;
-    	public string PurchOrderID 
-    	{ 
-    		get { return _purchOrderID; } 
-    		set { SetProperty(ref _purchOrderID, value); } 
-    	}
-    
-        private string _purchVendor;
-    	public string PurchVendor 
-    	{ 
-    		get { return _purchVendor; } 
-    		set { SetProperty(ref _purchVendor, value); } 
-    	}
-    
         private string _purchUnit;
     	public string PurchUnit 
     	{ 
@@ -102,6 +88,20 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _purchQtyPrice; } 
     		set { SetProperty(ref _purchQtyPrice, value); } 
+    	}
+    
+        private string _categoryGroup;
+    	public string CategoryGroup 
+    	{ 
+    		get { return _categoryGroup; } 
+    		set { SetProperty(ref _categoryGroup, value); } 
+    	}
+    
+        private string _categoryName;
+    	public string CategoryName 
+    	{ 
+    		get { return _categoryName; } 
+    		set { SetProperty(ref _categoryName, value); } 
     	}
     
     }

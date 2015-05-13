@@ -151,18 +151,18 @@ namespace WalzExplorer
         }
 
 
-        private void tbSearch_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Return)
-            {
-                //Search();
-            }
-        }
+        //private void tbSearch_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Return)
+        //    {
+        //        //Search();
+        //    }
+        //}
 
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
-        {
-            //Search();
-        }
+        //private void btnSearch_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //Search();
+        //}
 
         private void btnFeedback_Click(object sender, RoutedEventArgs e)
         {
@@ -173,30 +173,60 @@ namespace WalzExplorer
 
         private void tcLHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            WEXTreeView tv;
             using (new WaitCursor())
             {
                 RadTabControl tc = (RadTabControl)sender;
                 if (tc.SelectedItem != null)
                 {
                     WEXLHSTab ti = (WEXLHSTab)tc.SelectedItem;
+                    settings.lhsTab = ti;
                     Logging.LogEvent("CHANGE LHSTab to" + ti.ID);
                     if (ti.Content == null)
                     {
                         //Create Treeview if not created
-                        WEXTreeView tv = new WEXTreeView() { Name = ti.TreeviewName(), Tag = ti.ID };
-                        tv.PopulateRoot(settings.user, dicSQLSubsitutes);
+                         tv = new WEXTreeView(settings) { Name = ti.TreeviewName(), Tag = ti.ID };
+                        if (ti.ID!="Search")    //if search populate via search button
+                        {
+                            tv.PopulateRoot(settings.user, dicSQLSubsitutes);
+                        }
+                        else
+                        {
+                            tv.SearchActivated += tv_SearchActivated;
+                        }
                         tv.NodeChanged += new EventHandler(tvLHS_NodeChanged);
                         ti.Content = tv;
                     }
                     else
                     {
                         // Fire node change event when tab changed
-                        WEXTreeView tv = (WEXTreeView)ti.Content;
+                         tv = (WEXTreeView)ti.Content;
                         tvLHS_NodeChanged(tv, null);
                     }
+                    tv = (WEXTreeView)ti.Content;
+                    if (tv.SelectedItem() == null)
+                    {
+                        tcRHS.Visibility = System.Windows.Visibility.Hidden;
+                    }
+
                 }
+                else
+                {
+                    settings.lhsTab = null;
+                   
+                }
+
             }
+        }
+
+        void tv_SearchActivated(object sender, EventArgs e)
+        {
+            WEXTreeView tv = (WEXTreeView)sender;
+            //Build dictionary of SQL subsitutions  (remove if already there)
+            if (dicSQLSubsitutes.ContainsKey("@@SearchCriteria")) dicSQLSubsitutes.Remove("@@SearchCriteria");
+            settings.SearchCriteria = tv.SearchValue();
+            dicSQLSubsitutes.Add("@@SearchCriteria", "'" + settings.SearchCriteria + "'");
+            tv.PopulateRoot(settings.user, dicSQLSubsitutes);
         }
 
         private void tcRHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -229,56 +259,65 @@ namespace WalzExplorer
         private void tvLHS_NodeChanged(object sender, EventArgs e)
         {
             WEXTreeView ntv = (WEXTreeView)sender;
-            RHSTabViewModel _rhsTabs = new RHSTabViewModel(ntv.SelectedItem(), settings.user);
-
-            WEXNode node = ntv.SelectedItem().Node;
-            Logging.LogEvent("CHANGE LHSNode to Type:" + node.IDType +", ID:"+node.ID );
-
-            //if tab list the same
-            //NOT doing this as issue with clareaing RADGRID with dropdowns Itemssource=Null;rebind(); does not get rid of all columns
-            //if (RHSTabsSame(_rhsTabs.RHSTabs, tcRHS.Items))
-            //{
-            //    if (tcRHS.Items.Count != 0)
-            //    {
-            //        // should reload control content
-            //        WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
-            //        CurrentTab.SetNode(ntv.SelectedNode());
-            //        CurrentTab.Content.Update();
-            //    }
-            //}
-            //else
-            //{
-            //Recreate tabs and set current tab (current tab= original tab or first tab) 
-
-            //Store currently selected Tab ID (if tabs exist)
-            string SelectedTabID = "";
-            if (tcRHS.Items.Count != 0)
-                SelectedTabID = ((WEXRHSTab)tcRHS.SelectedItem).ID;
-
-            //apply new tab list
-            base.DataContext = _rhsTabs;
-
-            //set selected tab to the same as before if possible or first
-            if (tcRHS.Items.Count != 0)
+            if (ntv.tv.Items.Count != 0)
             {
-                tcRHS.Visibility = System.Windows.Visibility.Visible;
-                for (int i = 0; i < tcRHS.Items.Count; i++)
+                if (ntv.SelectedItem() == null)
                 {
-                    if (((WEXRHSTab)tcRHS.Items[i]).ID == SelectedTabID)
+                    //no node selected
+                }
+                else
+                {
+                    RHSTabViewModel _rhsTabs = new RHSTabViewModel(ntv.SelectedItem(), settings.user);
+
+                    WEXNode node = ntv.SelectedItem().Node;
+                    Logging.LogEvent("CHANGE LHSNode to Type:" + node.IDType + ", ID:" + node.ID);
+
+                    //if tab list the same
+                    //NOT doing this as issue with clareaing RADGRID with dropdowns Itemssource=Null;rebind(); does not get rid of all columns
+                    //if (RHSTabsSame(_rhsTabs.RHSTabs, tcRHS.Items))
+                    //{
+                    //    if (tcRHS.Items.Count != 0)
+                    //    {
+                    //        // should reload control content
+                    //        WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
+                    //        CurrentTab.SetNode(ntv.SelectedNode());
+                    //        CurrentTab.Content.Update();
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //Recreate tabs and set current tab (current tab= original tab or first tab) 
+
+                    //Store currently selected Tab ID (if tabs exist)
+                    string SelectedTabID = "";
+                    if (tcRHS.Items.Count != 0)
+                        SelectedTabID = ((WEXRHSTab)tcRHS.SelectedItem).ID;
+
+                    //apply new tab list
+                    base.DataContext = _rhsTabs;
+
+                    //set selected tab to the same as before if possible or first
+                    if (tcRHS.Items.Count != 0)
                     {
-                        tcRHS.SelectedIndex = i;
-                        break;
+                        tcRHS.Visibility = System.Windows.Visibility.Visible;
+                        for (int i = 0; i < tcRHS.Items.Count; i++)
+                        {
+                            if (((WEXRHSTab)tcRHS.Items[i]).ID == SelectedTabID)
+                            {
+                                tcRHS.SelectedIndex = i;
+                                break;
+                            }
+                        }
                     }
+                    else
+                        tcRHS.Visibility = System.Windows.Visibility.Hidden;
+                    if (tcRHS.SelectedIndex == -1)
+                        tcRHS.SelectedIndex = 0;
+
+                    //((WEXRHSTab)tcRHS.SelectedItem).Content.Update();
+                    //}
                 }
             }
-            else
-                tcRHS.Visibility = System.Windows.Visibility.Hidden;
-            if (tcRHS.SelectedIndex == -1)
-                tcRHS.SelectedIndex = 0;
-
-            //((WEXRHSTab)tcRHS.SelectedItem).Content.Update();
-            //}
-
         }
 
         private bool RHSTabsSame(ObservableCollection<WEXRHSTab> NewTabs, ItemCollection tcRHS)

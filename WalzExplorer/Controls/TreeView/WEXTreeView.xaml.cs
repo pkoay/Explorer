@@ -26,9 +26,22 @@ namespace WalzExplorer.Controls.TreeView
         private RootViewModel _rootNode;
         private NodeViewModel _selectedNode;
 
-        public WEXTreeView()
+        public WEXTreeView(WEXSettings settings)
         {
+           
             InitializeComponent();
+            if (settings.lhsTab.ID != "Search")
+            {
+                tbSearch.Visibility = System.Windows.Visibility.Hidden;
+                lblSearch.Visibility = System.Windows.Visibility.Hidden;
+                tv.Margin = new Thickness(0, 0, 0, 0);
+            }
+            else
+            {
+                tbSearch.Visibility = System.Windows.Visibility.Visible;
+                lblSearch.Visibility = System.Windows.Visibility.Visible;
+                tv.Margin = new Thickness(0, 40, 0, 0);
+            }
         }
 
         public void PopulateRoot(WEXUser user, Dictionary<string, string> dicSQLSubsitutes)
@@ -68,5 +81,24 @@ namespace WalzExplorer.Controls.TreeView
 
         public event EventHandler NodeChanged;
 
+        public event EventHandler SearchActivated;
+
+        private void tbSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                SearchActivated(this, EventArgs.Empty);
+            }
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            SearchActivated(this, EventArgs.Empty);
+        }
+
+        public  string SearchValue()
+        {
+            return tbSearch.Text;
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         int CustomerID;
         string NodeTypeID;
         string UserPersonID;
+        
        
         public SummaryViewModel (WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
@@ -34,7 +35,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             //var pNTSecurityGroupsSeperator = new SqlParameter("@NTSecurityGroupsSeperator", "|");
             //data = context.Database.SqlQuery( "spWEX.RHSTabList", pTreeNodeTypeID, pNodeTypeID, pNTSecurityGroupsSeperator).ToList();
 
-            data = new ObservableCollection<spWEX_RHS_Project_Summary_Result>(context.spWEX_RHS_Project_Summary(UserPersonID, NodeTypeID, ProjectID,ManagerID, CustomerID));  
+            data = new ObservableCollection<spWEX_RHS_Project_Summary_Result>(context.spWEX_RHS_Project_Summary(UserPersonID, NodeTypeID, settings.SearchCriteria, ProjectID, ManagerID, CustomerID));  
         }
     }
 }

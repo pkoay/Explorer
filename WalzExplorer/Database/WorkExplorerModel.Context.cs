@@ -368,7 +368,7 @@ namespace WalzExplorer.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_Node_TenderActivityList_Result>("spWEX_Node_TenderActivityList", tenderIDParameter);
         }
     
-        public virtual ObjectResult<spWEX_RHS_Project_Summary_Result> spWEX_RHS_Project_Summary(string userPersonID, string nodeTypeID, Nullable<int> projectID, Nullable<int> managerID, Nullable<int> customerID)
+        public virtual ObjectResult<spWEX_RHS_Project_Summary_Result> spWEX_RHS_Project_Summary(string userPersonID, string nodeTypeID, string searchCriteria, Nullable<int> projectID, Nullable<int> managerID, Nullable<int> customerID)
         {
             var userPersonIDParameter = userPersonID != null ?
                 new ObjectParameter("UserPersonID", userPersonID) :
@@ -377,6 +377,10 @@ namespace WalzExplorer.Database
             var nodeTypeIDParameter = nodeTypeID != null ?
                 new ObjectParameter("NodeTypeID", nodeTypeID) :
                 new ObjectParameter("NodeTypeID", typeof(string));
+    
+            var searchCriteriaParameter = searchCriteria != null ?
+                new ObjectParameter("SearchCriteria", searchCriteria) :
+                new ObjectParameter("SearchCriteria", typeof(string));
     
             var projectIDParameter = projectID.HasValue ?
                 new ObjectParameter("ProjectID", projectID) :
@@ -390,7 +394,7 @@ namespace WalzExplorer.Database
                 new ObjectParameter("CustomerID", customerID) :
                 new ObjectParameter("CustomerID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_Summary_Result>("spWEX_RHS_Project_Summary", userPersonIDParameter, nodeTypeIDParameter, projectIDParameter, managerIDParameter, customerIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_Summary_Result>("spWEX_RHS_Project_Summary", userPersonIDParameter, nodeTypeIDParameter, searchCriteriaParameter, projectIDParameter, managerIDParameter, customerIDParameter);
         }
     
         public virtual ObjectResult<spWEX_RHS_Project_Committed_Result> spWEX_RHS_Project_Committed(Nullable<int> projectID)
@@ -521,6 +525,15 @@ namespace WalzExplorer.Database
                 new ObjectParameter("ProjectID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_P6EarnedValue_Result>("spWEX_RHS_Project_P6EarnedValue", projectIDParameter);
+        }
+    
+        public virtual ObjectResult<spWEX_RHS_Project_CostBudgetVsActual_Result> spWEX_RHS_Project_CostBudgetVsActual(Nullable<int> projectID)
+        {
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_CostBudgetVsActual_Result>("spWEX_RHS_Project_CostBudgetVsActual", projectIDParameter);
         }
     }
 }

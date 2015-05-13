@@ -13,8 +13,9 @@ namespace WalzExplorer
     {
         public bool DeveloperMode= false;
         public WEXUser user= new WEXUser();
-        public WEXNode node= new WEXNode(); 
-
+        public WEXLHSTab lhsTab = new WEXLHSTab();
+        public WEXNode node= new WEXNode();
+        public string SearchCriteria = "";
     }
     
 }
