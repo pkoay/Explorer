@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Background="#FF252526">
-        <Label Name="lblSearch" Content="Search:" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <!--<Label Name="lblSearch" Content="Search:" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <TextBox Name="tbSearch" HorizontalAlignment="Stretch" Margin="53,10,40,0" Height="10" VerticalAlignment="Top" KeyDown="tbSearch_KeyDown"/>
         <Button Name="btnSearch" Width ="25" Height="22"  Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" ToolTip="Search" Click="btnSearch_Click">
                  
@@ -17,8 +17,8 @@
                     <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_magnify}" />
                 </Rectangle.OpacityMask>
             </Rectangle>
-        </Button>
-        <TreeView Name ="tv" ItemsSource="{Binding RootNodes}" Margin="0,40,0,0"  SelectedItemChanged="tv_SelectedItemChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.PanningMode="VerticalOnly" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        </Button>-->
+        <TreeView Name ="tv" ItemsSource="{Binding RootNodes}" Margin="0,0,0,0"  SelectedItemChanged="tv_SelectedItemChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.PanningMode="VerticalOnly" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <TreeView.ItemContainerStyle>
             <!-- 
         This Style binds a TreeViewItem to a NodeViewModel. 

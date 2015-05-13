@@ -150,26 +150,7 @@ namespace WalzExplorer
             }
         }
 
-
-        //private void tbSearch_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == Key.Return)
-        //    {
-        //        //Search();
-        //    }
-        //}
-
-        //private void btnSearch_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //Search();
-        //}
-
-        private void btnFeedback_Click(object sender, RoutedEventArgs e)
-        {
-            Window winFeedBack = new Windows.FeedbackDialog(settings);
-            winFeedBack.Owner = Application.Current.MainWindow;
-            winFeedBack.ShowDialog();
-        }
+      
 
         private void tcLHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -192,7 +173,7 @@ namespace WalzExplorer
                         }
                         else
                         {
-                            tv.SearchActivated += tv_SearchActivated;
+                            //tv.SearchActivated += tv_SearchActivated;
                         }
                         tv.NodeChanged += new EventHandler(tvLHS_NodeChanged);
                         ti.Content = tv;
@@ -219,15 +200,15 @@ namespace WalzExplorer
             }
         }
 
-        void tv_SearchActivated(object sender, EventArgs e)
-        {
-            WEXTreeView tv = (WEXTreeView)sender;
-            //Build dictionary of SQL subsitutions  (remove if already there)
-            if (dicSQLSubsitutes.ContainsKey("@@SearchCriteria")) dicSQLSubsitutes.Remove("@@SearchCriteria");
-            settings.SearchCriteria = tv.SearchValue();
-            dicSQLSubsitutes.Add("@@SearchCriteria", "'" + settings.SearchCriteria + "'");
-            tv.PopulateRoot(settings.user, dicSQLSubsitutes);
-        }
+        //void tv_SearchActivated(object sender, EventArgs e)
+        //{
+        //    WEXTreeView tv = (WEXTreeView)sender;
+        //    //Build dictionary of SQL subsitutions  (remove if already there)
+        //    if (dicSQLSubsitutes.ContainsKey("@@SearchCriteria")) dicSQLSubsitutes.Remove("@@SearchCriteria");
+        //    settings.SearchCriteria = tv.SearchValue();
+        //    dicSQLSubsitutes.Add("@@SearchCriteria", "'" + settings.SearchCriteria + "'");
+        //    tv.PopulateRoot(settings.user, dicSQLSubsitutes);
+        //}
 
         private void tcRHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -353,9 +334,52 @@ namespace WalzExplorer
             return null;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+#region Menu bar
 
+        private void btnInfo_Click(object sender, RoutedEventArgs e)
+        {
+            WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
+            if (CurrentTab == null)
+            {
+                System.Diagnostics.Process.Start("http://gldsp01/Wiki/Explorer.aspx");
+            }
+            else
+            {
+                System.Diagnostics.Process.Start("http://gldsp01/Wiki/Explorer%20" + CurrentTab.ID.Replace(".", "%20") + "%20Tab.aspx");
+            }
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            Search();
+        }
+
+        private void tbSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                Search();
+            }
+        }
+        private void Search()
+        {
+            
+            settings.SearchCriteria = tbSearch.Text;
+            tcLHS.SelectedIndex = 2;
+            WEXLHSTab ti = (WEXLHSTab)tcLHS.SelectedItem;
+            WEXTreeView tv = (WEXTreeView)ti.Content;
+
+            //Build dictionary of SQL subsitutions  (remove if already there)
+            if (dicSQLSubsitutes.ContainsKey("@@SearchCriteria")) dicSQLSubsitutes.Remove("@@SearchCriteria");
+                    dicSQLSubsitutes.Add("@@SearchCriteria", "'" + settings.SearchCriteria + "'");
+            tv.PopulateRoot(settings.user, dicSQLSubsitutes);
+        }
+
+        private void btnFeedback_Click(object sender, RoutedEventArgs e)
+        {
+            Window winFeedBack = new Windows.FeedbackDialog(settings);
+            winFeedBack.Owner = Application.Current.MainWindow;
+            winFeedBack.ShowDialog();
         }
 
         private void btnConfigure_Click(object sender, RoutedEventArgs e)
@@ -423,14 +447,15 @@ namespace WalzExplorer
             }
         }
 
-        private void MetroWindow_Closed(object sender, EventArgs e)
-        {
-            Logging.LogEvent("Logout");
-        }
-
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             LoadFormForMimic();
+        }
+#endregion
+
+        private void MetroWindow_Closed(object sender, EventArgs e)
+        {
+            Logging.LogEvent("Logout");
         }
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -457,23 +482,6 @@ namespace WalzExplorer
         {
             Application.Current.Dispatcher.Invoke(DispatcherPriority.Background,
                                                   new Action(delegate { }));
-        }
-        private void MetroWindow_Unloaded(object sender, RoutedEventArgs e)
-        {
-           
-        }
-
-        private void btnInfo_Click(object sender, RoutedEventArgs e)
-        {
-              WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
-              if (CurrentTab == null)
-              {
-                  System.Diagnostics.Process.Start("http://gldsp01/Wiki/Explorer.aspx"); 
-              }
-              else
-              {
-                  System.Diagnostics.Process.Start("http://gldsp01/Wiki/Explorer%20" + CurrentTab.ID.Replace(".", "%20") + "%20Tab.aspx"); 
-              }
         }
 
     }
