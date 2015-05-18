@@ -17,6 +17,18 @@
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblFavourite">
+          <Key>
+            <PropertyRef Name="FavouriteID" />
+          </Key>
+          <Property Name="FavouriteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="Identifier" Type="int" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblPerson">
           <Key>
             <PropertyRef Name="PersonID" />
@@ -677,6 +689,7 @@
           <Property Name="LHSTabID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Icon" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="ToolTip" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="tblWEX_NTSecurityGroup">
           <Key>
@@ -1637,6 +1650,10 @@
         <Function Name="spWEX_RHS_Project_PurchaseOrderSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_PurchaseOrderSummary">
           <Parameter Name="ProjectID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spWEX_RHS_Project_PurchaseOrderSummary_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_PurchaseOrderSummary_v2">
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
+          <Parameter Name="PersonID" Type="int" Mode="In" />
+        </Function>
         <Function Name="spWEX_RHS_Project_Summary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Summary">
           <Parameter Name="UserPersonID" Type="nvarchar" Mode="In" />
           <Parameter Name="NodeTypeID" Type="varchar" Mode="In" />
@@ -1657,6 +1674,7 @@
         </Function>
         <EntityContainer Name="WalzExplorerModelStoreContainer">
           <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFavourite" EntityType="Self.tblFavourite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPerson" EntityType="Self.tblPerson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPerson_Mimic" EntityType="Self.tblPerson_Mimic" Schema="dbo" Table="tblPerson.Mimic" store:Type="Tables" />
           <EntitySet Name="tblProject" EntityType="Self.tblProject" Schema="dbo" store:Type="Tables" />
@@ -2264,6 +2282,7 @@
           <NavigationProperty Name="tblWEX_Tree" Relationship="Self.FK_WEX_Tree_WEX_LHSTab" FromRole="tblWEX_LHSTab" ToRole="tblWEX_Tree" />
           <Property Name="Icon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="ToolTip" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblWEX_NTSecurityGroup">
           <Key>
@@ -2993,6 +3012,14 @@
           </FunctionImport>
           <FunctionImport Name="spWEX_RHS_Project_CostBudgetVsActual" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_CostBudgetVsActual_Result)">
           <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="tblFavourites" EntityType="WalzExplorerModel.tblFavourite" />
+          <FunctionImport Name="spWEX_RHS_Project_PurchaseOrderSummary_ForPM" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_PurchaseOrderSummary_ForPM_Result)">
+            <Parameter Name="PersonID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_RHS_Project_PurchaseOrderSummary_v2" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_PurchaseOrderSummary_v2_Result)">
+            <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+            <Parameter Name="PersonID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
@@ -4205,20 +4232,6 @@
           <Property Type="String" Name="InvoiceNo" Nullable="false" MaxLength="20" />
           <Property Type="Decimal" Name="InvoicedAmount" Nullable="false" Precision="28" Scale="12" />
         </ComplexType>
-        <ComplexType Name="spWEX_RHS_Project_PurchaseOrderSummary_Result">
-          <Property Type="String" Name="DataAreaID" Nullable="false" MaxLength="4" />
-          <Property Type="String" Name="ProjID" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="ProjectName" Nullable="false" MaxLength="60" />
-          <Property Type="String" Name="PurchaseOrderID" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="Requisitioner" Nullable="false" MaxLength="51" />
-          <Property Type="String" Name="PurchasePlacer" Nullable="false" MaxLength="51" />
-          <Property Type="String" Name="VendorName" Nullable="true" MaxLength="60" />
-          <Property Type="String" Name="PurchaseName" Nullable="false" MaxLength="60" />
-          <Property Type="DateTime" Name="CreateDate" Nullable="true" />
-          <Property Type="Decimal" Name="OrderAmount" Nullable="true" Precision="38" Scale="12" />
-          <Property Type="Decimal" Name="CommittedAmount" Nullable="true" Precision="38" Scale="12" />
-          <Property Type="Decimal" Name="PaidAmount" Nullable="true" Precision="38" Scale="12" />
-        </ComplexType>
         <ComplexType Name="spWEX_RHS_Project_ContractValue_Result">
           <Property Type="String" Name="DataAreaID" Nullable="false" MaxLength="4" />
           <Property Type="String" Name="ProjID" Nullable="false" MaxLength="20" />
@@ -4279,6 +4292,65 @@
           <Property Type="Decimal" Name="Actual" Nullable="true" Precision="38" Scale="6" />
           <Property Type="Decimal" Name="Committed" Nullable="true" Precision="38" Scale="12" />
           <Property Type="Decimal" Name="Remaining" Nullable="true" Precision="38" Scale="6" />
+        </ComplexType>
+        <EntityType Name="tblFavourite">
+          <Key>
+            <PropertyRef Name="FavouriteID" />
+          </Key>
+          <Property Name="FavouriteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="Identifier" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+        </EntityType>
+        <ComplexType Name="spWEX_RHS_Project_PurchaseOrderSummary_Result">
+          <Property Type="String" Name="DataAreaID" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="ProjID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="PurchaseOrderID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Requisitioner" Nullable="false" MaxLength="51" />
+          <Property Type="String" Name="PurchasePlacer" Nullable="false" MaxLength="51" />
+          <Property Type="String" Name="VendorName" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="PurchaseName" Nullable="false" MaxLength="60" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" />
+          <Property Type="DateTime" Name="DeliveryDate" Nullable="true" />
+          <Property Type="Decimal" Name="OrderAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="CommittedAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="PaidAmount" Nullable="true" Precision="38" Scale="12" />
+        </ComplexType>
+        <ComplexType Name="spWEX_RHS_Project_PurchaseOrderSummary_ForPM_Result">
+          <Property Type="String" Name="DataAreaID" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="ProjID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="PurchaseOrderID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="PurchaseName" Nullable="false" MaxLength="60" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="255" />
+          <Property Type="DateTime" Name="DeliveryDate" Nullable="true" />
+          <Property Type="Decimal" Name="OrderAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="CommittedAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="PaidAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="String" Name="Requisitioner" Nullable="false" MaxLength="51" />
+          <Property Type="String" Name="PurchasePlacer" Nullable="false" MaxLength="51" />
+          <Property Type="String" Name="VendorName" Nullable="true" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="spWEX_RHS_Project_PurchaseOrderSummary_v2_Result">
+          <Property Type="String" Name="DataAreaID" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="ProjID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="PurchaseOrderID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="PurchaseName" Nullable="false" MaxLength="60" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="255" />
+          <Property Type="DateTime" Name="DeliveryDate" Nullable="true" />
+          <Property Type="Decimal" Name="OrderAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="CommittedAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="PaidAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="String" Name="Requisitioner" Nullable="false" MaxLength="51" />
+          <Property Type="String" Name="PurchasePlacer" Nullable="false" MaxLength="51" />
+          <Property Type="String" Name="VendorName" Nullable="true" MaxLength="60" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -4533,6 +4605,7 @@
           <EntitySetMapping Name="tblWEX_LHSTab">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblWEX_LHSTab">
               <MappingFragment StoreEntitySet="tblWEX_LHSTab">
+                <ScalarProperty Name="ToolTip" ColumnName="ToolTip" />
                 <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="Icon" ColumnName="Icon" />
                 <ScalarProperty Name="LHSTabID" ColumnName="LHSTabID" />
@@ -5303,6 +5376,7 @@
                 <ScalarProperty Name="VendorName" ColumnName="VendorName" />
                 <ScalarProperty Name="PurchaseName" ColumnName="PurchaseName" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
                 <ScalarProperty Name="OrderAmount" ColumnName="OrderAmount" />
                 <ScalarProperty Name="CommittedAmount" ColumnName="CommittedAmount" />
                 <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
@@ -5379,6 +5453,39 @@
                 <ScalarProperty Name="Actual" ColumnName="Actual" />
                 <ScalarProperty Name="Committed" ColumnName="Committed" />
                 <ScalarProperty Name="Remaining" ColumnName="Remaining" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="tblFavourites">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblFavourite">
+              <MappingFragment StoreEntitySet="tblFavourite">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Identifier" ColumnName="Identifier" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="FavouriteID" ColumnName="FavouriteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_PurchaseOrderSummary_v2" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_PurchaseOrderSummary_v2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_PurchaseOrderSummary_v2_Result">
+                <ScalarProperty Name="DataAreaID" ColumnName="DataAreaID" />
+                <ScalarProperty Name="ProjID" ColumnName="ProjID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="PurchaseOrderID" ColumnName="PurchaseOrderID" />
+                <ScalarProperty Name="PurchaseName" ColumnName="PurchaseName" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="OrderAmount" ColumnName="OrderAmount" />
+                <ScalarProperty Name="CommittedAmount" ColumnName="CommittedAmount" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="Requisitioner" ColumnName="Requisitioner" />
+                <ScalarProperty Name="PurchasePlacer" ColumnName="PurchasePlacer" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

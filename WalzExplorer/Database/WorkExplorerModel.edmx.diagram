@@ -118,6 +118,7 @@
         <AssociationConnector Association="WalzExplorerModel.FK_tblProject_HistoryRFI_tblProject_History" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblProject_tblCustomer" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblWEX_Variables" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblFavourite" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

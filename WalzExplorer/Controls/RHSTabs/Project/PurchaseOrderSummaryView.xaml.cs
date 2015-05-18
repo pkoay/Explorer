@@ -42,9 +42,17 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.columnSettings.format.Add("VendorName", Grid.Grid_Read.columnFormat.TEXT);
             grd.columnSettings.format.Add("PurchaseName", Grid.Grid_Read.columnFormat.TEXT);
             grd.columnSettings.format.Add("CreateDate", Grid.Grid_Read.columnFormat.DATE);
+            grd.columnSettings.format.Add("DeliveryDate", Grid.Grid_Read.columnFormat.DATE);
             grd.columnSettings.format.Add("OrderAmount", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grd.columnSettings.format.Add("CommittedAmount", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grd.columnSettings.format.Add("PaidAmount", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.toolTip.Add("Status",
+                string.Join(Environment.NewLine
+                ,"Open Order - Order sent"
+                ,"Recieved - Order recieved"
+                ,"Invoiced - Order invoiced (final stage)"
+                ,"Cancelled - Order cancelled (final stage)"
+                ));
             
         }
 
@@ -52,35 +60,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         {
             return "";
         }
-        //private void grd_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
-        //{
-        //    GridViewDataColumn column = e.Column as GridViewDataColumn;
-        //    switch (e.Column.Header.ToString())
-        //    {
-        //        case "ProjId":
-        //            e.Column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
-        //            column.ShowColumnWhenGrouped = false;
-        //            break;
-        //        case "Date":
-        //            SetColumn(column, "DATE");
-        //            break;
-        //        case "CommCostAmount":
-        //            SetColumn(column, "TWO_DECIMAL");
-        //            break;
-        //        case "Quantity":
-        //            SetColumn(column, "TWO_DECIMAL");
-        //            break;
-        //        case "CategoryGroup":
-        //            SetColumn(column, "TEXT");
-        //            break;
-        //        case "CategoryName":
-        //            SetColumn(column, "TEXT");
-        //            break;
-        //        case "PurchQtyPrice":
-        //            SetColumn(column, "TWO_DECIMAL_NO_TOTAL");
-        //            break;
-        //    }
-        //}
+        
 
        
      

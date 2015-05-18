@@ -129,6 +129,7 @@ namespace WalzExplorer
        
         private void LoadFormForMimic()
         {
+
             tcRHS.Visibility = System.Windows.Visibility.Hidden;
         
             using (WalzExplorerEntities we = new WalzExplorerEntities(false))
@@ -187,7 +188,9 @@ namespace WalzExplorer
                     tv = (WEXTreeView)ti.Content;
                     if (tv.SelectedItem() == null)
                     {
+                        
                         tcRHS.Visibility = System.Windows.Visibility.Hidden;
+                        
                     }
 
                 }
@@ -291,7 +294,9 @@ namespace WalzExplorer
                         }
                     }
                     else
+                    {
                         tcRHS.Visibility = System.Windows.Visibility.Hidden;
+                    }
                     if (tcRHS.SelectedIndex == -1)
                         tcRHS.SelectedIndex = 0;
 
@@ -339,7 +344,7 @@ namespace WalzExplorer
         private void btnInfo_Click(object sender, RoutedEventArgs e)
         {
             WEXRHSTab CurrentTab = (WEXRHSTab)tcRHS.SelectedItem;
-            if (CurrentTab == null)
+            if (CurrentTab == null || tcRHS.Visibility==System.Windows.Visibility.Hidden)
             {
                 System.Diagnostics.Process.Start("http://gldsp01/Wiki/Explorer.aspx");
             }

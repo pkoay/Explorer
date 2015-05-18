@@ -11,7 +11,7 @@ namespace WalzExplorer.Database
 {
     using System;
     using System.Collections.Generic;
-    public partial class spWEX_RHS_Project_PurchaseOrderSummary_Result : ModelBase
+    public partial class spWEX_RHS_Project_PurchaseOrderSummary_v2_Result : ModelBase
     {
         private string _dataAreaID;
     	public string DataAreaID 
@@ -41,27 +41,6 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _purchaseOrderID, value); } 
     	}
     
-        private string _requisitioner;
-    	public string Requisitioner 
-    	{ 
-    		get { return _requisitioner; } 
-    		set { SetProperty(ref _requisitioner, value); } 
-    	}
-    
-        private string _purchasePlacer;
-    	public string PurchasePlacer 
-    	{ 
-    		get { return _purchasePlacer; } 
-    		set { SetProperty(ref _purchasePlacer, value); } 
-    	}
-    
-        private string _vendorName;
-    	public string VendorName 
-    	{ 
-    		get { return _vendorName; } 
-    		set { SetProperty(ref _vendorName, value); } 
-    	}
-    
         private string _purchaseName;
     	public string PurchaseName 
     	{ 
@@ -74,6 +53,13 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _createDate; } 
     		set { SetProperty(ref _createDate, value); } 
+    	}
+    
+        private string _status;
+    	public string Status 
+    	{ 
+    		get { return _status; } 
+    		set { SetProperty(ref _status, value); } 
     	}
     
         private Nullable<System.DateTime> _deliveryDate;
@@ -102,6 +88,27 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _paidAmount; } 
     		set { SetProperty(ref _paidAmount, value); } 
+    	}
+    
+        private string _requisitioner;
+    	public string Requisitioner 
+    	{ 
+    		get { return _requisitioner; } 
+    		set { SetProperty(ref _requisitioner, value); } 
+    	}
+    
+        private string _purchasePlacer;
+    	public string PurchasePlacer 
+    	{ 
+    		get { return _purchasePlacer; } 
+    		set { SetProperty(ref _purchasePlacer, value); } 
+    	}
+    
+        private string _vendorName;
+    	public string VendorName 
+    	{ 
+    		get { return _vendorName; } 
+    		set { SetProperty(ref _vendorName, value); } 
     	}
     
     }

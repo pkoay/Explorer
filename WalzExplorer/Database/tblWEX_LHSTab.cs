@@ -40,6 +40,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _sortOrder, value); } 
     	}
     
+        private string _toolTip;
+    	public string ToolTip 
+    	{ 
+    		get { return _toolTip; } 
+    		set { SetProperty(ref _toolTip, value); } 
+    	}
+    
     
         public virtual ICollection<tblWEX_Tree> tblWEX_Tree { get; set; }
     }

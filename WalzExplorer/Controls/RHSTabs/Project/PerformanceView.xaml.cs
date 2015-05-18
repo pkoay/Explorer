@@ -663,6 +663,28 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 
             
                 SetControlsOnStatusChange();
+
+                switch (vm.historyData.TypeID)
+                {
+                    case 1: //Basic Cost performance & Notes
+                        tcHistory.Visibility = System.Windows.Visibility.Visible;
+                        TabBasic.Visibility = System.Windows.Visibility.Visible;
+                        tcHistory.SelectedItem = TabBasic;
+                        TabRevenue.Visibility = System.Windows.Visibility.Hidden;
+                        break;
+                    case 2: //Advanced (P6)
+                        tcHistory.Visibility = System.Windows.Visibility.Visible;
+                        TabRevenue.Visibility = System.Windows.Visibility.Visible;
+                        tcHistory.SelectedItem = TabRevenue;
+                        TabBasic.Visibility = System.Windows.Visibility.Hidden;
+                        break;
+                    case 3: //notes only
+                        TabBasic.Visibility = System.Windows.Visibility.Hidden;
+                        TabRevenue.Visibility = System.Windows.Visibility.Hidden;
+                        tcHistory.Visibility = System.Windows.Visibility.Hidden;
+                        break;
+                }
+
             }
 
             else

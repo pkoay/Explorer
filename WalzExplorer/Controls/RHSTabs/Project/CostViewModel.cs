@@ -28,7 +28,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             //UserPersonID=settings.user.MimicedPerson.PersonID.ToString();
 
 
-
+            context.Database.CommandTimeout = 180;
             data = new ObservableCollection<spWEX_RHS_Project_Cost_Result>(context.spWEX_RHS_Project_Cost(ProjectID));  
         }
     }

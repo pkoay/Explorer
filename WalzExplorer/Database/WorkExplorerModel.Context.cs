@@ -72,6 +72,7 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblProject_HistoryRFI> tblProject_HistoryRFI { get; set; }
         public virtual DbSet<tblProject_Portfolio> tblProject_Portfolio { get; set; }
         public virtual DbSet<tblWEX_Variables> tblWEX_Variables { get; set; }
+        public virtual DbSet<tblFavourite> tblFavourites { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)
@@ -534,6 +535,28 @@ namespace WalzExplorer.Database
                 new ObjectParameter("ProjectID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_CostBudgetVsActual_Result>("spWEX_RHS_Project_CostBudgetVsActual", projectIDParameter);
+        }
+    
+        public virtual ObjectResult<spWEX_RHS_Project_PurchaseOrderSummary_ForPM_Result> spWEX_RHS_Project_PurchaseOrderSummary_ForPM(Nullable<int> personID)
+        {
+            var personIDParameter = personID.HasValue ?
+                new ObjectParameter("PersonID", personID) :
+                new ObjectParameter("PersonID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_PurchaseOrderSummary_ForPM_Result>("spWEX_RHS_Project_PurchaseOrderSummary_ForPM", personIDParameter);
+        }
+    
+        public virtual ObjectResult<spWEX_RHS_Project_PurchaseOrderSummary_v2_Result> spWEX_RHS_Project_PurchaseOrderSummary_v2(Nullable<int> projectID, Nullable<int> personID)
+        {
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            var personIDParameter = personID.HasValue ?
+                new ObjectParameter("PersonID", personID) :
+                new ObjectParameter("PersonID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_PurchaseOrderSummary_v2_Result>("spWEX_RHS_Project_PurchaseOrderSummary_v2", projectIDParameter, personIDParameter);
         }
     }
 }
