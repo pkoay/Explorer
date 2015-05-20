@@ -39,6 +39,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
         public override string IssueIfClosed()
         {
+           //This is required to end the edit so that the bindings fire to update the data before save
+            EndEdit(this);
+            vm.context.SaveChanges();
             return "";
         }
 
@@ -51,6 +54,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
             if (vm.historyList.Count > 0)
             {
+                grdNoDataLayout.Visibility = System.Windows.Visibility.Hidden;
                 //Build Rating styles
                 //Style Rating_RadComboItemStyle = new Style(typeof(RadComboBoxItem));
                 //Rating_RadComboItemStyle.BasedOn = (Style)FindResource("RadComboBoxItemStyle");
@@ -99,7 +103,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 tbSummaryPMComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
 
                 //Buttons
-                btnSave.ToolTip = "Save the data you have entered for this Performance report.";
+                //btnSave.ToolTip = "Save the data you have entered for this Performance report.";
                 btnRefresh.ToolTip = "Reloads the data from AX, P6, and WalzApps. Your manually entered data will remain unchanged";
                 btnProjectManagerSign.ToolTip = String.Join(
                    Environment.NewLine,
@@ -436,16 +440,21 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                         TabRevenue.Visibility = System.Windows.Visibility.Hidden;
                         tcHistory.Visibility = System.Windows.Visibility.Hidden;
                         break;
+                    
+
                 }
 
             }
 
             else
             {
-                foreach (Control ctr in Common.ControlLibrary.GetChildControls(this, 1))
-                {
-                    ctr.Visibility = System.Windows.Visibility.Hidden;
-                }
+
+                grdLayout.Visibility = System.Windows.Visibility.Hidden;
+                
+                //foreach (Control ctr in Common.ControlLibrary.GetChildControls(this.,99))
+                //{
+                //    ctr.Visibility = System.Windows.Visibility.Hidden;
+                //}
             }
             isTabLoad = false;
         }
@@ -964,7 +973,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     ProjectManagerDataEntryFieldsEnabled(vm.isProjectManager || vm.isOperationsManager || vm.isAdministrator);
 
                     //Buttons
-                    btnSave.IsEnabled = (vm.isProjectManager || vm.isOperationsManager || vm.isAdministrator);
+                    //btnSave.IsEnabled = (vm.isProjectManager || vm.isOperationsManager || vm.isAdministrator);
                     btnRefresh.IsEnabled = (vm.isProjectManager || vm.isOperationsManager || vm.isAdministrator);
                     btnProjectManagerSign.Content = "Sign";
                     btnProjectManagerSign.IsEnabled = (vm.isProjectManager || vm.isOperationsManager || vm.isAdministrator);
@@ -978,7 +987,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     ProjectManagerDataEntryFieldsEnabled(false);
 
                     //Buttons
-                    btnSave.IsEnabled = false;
+                    //btnSave.IsEnabled = false;
                     btnRefresh.IsEnabled = false;
                     btnProjectManagerSign.Content = "Clear";
                     btnProjectManagerSign.IsEnabled = (vm.isOperationsManager || vm.isAdministrator);
@@ -992,7 +1001,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     ProjectManagerDataEntryFieldsEnabled(false);
 
                     //Buttons
-                    btnSave.IsEnabled = false;
+                    //btnSave.IsEnabled = false;
                     btnRefresh.IsEnabled = false;
                     btnProjectManagerSign.IsEnabled = false;
                     btnOperationsManagerSign.Content = "Clear";
@@ -1046,31 +1055,45 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             cmbSummaryRating.ItemsSource = vm.ratingList;
             tbSummaryPMComments.DataContext = vm.historyData;
 
-            //Basic
-            //tbBasicComments.DataContext = vm.historyData;
-            tbBasicBudget.DataContext = vm.historyData;
-            tbBasicActual.DataContext = vm.historyData;
-            niBasicCostAtCompletion.DataContext = vm.historyData;
-            niBasicCostAtCompletion_LostFocus(null, null); //calculate %Comp, Earned, CPI
-                
-            //Revenue
-            //tbCostComments.DataContext = vm.historyData;
-            foreach (CartesianSeries series in chartRevenue.Series)
+
+            switch (vm.historyData.TypeID)
             {
-                switch (series.Name)
-                {
-                    case "Planned":
-                        series.ItemsSource = vm.revenuePlannedData;
-                        break;
-                    case "Earned":
-                        series.ItemsSource = vm.revenueEarnedData;
-                        break;
-                    case "Actual":
-                        series.ItemsSource = vm.revenueActualData;
-                        break;
-                }
+                case 1: //Basic Cost performance & Notes
+                    //tbBasicComments.DataContext = vm.historyData;
+                    tbBasicBudget.DataContext = vm.historyData;
+                    tbBasicActual.DataContext = vm.historyData;
+                    niBasicCostAtCompletion.DataContext = vm.historyData;
+                    niBasicCostAtCompletion_LostFocus(null, null); //calculate %Comp, Earned, CPI
+                    break;
+                case 2: //Advanced (P6)
+                    //Revenue
+                    //tbCostComments.DataContext = vm.historyData;
+                    foreach (CartesianSeries series in chartRevenue.Series)
+                    {
+                        switch (series.Name)
+                        {
+                            case "Planned":
+                                series.ItemsSource = vm.revenuePlannedData;
+                                break;
+                            case "Earned":
+                                series.ItemsSource = vm.revenueEarnedData;
+                                break;
+                            case "Actual":
+                                series.ItemsSource = vm.revenueActualData;
+                                break;
+                        }
+                    }
+                    grdRevenueSummary.grd.ItemsSource = vm.revenueSummaryData;
+                    break;
+                case 3: //notes only
+                    
+                    break;
             }
-            grdRevenueSummary.grd.ItemsSource = vm.revenueSummaryData;
+
+
+          
+                
+           
 
             //hours
             //cmbHoursRating.DataContext = vm.historyData;

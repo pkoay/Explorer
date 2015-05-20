@@ -151,8 +151,6 @@ namespace WalzExplorer
             }
         }
 
-      
-
         private void tcLHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             WEXTreeView tv;
@@ -203,16 +201,6 @@ namespace WalzExplorer
             }
         }
 
-        //void tv_SearchActivated(object sender, EventArgs e)
-        //{
-        //    WEXTreeView tv = (WEXTreeView)sender;
-        //    //Build dictionary of SQL subsitutions  (remove if already there)
-        //    if (dicSQLSubsitutes.ContainsKey("@@SearchCriteria")) dicSQLSubsitutes.Remove("@@SearchCriteria");
-        //    settings.SearchCriteria = tv.SearchValue();
-        //    dicSQLSubsitutes.Add("@@SearchCriteria", "'" + settings.SearchCriteria + "'");
-        //    tv.PopulateRoot(settings.user, dicSQLSubsitutes);
-        //}
-
         private void tcRHS_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
           
@@ -237,8 +225,6 @@ namespace WalzExplorer
                 CurrentTab.Content.TabLoad();
             }
         }
-
-
 
         private void tvLHS_NodeChanged(object sender, EventArgs e)
         {

@@ -175,9 +175,16 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     break;
                 case 3: //notes only
                     //Nothing
+                    summaryRating = GetRating(999, "CostCPISPI");
+           
                     break;
             }
         }
+        private void NotesOnly(int HistoryID)
+        {
+
+        }
+
         private void RevenueDataSetup(int HistoryID)
         {
             //General

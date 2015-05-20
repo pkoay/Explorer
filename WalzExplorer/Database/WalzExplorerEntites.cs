@@ -153,6 +153,10 @@ namespace WalzExplorer.Database
             return result.Any() ? result : null;
         }
        
+        public bool HasChanged()
+        {
+            return !(this.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified).Count()==0);
+        }
         public override int SaveChanges()
         {
             
