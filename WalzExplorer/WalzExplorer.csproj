@@ -269,6 +269,7 @@
       <DependentUpon>PerformanceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Project\PerformanceViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\RHSTabBaseToolTips.cs" />
     <Compile Include="Controls\RHSTabs\Project\SummaryView.xaml.cs">
       <DependentUpon>SummaryView.xaml</DependentUpon>
     </Compile>

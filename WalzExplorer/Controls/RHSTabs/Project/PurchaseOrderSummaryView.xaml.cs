@@ -53,16 +53,24 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 ,"Invoiced - Order invoiced (final stage)"
                 ,"Cancelled - Order cancelled (final stage)"
                 ));
-            
+            //grd.grd.Columns[1].CellTemplate= FindResource("RedTemp") as DataTemplate;
+            grd.columnSettings.drilldown.Add("CommittedAmount", "RedTemp");
+
         }
 
         public override string IssueIfClosed()
         {
             return "";
         }
-        
 
-       
+
+
+
+        private void btnDrilldown_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("drilldown!");
+        }
+
      
       
     }

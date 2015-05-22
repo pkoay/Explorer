@@ -52,35 +52,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         {
             return "";
         }
-        //private void grd_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
-        //{
-        //    GridViewDataColumn column = e.Column as GridViewDataColumn;
-        //    switch (e.Column.Header.ToString())
-        //    {
-        //        case "ProjId":
-        //            e.Column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
-        //            column.ShowColumnWhenGrouped = false;
-        //            break;
-        //        case "Date":
-        //            SetColumn(column, "DATE");
-        //            break;
-        //        case "CommCostAmount":
-        //            SetColumn(column, "TWO_DECIMAL");
-        //            break;
-        //        case "Quantity":
-        //            SetColumn(column, "TWO_DECIMAL");
-        //            break;
-        //        case "CategoryGroup":
-        //            SetColumn(column, "TEXT");
-        //            break;
-        //        case "CategoryName":
-        //            SetColumn(column, "TEXT");
-        //            break;
-        //        case "PurchQtyPrice":
-        //            SetColumn(column, "TWO_DECIMAL_NO_TOTAL");
-        //            break;
-        //    }
-        //}
+       
 
        
      

@@ -66,9 +66,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.columnSettings.toolTip.Add("Employee", "The name of the employee, if applicable.");
             grd.columnSettings.toolTip.Add("Hours", "The hours, if applicable.");
             grd.columnSettings.toolTip.Add("Quantity", "The quantity, if applicable.​");
-            grd.columnSettings.toolTip.Add("CostAmount", "​This is the costs amount excluding overheads and committed costs");
-            grd.columnSettings.toolTip.Add("CostOverhead", "This is the overhead cost amount (excludes commited costs)");
-            grd.columnSettings.toolTip.Add("CostTotal", "This is the sum of 'Cost Amount' and 'Cost Overhead' (Excludes commited costs)");
             grd.columnSettings.toolTip.Add("Description", "​Some addtional description for this cost item");
             grd.columnSettings.toolTip.Add("PurchOrderID", "Purchase Order number, if applicable.​");
             grd.columnSettings.toolTip.Add("PurchVendor", "The vendor of the purchase, if applicable.​");

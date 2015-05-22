@@ -110,20 +110,25 @@ namespace WalzExplorer
                 // exit app (unable to login)
                 Application.Current.Shutdown();
             }
-            else
+            if (!settings.user.SecurityGroups.Contains("WC_Walz"))
             {
-                //Load the mimic not the real person, note when starting up Mimic= real person. Real person is only rerally used for security logs etc.
-                LoadFormForMimic();
-
-                //Context Menu setup
-                ContextMenu cm = new ContextMenu();
-                btnConfigure.ContextMenu = cm;
-                cm.PlacementTarget = btnConfigure;
-                cm.Placement = System.Windows.Controls.Primitives.PlacementMode.AbsolutePoint;
-
-                //Wait for window to render
-                splashWindow.CloseAfterCount(2.5);
+                MessageBox.Show("Login failed. The user '" + user + "' has not been assigned to a Active Directory postition (i.e. WP_xxxxxx)", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                // exit app (unable to login)
+                Application.Current.Shutdown();
             }
+           
+            //Load the mimic not the real person, note when starting up Mimic= real person. Real person is only rerally used for security logs etc.
+            LoadFormForMimic();
+
+            //Context Menu setup
+            ContextMenu cm = new ContextMenu();
+            btnConfigure.ContextMenu = cm;
+            cm.PlacementTarget = btnConfigure;
+            cm.Placement = System.Windows.Controls.Primitives.PlacementMode.AbsolutePoint;
+
+            //Wait for window to render
+            splashWindow.CloseAfterCount(2.5);
+            
 
         }
        

@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -19,6 +20,7 @@ using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
 using WalzExplorer.Common;
+using WalzExplorer.Controls.RHSTabs;
 
 namespace WalzExplorer.Controls.Grid
 {
@@ -48,6 +50,7 @@ namespace WalzExplorer.Controls.Grid
             public Dictionary<string, string> foreground = new Dictionary<string, string>();
             public Dictionary<string, columnFormat> format = new Dictionary<string, columnFormat>();
             public Dictionary<string, string> toolTip = new Dictionary<string, string>();
+            public Dictionary<string, string> drilldown = new Dictionary<string, string>();
             //public Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
             public List<string> developer = new List<string>();
             public void Dispose()
@@ -60,7 +63,7 @@ namespace WalzExplorer.Controls.Grid
         protected Telerik.Windows.Controls.GridView.GridViewCell ContextMenuCell;
         protected Telerik.Windows.Controls.GridView.GridViewHeaderCell ContextMenuColumnHeader;
         protected WEXSettings _settings;
-
+        private DataTemplate dtDrilldown;
 
         public Grid_Read()
         {
@@ -105,7 +108,10 @@ namespace WalzExplorer.Controls.Grid
             }
 
             columnSettings = new GridColumnSettings();
+
+          
         }
+
 
 
 
@@ -275,13 +281,22 @@ namespace WalzExplorer.Controls.Grid
             }
 
             //ToolTip 
+          
+          
             if (columnSettings.toolTip.ContainsKey(c.UniqueName))
             {
                 //Rename from the dictionary
                 string s = columnSettings.toolTip[c.UniqueName];
                 ColumnToolTipStatic(dc, s);
             }
-
+            else
+            {
+                string s = RHSTabBaseDefaultColumnSettings.DefaultToolTip(c.UniqueName);
+                if ( s!= "")
+                {
+                    ColumnToolTipStatic(dc, s);
+                }
+            }
             //format
             if (columnSettings.format.ContainsKey(c.UniqueName))
             {
@@ -307,12 +322,58 @@ namespace WalzExplorer.Controls.Grid
                 cstyle.Seal();
                 dc.CellStyle = cstyle;
             }
+            //drilldown
+            if (columnSettings.drilldown.ContainsKey(c.UniqueName))
+            {
+//                string dataTemplateString = @"
+//                    <DataTemplate>
+//                        <Grid  HorizontalAlignment=""Right"">
+//                            <Grid.ColumnDefinitions>
+//                                <ColumnDefinition />
+//                                <ColumnDefinition />
+//                            </Grid.ColumnDefinitions>
+//                            <TextBlock Grid.Column=""0"" Text=""{Binding RelativeSource={RelativeSource AncestorType=telerik:GridViewCell}, Path=Value, StringFormat={}{0:N2}}""  TextAlignment=""Right""  Foreground=""#FFF1F1F1"" Margin=""0,0,5,0""/>
+//                            <Button Grid.Column=""1"" Name=""btnDrilldown"" Click=""btnDrilldown_Click"" ToolTip=""DrillDown (show detail)"" BorderThickness=""0""  Background=""Transparent"">
+//                                <Rectangle   Width=""8"" Height=""8"" Fill=""DarkGray"" Margin=""0,0,0,5"">
+//                                    <Rectangle.OpacityMask>
+//                                        <VisualBrush Stretch=""Fill"" Visual=""{StaticResource appbar_chevron_down}"" />
+//                                    </Rectangle.OpacityMask>
+//                                </Rectangle>
+//                            </Button>
+//                        </Grid>
+//                    </DataTemplate>
+//                        ";
+
+
+//                MemoryStream sr = new MemoryStream(Encoding.ASCII.GetBytes(dataTemplateString));
+//                ParserContext pc = new ParserContext();
+//                pc.XmlnsDictionary.Add("", "http://schemas.microsoft.com/winfx/2006/xaml/presentation");
+//                pc.XmlnsDictionary.Add("x", "http://schemas.microsoft.com/winfx/2006/xaml");
+//                pc.XmlnsDictionary.Add("telerik", "http://schemas.telerik.com/2008/xaml/presentation");
+
+//                DataTemplate template = (DataTemplate)XamlReader.Load(sr, pc);
+//                template.Seal();
+//                this.Resources.Add("RedTemp", template);
+
+                //c.CellTemplate = DrilldownDataTemplate();
+                c.CellTemplate = (DataTemplate)this.FindResource("RedTempx");
+   
+                 
+            }
 
             e.Column.IsReadOnly = true;
 
 
             grd.Rebind();
         }
+        //private DataTemplate DrilldownDataTemplate()
+        //{
+
+
+        //    return template;
+        //}
+
+
 
         public void ColumnToolTipStatic(GridViewDataColumn column, string ToolTipString)
         {
@@ -421,6 +482,12 @@ namespace WalzExplorer.Controls.Grid
             }
 
         }
+
+        private void btnDrilldown_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 
 }

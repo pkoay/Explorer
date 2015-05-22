@@ -192,7 +192,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 //                    string TemplateName = string.Format("EllipseTemplate{0}", ev.Title);
 
 //                    series.PointTemplate = chartHours.Resources[TemplateName] as DataTemplate;
-//                    series.CategoryBinding = new PropertyNameDataPointBinding("WeekEnd");
+//                    series.CategoryBinding = new PropertyNameDataPointBinding("WeekEnd");DataTemplate
 //                    series.ValueBinding = new PropertyNameDataPointBinding("Value");
 //                    var bc = new BrushConverter();
 //                    series.Stroke = (Brush)bc.ConvertFrom(ev.Color);

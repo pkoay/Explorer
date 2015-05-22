@@ -43,6 +43,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.columnSettings.format.Add("Remaining", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grd.columnSettings.format.Add("Actual", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grd.columnSettings.format.Add("Committed", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+
         }
         public override string IssueIfClosed()
         {

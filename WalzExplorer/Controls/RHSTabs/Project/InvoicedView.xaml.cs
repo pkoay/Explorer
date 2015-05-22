@@ -34,8 +34,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
             grd.SetGrid(settings);
             grd.columnSettings.developer.Add("DataAreaID");
-            grd.columnSettings.format.Add("PurchaseOrderID", Grid.Grid_Read.columnFormat.COUNT);
-            grd.columnSettings.format.Add("ProjID", Grid.Grid_Read.columnFormat.TEXT);
+            grd.columnSettings.format.Add("ProjID", Grid.Grid_Read.columnFormat.COUNT);
+            //grd.columnSettings.format.Add("ProjID", Grid.Grid_Read.columnFormat.TEXT);
             grd.columnSettings.format.Add("InvoiceDate", Grid.Grid_Read.columnFormat.DATE);
             grd.columnSettings.format.Add("ProjTransType", Grid.Grid_Read.columnFormat.TEXT);
             grd.columnSettings.format.Add("InvoiceNo", Grid.Grid_Read.columnFormat.TEXT);
