@@ -63,7 +63,7 @@ namespace WalzExplorer.Controls.Grid
         protected Telerik.Windows.Controls.GridView.GridViewCell ContextMenuCell;
         protected Telerik.Windows.Controls.GridView.GridViewHeaderCell ContextMenuColumnHeader;
         protected WEXSettings _settings;
-        private DataTemplate dtDrilldown;
+        //private DataTemplate dtDrilldown;
 
         public Grid_Read()
         {
@@ -343,7 +343,24 @@ namespace WalzExplorer.Controls.Grid
 //                        </Grid>
 //                    </DataTemplate>
 //                        ";
-
+//                 dataTemplateString = @"
+//                 <DataTemplate>
+//                        <Grid  HorizontalAlignment=""Right"">
+//                            <Grid.ColumnDefinitions>
+//                                <ColumnDefinition />
+//                                <ColumnDefinition />
+//                            </Grid.ColumnDefinitions>
+//                            <TextBlock Grid.Column=""0"" Text=""{Binding RelativeSource={RelativeSource AncestorType=telerik:GridViewCell}, Path=Value, StringFormat={}{0:N2}}""  TextAlignment=""Right""  Foreground=""#FFF1F1F1"" Margin=""0,0,5,0""/>
+//                            <Button Grid.Column=""1"" x:Name=""btnDrilldown""   ToolTip=""DrillDown (show detail)"" BorderThickness=""0""  Background=""Transparent"">
+//                                <Rectangle   Width=""8"" Height=""8"" Fill=""DarkGray"" Margin=""0,0,0,5"">
+//                                    <Rectangle.OpacityMask>
+//                                        <VisualBrush Stretch=""Fill"" Visual=""{StaticResource appbar_chevron_down}"" />
+//                                    </Rectangle.OpacityMask>
+//                                </Rectangle>
+//                            </Button>
+//                        </Grid>
+//                    </DataTemplate>
+//                        ";
 
 //                MemoryStream sr = new MemoryStream(Encoding.ASCII.GetBytes(dataTemplateString));
 //                ParserContext pc = new ParserContext();
@@ -352,10 +369,14 @@ namespace WalzExplorer.Controls.Grid
 //                pc.XmlnsDictionary.Add("telerik", "http://schemas.telerik.com/2008/xaml/presentation");
 
 //                DataTemplate template = (DataTemplate)XamlReader.Load(sr, pc);
+//                template.DataType = typeof(GridViewCell);
 //                template.Seal();
-//                this.Resources.Add("RedTemp", template);
-
+//                this.Resources.Add("RedTempx", template);
+                //Button btnDrilldown = (Button)this.FindName("btnDrilldown");
+               
+                //btnDrilldown.Click += btnDrilldown_Click;
                 //c.CellTemplate = DrilldownDataTemplate();
+
                 c.CellTemplate = (DataTemplate)this.FindResource("RedTempx");
    
                  
@@ -366,13 +387,16 @@ namespace WalzExplorer.Controls.Grid
 
             grd.Rebind();
         }
-        //private DataTemplate DrilldownDataTemplate()
-        //{
 
+        private void btnDrilldown_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("drilldown!");
+        }
 
-        //    return template;
-        //}
-
+        private void settemplate()
+        {
+    
+        }
 
 
         public void ColumnToolTipStatic(GridViewDataColumn column, string ToolTipString)
@@ -483,10 +507,7 @@ namespace WalzExplorer.Controls.Grid
 
         }
 
-        private void btnDrilldown_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+       
 
     }
 

@@ -10,24 +10,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="402.09" d:DesignHeight="143.881"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
              x:Class="WalzExplorer.Controls.RHSTabs.Project.PurchaseOrderSummaryView">
-    <Control.Resources>
-        <DataTemplate x:Key="RedTempx" >
-            <Grid  HorizontalAlignment="Right">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding RelativeSource={RelativeSource AncestorType=telerik:GridViewCell}, Path=Value, StringFormat={}{0:N2}}"  TextAlignment="Right"  Foreground="#FFF1F1F1" Margin="0,0,5,0"/>
-                <Button Grid.Column="1" Name="btnDrilldown" Click="btnDrilldown_Click" ToolTip="DrillDown (show detail)" BorderThickness="0"  Background="Transparent">
-                    <Rectangle   Width="8" Height="8" Fill="DarkGray" Margin="0,0,0,5">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_chevron_down}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                </Button>
-            </Grid>
-        </DataTemplate>
-    </Control.Resources>
+
     <Grid >
         <grid:Grid_Read  x:Name="grd"/>
     </Grid>

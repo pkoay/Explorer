@@ -66,11 +66,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
 
 
-        private void btnDrilldown_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("drilldown!");
-        }
-
+      
      
       
     }

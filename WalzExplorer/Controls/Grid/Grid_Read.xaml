@@ -6,6 +6,25 @@
              xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="WalzExplorer.Controls.Grid.Grid_Read" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+
+    <Control.Resources>
+        <DataTemplate x:Key="RedTempx" >
+            <Grid  HorizontalAlignment="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding RelativeSource={RelativeSource AncestorType=telerik:GridViewCell}, Path=Value, StringFormat={}{0:N2}}"  TextAlignment="Right"  Foreground="#FFF1F1F1" Margin="0,0,5,0"/>
+                <Button Grid.Column="1" Name="btnDrilldown" Click="btnDrilldown_Click" ToolTip="DrillDown (show detail)" BorderThickness="0"  Background="Transparent">
+                    <Rectangle   Width="8" Height="8" Fill="DarkGray" Margin="0,0,0,5">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_chevron_down}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+            </Grid>
+        </DataTemplate>
+    </Control.Resources>
     <Grid>
       
         <telerik:RadGridView Name="grd" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch"/>
