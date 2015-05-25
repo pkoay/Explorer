@@ -22,12 +22,19 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
         public CommittedViewModel(WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
-            ProjectID = ConvertLibrary.StringToInt(settings.node.FindID("PROJECT", "-2"), -1);
-            //CustomerID = ConvertLibrary.StringToInt(settings.node.FindID("CUSTOMER", "-2"), -1).ToString();
-            //NodeTypeID = settings.node.TypeID;
-            //UserPersonID=settings.user.MimicedPerson.PersonID.ToString();
+            if (settings.drilldown == null)
+            {
+                ProjectID = ConvertLibrary.StringToInt(settings.node.FindID("PROJECT", "-2"), -1);
+                //CustomerID = ConvertLibrary.StringToInt(settings.node.FindID("CUSTOMER", "-2"), -1).ToString();
+                //NodeTypeID = settings.node.TypeID;
+                //UserPersonID=settings.user.MimicedPerson.PersonID.ToString();
 
-            data = new ObservableCollection<spWEX_RHS_Project_Committed_Result>(context.spWEX_RHS_Project_Committed(ProjectID));  
+                data = new ObservableCollection<spWEX_RHS_Project_Committed_Result>(context.spWEX_RHS_Project_Committed(ProjectID));
+            }
+            else
+            {
+
+            }
         }
     }
 }

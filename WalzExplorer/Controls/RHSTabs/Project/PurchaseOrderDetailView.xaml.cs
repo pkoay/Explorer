@@ -17,34 +17,38 @@ namespace WalzExplorer.Controls.RHSTabs.Project
     /// </summary>
 
 
-    public partial class CommittedView : RHSTabViewBase
+    public partial class PurchaseOrderDetailView : RHSTabViewBase
     {
       
-        CommittedViewModel vm;
+        PurchaseOrderDetailViewModel vm;
 
-        public CommittedView()
+        public PurchaseOrderDetailView()
         {
             InitializeComponent();
         }
 
         public override void TabLoad()
         {
-            vm = new CommittedViewModel(settings);
+            vm = new PurchaseOrderDetailViewModel(settings);
             grd.grd.DataContext = vm;
             grd.grd.ItemsSource = vm.data;
 
             grd.SetGrid(settings);
-            //grd.Reset();
+            
             grd.columnSettings.developer.Add("DataAreaId");
+            grd.columnSettings.developer.Add("IsCommitted");
             grd.columnSettings.format.Add("ProjId", Grid.Grid_Read.columnFormat.COUNT);
             grd.columnSettings.format.Add("Date", Grid.Grid_Read.columnFormat.DATE);
-            grd.columnSettings.format.Add("CommCostAmount", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.rename.Add("PurchID", "Purchase Order ID");
+            grd.columnSettings.format.Add("OrderAmount", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("CommittedAmount", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("PaidAmount", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grd.columnSettings.format.Add("Quantity", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grd.columnSettings.format.Add("CategoryGroup", Grid.Grid_Read.columnFormat.TEXT);
             grd.columnSettings.format.Add("CategoryName", Grid.Grid_Read.columnFormat.TEXT);
             grd.columnSettings.format.Add("PurchQtyPrice", Grid.Grid_Read.columnFormat.TWO_DECIMAL_NO_TOTAL);
             
-            //base.TabLoad();
+            
             
         }
 

@@ -25,6 +25,16 @@ namespace WalzExplorer.Common
             else
                 return FailValue;
         }
+        public static bool? StringToNullableBool(string s, bool? FailValue)
+        {
+            if (s == null)
+                return null;
+            bool i;
+            if (bool.TryParse(s, out i))
+                return i;
+            else
+                return FailValue;
+        }
 
     }
 }

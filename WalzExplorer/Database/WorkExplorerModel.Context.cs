@@ -558,5 +558,26 @@ namespace WalzExplorer.Database
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_PurchaseOrderSummary_v2_Result>("spWEX_RHS_Project_PurchaseOrderSummary_v2", projectIDParameter, personIDParameter);
         }
+    
+        public virtual ObjectResult<spWEX_RHS_Project_PurchaseOrder_Detail_Result> spWEX_RHS_Project_PurchaseOrder_Detail(Nullable<int> projectID, string dataAreaID, string purchID, Nullable<bool> committed)
+        {
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            var dataAreaIDParameter = dataAreaID != null ?
+                new ObjectParameter("DataAreaID", dataAreaID) :
+                new ObjectParameter("DataAreaID", typeof(string));
+    
+            var purchIDParameter = purchID != null ?
+                new ObjectParameter("PurchID", purchID) :
+                new ObjectParameter("PurchID", typeof(string));
+    
+            var committedParameter = committed.HasValue ?
+                new ObjectParameter("Committed", committed) :
+                new ObjectParameter("Committed", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_PurchaseOrder_Detail_Result>("spWEX_RHS_Project_PurchaseOrder_Detail", projectIDParameter, dataAreaIDParameter, purchIDParameter, committedParameter);
+        }
     }
 }

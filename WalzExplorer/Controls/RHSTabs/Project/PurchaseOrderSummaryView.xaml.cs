@@ -10,6 +10,8 @@ using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
 using WalzExplorer.Common;
+using WalzExplorer.Database;
+using WalzExplorer.Model;
 namespace WalzExplorer.Controls.RHSTabs.Project
 {
     /// <summary>
@@ -19,7 +21,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
     public partial class PurchaseOrderSummaryView : RHSTabViewBase
     {
-      
+
         PurchaseOrderSummaryViewModel vm;
 
         public PurchaseOrderSummaryView()
@@ -54,7 +56,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 ,"Cancelled - Order cancelled (final stage)"
                 ));
             //grd.grd.Columns[1].CellTemplate= FindResource("RedTemp") as DataTemplate;
+            grd.columnSettings.drilldown.Add("OrderAmount", "RedTemp");
             grd.columnSettings.drilldown.Add("CommittedAmount", "RedTemp");
+            grd.columnSettings.drilldown.Add("PaidAmount", "RedTemp");
 
         }
 
@@ -63,11 +67,35 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             return "";
         }
 
+        private void grd_Drilldown(object sender, EventArgs e)
+        {
+           //extract data from grid for drilldown
+           WalzExplorer.Controls.Grid.Grid_Read.DrilldownResult ddInfo=(WalzExplorer.Controls.Grid.Grid_Read.DrilldownResult) sender;
+           spWEX_RHS_Project_PurchaseOrderSummary_v2_Result ddRowdata = (spWEX_RHS_Project_PurchaseOrderSummary_v2_Result) ddInfo.RowData;
 
+           //Pass data to drilldown
+           Dictionary<string, string> fields = new Dictionary<string, string>();
+           fields.Add("PurchID", ddRowdata.PurchaseOrderID);
+           fields.Add("DataAreaID", ddRowdata.DataAreaID);
+           switch (ddInfo.ColumnUniqueName)
+            {
+                case "CommittedAmount":
+                    fields.Add("isCommitted", "true");
+                    break;
+                case "PaidAmount":
+                    fields.Add("isCommitted", "false");
+                    break;
+                case "OrderAmount":
+                    fields.Add("isCommitted", null);
+                    break;
+            }
+            settings.drilldown = new WEXDrilldown("Project.PurchaseOrderDetailView", DrilldownFilter.PurchaseOrder, fields);
+            DrilldownWindow.Open(settings);
+           
+        }
+            
+          
 
-
-      
-     
       
     }
 

@@ -227,6 +227,7 @@
     <Compile Include="Controls\Grid\Grid_Read.xaml.cs">
       <DependentUpon>Grid_Read.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RHSTabs\DrilldownWindow.cs" />
     <Compile Include="Controls\RHSTabs\Explorer\MimicView.xaml.cs">
       <DependentUpon>MimicView.xaml</DependentUpon>
     </Compile>
@@ -234,6 +235,10 @@
     <Compile Include="Controls\RHSTabs\Project\Admin.xaml.cs">
       <DependentUpon>Admin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RHSTabs\Project\PurchaseOrderDetailView.xaml.cs">
+      <DependentUpon>PurchaseOrderDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Project\PurchaseOrderDetailViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Project\ContractValueView.xaml.cs">
       <DependentUpon>ContractValueView.xaml</DependentUpon>
     </Compile>
@@ -374,6 +379,9 @@
     <Compile Include="Database\spWEX_RHS_Project_PurchaseOrderSummary_v2_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\spWEX_RHS_Project_PurchaseOrder_Detail_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\spWEX_RHS_Project_Summary_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -506,6 +514,7 @@
     </Compile>
     <Compile Include="Database\WalzExplorerEntites.cs" />
     <Compile Include="Database\WalzExplorerViewModel.cs" />
+    <Compile Include="Model\WEXDrilldown.cs" />
     <Compile Include="Model\WEXLHSTab.cs" />
     <Compile Include="Model\WEXTreeRoot.cs" />
     <Compile Include="Model\WEXNode.cs" />
@@ -599,6 +608,9 @@
     <Compile Include="SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\DrilldownView.xaml.cs">
+      <DependentUpon>DrilldownView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\FeedbackDialogView.xaml.cs">
       <DependentUpon>FeedbackDialogView.xaml</DependentUpon>
     </Compile>
@@ -623,6 +635,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Project\Admin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Project\PurchaseOrderDetailView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -736,6 +752,10 @@
     <Page Include="Themes\VisualStudio2013\Telerik.Windows.Controls.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\DrilldownView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\FeedbackDialogView.xaml">
       <Generator>MSBuild:Compile</Generator>

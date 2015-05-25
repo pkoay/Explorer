@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
 
     <Control.Resources>
-        <DataTemplate x:Key="RedTempx" >
+        <DataTemplate x:Key="dtDrilldown" >
             <Grid  HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />

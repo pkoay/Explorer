@@ -201,6 +201,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _p6ProjID, value); } 
     	}
     
+        private int _tempContractType;
+    	public int TempContractType 
+    	{ 
+    		get { return _tempContractType; } 
+    		set { SetProperty(ref _tempContractType, value); } 
+    	}
+    
     
         public virtual tblPerson tblPerson { get; set; }
         public virtual tblPerson tblPerson1 { get; set; }

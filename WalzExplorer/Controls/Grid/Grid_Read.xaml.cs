@@ -21,14 +21,23 @@ using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
 using WalzExplorer.Common;
 using WalzExplorer.Controls.RHSTabs;
+using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.Grid
 {
+
     /// <summary>
     /// Interaction logic for Grid_Readonly.xaml
     /// </summary>
     public partial class Grid_Read : UserControl
     {
+        public event EventHandler Drilldown;
+        public class DrilldownResult
+        {
+            public string ColumnUniqueName;
+            public object RowData;
+        }
+
         public enum columnFormat
         {
             COUNT,
@@ -377,7 +386,7 @@ namespace WalzExplorer.Controls.Grid
                 //btnDrilldown.Click += btnDrilldown_Click;
                 //c.CellTemplate = DrilldownDataTemplate();
 
-                c.CellTemplate = (DataTemplate)this.FindResource("RedTempx");
+                c.CellTemplate = (DataTemplate)this.FindResource("dtDrilldown");
    
                  
             }
@@ -390,7 +399,17 @@ namespace WalzExplorer.Controls.Grid
 
         private void btnDrilldown_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("drilldown!");
+
+            GridViewCell cell = ControlLibrary.TryFindParent<GridViewCell>((Button)sender);
+            GridViewRow row = ControlLibrary.TryFindParent<GridViewRow>((Button)sender);
+
+            DrilldownResult result = new DrilldownResult() { ColumnUniqueName = cell.Column.UniqueName, RowData = row.Item };
+
+            //raise event
+            if (Drilldown != null)
+            {
+                Drilldown(result, new EventArgs());
+            }
         }
 
         private void settemplate()

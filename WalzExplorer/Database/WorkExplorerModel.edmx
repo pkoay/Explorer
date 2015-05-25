@@ -83,6 +83,7 @@
           <Property Name="InvoicedAmount" Type="float" Nullable="false" />
           <Property Name="HoursActual" Type="float" Nullable="false" />
           <Property Name="P6ProjID" Type="int" />
+          <Property Name="TempContractType" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -1647,6 +1648,12 @@
         <Function Name="spWEX_RHS_Project_Performance_Safety" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Performance_Safety">
           <Parameter Name="HistoryID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spWEX_RHS_Project_PurchaseOrder_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_PurchaseOrder_Detail">
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
+          <Parameter Name="DataAreaID" Type="varchar" Mode="In" />
+          <Parameter Name="PurchID" Type="varchar" Mode="In" />
+          <Parameter Name="Committed" Type="bit" Mode="In" />
+        </Function>
         <Function Name="spWEX_RHS_Project_PurchaseOrderSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_PurchaseOrderSummary">
           <Parameter Name="ProjectID" Type="int" Mode="In" />
         </Function>
@@ -3021,6 +3028,12 @@
             <Parameter Name="ProjectID" Mode="In" Type="Int32" />
             <Parameter Name="PersonID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="spWEX_RHS_Project_PurchaseOrder_Detail" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_PurchaseOrder_Detail_Result)">
+            <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+            <Parameter Name="DataAreaID" Mode="In" Type="String" />
+            <Parameter Name="PurchID" Mode="In" Type="String" />
+            <Parameter Name="Committed" Mode="In" Type="Boolean" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -3554,6 +3567,7 @@
           <NavigationProperty Name="tblCustomer" Relationship="WalzExplorerModel.FK_tblProject_tblCustomer" FromRole="tblProject" ToRole="tblCustomer" />
           <Property Name="HoursActual" Type="Double" Nullable="false" />
           <Property Name="P6ProjID" Type="Int32" />
+          <Property Name="TempContractType" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTender">
           <Key>
@@ -4352,6 +4366,24 @@
           <Property Type="String" Name="PurchasePlacer" Nullable="false" MaxLength="51" />
           <Property Type="String" Name="VendorName" Nullable="true" MaxLength="60" />
         </ComplexType>
+        <ComplexType Name="spWEX_RHS_Project_PurchaseOrder_Detail_Result">
+          <Property Type="String" Name="DataAreaId" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="ProjId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="PurchID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="PurchVendor" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="255" />
+          <Property Type="Decimal" Name="OrderAmount" Nullable="false" Precision="28" Scale="12" />
+          <Property Type="Decimal" Name="CommittedAmount" Nullable="false" Precision="28" Scale="12" />
+          <Property Type="Decimal" Name="PaidAmount" Nullable="true" Precision="29" Scale="12" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="28" Scale="12" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="1000" />
+          <Property Type="String" Name="PurchUnit" Nullable="false" MaxLength="10" />
+          <Property Type="Decimal" Name="PurchQtyPrice" Nullable="false" Precision="28" Scale="12" />
+          <Property Type="String" Name="CategoryGroup" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="60" />
+          <Property Type="Int32" Name="IsCommitted" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5041,6 +5073,7 @@
           <EntitySetMapping Name="tblProjects">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblProject">
               <MappingFragment StoreEntitySet="tblProject">
+                <ScalarProperty Name="TempContractType" ColumnName="TempContractType" />
                 <ScalarProperty Name="P6ProjID" ColumnName="P6ProjID" />
                 <ScalarProperty Name="HoursActual" ColumnName="HoursActual" />
                 <ScalarProperty Name="ContractTypeID" ColumnName="ContractTypeID" />
@@ -5486,6 +5519,28 @@
                 <ScalarProperty Name="Requisitioner" ColumnName="Requisitioner" />
                 <ScalarProperty Name="PurchasePlacer" ColumnName="PurchasePlacer" />
                 <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_PurchaseOrder_Detail" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_PurchaseOrder_Detail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_PurchaseOrder_Detail_Result">
+                <ScalarProperty Name="DataAreaId" ColumnName="DataAreaId" />
+                <ScalarProperty Name="ProjId" ColumnName="ProjId" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="PurchID" ColumnName="PurchID" />
+                <ScalarProperty Name="PurchVendor" ColumnName="PurchVendor" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="OrderAmount" ColumnName="OrderAmount" />
+                <ScalarProperty Name="CommittedAmount" ColumnName="CommittedAmount" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PurchUnit" ColumnName="PurchUnit" />
+                <ScalarProperty Name="PurchQtyPrice" ColumnName="PurchQtyPrice" />
+                <ScalarProperty Name="CategoryGroup" ColumnName="CategoryGroup" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="IsCommitted" ColumnName="IsCommitted" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

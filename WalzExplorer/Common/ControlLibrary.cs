@@ -21,7 +21,7 @@ namespace WalzExplorer.Common
         /// <returns>The first parent item that matches the submitted
         /// type parameter. If not matching item can be found, a null
         /// reference is being returned.</returns>
-        public static T TryFindParent<T>(this DependencyObject child)
+        public static T TryFindParent<T>(DependencyObject child)
             where T : DependencyObject
         {
             //get parent item
