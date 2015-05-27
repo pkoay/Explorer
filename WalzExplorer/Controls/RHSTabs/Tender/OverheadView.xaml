@@ -9,8 +9,8 @@
              xmlns:tab="clr-namespace:WalzExplorer.Controls.RHSTabs"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="402.09" d:DesignHeight="143.881"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
-             x:Class="WalzExplorer.Controls.RHSTabs.Project.SummaryView">
+             x:Class="WalzExplorer.Controls.RHSTabs.Tender.OverheadView">
     <Grid>
-        <grid:Grid_Read  x:Name="grd" Drilldown="grd_Drilldown"/>
+        <grid:GridEditViewBase  x:Name="grd"/>
     </Grid>
 </base:RHSTabViewBase>

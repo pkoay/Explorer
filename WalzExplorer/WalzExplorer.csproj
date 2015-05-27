@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>90</ApplicationRevision>
+    <ApplicationRevision>92</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -228,9 +228,21 @@
       <DependentUpon>Grid_Read.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\DrilldownWindow.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\OverheadDetailView.xaml.cs">
+      <DependentUpon>OverheadDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\OverheadGroupView.xaml.cs">
+      <DependentUpon>OverheadGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\OverheadView.xaml.cs">
+      <DependentUpon>OverheadView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RHSTabs\Explorer\MimicView.xaml.cs">
       <DependentUpon>MimicView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\OverheadDetailViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\OverheadGroupViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\OverheadViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Explorer\MimicViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Project\Admin.xaml.cs">
       <DependentUpon>Admin.xaml</DependentUpon>
@@ -289,26 +301,6 @@
     <Compile Include="Controls\LHSTabs\LHSTabViewModel.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabGridViewModelBase.cs" />
     <Compile Include="Controls\RHSTabs\RHSTabViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\Tender\TenderActivityMaterialView.xaml.cs">
-      <DependentUpon>TenderActivityMaterialView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\RHSTabs\Tender\TenderActivityLabourView.xaml.cs">
-      <DependentUpon>TenderActivityLabourView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\RHSTabs\Tender\TenderActivityMaterialViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\Tender\TenderActivityView.xaml.cs">
-      <DependentUpon>TenderActivityView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\RHSTabs\Tender\TenderActivityLabourViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\Tender\TenderActivityViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\Tender\TenderView.xaml.cs">
-      <DependentUpon>TenderView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\RHSTabs\Tender\TenderContractorView.xaml.cs">
-      <DependentUpon>TenderContractorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\RHSTabs\Tender\TenderViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\Tender\TenderContractorViewModel.cs" />
     <Compile Include="Controls\TreeView\WEXTreeView.xaml.cs">
       <DependentUpon>WEXTreeView.xaml</DependentUpon>
     </Compile>
@@ -457,13 +449,13 @@
     <Compile Include="Database\tblTender_LabourStandard.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\tblTender_Workgroup.cs">
+    <Compile Include="Database\tblTender_Overhead.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\tblTender_WorkgroupHeader.cs">
+    <Compile Include="Database\tblTender_OverheadGroup.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\tblTender_WorkgroupItem.cs">
+    <Compile Include="Database\tblTender_OverheadItem.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblWEX_Variables.cs">
@@ -524,21 +516,6 @@
     <Compile Include="Model\WEXSetting.cs" />
     <Compile Include="Model\WEXUser.cs" />
     <Compile Include="Database\tblTender.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_Activity.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_ActivityChildActivity.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_ActivityContractor.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_ActivityLabour.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_ActivityMaterial.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblTender_Contractor.cs">
@@ -630,6 +607,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\RHSTabs\Tender\OverheadDetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\OverheadGroupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\OverheadView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\RHSTabs\Explorer\MimicView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -679,26 +668,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Project\SummaryView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\RHSTabs\Tender\TenderActivityMaterialView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\RHSTabs\Tender\TenderActivityLabourView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\RHSTabs\Tender\TenderActivityView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\RHSTabs\Tender\TenderView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\RHSTabs\Tender\TenderContractorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

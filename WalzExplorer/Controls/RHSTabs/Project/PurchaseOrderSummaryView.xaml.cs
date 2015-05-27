@@ -56,9 +56,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 ,"Cancelled - Order cancelled (final stage)"
                 ));
             //grd.grd.Columns[1].CellTemplate= FindResource("RedTemp") as DataTemplate;
-            grd.columnSettings.drilldown.Add("OrderAmount", "RedTemp");
-            grd.columnSettings.drilldown.Add("CommittedAmount", "RedTemp");
-            grd.columnSettings.drilldown.Add("PaidAmount", "RedTemp");
+            grd.columnSettings.drilldown.Add("OrderAmount");
+            grd.columnSettings.drilldown.Add("CommittedAmount");
+            grd.columnSettings.drilldown.Add("PaidAmount");
 
         }
 
@@ -74,22 +74,26 @@ namespace WalzExplorer.Controls.RHSTabs.Project
            spWEX_RHS_Project_PurchaseOrderSummary_v2_Result ddRowdata = (spWEX_RHS_Project_PurchaseOrderSummary_v2_Result) ddInfo.RowData;
 
            //Pass data to drilldown
+           string title="";
            Dictionary<string, string> fields = new Dictionary<string, string>();
            fields.Add("PurchID", ddRowdata.PurchaseOrderID);
            fields.Add("DataAreaID", ddRowdata.DataAreaID);
            switch (ddInfo.ColumnUniqueName)
             {
                 case "CommittedAmount":
+                    title = "Drilldown on Purchase Order " + ddRowdata.PurchaseOrderID + ", committed amount totaling " + ((decimal)ddRowdata.CommittedAmount).ToString("N2");
                     fields.Add("isCommitted", "true");
                     break;
                 case "PaidAmount":
+                    title = "Drilldown on Purchase Order " + ddRowdata.PurchaseOrderID + ", paid amount totaling "  + ((decimal)ddRowdata.PaidAmount).ToString("N2");
                     fields.Add("isCommitted", "false");
                     break;
                 case "OrderAmount":
+                    title = "Drilldown on Purchase Order " + ddRowdata.PurchaseOrderID + ", order amount totaling " + ((decimal)ddRowdata.OrderAmount).ToString("N2");
                     fields.Add("isCommitted", null);
                     break;
             }
-            settings.drilldown = new WEXDrilldown("Project.PurchaseOrderDetailView", DrilldownFilter.PurchaseOrder, fields);
+            settings.drilldown = new WEXDrilldown(title,"Project.PurchaseOrderDetailView", DrilldownFilter.PurchaseOrder, fields);
             DrilldownWindow.Open(settings);
            
         }

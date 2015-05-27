@@ -44,12 +44,12 @@ namespace WalzExplorer
             
             if (RealPerson != null)
             {
-                //// if pkoay then mimic Sam Givney (ease of testing)
-                //if (loginID.ToUpper() == "WALZ\\PKOAY")
-                //{
-                //    MimicedPerson = db.tblPersons.Where(x => x.Login == "WALZ\\SGIVNEY").FirstOrDefault();
-                //}
-                //else
+                // if pkoay then mimic tim rigby (ease of testing)
+                if (loginID.ToUpper() == "WALZ\\PKOAY")
+                {
+                    MimicedPerson = db.tblPersons.Where(x => x.Login == "WALZ\\trigby").FirstOrDefault();
+                }
+                else
                 {
                     MimicedPerson = RealPerson;
                 }

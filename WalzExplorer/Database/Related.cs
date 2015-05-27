@@ -12,18 +12,18 @@ namespace WalzExplorer.Database
 
     public partial class tblTender_Contractor
     {
-        public override  Dictionary<string, int> RelatedInformation (WalzExplorerEntities context)
-        {
+        //public override  Dictionary<string, int> RelatedInformation (WalzExplorerEntities context)
+        //{
           
             
-            Dictionary<string, int> rel = new Dictionary<string, int>();
-            int c = context.Entry(this).Collection(b => b.tblTender_ActivityContractor).Query().Count();
+        //    Dictionary<string, int> rel = new Dictionary<string, int>();
+        //    int c = context.Entry(this).Collection(b => b.tblTender_ActivityContractor).Query().Count();
 
-            if (c!=0) rel.Add("Activity Contractors", c);
+        //    if (c!=0) rel.Add("Activity Contractors", c);
 
-            return rel;
+        //    return rel;
   
-        }
+        //}
     }
 
 }

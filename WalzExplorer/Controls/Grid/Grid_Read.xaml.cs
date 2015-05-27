@@ -59,7 +59,7 @@ namespace WalzExplorer.Controls.Grid
             public Dictionary<string, string> foreground = new Dictionary<string, string>();
             public Dictionary<string, columnFormat> format = new Dictionary<string, columnFormat>();
             public Dictionary<string, string> toolTip = new Dictionary<string, string>();
-            public Dictionary<string, string> drilldown = new Dictionary<string, string>();
+            public HashSet<string> drilldown = new HashSet<string>();
             //public Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
             public List<string> developer = new List<string>();
             public void Dispose()
@@ -332,7 +332,7 @@ namespace WalzExplorer.Controls.Grid
                 dc.CellStyle = cstyle;
             }
             //drilldown
-            if (columnSettings.drilldown.ContainsKey(c.UniqueName))
+            if (columnSettings.drilldown.Contains(c.UniqueName))
             {
 //                string dataTemplateString = @"
 //                    <DataTemplate>

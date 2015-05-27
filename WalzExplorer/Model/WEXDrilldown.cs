@@ -16,9 +16,12 @@ namespace WalzExplorer.Model
         public string _rhstab; // tab to display in window (i.e. new information that is shown when original object was drilled into)
         public DrilldownFilter _filter;
         public Dictionary<string, string> _parameters;
+        public string _title;
 
-        public WEXDrilldown(string rhstab, DrilldownFilter filter, Dictionary<string, string> parameters)
+
+        public WEXDrilldown(string title, string rhstab, DrilldownFilter filter, Dictionary<string, string> parameters)
         {
+            _title = title;
             _rhstab = rhstab;
             _filter = filter;
             _parameters = parameters;

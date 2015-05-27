@@ -4,10 +4,10 @@
         Title="DrilldownView" Height="300" Width="300" Loaded="Window_Loaded">
     <Grid x:Name="grid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Name="lblTitle" Content="test"/>
+        <Label Grid.Row="0" Name="lblTitle"/>
        
     </Grid>
 </Window>

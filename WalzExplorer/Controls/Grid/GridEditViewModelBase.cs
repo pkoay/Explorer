@@ -20,7 +20,7 @@ namespace WalzExplorer.Controls.Grid
 
         public ObservableCollection<ModelBase> data;
         public WalzExplorerEntities context;
-        protected Dictionary<string, object> columnDefault = new Dictionary<string, object>();
+        //protected Dictionary<string, object> columnDefault = new Dictionary<string, object>();
 
 
         public GridEditViewModelBase()
@@ -46,9 +46,9 @@ namespace WalzExplorer.Controls.Grid
             data.Insert( this.data.IndexOf(InsertAbove), i);
             return i;
         }
-      
-      
-       public void MoveItemsToIndex( List<ModelBase> items,int index)
+
+
+        public EfStatus MoveItemsToIndex(List<ModelBase> items, int index)
        {
            
            if (this.data.IndexOf(items[0])>index) items.Reverse();
@@ -56,24 +56,26 @@ namespace WalzExplorer.Controls.Grid
            {
                this.data.Move(this.data.IndexOf(i), index);
            }
-           SaveAndUpdateSortOrder();
+            //PK
+           return context.SaveChangesWithValidation();
        }
 
-       public void MoveItemsToItem( List<ModelBase> items,ModelBase MoveAbove)
+        public EfStatus MoveItemsToItem(List<ModelBase> items, ModelBase MoveAbove)
         {
-            MoveItemsToIndex(items, this.data.IndexOf(MoveAbove));
+             return MoveItemsToIndex(items, this.data.IndexOf(MoveAbove));
         }
+       
 
-        public void Delete(IEnumerable<object> items)
+       public EfStatus Delete(IEnumerable<object> items)
         {
             foreach (ModelBase item in items)
             {
                 context.Entry(item).State = System.Data.Entity.EntityState.Deleted;
             }
-            SaveAndUpdateSortOrder();
+            return SaveWithValidationAndUpdateSortOrder();
         }
 
-        public void SavePaste(List<ModelBase> items)
+       public void SavePaste(List<ModelBase> items)
         {
             foreach (ModelBase item in items)
             {
@@ -84,31 +86,57 @@ namespace WalzExplorer.Controls.Grid
                     context.Entry(item).State = System.Data.Entity.EntityState.Added;
                 }
             }
-            SaveAndUpdateSortOrder();
+            //return SaveWithValidationAndUpdateSortOrder();
 
         }
 
         //sets the defaults for a ModelBases (defaults as specified in dictionary columnDefault)
-        public void SetDefaultsForPaste(object o)
+        //public void SetDefaultsForPaste(object o)
+        //{
+        //    ModelBase i = DefaultItem();
+
+        //    foreach (KeyValuePair<string, object> def in columnDefault.ToList())
+        //    {
+        //        string DefaultKey = def.Key.ToString();
+        //        object DefaultValue = def.Value;
+               
+        //            //check to see if the property value in the ModelBase is the same as the property value  in a new instance
+        //            object ni = ObjectLibrary.CreateNewInstanace(o);
+
+        //            //this is dodgy..
+        //            if (ObjectLibrary.GetValue(o, DefaultKey).ToString() == ObjectLibrary.GetValue(ni, DefaultKey).ToString())
+        //                ObjectLibrary.SetValue(o, DefaultKey, DefaultValue);    //change to default value
+               
+        //    }
+        //}
+        //sets the defaults for a ModelBases (defaults as specified in dictionary columnDefault)
+        public void SetDefaultsForPaste(object currentitem)
         {
+            //default item is with defaults set
+            object defaultItem = DefaultItem();
+            Type defaultItemType = defaultItem.GetType();
 
-            foreach (KeyValuePair<string, object> def in columnDefault.ToList())
+            //create new object (no defaults set)
+            object basicItem = Activator.CreateInstance(defaultItemType);
+
+            //Compare basic and Default item to see if there are any changes (i.e. Defaults set)
+            //IF so apply them to the current item
+            foreach (PropertyInfo propertyInfo in defaultItemType.GetProperties())
             {
-                string DefaultKey = def.Key.ToString();
-                object DefaultValue = def.Value;
-               
-                    //check to see if the property value in the ModelBase is the same as the property value  in a new instance
-                    object ni = ObjectLibrary.CreateNewInstanace(o);
-
-                    //this is dodgy..
-                    if (ObjectLibrary.GetValue(o, DefaultKey).ToString() == ObjectLibrary.GetValue(ni, DefaultKey).ToString())
-                        ObjectLibrary.SetValue(o, DefaultKey, DefaultValue);    //change to default value
-               
+                if (propertyInfo.CanWrite)
+                {
+                    object defaultValue = propertyInfo.GetValue(defaultItem, null);
+                    object basicValue = propertyInfo.GetValue(basicItem, null);
+                    if (!object.Equals(defaultValue, basicValue))
+                    {
+                        propertyInfo.SetValue(currentitem, defaultValue);
+                    }
+                }
             }
-        }
-       
 
-        private void SaveAndUpdateSortOrder()
+        }
+
+        private EfStatus SaveWithValidationAndUpdateSortOrder()
         {
             int i = 0;
             foreach (ModelBase item in this.data)
@@ -116,10 +144,11 @@ namespace WalzExplorer.Controls.Grid
                 ObjectLibrary.SetValue(item, "SortOrder", i);
                 i++;
             }   
-            context.SaveChangesWithValidation();
+            return context.SaveChangesWithValidation();
+            
         }
 
-        public void ManualChange(ModelBase changedItem)
+        public EfStatus ManualChange(ModelBase changedItem)
         {
 
             // If item not in database 
@@ -128,7 +157,7 @@ namespace WalzExplorer.Controls.Grid
                 //Add item to dataabse 
                 context.Entry(changedItem).State = System.Data.Entity.EntityState.Added;
             }
-            SaveAndUpdateSortOrder();
+            return SaveWithValidationAndUpdateSortOrder();
             
             
         }

@@ -12,19 +12,18 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_Workgroup : ModelBase
+    public partial class tblTender_OverheadGroup : ModelBase
     {
-        public tblTender_Workgroup()
+        public tblTender_OverheadGroup()
         {
-            this.tblTender_ActivityLabour = new HashSet<tblTender_ActivityLabour>();
-            this.tblTender_WorkgroupItem = new HashSet<tblTender_WorkgroupItem>();
+            this.tblTender_OverheadItem = new HashSet<tblTender_OverheadItem>();
         }
     
-        private int _workgroupID;
-    	public int WorkgroupID 
+        private int _overheadGroupID;
+    	public int OverheadGroupID 
     	{ 
-    		get { return _workgroupID; } 
-    		set { SetProperty(ref _workgroupID, value); } 
+    		get { return _overheadGroupID; } 
+    		set { SetProperty(ref _overheadGroupID, value); } 
     	}
     
         private int _tenderID;
@@ -41,32 +40,11 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _title, value); } 
     	}
     
-        private double _onsiteLabourRate;
-    	public double OnsiteLabourRate 
+        private int _sortOrder;
+    	public int SortOrder 
     	{ 
-    		get { return _onsiteLabourRate; } 
-    		set { SetProperty(ref _onsiteLabourRate, value); } 
-    	}
-    
-        private double _labourMarkup;
-    	public double LabourMarkup 
-    	{ 
-    		get { return _labourMarkup; } 
-    		set { SetProperty(ref _labourMarkup, value); } 
-    	}
-    
-        private int _rate;
-    	public int Rate 
-    	{ 
-    		get { return _rate; } 
-    		set { SetProperty(ref _rate, value); } 
-    	}
-    
-        private string _comment;
-    	public string Comment 
-    	{ 
-    		get { return _comment; } 
-    		set { SetProperty(ref _comment, value); } 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
     	}
     
         private string _updatedBy;
@@ -90,16 +68,7 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
-        private int _sortOrder;
-    	public int SortOrder 
-    	{ 
-    		get { return _sortOrder; } 
-    		set { SetProperty(ref _sortOrder, value); } 
-    	}
     
-    
-        public virtual ICollection<tblTender_ActivityLabour> tblTender_ActivityLabour { get; set; }
-        public virtual ICollection<tblTender_WorkgroupItem> tblTender_WorkgroupItem { get; set; }
-        public virtual tblTender tblTender { get; set; }
+        public virtual ICollection<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
     }
 }

@@ -113,7 +113,6 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual tblTender_Activity tblTender_Activity { get; set; }
         public virtual tblTender_Drawing tblTender_Drawing { get; set; }
         public virtual tblTender_Schedule tblTender_Schedule { get; set; }
         public virtual tblTender tblTender { get; set; }

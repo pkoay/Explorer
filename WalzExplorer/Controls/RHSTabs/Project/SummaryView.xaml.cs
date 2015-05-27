@@ -9,6 +9,8 @@ using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
 using WalzExplorer.Common;
+using WalzExplorer.Database;
+using WalzExplorer.Model;
 namespace WalzExplorer.Controls.RHSTabs.Project
 {
     /// <summary>
@@ -57,10 +59,43 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.columnSettings.toolTip.Add("Committed", "Committed Costs to date (Open purchase orders)");
             grd.columnSettings.toolTip.Add("Invoiced", "Invoiced to client to date");
 
+            grd.columnSettings.drilldown.Add("Committed");
+            grd.columnSettings.drilldown.Add("Cost");
+
         }
         public override string IssueIfClosed()
         {
             return "";
+        }
+
+
+        private void grd_Drilldown(object sender, EventArgs e)
+        {
+            //extract data from grid for drilldown
+            WalzExplorer.Controls.Grid.Grid_Read.DrilldownResult ddInfo = (WalzExplorer.Controls.Grid.Grid_Read.DrilldownResult)sender;
+            spWEX_RHS_Project_Summary_Result ddRowdata = (spWEX_RHS_Project_Summary_Result)ddInfo.RowData;
+
+            //Pass data to drilldown
+            string title = "";
+            Dictionary<string, string> fields = new Dictionary<string, string>();
+            fields.Add("ProjectID", ddRowdata.ProjectID.ToString());
+           
+            switch (ddInfo.ColumnUniqueName)
+            {
+                case "Committed":
+                    title = "Drilldown on Project " + ddRowdata.AXProjectID + ", committed amount totaling " + ((decimal)ddRowdata.Committed).ToString("N2");
+                    fields.Add("isCommitted", "true");
+                    settings.drilldown = new WEXDrilldown(title, "Project.PurchaseOrderDetailView", DrilldownFilter.Project, fields);
+                    DrilldownWindow.Open(settings);
+                    break;
+                case "Cost":
+                    title = "Drilldown on Project " + ddRowdata.AXProjectID + ", Cost (including overheads) amount totaling " + ((decimal)ddRowdata.Cost).ToString("N2");
+                    settings.drilldown = new WEXDrilldown(title, "Project.CostView", DrilldownFilter.Project, fields);
+                    DrilldownWindow.Open(settings);
+                    break;
+            }
+         
+
         }
         //private void grd_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
         //{

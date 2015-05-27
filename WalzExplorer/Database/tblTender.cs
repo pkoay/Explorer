@@ -16,7 +16,6 @@ namespace WalzExplorer.Database
     {
         public tblTender()
         {
-            this.tblTender_Activity = new HashSet<tblTender_Activity>();
             this.tblTender_Contractor = new HashSet<tblTender_Contractor>();
             this.tblTender_ContractorType = new HashSet<tblTender_ContractorType>();
             this.tblTender_Drawing = new HashSet<tblTender_Drawing>();
@@ -25,7 +24,7 @@ namespace WalzExplorer.Database
             this.tblTender_Material = new HashSet<tblTender_Material>();
             this.tblTender_Supplier = new HashSet<tblTender_Supplier>();
             this.tblTender_UnitOfMeasure = new HashSet<tblTender_UnitOfMeasure>();
-            this.tblTender_Workgroup = new HashSet<tblTender_Workgroup>();
+            this.tblTender_Overhead = new HashSet<tblTender_Overhead>();
         }
     
         private int _tenderID;
@@ -105,9 +104,15 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
+        private int _customerID;
+    	public int CustomerID 
+    	{ 
+    		get { return _customerID; } 
+    		set { SetProperty(ref _customerID, value); } 
+    	}
+    
     
         public virtual tblPerson tblPerson { get; set; }
-        public virtual ICollection<tblTender_Activity> tblTender_Activity { get; set; }
         public virtual ICollection<tblTender_Contractor> tblTender_Contractor { get; set; }
         public virtual ICollection<tblTender_ContractorType> tblTender_ContractorType { get; set; }
         public virtual ICollection<tblTender_Drawing> tblTender_Drawing { get; set; }
@@ -117,6 +122,7 @@ namespace WalzExplorer.Database
         public virtual ICollection<tblTender_Supplier> tblTender_Supplier { get; set; }
         public virtual tblTender_Status tblTender_Status { get; set; }
         public virtual ICollection<tblTender_UnitOfMeasure> tblTender_UnitOfMeasure { get; set; }
-        public virtual ICollection<tblTender_Workgroup> tblTender_Workgroup { get; set; }
+        public virtual tblCustomer tblCustomer { get; set; }
+        public virtual ICollection<tblTender_Overhead> tblTender_Overhead { get; set; }
     }
 }

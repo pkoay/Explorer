@@ -20,7 +20,7 @@ namespace WalzExplorer.Windows
     /// </summary>
     public partial class DrilldownView : Window
     {
-        public DrilldownView(RHSTabViewBase Drilldown)
+        public DrilldownView(RHSTabViewBase Drilldown, string title)
         {
             InitializeComponent();
             const int border = 50;
@@ -30,10 +30,12 @@ namespace WalzExplorer.Windows
             this.Top = mainWindow.Top + border;
             this.Width = mainWindow.Width - border * 2;
             this.Height = mainWindow.Height - border * 2;
+            lblTitle.Content = title;
             MainWindow mw = (MainWindow)mainWindow;
 
             System.Windows.Controls.Grid.SetRow(Drilldown, 1);
             grid.Children.Add(Drilldown);
+
             
         }
 

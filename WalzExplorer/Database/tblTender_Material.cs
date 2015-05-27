@@ -16,7 +16,6 @@ namespace WalzExplorer.Database
     {
         public tblTender_Material()
         {
-            this.tblTender_ActivityMaterial = new HashSet<tblTender_ActivityMaterial>();
             this.tblTender_Supplier_Material = new HashSet<tblTender_Supplier_Material>();
         }
     
@@ -98,7 +97,6 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual ICollection<tblTender_ActivityMaterial> tblTender_ActivityMaterial { get; set; }
         public virtual tblTender_UnitOfMeasure tblTender_UnitOfMeasure { get; set; }
         public virtual ICollection<tblTender_Supplier_Material> tblTender_Supplier_Material { get; set; }
         public virtual tblTender tblTender { get; set; }

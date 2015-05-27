@@ -142,20 +142,8 @@ namespace WalzExplorer.Database
             get { return null; }
         }
     }
-    public partial class tblTender_Workgroup
-    {
-        public override string this[string columnName]
-        {
-            get { return null; }
-        }
-    }
-    public partial class tblTender_WorkgroupHeader
-    {
-        public override string this[string columnName]
-        {
-            get { return null; }
-        }
-    }
+ 
+
     public partial class tblWEX_Tree
     {
         public override string this[string columnName]
@@ -177,20 +165,8 @@ namespace WalzExplorer.Database
             get { return null; }
         }
     }
-    public partial class tblTender_Activity
-    {
-        public override string this[string columnName]
-        {
-            get { return null; }
-        }
-    }
-    public partial class tblTender_ActivityChildActivity
-    {
-        public override string this[string columnName]
-        {
-            get { return null; }
-        }
-    }
+
+
     public partial class tblTender_LabourStandard
     {
         public override string this[string columnName]
@@ -198,13 +174,7 @@ namespace WalzExplorer.Database
             get { return null; }
         }
     }
-    public partial class tblTender_ActivityContractor
-    {
-        public override string this[string columnName]
-        {
-            get { return null; }
-        }
-    }
+
     public partial class tblTender_Supplier_Material
     {
         public override string this[string columnName]
@@ -219,27 +189,7 @@ namespace WalzExplorer.Database
             get { return null; }
         }
     }
-    public partial class tblTender_ActivityLabour
-    {
-        public override string this[string columnName]
-        {
-            get { return null; }
-        }
-    }
-    public partial class tblTender_ActivityMaterial
-    {
-        public override string this[string columnName]
-        {
-            get { return null; }
-        }
-    }
-    public partial class tblTender_WorkgroupItem
-    {
-        public override string this[string columnName]
-        {
-            get { return null; }
-        }
-    }
+
     public partial class tblTender_Schedule
     {
         public override string this[string columnName]

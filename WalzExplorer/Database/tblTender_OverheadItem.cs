@@ -12,27 +12,27 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_WorkgroupItem : ModelBase
+    public partial class tblTender_OverheadItem : ModelBase
     {
-        private int _workgroupItemID;
-    	public int WorkgroupItemID 
+        private int _overheadItemID;
+    	public int OverheadItemID 
     	{ 
-    		get { return _workgroupItemID; } 
-    		set { SetProperty(ref _workgroupItemID, value); } 
+    		get { return _overheadItemID; } 
+    		set { SetProperty(ref _overheadItemID, value); } 
     	}
     
-        private int _workgroupID;
-    	public int WorkgroupID 
+        private int _overheadID;
+    	public int OverheadID 
     	{ 
-    		get { return _workgroupID; } 
-    		set { SetProperty(ref _workgroupID, value); } 
+    		get { return _overheadID; } 
+    		set { SetProperty(ref _overheadID, value); } 
     	}
     
-        private int _workgroupHeaderID;
-    	public int WorkgroupHeaderID 
+        private int _overheadGroupID;
+    	public int OverheadGroupID 
     	{ 
-    		get { return _workgroupHeaderID; } 
-    		set { SetProperty(ref _workgroupHeaderID, value); } 
+    		get { return _overheadGroupID; } 
+    		set { SetProperty(ref _overheadGroupID, value); } 
     	}
     
         private string _title;
@@ -70,6 +70,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _comments, value); } 
     	}
     
+        private int _sortOrder;
+    	public int SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
+    	}
+    
         private string _updatedBy;
     	public string UpdatedBy 
     	{ 
@@ -91,15 +98,8 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
-        private int _sortOrder;
-    	public int SortOrder 
-    	{ 
-    		get { return _sortOrder; } 
-    		set { SetProperty(ref _sortOrder, value); } 
-    	}
     
-    
-        public virtual tblTender_Workgroup tblTender_Workgroup { get; set; }
-        public virtual tblTender_WorkgroupHeader tblTender_WorkgroupHeader { get; set; }
+        public virtual tblTender_Overhead tblTender_Overhead { get; set; }
+        public virtual tblTender_OverheadGroup tblTender_OverheadGroup { get; set; }
     }
 }

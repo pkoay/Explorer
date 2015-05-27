@@ -7,56 +7,56 @@ using System.Windows.Media;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
 using WalzExplorer.Common;
-namespace WalzExplorer.Controls.RHSTabs.Tender
-{
-    /// <summary>
-    /// Interaction logic for TenderViewer.xaml
-    /// </summary>
+//namespace WalzExplorer.Controls.RHSTabs.Tender
+//{
+//    /// <summary>
+//    /// Interaction logic for TenderViewer.xaml
+//    /// </summary>
     
      
-    public partial class TenderActivityView : RHSTabGridViewBase
-    {
+//    public partial class TenderActivityView : RHSTabGridViewBase
+//    {
       
-        TenderActivityViewModel vm;
+//        //TenderActivityViewModel vm;
 
-        public TenderActivityView()
-        {
-            InitializeComponent();
+//        //public TenderActivityView()
+//        //{
+//        //    InitializeComponent();
            
            
-        }
+//        //}
 
-        public override void TabLoad()
-        {
-            base.SetGrid(grd);
-            base.Reset();
+//        //public override void TabLoad()
+//        //{
+//        //    base.SetGrid(grd);
+//        //    base.Reset();
 
-            columnReadOnlyDeveloper.Add("RowVersion");
-            columnReadOnlyDeveloper.Add("TenderID");
-            columnRename.Add("ActivityID", "ID");
+//        //    columnReadOnlyDeveloper.Add("RowVersion");
+//        //    columnReadOnlyDeveloper.Add("TenderID");
+//        //    columnRename.Add("ActivityID", "ID");
 
-            columnReadOnlyDeveloper.Add("SortOrder");
-            columnReadOnlyDeveloper.Add("UpdatedBy");
-            columnReadOnlyDeveloper.Add("UpdatedDate");
+//        //    columnReadOnlyDeveloper.Add("SortOrder");
+//        //    columnReadOnlyDeveloper.Add("UpdatedBy");
+//        //    columnReadOnlyDeveloper.Add("UpdatedDate");
 
-            gridEdit = true;
-            gridDelete = true;
-            gridAdd = (settings.node.TypeID == "TenderActivityFolder");
+//        //    gridEdit = true;
+//        //    gridDelete = true;
+//        //    gridAdd = (settings.node.TypeID == "TenderActivityFolder");
             
-            // set grid data
-            vm = new TenderActivityViewModel(settings);
-            viewModel = vm;
-            grd.DataContext = viewModel;
-            grd.ItemsSource = viewModel.data;
-            //columnCombo.Clear();
-            columnCombo.Add("UnitOfMeasureID", GridLibrary.CreateCombo("cmbUnitOfMeasureID", "Unit Of Measure", vm.cmbUnitOfMeasureList(), "UnitOfMeasureID", "Title"));
-            //columnCombo.Add("StatusID", GridLibrary.CreateCombo("cmbStatusID", "Status", vm.cmbStatusList(),"StatusID", "Title"));
-            base.TabLoad();
+//        //    // set grid data
+//        //    vm = new TenderActivityViewModel(settings);
+//        //    viewModel = vm;
+//        //    grd.DataContext = viewModel;
+//        //    grd.ItemsSource = viewModel.data;
+//        //    //columnCombo.Clear();
+//        //    columnCombo.Add("UnitOfMeasureID", GridLibrary.CreateCombo("cmbUnitOfMeasureID", "Unit Of Measure", vm.cmbUnitOfMeasureList(), "UnitOfMeasureID", "Title"));
+//        //    //columnCombo.Add("StatusID", GridLibrary.CreateCombo("cmbStatusID", "Status", vm.cmbStatusList(),"StatusID", "Title"));
+//        //    base.TabLoad();
 
-        }
+//        //}
 
      
       
-    }
+//    }
 
-}
+//}

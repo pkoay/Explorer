@@ -40,7 +40,8 @@ namespace WalzExplorer.Controls.Grid
             INT,
             INT_NO_TOTAL,
             TWO_DECIMAL_NO_TOTAL,
-            TWO_DECIMAL
+            TWO_DECIMAL,
+            RIGHT_JUSTIFY,
         };
 
         public class GridColumnSettings : IDisposable
@@ -70,10 +71,10 @@ namespace WalzExplorer.Controls.Grid
         public WEXSettings _settings;
 
         public Dictionary<string, string> columnRename = new Dictionary<string, string>();
-        //public List<string> columnReadOnly = new List<string>();
-        //public List<string> columnReadOnlyDeveloper = new List<string>();
+
 
         public Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
+        public Dictionary<string, GridViewExpressionColumn> columnExpression = new Dictionary<string, GridViewExpressionColumn>();
      
         protected GridViewRow ContextMenuRow;
 
@@ -122,6 +123,7 @@ namespace WalzExplorer.Controls.Grid
 
         public void SetGrid(WEXSettings settings, bool canAdd, bool canEdit, bool canDelete)
         {
+
             _settings = settings;
 
             //set basic grid properties
@@ -136,8 +138,12 @@ namespace WalzExplorer.Controls.Grid
             grd.ClipboardCopyMode = GridViewClipboardCopyMode.Cells;
             grd.ValidatesOnDataErrors = GridViewValidationMode.Default;
             grd.AutoGeneratingColumn += g_AutoGeneratingColumn;
+           
             grd.ContextMenuOpening += g_ContextMenuOpening;
 
+            grd.ShowColumnHeaders = true;
+            grd.ShowGroupPanel = true;
+            grd.ShowColumnFooters = true;
 
             grd.CanUserInsertRows = canAdd;
             grd.CanUserDeleteRows = canDelete;
@@ -294,7 +300,7 @@ namespace WalzExplorer.Controls.Grid
                         {
                             if (grd.SelectedItems.Contains(item)) moveItems.Add(item);
                         }
-                        vm.MoveItemsToItem(moveItems, (ModelBase)row.Item);
+                        MessageEfStatus(vm.MoveItemsToItem(moveItems, (ModelBase)row.Item));
                         grd.Rebind(); //redisplay new values such as ID, sort order
                     }
                     else
@@ -304,11 +310,22 @@ namespace WalzExplorer.Controls.Grid
         }
 
 
-       
+        private void MessageEfStatus(EfStatus status)
+        {
+            if (! status.IsValid)
+            {
+                string msg="";
+                foreach (System.ComponentModel.DataAnnotations.ValidationResult result in  status.EfErrors)
+                {
+                    msg=msg+result.ErrorMessage;
+                }
+                MessageBox.Show(msg,"Data Errors");
+            }
+        }
 
         public void g_Deleted(object sender, GridViewDeletedEventArgs e)
         {
-            vm.Delete(e.Items);
+            MessageEfStatus(vm.Delete(e.Items));
             grd.Rebind();         //redisplay new values such as ID, sort order
 
         }
@@ -333,9 +350,10 @@ namespace WalzExplorer.Controls.Grid
                     ApplicationCommands.Copy.Execute(this, null);
                     break;
                 case "miPaste":
-                    grd.ClipboardPasteMode = GridViewClipboardPasteMode.AllSelectedRows;
+                    grd.ClipboardPasteMode = GridViewClipboardPasteMode.AllSelectedRows | GridViewClipboardPasteMode.SkipHiddenColumns;
                     ApplicationCommands.Paste.Execute(this, null);
                     grd.ClipboardPasteMode = GridViewClipboardPasteMode.None;
+                    
                     break;
                 case "miInsert":
                     if (ContextMenuRow != null)
@@ -357,9 +375,10 @@ namespace WalzExplorer.Controls.Grid
                     //Note: paste does not invoke g_AddingNewDataItem so has to be treated seperatly
 
                     //insert rows using standard telerik methodology
-                    grd.ClipboardPasteMode = GridViewClipboardPasteMode.InsertNewRows | GridViewClipboardPasteMode.OverwriteWithEmptyValues;                    //Note OverwriteWithEmptyValues allows pasting of blank cells otherwise as if cell does not exist (e.g. copy 4 columns with one blank cell, will be like copying 3 columns)
+                    grd.ClipboardPasteMode = GridViewClipboardPasteMode.InsertNewRows | GridViewClipboardPasteMode.OverwriteWithEmptyValues| GridViewClipboardPasteMode.SkipHiddenColumns;                    //Note OverwriteWithEmptyValues allows pasting of blank cells otherwise as if cell does not exist (e.g. copy 4 columns with one blank cell, will be like copying 3 columns)
 
                     int before = grd.Items.Count;
+                   
                     ApplicationCommands.Paste.Execute(this, null);
                     int rowsInserted = grd.Items.Count - before;
                     grd.ClipboardPasteMode = GridViewClipboardPasteMode.None;
@@ -378,18 +397,25 @@ namespace WalzExplorer.Controls.Grid
                         //this is why the SetDefaults function checks to see if the value is different from a new instance, if the values are different 
                         // (i.e. value has been manually changed) then the value will not be overwritten by the 'DEFAULT'  f
 
+                        //foreach (ModelBase item in items)
+                        //{
+                        //    vm.SetDefaultsForPaste(item);
+                        //}
+
                         foreach (ModelBase item in items)
                         {
                             vm.SetDefaultsForPaste(item);
                         }
 
+
+                        vm.SavePaste(items);
                         //Move new inserted rows to insert location (i.e. from context menu click)
                         if (ContextMenuRow != null)
                         {
-                            vm.MoveItemsToItem(items, (ModelBase)ContextMenuRow.Item);
+                            MessageEfStatus(vm.MoveItemsToItem(items, (ModelBase)ContextMenuRow.Item));
                         }
 
-                        //viewModel.SavePaste(items);
+                        //vm.SavePaste(items);
                         grd.Rebind();         //redisplay new values such as ID, sort order
                     }
                     else
@@ -531,10 +557,22 @@ namespace WalzExplorer.Controls.Grid
                 cmb.GotFocus += gcb_GotFocus;
                 cmb.LostFocus += gcb_LostFocus;
 
-
+                foreach (AggregateFunction af in c.AggregateFunctions)
+                    cmb.AggregateFunctions.Add(af);
                 cmb.IsReadOnly = c.IsReadOnly; // make cmb readonly if column is readonly
                 if (cmb.IsReadOnly) cmb.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
 
+            }
+            //Add Expression Columns
+            if (columnExpression.ContainsKey(c.UniqueName))
+            {
+                GridViewExpressionColumn ec = columnExpression[c.UniqueName];
+                
+                if (grd.Columns.Contains(ec))
+                {
+                    grd.Columns.Remove(ec);
+                }
+                grd.Columns.Add(ec);
             }
             grd.Rebind();
 
@@ -566,6 +604,13 @@ namespace WalzExplorer.Controls.Grid
         {
             switch (type)
             {
+                case columnFormat.RIGHT_JUSTIFY:
+                    column.DataFormatString = "G";
+                    column.TextAlignment = TextAlignment.Right;
+                    column.HeaderTextAlignment = TextAlignment.Right;
+                    column.FooterTextAlignment = TextAlignment.Right;
+                    column.IsGroupable = false;
+                    break;
                 case columnFormat.COUNT:
                     column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
                     break;
@@ -656,9 +701,14 @@ namespace WalzExplorer.Controls.Grid
         private void g_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
         {
             isEditing = false;
-            vm.ManualChange((ModelBase)e.EditedItem);
+            MessageEfStatus(vm.ManualChange((ModelBase)e.EditedItem));
             grd.Rebind();         //redisplay new values such as ID, sort order
 
+        }
+
+        private void grd_PastingCellClipboardContent(object sender, GridViewCellClipboardEventArgs e)
+        {
+            
         }
     }
 }

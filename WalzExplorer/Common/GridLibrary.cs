@@ -24,6 +24,8 @@ namespace WalzExplorer.Common
 
             gcb.GotFocus += gcb_GotFocus;
             gcb.LostFocus += gcb_LostFocus;
+
+
             return gcb;
         }
 

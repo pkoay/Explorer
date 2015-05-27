@@ -17,6 +17,7 @@ namespace WalzExplorer.Database
         public tblCustomer()
         {
             this.tblProjects = new HashSet<tblProject>();
+            this.tblTenders = new HashSet<tblTender>();
         }
     
         private int _customerID;
@@ -70,5 +71,6 @@ namespace WalzExplorer.Database
     
     
         public virtual ICollection<tblProject> tblProjects { get; set; }
+        public virtual ICollection<tblTender> tblTenders { get; set; }
     }
 }
