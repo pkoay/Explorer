@@ -165,7 +165,7 @@ namespace WalzExplorer.Database
 
             //Add logging info
             var modifiedEntries = ChangeTracker.Entries()
-                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
+                .Where(e => (e.State == EntityState.Added || e.State == EntityState.Modified) )
                 .ToList();
 
             foreach (var entry in modifiedEntries)

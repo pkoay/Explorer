@@ -31,37 +31,48 @@ namespace WalzExplorer.Controls.Grid
     {
         public GridEditViewModelBase vm;
 
-        public enum columnFormat
-        {
-            COUNT,
-            DATE,
-            TEXT,
-            TEXT_NO_GROUP,
-            INT,
-            INT_NO_TOTAL,
-            TWO_DECIMAL_NO_TOTAL,
-            TWO_DECIMAL,
-            RIGHT_JUSTIFY,
-        };
+        private HashSet<string> defaultDeveloperColumns = new HashSet<string>() {"RowVersion","UpdatedBy","UpdatedDate","SortOrder"};
 
-        public class GridColumnSettings : IDisposable
+
+        public class columnSetting : IDisposable
         {
-            public HashSet<string> readOnly = new HashSet<string>();
-            
-            public Dictionary<string, string> rename = new Dictionary<string, string>();
-            public Dictionary<string, string> background = new Dictionary<string, string>();
-            public Dictionary<string, string> foreground = new Dictionary<string, string>();
-            public Dictionary<string, columnFormat> format = new Dictionary<string, columnFormat>();
-            public Dictionary<string, string> toolTip = new Dictionary<string, string>();
-            //public Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
-            public HashSet<string> developer = new HashSet<string>();
+            public enum aggregationType
+            {
+                NONE,
+                MAX,
+                MIN,
+                COUNT,
+                AVERAGE,
+                SUM,
+            }
+            public enum formatType
+            {
+                TEXT,
+                DATEYYYY,
+                DATEYY,
+                G,
+                G2,
+                N2,
+                N,
+            }
+            public string rename = null;
+            public string background = null;
+            public string foreground = null;
+            public formatType format = formatType.N2;
+            public aggregationType aggregation = aggregationType.NONE;
+            public string tooltip = null;
+            public int order = -1;
+            public bool isReadonly = false;
+            public bool isDeveloper = false;
+            public bool? isGroupable = null; // default set by format
+
             public void Dispose()
             {
             }
         }
 
 
-        public GridColumnSettings columnSettings;
+        public Dictionary<string, columnSetting> columnsettings = new Dictionary<string, columnSetting>();
 
         //Grid Formatting
         private bool _canAdd;
@@ -70,11 +81,11 @@ namespace WalzExplorer.Controls.Grid
 
         public WEXSettings _settings;
 
-        public Dictionary<string, string> columnRename = new Dictionary<string, string>();
+       
 
 
         public Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
-        public Dictionary<string, GridViewExpressionColumn> columnExpression = new Dictionary<string, GridViewExpressionColumn>();
+       
      
         protected GridViewRow ContextMenuRow;
 
@@ -97,7 +108,7 @@ namespace WalzExplorer.Controls.Grid
             _canEdit = false;
             _canDelete = false;
 
-            columnSettings = new GridColumnSettings();
+            //columnSettings_old = new GridColumnSettings_old();
            
         }
 
@@ -216,8 +227,6 @@ namespace WalzExplorer.Controls.Grid
                 }
             }
             grd.ContextMenu = cm;
-
-            columnSettings = new GridColumnSettings();
         }
 
 
@@ -475,73 +484,130 @@ namespace WalzExplorer.Controls.Grid
             //Ignore foreign key all columns
             if (c.UniqueName.StartsWith("tbl")) { e.Cancel = true; return; }
 
-
-            //Ignore Columns for developers only while not in development mode
-            if (columnSettings.developer.Contains(c.UniqueName) && !_settings.DeveloperMode) { e.Cancel = true; return; }
-
-            //Rename 
-            if (columnSettings.rename.ContainsKey(c.UniqueName))
+            if (defaultDeveloperColumns.Contains(c.UniqueName) && !_settings.DeveloperMode)
             {
-                //Rename from the dictionary
-                c.Header = columnSettings.rename[c.UniqueName];
+                { e.Cancel = true; return; }
+            }
+           
+            if (columnsettings.ContainsKey(c.UniqueName))
+            {
+                columnSetting colsetting = columnsettings[c.UniqueName];
+                string background = null;
+                string foreground = null;
+
+                //developer only column - hide
+                if (colsetting.isDeveloper && !_settings.DeveloperMode) { e.Cancel = true;  return;}
+
+                //Rename or logical name
+                if (colsetting.rename != null)
+                {
+                    c.Header = colsetting.rename;
+                }
+                else
+                {
+                    //Set the name from PascalCase to Logical (e.g. 'UpdatedBy' to 'Updated By')
+                    Regex r = new Regex("([A-Z]+[a-z]+)");
+                    c.Header = r.Replace(c.UniqueName, m => (m.Value.Length > 3 ? m.Value : m.Value.ToLower()) + " ");
+                }
+
+                //determine foreground/background
+                if (colsetting.isReadonly ||!_canEdit || colsetting.isDeveloper)
+                {
+                    foreground = "#FF999999";
+                    background = "#4C35496A";
+                    c.IsReadOnly = true;
+                    c.IsEnabled = true;
+                    
+                }
+                if (colsetting.background != null) background = colsetting.background;
+                if (colsetting.foreground != null) foreground = colsetting.foreground;
+                c.CellStyle = CellStyle(foreground, background);
+                
+                //tooltip
+                if (colsetting.tooltip != null) ColumnToolTipStatic(dc, colsetting.tooltip);
+
+                string format = null;
+                dc.TextAlignment = TextAlignment.Right;
+                dc.HeaderTextAlignment = TextAlignment.Right;
+                dc.FooterTextAlignment = TextAlignment.Right;
+                switch (colsetting.format)
+                {
+                    case columnSetting.formatType.TEXT:
+                        format = "";
+                        dc.TextAlignment = TextAlignment.Left;
+                        dc.HeaderTextAlignment = TextAlignment.Left;
+                        dc.FooterTextAlignment = TextAlignment.Left;
+                        dc.IsGroupable = true;
+                        break;
+                    case columnSetting.formatType.DATEYYYY:
+                        format = "dd/MMM/yyyy";
+                        dc.IsGroupable = true;
+                        break;
+                    case columnSetting.formatType.DATEYY:
+                        format = "dd/MMM/yy";
+                        dc.IsGroupable = true;
+                        break;
+                    case columnSetting.formatType.G:
+                        dc.IsGroupable = false;
+                        format = "G";
+                        break;
+                    case columnSetting.formatType.G2:
+                        dc.IsGroupable = false;
+                        format = "G2";
+                        break;
+                    case columnSetting.formatType.N2:
+                        dc.IsGroupable = false;
+                        format = "N2";
+                        break;
+                    case columnSetting.formatType.N:
+                        dc.IsGroupable = false;
+                        format = "N";
+                        break;
+                    default:
+                        break;
+                }
+
+                string aggformat = "{0:" + format + "}";
+                switch (colsetting.aggregation)
+                {
+                    case columnSetting.aggregationType.NONE:
+                        break;
+                    case columnSetting.aggregationType.MAX:
+                        dc.AggregateFunctions.Add(new MaxFunction() { Caption = "Min=", ResultFormatString = aggformat });
+                        break;
+                    case columnSetting.aggregationType.MIN:
+                        dc.AggregateFunctions.Add(new MinFunction() { Caption = "Min=", ResultFormatString = aggformat });
+                        break;
+                    case columnSetting.aggregationType.COUNT:
+                        dc.AggregateFunctions.Add(new CountFunction() { Caption = "Count=" });
+                        break;
+                    case columnSetting.aggregationType.AVERAGE:
+                        dc.AggregateFunctions.Add(new AverageFunction() { Caption = "Avg=", ResultFormatString = aggformat });
+                        break;
+                    case columnSetting.aggregationType.SUM:
+                        dc.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = aggformat });
+                        break;
+                    default:
+                        break;
+                }
+                dc.DataFormatString = format;
+                if (colsetting.isGroupable.HasValue) dc.IsGroupable = (bool)colsetting.isGroupable;
+                
+                //order
+                if (colsetting.order != -1) c.DisplayIndex= colsetting.order;
+                
+                
+                
             }
             else
             {
-                //Set the name from PascalCase to Logical (e.g. 'UpdatedBy' to 'Updated By')
-                Regex r = new Regex("([A-Z]+[a-z]+)");
-                c.Header = r.Replace(c.UniqueName, m => (m.Value.Length > 3 ? m.Value : m.Value.ToLower()) + " ");
-            }
-
-            //Read Only
-            if (columnSettings.readOnly.Contains(c.UniqueName) || !_canEdit || (columnSettings.developer.Contains(c.UniqueName) && _settings.DeveloperMode))
-            {
-                //e.Column.CellStyle = style;
-                e.Column.IsReadOnly = true;
-
-                // changing foregound makes the text invisible!?!?
-                //style = new Style(typeof(GridViewCell));
-                //style.Setters.Add(new Setter(GridViewCell.BackgroundProperty, (SolidColorBrush)new BrushConverter().ConvertFromString("#FF3E3E40")));
-                //c.CellStyle = style;
-                e.Column.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
-
-            }
-
-            //ToolTip 
-            if (columnSettings.toolTip.ContainsKey(c.UniqueName))
-            {
-                //Rename from the dictionary
-                string s = columnSettings.toolTip[c.UniqueName];
-                ColumnToolTipStatic(dc, s);
-            }
-
-            //format
-            if (columnSettings.format.ContainsKey(c.UniqueName))
-            {
-                //Rename from the dictionary
-                columnFormat f = columnSettings.format[c.UniqueName];
-                FormatColumn(dc, f);
-            }
-            //Background
-            if (columnSettings.background.ContainsKey(c.UniqueName))
-            {
-                //Rename from the dictionary
-                string f = columnSettings.background[c.UniqueName];
-                dc.Background = Common.GraphicsLibrary.BrushFromHex(f);
-            }
-            //Foreground
-            if (columnSettings.foreground.ContainsKey(c.UniqueName))
-            {
-                //Rename from the dictionary
-                string f = columnSettings.foreground[c.UniqueName];
-                Style cstyle = new Style(typeof(GridViewCell));
-                cstyle.BasedOn = (Style)FindResource("GridViewCellStyle");
-                cstyle.Setters.Add(new Setter(GridViewCell.ForegroundProperty, Common.GraphicsLibrary.BrushFromHex(f)));
-                cstyle.Seal();
-                dc.CellStyle = cstyle;
+                if (!_canEdit)
+                {
+                    c.CellStyle=CellStyle("#FF999999","#4C35496A");
+                }
             }
 
 
-            //Add combos
             if (columnCombo.ContainsKey(c.UniqueName))
             {
                 GridViewComboBoxColumn cmb = columnCombo[c.UniqueName];
@@ -560,22 +626,155 @@ namespace WalzExplorer.Controls.Grid
                 foreach (AggregateFunction af in c.AggregateFunctions)
                     cmb.AggregateFunctions.Add(af);
                 cmb.IsReadOnly = c.IsReadOnly; // make cmb readonly if column is readonly
-                if (cmb.IsReadOnly) cmb.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
+                if (cmb.IsReadOnly) cmb.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#4C35496A");
 
             }
-            //Add Expression Columns
-            if (columnExpression.ContainsKey(c.UniqueName))
-            {
-                GridViewExpressionColumn ec = columnExpression[c.UniqueName];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //// OLD STUFF!
+            ////Ignore Columns for developers only while not in development mode
+            //if (columnSettings_old.developer.Contains(c.UniqueName) && !_settings.DeveloperMode) { e.Cancel = true; return; }
+
+            ////Rename 
+            //if (columnSettings_old.rename.ContainsKey(c.UniqueName))
+            //{
+            //    //Rename from the dictionary
+            //    c.Header = columnSettings_old.rename[c.UniqueName];
+            //}
+            //else
+            //{
+            //    //Set the name from PascalCase to Logical (e.g. 'UpdatedBy' to 'Updated By')
+            //    Regex r = new Regex("([A-Z]+[a-z]+)");
+            //    c.Header = r.Replace(c.UniqueName, m => (m.Value.Length > 3 ? m.Value : m.Value.ToLower()) + " ");
+            //}
+
+            ////Read Only
+            //if (columnSettings_old.readOnly.Contains(c.UniqueName) || !_canEdit || (columnSettings_old.developer.Contains(c.UniqueName) && _settings.DeveloperMode))
+            //{
+            //    //e.Column.CellStyle = style;
+            //    e.Column.IsReadOnly = true;
+
+            //    // changing foregound makes the text invisible!?!?
+            //    //style = new Style(typeof(GridViewCell));
+            //    //style.Setters.Add(new Setter(GridViewCell.BackgroundProperty, (SolidColorBrush)new BrushConverter().ConvertFromString("#FF3E3E40")));
+            //    //c.CellStyle = style;
+            //    //e.Column.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
+            //    Style cstyle = new Style(typeof(GridViewCell));
+            //    cstyle.BasedOn = (Style)FindResource("GridViewCellStyle");
+            //    cstyle.Setters.Add(new Setter(GridViewCell.ForegroundProperty, Common.GraphicsLibrary.BrushFromHex("#FF999999")));
+            //    cstyle.Setters.Add(new Setter(GridViewCell.BackgroundProperty, Common.GraphicsLibrary.BrushFromHex("#4C35496A")));
+            //    cstyle.Seal();
+            //    c.CellStyle = cstyle;
+            //}
+
+            ////ToolTip 
+            //if (columnSettings_old.toolTip.ContainsKey(c.UniqueName))
+            //{
+            //    //Rename from the dictionary
+            //    string s = columnSettings_old.toolTip[c.UniqueName];
+            //    ColumnToolTipStatic(dc, s);
+            //}
+
+            ////format
+            //if (columnSettings_old.format.ContainsKey(c.UniqueName))
+            //{
+            //    //Rename from the dictionary
+            //    columnFormat_old f = columnSettings_old.format[c.UniqueName];
+            //    FormatColumn(dc, f);
+            //}
+            ////Background
+            //if (columnSettings_old.background.ContainsKey(c.UniqueName))
+            //{
+            //    //Rename from the dictionary
+            //    string f = columnSettings_old.background[c.UniqueName];
+            //    dc.Background = Common.GraphicsLibrary.BrushFromHex(f);
+            //}
+            ////Foreground
+            //if (columnSettings_old.foreground.ContainsKey(c.UniqueName))
+            //{
+            //    //Rename from the dictionary
+            //    string f = columnSettings_old.foreground[c.UniqueName];
+            //    Style cstyle = new Style(typeof(GridViewCell));
+            //    cstyle.BasedOn = (Style)FindResource("GridViewCellStyle");
+            //    cstyle.Setters.Add(new Setter(GridViewCell.ForegroundProperty, Common.GraphicsLibrary.BrushFromHex(f)));
+            //    cstyle.Seal();
+            //    dc.CellStyle = cstyle;
+            //}
+
+
+            //Add combos
+            //if (columnCombo.ContainsKey(c.UniqueName))
+            //{
+            //    GridViewComboBoxColumn cmb = columnCombo[c.UniqueName];
+            //    c.IsVisible = false;
+            //    if (grd.Columns.Contains(cmb))
+            //    {
+            //        grd.Columns.Remove(cmb);
+            //    }
+            //    grd.Columns.Add(cmb);
+            //    cmb.DataMemberBinding = new Binding(c.UniqueName);
+            //    cmb.SelectedValueMemberPath = cmb.Tag.ToString();
+            //    cmb.Initialized += cmb_Initialized;
+            //    cmb.GotFocus += gcb_GotFocus;
+            //    cmb.LostFocus += gcb_LostFocus;
+
+            //    foreach (AggregateFunction af in c.AggregateFunctions)
+            //        cmb.AggregateFunctions.Add(af);
+            //    cmb.IsReadOnly = c.IsReadOnly; // make cmb readonly if column is readonly
+            //    if (cmb.IsReadOnly) cmb.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
+
+            //}
+            ////Add Expression Columns
+            //if (columnExpression.ContainsKey(c.UniqueName))
+            //{
+            //    GridViewExpressionColumn ec = columnExpression[c.UniqueName];
                 
-                if (grd.Columns.Contains(ec))
-                {
-                    grd.Columns.Remove(ec);
-                }
-                grd.Columns.Add(ec);
-            }
+            //    if (grd.Columns.Contains(ec))
+            //    {
+            //        grd.Columns.Remove(ec);
+            //    }
+            //    grd.Columns.Add(ec);
+            //}
             grd.Rebind();
 
+        }
+
+        private Style CellStyle(string foreground, string background)
+        {
+            Style cstyle = new Style(typeof(GridViewCell));
+            cstyle.BasedOn = (Style)FindResource("GridViewCellStyle");
+            if (foreground!=null)
+                cstyle.Setters.Add(new Setter(GridViewCell.ForegroundProperty, Common.GraphicsLibrary.BrushFromHex(foreground)));
+            if (background != null)
+                cstyle.Setters.Add(new Setter(GridViewCell.BackgroundProperty, Common.GraphicsLibrary.BrushFromHex(background)));
+            cstyle.Seal();
+            return cstyle;
         }
         public void ColumnToolTipStatic(GridViewDataColumn column, string ToolTipString)
         {
@@ -600,81 +799,81 @@ namespace WalzExplorer.Controls.Grid
 
 
 
-        public void FormatColumn(GridViewDataColumn column, columnFormat type)
-        {
-            switch (type)
-            {
-                case columnFormat.RIGHT_JUSTIFY:
-                    column.DataFormatString = "G";
-                    column.TextAlignment = TextAlignment.Right;
-                    column.HeaderTextAlignment = TextAlignment.Right;
-                    column.FooterTextAlignment = TextAlignment.Right;
-                    column.IsGroupable = false;
-                    break;
-                case columnFormat.COUNT:
-                    column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
-                    break;
+        //public void FormatColumn(GridViewDataColumn column, columnFormat_old type)
+        //{
+        //    switch (type)
+        //    {
+        //        case columnFormat_old.RIGHT_JUSTIFY:
+        //            column.DataFormatString = "G";
+        //            column.TextAlignment = TextAlignment.Right;
+        //            column.HeaderTextAlignment = TextAlignment.Right;
+        //            column.FooterTextAlignment = TextAlignment.Right;
+        //            column.IsGroupable = false;
+        //            break;
+        //        case columnFormat_old.COUNT:
+        //            column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
+        //            break;
 
-                case columnFormat.DATE:
-                    column.DataFormatString = "dd-MMM-yyyy";
-                    column.TextAlignment = TextAlignment.Right;
-                    column.HeaderTextAlignment = TextAlignment.Right;
-                    column.FooterTextAlignment = TextAlignment.Right;
-                    column.IsGroupable = false;
-                    break;
+        //        case columnFormat_old.DATE:
+        //            column.DataFormatString = "dd-MMM-yyyy";
+        //            column.TextAlignment = TextAlignment.Right;
+        //            column.HeaderTextAlignment = TextAlignment.Right;
+        //            column.FooterTextAlignment = TextAlignment.Right;
+        //            column.IsGroupable = false;
+        //            break;
 
-                case columnFormat.TEXT:
-                    column.DataFormatString = "";
-                    column.TextAlignment = TextAlignment.Left;
-                    column.HeaderTextAlignment = TextAlignment.Left;
-                    column.FooterTextAlignment = TextAlignment.Left;
-                    column.IsGroupable = true;
-                    break;
+        //        case columnFormat_old.TEXT:
+        //            column.DataFormatString = "";
+        //            column.TextAlignment = TextAlignment.Left;
+        //            column.HeaderTextAlignment = TextAlignment.Left;
+        //            column.FooterTextAlignment = TextAlignment.Left;
+        //            column.IsGroupable = true;
+        //            break;
 
-                case columnFormat.TEXT_NO_GROUP:
-                    column.DataFormatString = "";
-                    column.TextAlignment = TextAlignment.Left;
-                    column.HeaderTextAlignment = TextAlignment.Left;
-                    column.FooterTextAlignment = TextAlignment.Left;
-                    column.IsGroupable = false;
-                    break;
+        //        case columnFormat_old.TEXT_NO_GROUP:
+        //            column.DataFormatString = "";
+        //            column.TextAlignment = TextAlignment.Left;
+        //            column.HeaderTextAlignment = TextAlignment.Left;
+        //            column.FooterTextAlignment = TextAlignment.Left;
+        //            column.IsGroupable = false;
+        //            break;
 
-                case columnFormat.INT:
-                    column.DataFormatString = "#,##0";
-                    column.TextAlignment = TextAlignment.Right;
-                    column.HeaderTextAlignment = TextAlignment.Right;
-                    column.FooterTextAlignment = TextAlignment.Right;
-                    column.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = "{0:#,0}" });
-                    column.IsGroupable = false;
-                    break;
+        //        case columnFormat_old.INT:
+        //            column.DataFormatString = "#,##0";
+        //            column.TextAlignment = TextAlignment.Right;
+        //            column.HeaderTextAlignment = TextAlignment.Right;
+        //            column.FooterTextAlignment = TextAlignment.Right;
+        //            column.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = "{0:#,0}" });
+        //            column.IsGroupable = false;
+        //            break;
 
-                case columnFormat.INT_NO_TOTAL:
-                    column.DataFormatString = "#,##0";
-                    column.TextAlignment = TextAlignment.Right;
-                    column.HeaderTextAlignment = TextAlignment.Right;
-                    column.FooterTextAlignment = TextAlignment.Right;
-                    column.IsGroupable = false;
-                    break;
+        //        case columnFormat_old.INT_NO_TOTAL:
+        //            column.DataFormatString = "#,##0";
+        //            column.TextAlignment = TextAlignment.Right;
+        //            column.HeaderTextAlignment = TextAlignment.Right;
+        //            column.FooterTextAlignment = TextAlignment.Right;
+        //            column.IsGroupable = false;
+        //            break;
 
-                case columnFormat.TWO_DECIMAL_NO_TOTAL:
-                    column.DataFormatString = "#,##0.00";
-                    column.TextAlignment = TextAlignment.Right;
-                    column.HeaderTextAlignment = TextAlignment.Right;
-                    column.FooterTextAlignment = TextAlignment.Right;
-                    column.IsGroupable = false;
-                    break;
+        //        case columnFormat_old.TWO_DECIMAL_NO_TOTAL:
+        //            column.DataFormatString = "#,##0.00";
+        //            column.TextAlignment = TextAlignment.Right;
+        //            column.HeaderTextAlignment = TextAlignment.Right;
+        //            column.FooterTextAlignment = TextAlignment.Right;
+        //            column.IsGroupable = false;
+        //            break;
 
-                case columnFormat.TWO_DECIMAL:
-                    column.DataFormatString = "#,##0.00";
-                    column.TextAlignment = TextAlignment.Right;
-                    column.HeaderTextAlignment = TextAlignment.Right;
-                    column.FooterTextAlignment = TextAlignment.Right;
-                    column.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = "{0:#,0.00}" });
-                    column.IsGroupable = false;
-                    break;
-            }
+        //        case columnFormat_old.TWO_DECIMAL:
+        //            column.DataFormatString = "#,##0.00";
+        //            column.TextAlignment = TextAlignment.Right;
+        //            column.HeaderTextAlignment = TextAlignment.Right;
+        //            column.FooterTextAlignment = TextAlignment.Right;
+        //            column.AggregateFunctions.Add(new SumFunction() { Caption = "=", ResultFormatString = "{0:#,0.00}" });
+        //            column.IsGroupable = false;
+        //            break;
+        //    }
 
-        }
+        //}
         void cmb_Initialized(object sender, EventArgs e)
         {
             throw new NotImplementedException();
@@ -682,8 +881,6 @@ namespace WalzExplorer.Controls.Grid
 
         private void g_AddingNewDataItem(object sender, GridViewAddingNewEventArgs e)
         {
-
-
             grd.Rebind();
             e.Cancel = true;
             e.NewObject = vm.InsertNew();

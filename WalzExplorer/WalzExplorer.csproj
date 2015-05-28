@@ -505,6 +505,7 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\WalzExplorerEntites.cs" />
+    <Compile Include="Database\WalzExplorerEntities_Addtions.cs" />
     <Compile Include="Database\WalzExplorerViewModel.cs" />
     <Compile Include="Model\WEXDrilldown.cs" />
     <Compile Include="Model\WEXLHSTab.cs" />

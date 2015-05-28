@@ -36,12 +36,9 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             grd.grd.ItemsSource = vm.data;
            
             grd.SetGrid(settings,true,true,true);
-            grd.columnSettings.developer.Add("OverheadGroupID");
-            grd.columnSettings.developer.Add("TenderID");
-            grd.columnSettings.developer.Add("SortOrder");
-            grd.columnSettings.developer.Add("RowVersion");
-            grd.columnSettings.developer.Add("UpdatedBy");
-            grd.columnSettings.developer.Add("UpdatedDate");
+
+            grd.columnsettings.Add("OverheadGroupID", new GridEditViewBase.columnSetting() { isDeveloper  = true });
+            grd.columnsettings.Add("TenderID", new GridEditViewBase.columnSetting() { isDeveloper = true });
            
         }
 

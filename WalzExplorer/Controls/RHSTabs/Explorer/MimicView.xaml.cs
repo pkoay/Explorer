@@ -36,11 +36,8 @@ namespace WalzExplorer.Controls.RHSTabs.Explorer
             grd.grd.ItemsSource = vm.data;
            
             grd.SetGrid(settings,true,true,true);
-            grd.columnSettings.developer.Add("SortOrder");
-            grd.columnSettings.developer.Add("RowVersion");
-            grd.columnSettings.developer.Add("UpdatedBy");
-            grd.columnSettings.developer.Add("UpdatedDate");
-            grd.columnSettings.rename.Add("MimicPersonID", "Can Mimic");
+
+            grd.columnsettings.Add("MimicPersonID", new GridEditViewBase.columnSetting() { rename = "Can Mimic" });
             grd.columnCombo.Clear();
             grd.columnCombo.Add("PersonID", GridLibrary.CreateCombo("cmbPersonID", "Grant To", vm.cmbUserList(), "PersonID", "Name"));
             grd.columnCombo.Add("MimicPersonID", GridLibrary.CreateCombo("cmbMimicPersonID", "Can Mimic", vm.cmbUserList(), "PersonID", "Name"));

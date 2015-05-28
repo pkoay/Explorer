@@ -56,8 +56,7 @@ namespace WalzExplorer.Controls.Grid
            {
                this.data.Move(this.data.IndexOf(i), index);
            }
-            //PK
-           return context.SaveChangesWithValidation();
+           return SaveWithValidationAndUpdateSortOrder();
        }
 
         public EfStatus MoveItemsToItem(List<ModelBase> items, ModelBase MoveAbove)
@@ -158,7 +157,6 @@ namespace WalzExplorer.Controls.Grid
                 context.Entry(changedItem).State = System.Data.Entity.EntityState.Added;
             }
             return SaveWithValidationAndUpdateSortOrder();
-            
             
         }
         public bool HasErrors()
