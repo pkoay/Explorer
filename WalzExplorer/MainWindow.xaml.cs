@@ -134,12 +134,12 @@ namespace WalzExplorer
        
         private void LoadFormForMimic()
         {
-
+            
             tcRHS.Visibility = System.Windows.Visibility.Hidden;
         
             using (WalzExplorerEntities we = new WalzExplorerEntities(false))
             {
-                we.Database.Connection.Open();
+                
 
                 //Build dictionary of SQL subsitutions  (remove if already there)
                 if (dicSQLSubsitutes.ContainsKey("@@UserPersonID")) dicSQLSubsitutes.Remove("@@UserPersonID");
@@ -405,6 +405,9 @@ namespace WalzExplorer
             MenuItem mi = (MenuItem)sender;
             switch (mi.Name)
             {
+                case "miHistory":
+
+                    break;
                 case "miDeveloper":
                     MessageBox.Show("Developer mode " + ((mi.IsChecked) ? "enabled" : "disabled") + ".", "About", MessageBoxButton.OK, MessageBoxImage.Information);
                     settings.DeveloperMode = mi.IsChecked;

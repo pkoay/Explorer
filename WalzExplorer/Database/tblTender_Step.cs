@@ -14,6 +14,14 @@ namespace WalzExplorer.Database
     using System.Collections.Generic;
     public partial class tblTender_Step : ModelBase
     {
+        public tblTender_Step()
+        {
+            this.tblTender_ObjectChildObject = new HashSet<tblTender_ObjectChildObject>();
+            this.tblTender_ObjectContractor = new HashSet<tblTender_ObjectContractor>();
+            this.tblTender_ObjectLabour = new HashSet<tblTender_ObjectLabour>();
+            this.tblTender_ObjectMaterial = new HashSet<tblTender_ObjectMaterial>();
+        }
+    
         private int _stepID;
     	public int StepID 
     	{ 
@@ -63,5 +71,10 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
+    
+        public virtual ICollection<tblTender_ObjectChildObject> tblTender_ObjectChildObject { get; set; }
+        public virtual ICollection<tblTender_ObjectContractor> tblTender_ObjectContractor { get; set; }
+        public virtual ICollection<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
+        public virtual ICollection<tblTender_ObjectMaterial> tblTender_ObjectMaterial { get; set; }
     }
 }

@@ -12,13 +12,13 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_LabourStandard : ModelBase
+    public partial class tblTender_LabourRate : ModelBase
     {
-        private int _labourStandardID;
-    	public int LabourStandardID 
+        private int _labourRateID;
+    	public int LabourRateID 
     	{ 
-    		get { return _labourStandardID; } 
-    		set { SetProperty(ref _labourStandardID, value); } 
+    		get { return _labourRateID; } 
+    		set { SetProperty(ref _labourRateID, value); } 
     	}
     
         private int _tenderID;
@@ -28,11 +28,11 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _tenderID, value); } 
     	}
     
-        private int _workGroupID;
-    	public int WorkGroupID 
+        private int _overheadID;
+    	public int OverheadID 
     	{ 
-    		get { return _workGroupID; } 
-    		set { SetProperty(ref _workGroupID, value); } 
+    		get { return _overheadID; } 
+    		set { SetProperty(ref _overheadID, value); } 
     	}
     
         private string _title;
@@ -56,6 +56,20 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _standardHours, value); } 
     	}
     
+        private string _comment;
+    	public string Comment 
+    	{ 
+    		get { return _comment; } 
+    		set { SetProperty(ref _comment, value); } 
+    	}
+    
+        private int _sortOrder;
+    	public int SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
+    	}
+    
         private string _updatedBy;
     	public string UpdatedBy 
     	{ 
@@ -75,13 +89,6 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _rowVersion; } 
     		set { SetProperty(ref _rowVersion, value); } 
-    	}
-    
-        private int _sortOrder;
-    	public int SortOrder 
-    	{ 
-    		get { return _sortOrder; } 
-    		set { SetProperty(ref _sortOrder, value); } 
     	}
     
     

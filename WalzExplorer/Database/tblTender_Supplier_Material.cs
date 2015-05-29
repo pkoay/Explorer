@@ -63,6 +63,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _sortOrder, value); } 
     	}
     
+        private int _tenderID;
+    	public int TenderID 
+    	{ 
+    		get { return _tenderID; } 
+    		set { SetProperty(ref _tenderID, value); } 
+    	}
+    
     
         public virtual tblTender_Material tblTender_Material { get; set; }
         public virtual tblTender_Supplier tblTender_Supplier { get; set; }

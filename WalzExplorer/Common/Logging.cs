@@ -69,7 +69,7 @@ namespace WalzExplorer.Common
                             if (!PropertiesToSkip.Contains(propertyName))
                             {
                                 string AddedValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString();
-                                db.spLogChange("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), AddedValue);
+                                db.spLogChangev2("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(),"<new>", AddedValue);
                             }
                         }
                         break;
@@ -78,8 +78,8 @@ namespace WalzExplorer.Common
                         {
                             if (!PropertiesToSkip.Contains(propertyName))
                             {
-                                string DeletedValue = dbEntry.OriginalValues.GetValue<object>(propertyName) == null ? null : dbEntry.OriginalValues.GetValue<object>(propertyName).ToString();
-                                db.spLogChange("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), DeletedValue);
+                                string OldValue = dbEntry.OriginalValues.GetValue<object>(propertyName) == null ? null : dbEntry.OriginalValues.GetValue<object>(propertyName).ToString();
+                                db.spLogChangev2("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(),OldValue,"<deleted>");
                             }
                         }
                         break;
@@ -91,7 +91,9 @@ namespace WalzExplorer.Common
                                 if (!object.Equals(dbEntry.OriginalValues.GetValue<object>(propertyName), dbEntry.CurrentValues.GetValue<object>(propertyName)))
                                 {
                                     string NewValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString();
-                                    db.spLogChange("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), NewValue);
+                                    string OldValue = dbEntry.OriginalValues.GetValue<object>(propertyName) == null ? null : dbEntry.OriginalValues.GetValue<object>(propertyName).ToString();
+
+                                    db.spLogChangev2("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(),OldValue, NewValue);
                                 }
                             }
                         }

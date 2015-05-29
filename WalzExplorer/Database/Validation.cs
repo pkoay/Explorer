@@ -167,13 +167,7 @@ namespace WalzExplorer.Database
     }
 
 
-    public partial class tblTender_LabourStandard
-    {
-        public override string this[string columnName]
-        {
-            get { return null; }
-        }
-    }
+   
 
     public partial class tblTender_Supplier_Material
     {

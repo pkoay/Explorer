@@ -11,6 +11,7 @@ using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
 using WalzExplorer.Common;
 using WalzExplorer.Controls.Grid;
+
 namespace WalzExplorer.Controls.RHSTabs.Tender
 {
     /// <summary>
@@ -18,19 +19,19 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
     /// </summary>
 
 
-    public partial class OverheadGroupView : RHSTabViewBase
+    public partial class DrawingView : RHSTabViewBase
     {
-      
-       OverheadGroupViewModel vm;
 
-       public OverheadGroupView()
+        DrawingViewModel vm;
+
+       public DrawingView()
         {
             InitializeComponent();
         }
 
         public override void TabLoad()
         {
-            vm = new OverheadGroupViewModel(settings);
+            vm = new DrawingViewModel(settings);
             grd.vm = vm;
             grd.grd.DataContext = vm;
             grd.grd.ItemsSource = vm.data;
@@ -40,14 +41,20 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             else
                 grd.SetGrid(settings, false, false, false);
 
-            grd.columnsettings.Add("OverheadGroupID", new GridEditViewBase.columnSetting() { isDeveloper  = true });
-            grd.columnsettings.Add("TenderID", new GridEditViewBase.columnSetting() { isDeveloper = true });
-            grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT, format= GridEditViewBase.columnSetting.formatType.TEXT });
            
+            grd.columnsettings.Add("DrawingID", new GridEditViewBase.columnSetting() { isDeveloper = true });
+            grd.columnsettings.Add("TenderID", new GridEditViewBase.columnSetting() { isDeveloper = true });
+            grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT ,format=  GridEditViewBase.columnSetting.formatType.TEXT});
+          
         }
 
         public override string IssueIfClosed()
         {
+            bool isvalid = grd.IsValid();
+            if (!isvalid)
+            {
+                return "Not all data in the tab is saved (data in error not saved). Press ok to fix the errors, or press cancel to lose changes in error";
+            }
             return "";
         }
        

@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>92</ApplicationRevision>
+    <ApplicationRevision>100</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -228,9 +228,37 @@
       <DependentUpon>Grid_Read.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\DrilldownWindow.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\DrawingView.xaml.cs">
+      <DependentUpon>DrawingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\DrawingViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\StepView.xaml.cs">
+      <DependentUpon>StepView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\StepViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\UnitOfMeasureView.xaml.cs">
+      <DependentUpon>UnitOfMeasureView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\UnitOfMeasureViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\SupplierView.xaml.cs">
+      <DependentUpon>SupplierView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\ContractorTypeView.xaml.cs">
+      <DependentUpon>ContractorTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\SupplierViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\ContractorView.xaml.cs">
+      <DependentUpon>ContractorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\MaterialView.xaml.cs">
+      <DependentUpon>MaterialView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\ContractorTypeViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\ContractorViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\OverheadDetailView.xaml.cs">
       <DependentUpon>OverheadDetailView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\MaterialViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\OverheadGroupView.xaml.cs">
       <DependentUpon>OverheadGroupView.xaml</DependentUpon>
     </Compile>
@@ -377,8 +405,14 @@
     <Compile Include="Database\spWEX_RHS_Project_Summary_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\tblChangeLog.cs">
+      <DependentUpon>ServicesModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\tblCustomer.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblEventLog.cs">
+      <DependentUpon>ServicesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblFavourite.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
@@ -446,7 +480,25 @@
     <Compile Include="Database\tblProject_Status.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\tblTender_LabourStandard.cs">
+    <Compile Include="Database\tblTender_LabourRate.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_Object.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_ObjectChildObject.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_ObjectContractor.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_ObjectLabour.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_ObjectMaterial.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_ObjectType.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblTender_Overhead.cs">
@@ -607,6 +659,34 @@
     <Page Include="Controls\Grid\Grid_Read.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\DrawingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\StepView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\UnitOfMeasureView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\SupplierView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\ContractorTypeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\ContractorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\MaterialView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Tender\OverheadDetailView.xaml">
       <Generator>MSBuild:Compile</Generator>

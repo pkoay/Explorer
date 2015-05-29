@@ -12,26 +12,27 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_Material : ModelBase
+    public partial class tblTender_ObjectChildObject : ModelBase
     {
-        public tblTender_Material()
-        {
-            this.tblTender_Supplier_Material = new HashSet<tblTender_Supplier_Material>();
-            this.tblTender_ObjectMaterial = new HashSet<tblTender_ObjectMaterial>();
-        }
-    
-        private int _materialID;
-    	public int MaterialID 
+        private int _objectChildObjectID;
+    	public int ObjectChildObjectID 
     	{ 
-    		get { return _materialID; } 
-    		set { SetProperty(ref _materialID, value); } 
+    		get { return _objectChildObjectID; } 
+    		set { SetProperty(ref _objectChildObjectID, value); } 
     	}
     
-        private int _tenderID;
-    	public int TenderID 
+        private int _objectID;
+    	public int ObjectID 
     	{ 
-    		get { return _tenderID; } 
-    		set { SetProperty(ref _tenderID, value); } 
+    		get { return _objectID; } 
+    		set { SetProperty(ref _objectID, value); } 
+    	}
+    
+        private int _childObjectID;
+    	public int ChildObjectID 
+    	{ 
+    		get { return _childObjectID; } 
+    		set { SetProperty(ref _childObjectID, value); } 
     	}
     
         private string _title;
@@ -41,25 +42,25 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _title, value); } 
     	}
     
-        private double _sQM;
-    	public double SQM 
+        private int _stepID;
+    	public int StepID 
     	{ 
-    		get { return _sQM; } 
-    		set { SetProperty(ref _sQM, value); } 
+    		get { return _stepID; } 
+    		set { SetProperty(ref _stepID, value); } 
     	}
     
-        private double _kG;
-    	public double KG 
+        private double _quantity;
+    	public double Quantity 
     	{ 
-    		get { return _kG; } 
-    		set { SetProperty(ref _kG, value); } 
+    		get { return _quantity; } 
+    		set { SetProperty(ref _quantity, value); } 
     	}
     
-        private int _unitOfMeasureID;
-    	public int UnitOfMeasureID 
+        private double _factor;
+    	public double Factor 
     	{ 
-    		get { return _unitOfMeasureID; } 
-    		set { SetProperty(ref _unitOfMeasureID, value); } 
+    		get { return _factor; } 
+    		set { SetProperty(ref _factor, value); } 
     	}
     
         private string _comment;
@@ -67,6 +68,13 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _comment; } 
     		set { SetProperty(ref _comment, value); } 
+    	}
+    
+        private double _sortOrder;
+    	public double SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
     	}
     
         private string _updatedBy;
@@ -90,17 +98,9 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
-        private int _sortOrder;
-    	public int SortOrder 
-    	{ 
-    		get { return _sortOrder; } 
-    		set { SetProperty(ref _sortOrder, value); } 
-    	}
     
-    
-        public virtual tblTender_UnitOfMeasure tblTender_UnitOfMeasure { get; set; }
-        public virtual ICollection<tblTender_Supplier_Material> tblTender_Supplier_Material { get; set; }
-        public virtual tblTender tblTender { get; set; }
-        public virtual ICollection<tblTender_ObjectMaterial> tblTender_ObjectMaterial { get; set; }
+        public virtual tblTender_Object tblTender_Object { get; set; }
+        public virtual tblTender_Object tblTender_Object1 { get; set; }
+        public virtual tblTender_Step tblTender_Step { get; set; }
     }
 }

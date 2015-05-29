@@ -14,6 +14,11 @@ namespace WalzExplorer.Database
     using System.Collections.Generic;
     public partial class tblTender_Contractor : ModelBase
     {
+        public tblTender_Contractor()
+        {
+            this.tblTender_ObjectContractor = new HashSet<tblTender_ObjectContractor>();
+        }
+    
         private int _contractorID;
     	public int ContractorID 
     	{ 
@@ -80,5 +85,6 @@ namespace WalzExplorer.Database
     
         public virtual tblTender_ContractorType tblTender_ContractorType { get; set; }
         public virtual tblTender tblTender { get; set; }
+        public virtual ICollection<tblTender_ObjectContractor> tblTender_ObjectContractor { get; set; }
     }
 }

@@ -74,6 +74,7 @@
         <!--CONFIGURATION CONTEXT MENU-->
         <ContextMenu x:Key="cmConfiguration" FontSize="12"   >
             <MenuItem Name="miMimic" Header="Mimic User" Click="ConfigurationMenu_Click"  />
+            <MenuItem Name="miHistory" Header="History" Click="ConfigurationMenu_Click"  />
             <MenuItem Name="miDeveloper" Header="Developer Mode" IsCheckable="True" Click="ConfigurationMenu_Click"  />
             <MenuItem Name="miAbout"  Header="About" Click="ConfigurationMenu_Click" />
         </ContextMenu>

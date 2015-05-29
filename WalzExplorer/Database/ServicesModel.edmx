@@ -5,6 +5,33 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ServicesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblChangeLog">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Database" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Table" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Column" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="User" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="RowID" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Operation" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OldValue" Type="varchar(max)" />
+          <Property Name="NewValue" Type="varchar(max)" />
+          <Property Name="Timestamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblEventLog">
+          <Key>
+            <PropertyRef Name="EventLogID" />
+          </Key>
+          <Property Name="EventLogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApplicationID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OperationID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Timestamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblFeedback">
           <Key>
             <PropertyRef Name="ItemID" />
@@ -77,14 +104,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="spLogChange" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="spLogChangev2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Database" Type="varchar" Mode="In" />
           <Parameter Name="Table" Type="varchar" Mode="In" />
           <Parameter Name="Column" Type="varchar" Mode="In" />
           <Parameter Name="User" Type="varchar" Mode="In" />
           <Parameter Name="Row" Type="varchar" Mode="In" />
           <Parameter Name="Operation" Type="varchar" Mode="In" />
-          <Parameter Name="NewValue" Type="varchar" Mode="In" />
+          <Parameter Name="OldValue" Type="varchar(max)" Mode="In" />
+          <Parameter Name="NewValue" Type="varchar(max)" Mode="In" />
         </Function>
         <Function Name="spLogEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Application" Type="varchar" Mode="In" />
@@ -93,6 +121,8 @@
         </Function>
         <Function Name="spServices_ServerDatetime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spServices.ServerDatetime" />
         <EntityContainer Name="ServicesModelStoreContainer">
+          <EntitySet Name="tblChangeLog" EntityType="Self.tblChangeLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEventLog" EntityType="Self.tblEventLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFeedback" EntityType="Self.tblFeedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFeedback_Application" EntityType="Self.tblFeedback_Application" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFeedback_Status" EntityType="Self.tblFeedback_Status" Schema="dbo" store:Type="Tables" />
@@ -115,14 +145,35 @@
     <edmx:ConceptualModels>
       <Schema Namespace="ServicesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ServicesEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="spLogChange">
+            <Parameter Name="Database" Mode="In" Type="String" />
+            <Parameter Name="Table" Mode="In" Type="String" />
+            <Parameter Name="Column" Mode="In" Type="String" />
+            <Parameter Name="User" Mode="In" Type="String" />
+            <Parameter Name="Row" Mode="In" Type="String" />
+            <Parameter Name="Operation" Mode="In" Type="String" />
+            <Parameter Name="NewValue" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="tblChangeLogs" EntityType="ServicesModel.tblChangeLog" />
+          <EntitySet Name="tblEventLogs" EntityType="ServicesModel.tblEventLog" />
+          <FunctionImport Name="spLogChangev2">
+            <Parameter Name="Database" Mode="In" Type="String" />
+            <Parameter Name="Table" Mode="In" Type="String" />
+            <Parameter Name="Column" Mode="In" Type="String" />
+            <Parameter Name="User" Mode="In" Type="String" />
+            <Parameter Name="Row" Mode="In" Type="String" />
+            <Parameter Name="Operation" Mode="In" Type="String" />
+            <Parameter Name="OldValue" Mode="In" Type="String" />
+            <Parameter Name="NewValue" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="tblFeedbacks" EntityType="ServicesModel.tblFeedback" />
           <EntitySet Name="tblFeedback_Application" EntityType="ServicesModel.tblFeedback_Application" />
+          <EntitySet Name="tblFeedback_Status" EntityType="ServicesModel.tblFeedback_Status" />
+          <EntitySet Name="tblFeedback_Type" EntityType="ServicesModel.tblFeedback_Type" />
           <AssociationSet Name="FK_tblFeedback_Item_tblFeedback_Application" Association="ServicesModel.FK_tblFeedback_Item_tblFeedback_Application">
             <End Role="tblFeedback_Application" EntitySet="tblFeedback_Application" />
             <End Role="tblFeedback" EntitySet="tblFeedbacks" />
           </AssociationSet>
-          <EntitySet Name="tblFeedback_Status" EntityType="ServicesModel.tblFeedback_Status" />
-          <EntitySet Name="tblFeedback_Type" EntityType="ServicesModel.tblFeedback_Type" />
           <AssociationSet Name="FK_tblFeedback_Item_tblFeedback_Type" Association="ServicesModel.FK_tblFeedback_Item_tblFeedback_Type">
             <End Role="tblFeedback_Type" EntitySet="tblFeedback_Type" />
             <End Role="tblFeedback" EntitySet="tblFeedbacks" />
@@ -137,16 +188,34 @@
             <Parameter Name="User" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spServices_ServerDatetime" ReturnType="Collection(DateTime)" />
-          <FunctionImport Name="spLogChange">
-            <Parameter Name="Database" Mode="In" Type="String" />
-            <Parameter Name="Table" Mode="In" Type="String" />
-            <Parameter Name="Column" Mode="In" Type="String" />
-            <Parameter Name="User" Mode="In" Type="String" />
-            <Parameter Name="Row" Mode="In" Type="String" />
-            <Parameter Name="Operation" Mode="In" Type="String" />
-            <Parameter Name="NewValue" Mode="In" Type="String" />
-          </FunctionImport>
           </EntityContainer>
+        <EntityType Name="tblChangeLog">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Database" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Table" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Column" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RowID" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Operation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OldValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NewValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Timestamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="tblEventLog">
+          <Key>
+            <PropertyRef Name="EventLogID" />
+          </Key>
+          <Property Name="EventLogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ApplicationID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OperationID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Timestamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
         <EntityType Name="tblFeedback">
           <Key>
             <PropertyRef Name="ItemID" />
@@ -173,18 +242,6 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblFeedbacks" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedback_Application" FromRole="tblFeedback_Application" ToRole="tblFeedback" />
         </EntityType>
-        <Association Name="FK_tblFeedback_Item_tblFeedback_Application">
-          <End Type="ServicesModel.tblFeedback_Application" Role="tblFeedback_Application" Multiplicity="1" />
-          <End Type="ServicesModel.tblFeedback" Role="tblFeedback" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblFeedback_Application">
-              <PropertyRef Name="ApplicationID" />
-            </Principal>
-            <Dependent Role="tblFeedback">
-              <PropertyRef Name="ApplicationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="tblFeedback_Status">
           <Key>
             <PropertyRef Name="StatusID" />
@@ -201,6 +258,18 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblFeedbacks" Relationship="ServicesModel.FK_tblFeedback_Item_tblFeedback_Type" FromRole="tblFeedback_Type" ToRole="tblFeedback" />
         </EntityType>
+        <Association Name="FK_tblFeedback_Item_tblFeedback_Application">
+          <End Type="ServicesModel.tblFeedback_Application" Role="tblFeedback_Application" Multiplicity="1" />
+          <End Type="ServicesModel.tblFeedback" Role="tblFeedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblFeedback_Application">
+              <PropertyRef Name="ApplicationID" />
+            </Principal>
+            <Dependent Role="tblFeedback">
+              <PropertyRef Name="ApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblFeedback_Item_tblFeedback_Type">
           <End Type="ServicesModel.tblFeedback_Type" Role="tblFeedback_Type" Multiplicity="1" />
           <End Type="ServicesModel.tblFeedback" Role="tblFeedback" Multiplicity="*" />
@@ -231,6 +300,36 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ServicesModelStoreContainer" CdmEntityContainer="ServicesEntities">
+          <EntitySetMapping Name="tblChangeLogs">
+            <EntityTypeMapping TypeName="ServicesModel.tblChangeLog">
+              <MappingFragment StoreEntitySet="tblChangeLog">
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+                <ScalarProperty Name="OldValue" ColumnName="OldValue" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="RowID" ColumnName="RowID" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="Column" ColumnName="Column" />
+                <ScalarProperty Name="Table" ColumnName="Table" />
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEventLogs">
+            <EntityTypeMapping TypeName="ServicesModel.tblEventLog">
+              <MappingFragment StoreEntitySet="tblEventLog">
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="OperationID" ColumnName="OperationID" />
+                <ScalarProperty Name="ApplicationID" ColumnName="ApplicationID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="EventLogID" ColumnName="EventLogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spLogChangev2" FunctionName="ServicesModel.Store.spLogChangev2" />
           <EntitySetMapping Name="tblFeedbacks">
             <EntityTypeMapping TypeName="ServicesModel.tblFeedback">
               <MappingFragment StoreEntitySet="tblFeedback">
@@ -273,7 +372,6 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spLogEvent" FunctionName="ServicesModel.Store.spLogEvent" />
           <FunctionImportMapping FunctionImportName="spServices_ServerDatetime" FunctionName="ServicesModel.Store.spServices_ServerDatetime" />
-          <FunctionImportMapping FunctionImportName="spLogChange" FunctionName="ServicesModel.Store.spLogChange" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

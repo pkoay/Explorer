@@ -12,27 +12,18 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_UnitOfMeasure : ModelBase
+    public partial class tblTender_ObjectType : ModelBase
     {
-        public tblTender_UnitOfMeasure()
+        public tblTender_ObjectType()
         {
-            this.tblTender_Material = new HashSet<tblTender_Material>();
             this.tblTender_Object = new HashSet<tblTender_Object>();
-            this.tblTender_ObjectLabour = new HashSet<tblTender_ObjectLabour>();
         }
     
-        private int _unitOfMeasureID;
-    	public int UnitOfMeasureID 
+        private int _typeID;
+    	public int TypeID 
     	{ 
-    		get { return _unitOfMeasureID; } 
-    		set { SetProperty(ref _unitOfMeasureID, value); } 
-    	}
-    
-        private int _tenderID;
-    	public int TenderID 
-    	{ 
-    		get { return _tenderID; } 
-    		set { SetProperty(ref _tenderID, value); } 
+    		get { return _typeID; } 
+    		set { SetProperty(ref _typeID, value); } 
     	}
     
         private string _title;
@@ -42,11 +33,11 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _title, value); } 
     	}
     
-        private string _shortTitle;
-    	public string ShortTitle 
+        private int _sortOrder;
+    	public int SortOrder 
     	{ 
-    		get { return _shortTitle; } 
-    		set { SetProperty(ref _shortTitle, value); } 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
     	}
     
         private string _updatedBy;
@@ -70,17 +61,7 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
-        private int _sortOrder;
-    	public int SortOrder 
-    	{ 
-    		get { return _sortOrder; } 
-    		set { SetProperty(ref _sortOrder, value); } 
-    	}
     
-    
-        public virtual ICollection<tblTender_Material> tblTender_Material { get; set; }
-        public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_Object> tblTender_Object { get; set; }
-        public virtual ICollection<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
     }
 }

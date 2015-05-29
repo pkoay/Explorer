@@ -113,7 +113,7 @@ namespace WalzExplorer.Controls.TreeView
             
             contextMenuNode = ((NodeViewModel)tvi.DataContext).Node;
 
-            if (contextMenuNode.IDType != "PROJECT") { e.Handled = true; return; } //if clicked not a a treeview item then do nothing 
+            if (contextMenuNode.IDType != "PROJECT" && contextMenuNode.IDType != "TENDER") { e.Handled = true; return; } //if clicked not a a treeview item then do nothing 
 
             //Build menus
             ContextMenu cm = new ContextMenu();
@@ -169,6 +169,17 @@ namespace WalzExplorer.Controls.TreeView
                             context.SaveChanges();
                             MessageBox.Show("Project:" + contextMenuNode.Name + Environment.NewLine + "has been added to favourites.", "Favourite Added");
                         }
+                   
+                        if (contextMenuNode.IDType == "TENDER")
+                        {
+                            tblFavourite f = new tblFavourite();
+                            f.PersonID = _settings.user.MimicedPerson.PersonID;
+                            f.Identifier = ConvertLibrary.StringToInt(contextMenuNode.ID, 0);
+                            f.TypeID = 2;
+                            context.tblFavourites.Add(f);
+                            context.SaveChanges();
+                            MessageBox.Show("Tender:" + contextMenuNode.Name + Environment.NewLine + "has been added to favourites.", "Favourite Added");
+                        }
                     break;
                 case "miRemoveFavourite":
 
@@ -182,6 +193,21 @@ namespace WalzExplorer.Controls.TreeView
                         MessageBox.Show("Project:" + contextMenuNode.Name + Environment.NewLine + "has been removed from favourites.", "Favourite Removed");
                         
                         foreach ( NodeViewModel i  in tv.Items)
+                        {
+                            i.IsExpanded = false;
+                            i.IsExpanded = true;
+                        }
+                    }
+                    if (contextMenuNode.IDType == "TENDER")
+                    {
+                        int personID = _settings.user.MimicedPerson.PersonID;
+                        int identifier = ConvertLibrary.StringToInt(contextMenuNode.ID, 0);
+                        //context.tblFavourites.RemoveRange(context.tblFavourites.Where(x => x.PersonID == _settings.user.MimicedPerson.PersonID && x.Identifier == ConvertLibrary.StringToInt(contextMenuNode.ID, 0) && x.TypeID == 1));
+                        context.tblFavourites.RemoveRange(context.tblFavourites.Where(x => x.PersonID == personID && x.Identifier == identifier && x.TypeID == 2));
+                        context.SaveChanges();
+                        MessageBox.Show("Tender:" + contextMenuNode.Name + Environment.NewLine + "has been removed from favourites.", "Favourite Removed");
+
+                        foreach (NodeViewModel i in tv.Items)
                         {
                             i.IsExpanded = false;
                             i.IsExpanded = true;

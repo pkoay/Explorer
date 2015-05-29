@@ -56,13 +56,6 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _title, value); } 
     	}
     
-        private int _activityID;
-    	public int ActivityID 
-    	{ 
-    		get { return _activityID; } 
-    		set { SetProperty(ref _activityID, value); } 
-    	}
-    
         private double _quantity;
     	public double Quantity 
     	{ 
@@ -112,9 +105,17 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _sortOrder, value); } 
     	}
     
+        private int _objectID;
+    	public int ObjectID 
+    	{ 
+    		get { return _objectID; } 
+    		set { SetProperty(ref _objectID, value); } 
+    	}
+    
     
         public virtual tblTender_Drawing tblTender_Drawing { get; set; }
         public virtual tblTender_Schedule tblTender_Schedule { get; set; }
         public virtual tblTender tblTender { get; set; }
+        public virtual tblTender_Object tblTender_Object { get; set; }
     }
 }

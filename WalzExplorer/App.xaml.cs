@@ -38,6 +38,8 @@ namespace WalzExplorer
                 }
 
             }
+            
+            
 
 
             if (DatabseVariable.Read("System", "Enable_Login") != "N")
@@ -81,7 +83,16 @@ namespace WalzExplorer
       
         private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            MessageBox.Show("Unhandled exception occured. Walz Explorer will now close. Exception was:"+e.Exception.Message, "Exception Occured", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            Exception ex = e.Exception;
+            string error = e.Exception.Message;
+            while (ex.InnerException != null)
+            {
+                ex = ex.InnerException;
+                error=Environment.NewLine+ex.Message;
+            }
+   
+            MessageBox.Show("Unhandled exception occured. Walz Explorer will now close. Exception was:"+ error, "Exception Occured", MessageBoxButton.OK, MessageBoxImage.Error);
             e.Handled = true;
             Application.Current.Shutdown();
         }

@@ -4,15 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b2816e3b07034389a7d365354489d35a" Name="Diagram1">
-        <EntityTypeShape EntityType="ServicesModel.tblFeedback" Width="2.5" PointX="7.625" PointY="1" />
-        <EntityTypeShape EntityType="ServicesModel.tblFeedback_Application" Width="2.5" PointX="5.375" PointY="8.125" />
+      <Diagram DiagramId="b2816e3b07034389a7d365354489d35a" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="ServicesModel.tblChangeLog" Width="1.5" PointX="10.375" PointY="8.5" />
+        <EntityTypeShape EntityType="ServicesModel.tblEventLog" Width="1.5" PointX="10.75" PointY="5.375" />
+        <EntityTypeShape EntityType="ServicesModel.tblFeedback" Width="2" PointX="5.875" PointY="4" />
+        <EntityTypeShape EntityType="ServicesModel.tblFeedback_Application" Width="2" PointX="7.5" PointY="9" />
+        <EntityTypeShape EntityType="ServicesModel.tblFeedback_Status" Width="2" PointX="2.5" PointY="8.875" />
+        <EntityTypeShape EntityType="ServicesModel.tblFeedback_Type" Width="2" PointX="4.875" PointY="9" />
         <AssociationConnector Association="ServicesModel.FK_tblFeedback_Item_tblFeedback_Application" />
-        <EntityTypeShape EntityType="ServicesModel.tblFeedback_Status" Width="2.625" PointX="4.25" PointY="0.75" />
-        <EntityTypeShape EntityType="ServicesModel.tblFeedback_Type" Width="2.625" PointX="4.25" PointY="3.125" />
         <AssociationConnector Association="ServicesModel.FK_tblFeedback_Item_tblFeedback_Type" />
         <AssociationConnector Association="ServicesModel.FK_tblFeedback_Item_tblFeedbackStatus" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

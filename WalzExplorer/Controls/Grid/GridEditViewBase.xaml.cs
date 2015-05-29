@@ -33,7 +33,7 @@ namespace WalzExplorer.Controls.Grid
 
         private HashSet<string> defaultDeveloperColumns = new HashSet<string>() {"RowVersion","UpdatedBy","UpdatedDate","SortOrder"};
 
-
+        //Display settings
         public class columnSetting : IDisposable
         {
             public enum aggregationType
@@ -70,9 +70,8 @@ namespace WalzExplorer.Controls.Grid
             {
             }
         }
-
-
         public Dictionary<string, columnSetting> columnsettings = new Dictionary<string, columnSetting>();
+        public Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
 
         //Grid Formatting
         private bool _canAdd;
@@ -81,17 +80,10 @@ namespace WalzExplorer.Controls.Grid
 
         public WEXSettings _settings;
 
-       
-
-
-        public Dictionary<string, GridViewComboBoxColumn> columnCombo = new Dictionary<string, GridViewComboBoxColumn>();
-       
-     
+   
         protected GridViewRow ContextMenuRow;
-
-
         private bool isEditing = false;
-        public Style style;
+        //public Style style;
 
         //DragDrop
         const string GridDragData = "GridDragData";
@@ -102,15 +94,15 @@ namespace WalzExplorer.Controls.Grid
             InitializeComponent();
         }
 
-        public void Reset()
-        {
-            _canAdd = false;
-            _canEdit = false;
-            _canDelete = false;
+        //public void Reset()
+        //{
+        //    _canAdd = false;
+        //    _canEdit = false;
+        //    _canDelete = false;
 
-            //columnSettings_old = new GridColumnSettings_old();
+        //    //columnSettings_old = new GridColumnSettings_old();
            
-        }
+        //}
 
         //public  GridViewComboBoxColumn CreateCombo(string uniqueName, string header, List<object> list, string listIDColumn, string listDisplayColumn)
         //{
@@ -120,17 +112,15 @@ namespace WalzExplorer.Controls.Grid
         //    return gcb;
         //}
 
+        //Flag Combo box Edit
         void gcb_LostFocus(object sender, System.Windows.RoutedEventArgs e)
         {
             isEditing = true;
         }
-
         void gcb_GotFocus(object sender, System.Windows.RoutedEventArgs e)
         {
             isEditing = false;
         }
-
-
 
         public void SetGrid(WEXSettings settings, bool canAdd, bool canEdit, bool canDelete)
         {
@@ -155,6 +145,17 @@ namespace WalzExplorer.Controls.Grid
             grd.ShowColumnHeaders = true;
             grd.ShowGroupPanel = true;
             grd.ShowColumnFooters = true;
+
+            // Sets style for group headers (i.e. group totals (aggregates) below columns, not in header just concatenated
+            if (!grd.Resources.Contains(typeof(GroupHeaderRow)))
+            {
+                Style style = new Style(typeof(GroupHeaderRow));
+                style.BasedOn = (Style)FindResource("GroupHeaderRowStyle");
+                style.Setters.Add(new Setter(GroupHeaderRow.ShowGroupHeaderColumnAggregatesProperty, true));
+                style.Setters.Add(new Setter(GroupHeaderRow.ShowHeaderAggregatesProperty, false));
+                style.Seal();
+                grd.Resources.Add(typeof(GroupHeaderRow), style);
+            }
 
             grd.CanUserInsertRows = canAdd;
             grd.CanUserDeleteRows = canDelete;
@@ -191,6 +192,10 @@ namespace WalzExplorer.Controls.Grid
                 grd.Deleted += g_Deleted;
             }
 
+            //clear settings
+            columnsettings.Clear();
+            columnCombo.Clear();
+       
 
             // add context menu
             ContextMenu cm = new ContextMenu();
@@ -216,7 +221,9 @@ namespace WalzExplorer.Controls.Grid
             cm.Items.Add(new Separator());
             cm.Items.Add(new MenuItem() { Name = "miExportExcel", Header = "Export to Excel", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
             cm.Items.Add(new Separator());
-            cm.Items.Add(new MenuItem() { Name = "miRelatedData", Header = "Related data", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
+            cm.Items.Add(new MenuItem() { Name = "miRelatedData", Header = "Related data", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_social_sharethis", 16, 16) });
+            cm.Items.Add(new Separator());
+            cm.Items.Add(new MenuItem() { Name = "miItemHistory", Header = "Item History", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_timer.png", 16, 16) });
 
             foreach (object o in cm.Items)
             {
@@ -228,8 +235,6 @@ namespace WalzExplorer.Controls.Grid
             }
             grd.ContextMenu = cm;
         }
-
-
 
         public bool IsValid()
         {
@@ -331,22 +336,20 @@ namespace WalzExplorer.Controls.Grid
                 MessageBox.Show(msg,"Data Errors");
             }
         }
-
         public void g_Deleted(object sender, GridViewDeletedEventArgs e)
         {
             MessageEfStatus(vm.Delete(e.Items));
             grd.Rebind();         //redisplay new values such as ID, sort order
 
         }
-
+        
+        // context menu actions
         public void g_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             //store the grid row the contextmenu was open over
             var element = e.OriginalSource;
             ContextMenuRow = (element as FrameworkElement).ParentOfType<GridViewRow>();
         }
-
-        // context menu actions
         public void cm_ItemClick(object sender, RoutedEventArgs e)
         {
             MenuItem mi = (MenuItem)sender;
@@ -467,12 +470,16 @@ namespace WalzExplorer.Controls.Grid
                     }
                     MessageBox.Show(display, "Related Information ", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;
+                case "miItemHistory":
+                    MessageBox.Show("Not yet implemented", "Item History", MessageBoxButton.OK, MessageBoxImage.Information);
+                    break;
                 default:
                     MessageBox.Show(mi.Header.ToString(), "Configuration menu", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;
             }
         }
 
+        //Column layout
         public void g_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
         {
             Telerik.Windows.Controls.GridViewColumn c = e.Column;
@@ -524,8 +531,12 @@ namespace WalzExplorer.Controls.Grid
                 c.CellStyle = CellStyle(foreground, background);
                 
                 //tooltip
-                if (colsetting.tooltip != null) ColumnToolTipStatic(dc, colsetting.tooltip);
-
+                if (colsetting.tooltip != null)
+                {
+                    ColumnToolTipStatic(dc, colsetting.tooltip);
+                    dc.HeaderCellStyle = HeaderCellStyle(colsetting.tooltip);
+                    dc.FooterCellStyle = FooterCellStyle(colsetting.tooltip);
+                }
                 string format = null;
                 dc.TextAlignment = TextAlignment.Right;
                 dc.HeaderTextAlignment = TextAlignment.Right;
@@ -619,152 +630,26 @@ namespace WalzExplorer.Controls.Grid
                 grd.Columns.Add(cmb);
                 cmb.DataMemberBinding = new Binding(c.UniqueName);
                 cmb.SelectedValueMemberPath = cmb.Tag.ToString();
-                cmb.Initialized += cmb_Initialized;
+                //cmb.Initialized += cmb_Initialized;
                 cmb.GotFocus += gcb_GotFocus;
                 cmb.LostFocus += gcb_LostFocus;
 
                 foreach (AggregateFunction af in c.AggregateFunctions)
                     cmb.AggregateFunctions.Add(af);
-                cmb.IsReadOnly = c.IsReadOnly; // make cmb readonly if column is readonly
-                if (cmb.IsReadOnly) cmb.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#4C35496A");
+                 
+                if (c.IsReadOnly || !_canEdit)
+                {
+                    cmb.IsReadOnly=true;
+                    //cmb.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#4C35496A");
+                    cmb.CellStyle = CellStyle("#FF999999", "#4C35496A");
+                }
 
             }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //// OLD STUFF!
-            ////Ignore Columns for developers only while not in development mode
-            //if (columnSettings_old.developer.Contains(c.UniqueName) && !_settings.DeveloperMode) { e.Cancel = true; return; }
-
-            ////Rename 
-            //if (columnSettings_old.rename.ContainsKey(c.UniqueName))
-            //{
-            //    //Rename from the dictionary
-            //    c.Header = columnSettings_old.rename[c.UniqueName];
-            //}
-            //else
-            //{
-            //    //Set the name from PascalCase to Logical (e.g. 'UpdatedBy' to 'Updated By')
-            //    Regex r = new Regex("([A-Z]+[a-z]+)");
-            //    c.Header = r.Replace(c.UniqueName, m => (m.Value.Length > 3 ? m.Value : m.Value.ToLower()) + " ");
-            //}
-
-            ////Read Only
-            //if (columnSettings_old.readOnly.Contains(c.UniqueName) || !_canEdit || (columnSettings_old.developer.Contains(c.UniqueName) && _settings.DeveloperMode))
-            //{
-            //    //e.Column.CellStyle = style;
-            //    e.Column.IsReadOnly = true;
-
-            //    // changing foregound makes the text invisible!?!?
-            //    //style = new Style(typeof(GridViewCell));
-            //    //style.Setters.Add(new Setter(GridViewCell.BackgroundProperty, (SolidColorBrush)new BrushConverter().ConvertFromString("#FF3E3E40")));
-            //    //c.CellStyle = style;
-            //    //e.Column.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
-            //    Style cstyle = new Style(typeof(GridViewCell));
-            //    cstyle.BasedOn = (Style)FindResource("GridViewCellStyle");
-            //    cstyle.Setters.Add(new Setter(GridViewCell.ForegroundProperty, Common.GraphicsLibrary.BrushFromHex("#FF999999")));
-            //    cstyle.Setters.Add(new Setter(GridViewCell.BackgroundProperty, Common.GraphicsLibrary.BrushFromHex("#4C35496A")));
-            //    cstyle.Seal();
-            //    c.CellStyle = cstyle;
-            //}
-
-            ////ToolTip 
-            //if (columnSettings_old.toolTip.ContainsKey(c.UniqueName))
-            //{
-            //    //Rename from the dictionary
-            //    string s = columnSettings_old.toolTip[c.UniqueName];
-            //    ColumnToolTipStatic(dc, s);
-            //}
-
-            ////format
-            //if (columnSettings_old.format.ContainsKey(c.UniqueName))
-            //{
-            //    //Rename from the dictionary
-            //    columnFormat_old f = columnSettings_old.format[c.UniqueName];
-            //    FormatColumn(dc, f);
-            //}
-            ////Background
-            //if (columnSettings_old.background.ContainsKey(c.UniqueName))
-            //{
-            //    //Rename from the dictionary
-            //    string f = columnSettings_old.background[c.UniqueName];
-            //    dc.Background = Common.GraphicsLibrary.BrushFromHex(f);
-            //}
-            ////Foreground
-            //if (columnSettings_old.foreground.ContainsKey(c.UniqueName))
-            //{
-            //    //Rename from the dictionary
-            //    string f = columnSettings_old.foreground[c.UniqueName];
-            //    Style cstyle = new Style(typeof(GridViewCell));
-            //    cstyle.BasedOn = (Style)FindResource("GridViewCellStyle");
-            //    cstyle.Setters.Add(new Setter(GridViewCell.ForegroundProperty, Common.GraphicsLibrary.BrushFromHex(f)));
-            //    cstyle.Seal();
-            //    dc.CellStyle = cstyle;
-            //}
-
-
-            //Add combos
-            //if (columnCombo.ContainsKey(c.UniqueName))
-            //{
-            //    GridViewComboBoxColumn cmb = columnCombo[c.UniqueName];
-            //    c.IsVisible = false;
-            //    if (grd.Columns.Contains(cmb))
-            //    {
-            //        grd.Columns.Remove(cmb);
-            //    }
-            //    grd.Columns.Add(cmb);
-            //    cmb.DataMemberBinding = new Binding(c.UniqueName);
-            //    cmb.SelectedValueMemberPath = cmb.Tag.ToString();
-            //    cmb.Initialized += cmb_Initialized;
-            //    cmb.GotFocus += gcb_GotFocus;
-            //    cmb.LostFocus += gcb_LostFocus;
-
-            //    foreach (AggregateFunction af in c.AggregateFunctions)
-            //        cmb.AggregateFunctions.Add(af);
-            //    cmb.IsReadOnly = c.IsReadOnly; // make cmb readonly if column is readonly
-            //    if (cmb.IsReadOnly) cmb.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF35496A");
-
-            //}
-            ////Add Expression Columns
-            //if (columnExpression.ContainsKey(c.UniqueName))
-            //{
-            //    GridViewExpressionColumn ec = columnExpression[c.UniqueName];
-                
-            //    if (grd.Columns.Contains(ec))
-            //    {
-            //        grd.Columns.Remove(ec);
-            //    }
-            //    grd.Columns.Add(ec);
-            //}
             grd.Rebind();
 
         }
-
         private Style CellStyle(string foreground, string background)
         {
             Style cstyle = new Style(typeof(GridViewCell));
@@ -773,6 +658,24 @@ namespace WalzExplorer.Controls.Grid
                 cstyle.Setters.Add(new Setter(GridViewCell.ForegroundProperty, Common.GraphicsLibrary.BrushFromHex(foreground)));
             if (background != null)
                 cstyle.Setters.Add(new Setter(GridViewCell.BackgroundProperty, Common.GraphicsLibrary.BrushFromHex(background)));
+            cstyle.Seal();
+            return cstyle;
+        }
+        private Style HeaderCellStyle (string tooltip)
+        {
+            Style cstyle = new Style(typeof(GridViewHeaderCell));
+            cstyle.BasedOn = (Style)FindResource("GridViewHeaderCellStyle");
+            if (tooltip != null)
+                cstyle.Setters.Add(new Setter(GridViewHeaderCell.ToolTipProperty, tooltip));
+            cstyle.Seal();
+            return cstyle;
+        }
+        private Style FooterCellStyle(string tooltip)
+        {
+            Style cstyle = new Style(typeof(GridViewFooterCell));
+            cstyle.BasedOn = (Style)FindResource("GridViewFooterCellStyle");
+            if (tooltip != null)
+                cstyle.Setters.Add(new Setter(GridViewFooterCell.ToolTipProperty, tooltip));
             cstyle.Seal();
             return cstyle;
         }
@@ -791,9 +694,10 @@ namespace WalzExplorer.Controls.Grid
             string TemplateName = grd.Name + "_" + column.UniqueName;
 
             //Add the template to resources
-            this.Resources.Add(TemplateName, template);
+            if (!this.Resources.Contains(TemplateName)) this.Resources.Add(TemplateName, template);
 
             //Apply template to column
+            
             column.ToolTipTemplate = this.Resources[TemplateName] as DataTemplate;
         }
 
@@ -874,10 +778,10 @@ namespace WalzExplorer.Controls.Grid
         //    }
 
         //}
-        void cmb_Initialized(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+        //void cmb_Initialized(object sender, EventArgs e)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         private void g_AddingNewDataItem(object sender, GridViewAddingNewEventArgs e)
         {
@@ -903,10 +807,7 @@ namespace WalzExplorer.Controls.Grid
 
         }
 
-        private void grd_PastingCellClipboardContent(object sender, GridViewCellClipboardEventArgs e)
-        {
-            
-        }
+       
     }
 }
 
