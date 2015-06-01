@@ -20,12 +20,19 @@ namespace WalzExplorer.Controls.Grid
 
         public ObservableCollection<ModelBase> data;
         public WalzExplorerEntities context;
+
+        private bool _canOrder;
         //protected Dictionary<string, object> columnDefault = new Dictionary<string, object>();
 
 
         public GridEditViewModelBase()
         {
             this.context = new WalzExplorerEntities(false);
+        }
+
+        public void CanOrder( bool canOrder)
+        {
+            _canOrder = canOrder;
         }
 
         public virtual ModelBase DefaultItem()
@@ -74,6 +81,11 @@ namespace WalzExplorer.Controls.Grid
             return SaveWithValidationAndUpdateSortOrder();
         }
 
+       public void SavePaste()
+       {
+            SaveWithValidationAndUpdateSortOrder();
+
+       }
        public void SavePaste(List<ModelBase> items)
         {
             foreach (ModelBase item in items)
@@ -137,12 +149,16 @@ namespace WalzExplorer.Controls.Grid
 
         private EfStatus SaveWithValidationAndUpdateSortOrder()
         {
-            int i = 0;
-            foreach (ModelBase item in this.data)
+            if (_canOrder)
             {
-                ObjectLibrary.SetValue(item, "SortOrder", i);
-                i++;
-            }   
+                // update sort order
+                int i = 0;
+                foreach (ModelBase item in this.data)
+                {
+                    ObjectLibrary.SetValue(item, "SortOrder", i);
+                    i++;
+                }
+            }
             return context.SaveChangesWithValidation();
             
         }

@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>100</ApplicationRevision>
+    <ApplicationRevision>103</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -232,6 +232,22 @@
       <DependentUpon>DrawingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Tender\DrawingViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\ObjectContractorView.xaml.cs">
+      <DependentUpon>ObjectContractorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\ObjectMaterialView.xaml.cs">
+      <DependentUpon>ObjectMaterialView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\ObjectLabourView.xaml.cs">
+      <DependentUpon>ObjectLabourView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\ObjectContractorViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\ObjectMaterialViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\ObjectView.xaml.cs">
+      <DependentUpon>ObjectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\ObjectLabourViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\ObjectViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\StepView.xaml.cs">
       <DependentUpon>StepView.xaml</DependentUpon>
     </Compile>
@@ -336,11 +352,11 @@
     <Compile Include="Controls\TreeView\ViewModel\NodeViewModel.cs" />
     <Compile Include="Controls\TreeView\ViewModel\RootViewModel.cs" />
     <Compile Include="Controls\TreeView\ViewModel\TreeViewItemViewModel.cs" />
-    <Compile Include="Database\ModelBase.cs" />
-    <Compile Include="Database\EfStatus.cs" />
     <Compile Include="Database\fnTender_Schedule_List_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\ModelBase.cs" />
+    <Compile Include="Database\EfStatus.cs" />
     <Compile Include="Database\Related.cs" />
     <Compile Include="Database\ServicesModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -358,6 +374,45 @@
       <DependentUpon>ServicesModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Database\spProject_Admin_WeekList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_AllProjects_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_FoundProjects_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_MyProjects_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TenderActivityList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TenderComponentList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TenderDrawingList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TenderFolders_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TendersAllList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TendersAll_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TenderScheduleAndActivityList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TenderSetupList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TendersOpenList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_Node_TendersOpen_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\spWEX_RHSTabList_Result.cs">
@@ -403,6 +458,9 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\spWEX_RHS_Project_Summary_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_TreeRootList_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblChangeLog.cs">
@@ -480,7 +538,25 @@
     <Compile Include="Database\tblProject_Status.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\tblTender.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_Contractor.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_ContractorType.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_Drawing.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_Item.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\tblTender_LabourRate.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_Material.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblTender_Object.cs">
@@ -510,82 +586,6 @@
     <Compile Include="Database\tblTender_OverheadItem.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\tblWEX_Variables.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\Validation.cs" />
-    <Compile Include="Database\spWEX_Node_AllProjects_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\spWEX_Node_FoundProjects_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\spWEX_Node_MyProjects_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\spWEX_Node_TenderActivityList_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\spWEX_Node_TenderComponentList_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\spWEX_Node_TenderDrawingList_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\spWEX_Node_TenderFolders_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\spWEX_Node_TendersAllList_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\spWEX_Node_TendersAll_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\spWEX_Node_TenderScheduleAndActivityList_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\spWEX_Node_TenderSetupList_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\spWEX_Node_TendersOpenList_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\spWEX_Node_TendersOpen_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\spWEX_TreeRootList_Result.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\WalzExplorerEntites.cs" />
-    <Compile Include="Database\WalzExplorerEntities_Addtions.cs" />
-    <Compile Include="Database\WalzExplorerViewModel.cs" />
-    <Compile Include="Model\WEXDrilldown.cs" />
-    <Compile Include="Model\WEXLHSTab.cs" />
-    <Compile Include="Model\WEXTreeRoot.cs" />
-    <Compile Include="Model\WEXNode.cs" />
-    <Compile Include="Model\Person.cs" />
-    <Compile Include="Model\WEXRHSTab.cs" />
-    <Compile Include="Model\WEXConnection.cs" />
-    <Compile Include="Model\WEXSetting.cs" />
-    <Compile Include="Model\WEXUser.cs" />
-    <Compile Include="Database\tblTender.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_Contractor.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_ContractorType.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_Drawing.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_Item.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_Material.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Database\tblTender_Schedule.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -596,9 +596,6 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblTender_Supplier.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_Supplier_Material.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblTender_UnitOfMeasure.cs">
@@ -619,6 +616,25 @@
     <Compile Include="Database\tblWEX_TreeNodeType.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\tblWEX_TreeNodeType_RHSTab.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblWEX_Variables.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Validation.cs" />
+    <Compile Include="Database\WalzExplorerEntites.cs" />
+    <Compile Include="Database\WalzExplorerEntities_Addtions.cs" />
+    <Compile Include="Database\WalzExplorerViewModel.cs" />
+    <Compile Include="Model\WEXDrilldown.cs" />
+    <Compile Include="Model\WEXLHSTab.cs" />
+    <Compile Include="Model\WEXTreeRoot.cs" />
+    <Compile Include="Model\WEXNode.cs" />
+    <Compile Include="Model\Person.cs" />
+    <Compile Include="Model\WEXRHSTab.cs" />
+    <Compile Include="Model\WEXConnection.cs" />
+    <Compile Include="Model\WEXSetting.cs" />
+    <Compile Include="Model\WEXUser.cs" />
     <Compile Include="Database\ServiceEntites.cs" />
     <Compile Include="Database\WorkExplorerModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -661,6 +677,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\RHSTabs\Tender\DrawingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\ObjectContractorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\ObjectMaterialView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\ObjectLabourView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\ObjectView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

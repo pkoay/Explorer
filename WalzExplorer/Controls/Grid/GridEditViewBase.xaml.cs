@@ -77,6 +77,7 @@ namespace WalzExplorer.Controls.Grid
         private bool _canAdd;
         private bool _canEdit;
         private bool _canDelete;
+        private bool _canOrder;
 
         public WEXSettings _settings;
 
@@ -122,16 +123,19 @@ namespace WalzExplorer.Controls.Grid
             isEditing = false;
         }
 
-        public void SetGrid(WEXSettings settings, bool canAdd, bool canEdit, bool canDelete)
+        public void SetGrid(WEXSettings settings, bool canAdd, bool canEdit, bool canDelete, bool canOrder=false)
         {
 
             _settings = settings;
+            vm.CanOrder(canOrder);
+
 
             //set basic grid properties
             grd.AutoGenerateColumns = true;
             grd.GroupRenderMode = GroupRenderMode.Flat;
             grd.SelectionMode = System.Windows.Controls.SelectionMode.Extended;
-            grd.SelectionUnit = GridViewSelectionUnit.FullRow;
+            //grd.SelectionUnit = GridViewSelectionUnit.FullRow;
+            grd.SelectionUnit = GridViewSelectionUnit.Mixed;
             grd.AlternationCount = 4;
             grd.CanUserFreezeColumns = true;
             grd.GridLinesVisibility = GridLinesVisibility.None;
@@ -139,7 +143,8 @@ namespace WalzExplorer.Controls.Grid
             grd.ClipboardCopyMode = GridViewClipboardCopyMode.Cells;
             grd.ValidatesOnDataErrors = GridViewValidationMode.Default;
             grd.AutoGeneratingColumn += g_AutoGeneratingColumn;
-           
+            grd.ElementExporting += grd_ElementExporting;
+
             grd.ContextMenuOpening += g_ContextMenuOpening;
 
             grd.ShowColumnHeaders = true;
@@ -160,10 +165,10 @@ namespace WalzExplorer.Controls.Grid
             grd.CanUserInsertRows = canAdd;
             grd.CanUserDeleteRows = canDelete;
 
-
             _canAdd = canAdd;
             _canEdit = canEdit;
             _canDelete = canDelete;
+            _canOrder = canOrder;
 
             if (canAdd)
             {
@@ -180,12 +185,15 @@ namespace WalzExplorer.Controls.Grid
                 //Validation
                 grd.CellValidating += g_CellValidating;
 
-                //Drag Drop
-                grd.AllowDrop = true;
-                grd.PreviewMouseLeftButtonDown += g_PreviewMouseLeftButtonDown;
-                grd.PreviewMouseMove += g_PreviewMouseMove;
-                grd.Drop += g_Drop;
-                grd.DragEnter += g_DragEnter;
+                if (_canOrder)
+                {
+                    //Drag Drop
+                    grd.AllowDrop = true;
+                    grd.PreviewMouseLeftButtonDown += g_PreviewMouseLeftButtonDown;
+                    grd.PreviewMouseMove += g_PreviewMouseMove;
+                    grd.Drop += g_Drop;
+                    grd.DragEnter += g_DragEnter;
+                }
             }
             if (canDelete)
             {
@@ -254,6 +262,28 @@ namespace WalzExplorer.Controls.Grid
             isEditing = true;
         }
 
+        void grd_ElementExporting(object sender, GridViewElementExportingEventArgs e)
+        {
+            if (e.Element == ExportElement.Cell)
+            {
+
+                // Remove formatting so that excel export of numbers look like numbers not text
+                GridViewDataColumn dc = (e.Context as GridViewDataColumn);
+                if (dc != null)
+                {
+                    dc.DataFormatString = "";
+
+                    //this bit does not work for totals?
+                    foreach (AggregateFunction af in dc.AggregateFunctions)
+                    {
+                        af.Caption = "";
+                        af.ResultFormatString = null;
+                    }
+
+                }
+
+            }
+        }
 
         protected virtual void g_CellValidating(object sender, GridViewCellValidatingEventArgs e)
         {
@@ -362,10 +392,10 @@ namespace WalzExplorer.Controls.Grid
                     ApplicationCommands.Copy.Execute(this, null);
                     break;
                 case "miPaste":
-                    grd.ClipboardPasteMode = GridViewClipboardPasteMode.AllSelectedRows | GridViewClipboardPasteMode.SkipHiddenColumns;
+                    grd.ClipboardPasteMode = GridViewClipboardPasteMode.AllSelectedCells | GridViewClipboardPasteMode.SkipHiddenColumns;
                     ApplicationCommands.Paste.Execute(this, null);
                     grd.ClipboardPasteMode = GridViewClipboardPasteMode.None;
-                    
+                    vm.SavePaste();
                     break;
                 case "miInsert":
                     if (ContextMenuRow != null)
@@ -621,29 +651,31 @@ namespace WalzExplorer.Controls.Grid
 
             if (columnCombo.ContainsKey(c.UniqueName))
             {
-                GridViewComboBoxColumn cmb = columnCombo[c.UniqueName];
-                c.IsVisible = false;
-                if (grd.Columns.Contains(cmb))
+                if (c.IsVisible != false) //already built
                 {
-                    grd.Columns.Remove(cmb);
-                }
-                grd.Columns.Add(cmb);
-                cmb.DataMemberBinding = new Binding(c.UniqueName);
-                cmb.SelectedValueMemberPath = cmb.Tag.ToString();
-                //cmb.Initialized += cmb_Initialized;
-                cmb.GotFocus += gcb_GotFocus;
-                cmb.LostFocus += gcb_LostFocus;
+                    GridViewComboBoxColumn cmb = columnCombo[c.UniqueName];
+                    c.IsVisible = false;
+                    if (grd.Columns.Contains(cmb))
+                    {
+                        grd.Columns.Remove(cmb);
+                    }
+                    grd.Columns.Add(cmb);
+                    cmb.DataMemberBinding = new Binding(c.UniqueName);
+                    cmb.SelectedValueMemberPath = cmb.Tag.ToString();
+                    //cmb.Initialized += cmb_Initialized;
+                    cmb.GotFocus += gcb_GotFocus;
+                    cmb.LostFocus += gcb_LostFocus;
 
-                foreach (AggregateFunction af in c.AggregateFunctions)
-                    cmb.AggregateFunctions.Add(af);
-                 
-                if (c.IsReadOnly || !_canEdit)
-                {
-                    cmb.IsReadOnly=true;
-                    //cmb.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#4C35496A");
-                    cmb.CellStyle = CellStyle("#FF999999", "#4C35496A");
-                }
+                    foreach (AggregateFunction af in c.AggregateFunctions)
+                        cmb.AggregateFunctions.Add(af);
 
+                    if (c.IsReadOnly || !_canEdit)
+                    {
+                        cmb.IsReadOnly = true;
+                        //cmb.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#4C35496A");
+                        cmb.CellStyle = CellStyle("#FF999999", "#4C35496A");
+                    }
+                }
             }
 
 

@@ -14,18 +14,18 @@ namespace WalzExplorer.Database
     using System.Collections.Generic;
     public partial class tblTender_ObjectMaterial : ModelBase
     {
-        private int _activityMaterialID;
-    	public int ActivityMaterialID 
+        private int _objectMaterialID;
+    	public int ObjectMaterialID 
     	{ 
-    		get { return _activityMaterialID; } 
-    		set { SetProperty(ref _activityMaterialID, value); } 
+    		get { return _objectMaterialID; } 
+    		set { SetProperty(ref _objectMaterialID, value); } 
     	}
     
-        private int _activityID;
-    	public int ActivityID 
+        private int _objectID;
+    	public int ObjectID 
     	{ 
-    		get { return _activityID; } 
-    		set { SetProperty(ref _activityID, value); } 
+    		get { return _objectID; } 
+    		set { SetProperty(ref _objectID, value); } 
     	}
     
         private string _title;

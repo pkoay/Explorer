@@ -17,7 +17,7 @@ namespace WalzExplorer.Database
         public tblWEX_RHSTab()
         {
             this.tblWEX_NTSecurityGroup = new HashSet<tblWEX_NTSecurityGroup>();
-            this.tblWEX_TreeNodeType = new HashSet<tblWEX_TreeNodeType>();
+            this.tblWEX_TreeNodeType_RHSTab = new HashSet<tblWEX_TreeNodeType_RHSTab>();
         }
     
         private string _rHSTabID;
@@ -34,13 +34,6 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _name, value); } 
     	}
     
-        private int _order;
-    	public int Order 
-    	{ 
-    		get { return _order; } 
-    		set { SetProperty(ref _order, value); } 
-    	}
-    
         private string _tooltip;
     	public string Tooltip 
     	{ 
@@ -50,6 +43,6 @@ namespace WalzExplorer.Database
     
     
         public virtual ICollection<tblWEX_NTSecurityGroup> tblWEX_NTSecurityGroup { get; set; }
-        public virtual ICollection<tblWEX_TreeNodeType> tblWEX_TreeNodeType { get; set; }
+        public virtual ICollection<tblWEX_TreeNodeType_RHSTab> tblWEX_TreeNodeType_RHSTab { get; set; }
     }
 }

@@ -14,25 +14,25 @@ namespace WalzExplorer.Database
     using System.Collections.Generic;
     public partial class tblTender_ObjectLabour : ModelBase
     {
-        private int _activityLabourID;
-    	public int ActivityLabourID 
+        private int _objectLabourID;
+    	public int ObjectLabourID 
     	{ 
-    		get { return _activityLabourID; } 
-    		set { SetProperty(ref _activityLabourID, value); } 
+    		get { return _objectLabourID; } 
+    		set { SetProperty(ref _objectLabourID, value); } 
     	}
     
-        private int _activityID;
-    	public int ActivityID 
+        private int _objectID;
+    	public int ObjectID 
     	{ 
-    		get { return _activityID; } 
-    		set { SetProperty(ref _activityID, value); } 
+    		get { return _objectID; } 
+    		set { SetProperty(ref _objectID, value); } 
     	}
     
-        private int _labourStandardID;
-    	public int LabourStandardID 
+        private int _labourRateID;
+    	public int LabourRateID 
     	{ 
-    		get { return _labourStandardID; } 
-    		set { SetProperty(ref _labourStandardID, value); } 
+    		get { return _labourRateID; } 
+    		set { SetProperty(ref _labourRateID, value); } 
     	}
     
         private string _title;
@@ -49,11 +49,11 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _stepID, value); } 
     	}
     
-        private int _workgroupID;
-    	public int WorkgroupID 
+        private int _overheadID;
+    	public int OverheadID 
     	{ 
-    		get { return _workgroupID; } 
-    		set { SetProperty(ref _workgroupID, value); } 
+    		get { return _overheadID; } 
+    		set { SetProperty(ref _overheadID, value); } 
     	}
     
         private double _hours;

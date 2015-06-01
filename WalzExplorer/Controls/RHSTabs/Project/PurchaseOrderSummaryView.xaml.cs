@@ -95,6 +95,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             }
             settings.drilldown = new WEXDrilldown(title,"Project.PurchaseOrderDetailView", DrilldownFilter.PurchaseOrder, fields);
             DrilldownWindow.Open(settings);
+            settings.drilldown = null;
            
         }
             

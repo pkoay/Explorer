@@ -95,6 +95,9 @@ namespace WalzExplorer.Controls.Grid
             grd.ClipboardCopyMode = GridViewClipboardCopyMode.Cells;
             grd.ValidatesOnDataErrors = GridViewValidationMode.Default;
             grd.AutoGeneratingColumn += g_AutoGeneratingColumn;
+            grd.ElementExporting += grd_ElementExporting;
+            
+
 
             grd.ShowColumnHeaders = true;
             grd.ShowGroupPanel = true;
@@ -119,6 +122,30 @@ namespace WalzExplorer.Controls.Grid
             columnSettings = new GridColumnSettings();
 
           
+        }
+
+        void grd_ElementExporting(object sender, GridViewElementExportingEventArgs e)
+        {
+            if (e.Element == ExportElement.Cell)
+            {
+
+                // Remove formatting so that excel export of numbers look like numbers not text
+                GridViewDataColumn dc = (e.Context as GridViewDataColumn);
+                if (dc != null)
+                {
+                    dc.DataFormatString = "";
+
+                    //this bit does not work for totals?
+                    foreach (AggregateFunction af in dc.AggregateFunctions)
+                    {
+                        af.Caption = "";
+                        af.ResultFormatString = null;
+                    }
+
+                }
+                
+               
+            }
         }
 
 
@@ -203,6 +230,7 @@ namespace WalzExplorer.Controls.Grid
                                  ShowColumnHeaders = true,
                                  ShowColumnFooters = true,
                                  ShowGroupFooters = false,
+                                       
                              });
 
 
@@ -410,6 +438,7 @@ namespace WalzExplorer.Controls.Grid
             {
                 Drilldown(result, new EventArgs());
             }
+
         }
 
         private void settemplate()
@@ -491,7 +520,7 @@ namespace WalzExplorer.Controls.Grid
                     break;
 
                 case columnFormat.TWO_DECIMAL_NO_TOTAL:
-                    column.DataFormatString = "#,##0.00";
+                    column.DataFormatString = "N2";
                     column.TextAlignment = TextAlignment.Right;
                     column.HeaderTextAlignment = TextAlignment.Right;
                     column.FooterTextAlignment = TextAlignment.Right;
@@ -500,7 +529,7 @@ namespace WalzExplorer.Controls.Grid
 
 
                 case columnFormat.TWO_DECIMAL:
-                    column.DataFormatString = "#,##0.00";
+                    column.DataFormatString = "N2";
                     column.TextAlignment = TextAlignment.Right;
                     column.HeaderTextAlignment = TextAlignment.Right;
                     column.FooterTextAlignment = TextAlignment.Right;

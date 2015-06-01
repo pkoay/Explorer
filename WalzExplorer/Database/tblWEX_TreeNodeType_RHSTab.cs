@@ -12,13 +12,8 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblWEX_TreeNodeType : ModelBase
+    public partial class tblWEX_TreeNodeType_RHSTab : ModelBase
     {
-        public tblWEX_TreeNodeType()
-        {
-            this.tblWEX_TreeNodeType_RHSTab = new HashSet<tblWEX_TreeNodeType_RHSTab>();
-        }
-    
         private string _treeNodeTypeID;
     	public string TreeNodeTypeID 
     	{ 
@@ -26,7 +21,22 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _treeNodeTypeID, value); } 
     	}
     
+        private string _rHSTabID;
+    	public string RHSTabID 
+    	{ 
+    		get { return _rHSTabID; } 
+    		set { SetProperty(ref _rHSTabID, value); } 
+    	}
     
-        public virtual ICollection<tblWEX_TreeNodeType_RHSTab> tblWEX_TreeNodeType_RHSTab { get; set; }
+        private int _tabOrder;
+    	public int TabOrder 
+    	{ 
+    		get { return _tabOrder; } 
+    		set { SetProperty(ref _tabOrder, value); } 
+    	}
+    
+    
+        public virtual tblWEX_RHSTab tblWEX_RHSTab { get; set; }
+        public virtual tblWEX_TreeNodeType tblWEX_TreeNodeType { get; set; }
     }
 }

@@ -128,13 +128,7 @@ namespace WalzExplorer.Database
             get { return null; }
         }
     }
-    public partial class tblWEX_TreeNodeType
-    {
-        public override string this[string columnName]
-        {
-            get { return null; }
-        }
-    }
+   
     public partial class tblWEX_TreeNodeType_RHSTab
     {
         public string this[string columnName]
@@ -169,13 +163,7 @@ namespace WalzExplorer.Database
 
    
 
-    public partial class tblTender_Supplier_Material
-    {
-        public override string this[string columnName]
-        {
-            get { return null; }
-        }
-    }
+   
     public partial class tblTender_UnitOfMeasure
     {
         public override string this[string columnName]
