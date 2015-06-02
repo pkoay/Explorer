@@ -14,6 +14,11 @@ namespace WalzExplorer.Database
     using System.Collections.Generic;
     public partial class tblTender_LabourRate : ModelBase
     {
+        public tblTender_LabourRate()
+        {
+            this.tblTender_ObjectLabour = new HashSet<tblTender_ObjectLabour>();
+        }
+    
         private int _labourRateID;
     	public int LabourRateID 
     	{ 
@@ -93,5 +98,6 @@ namespace WalzExplorer.Database
     
     
         public virtual tblTender tblTender { get; set; }
+        public virtual ICollection<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
     }
 }

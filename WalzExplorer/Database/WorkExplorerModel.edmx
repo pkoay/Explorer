@@ -450,7 +450,7 @@
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UnitOfMeasureID" Type="int" Nullable="false" />
           <Property Name="StandardHours" Type="float" Nullable="false" />
-          <Property Name="Comment" Type="varchar(max)" Nullable="false" />
+          <Property Name="Comment" Type="varchar(max)" />
           <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
@@ -626,7 +626,7 @@
           <Property Name="ScheduleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenderID" Type="int" Nullable="false" />
           <Property Name="ClientCode" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ClientDescription" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="ParentID" Type="int" />
           <Property Name="CanAllocate" Type="bit" Nullable="false" />
           <Property Name="Comment" Type="varchar(max)" />
@@ -746,6 +746,7 @@
           <Property Name="TreeNodeTypeID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="RHSTabID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TabOrder" Type="int" Nullable="false" />
+          <Property Name="TabTitle" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblWEX_Variables">
           <Key>
@@ -1053,6 +1054,18 @@
             </Principal>
             <Dependent Role="tblTender_Object">
               <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_ObjectLabour_tblTender_LabourRate">
+          <End Role="tblTender_LabourRate" Type="Self.tblTender_LabourRate" Multiplicity="1" />
+          <End Role="tblTender_ObjectLabour" Type="Self.tblTender_ObjectLabour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_LabourRate">
+              <PropertyRef Name="LabourRateID" />
+            </Principal>
+            <Dependent Role="tblTender_ObjectLabour">
+              <PropertyRef Name="LabourRateID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1827,6 +1840,10 @@
             <End Role="tblTender_ObjectType" EntitySet="tblTender_ObjectType" />
             <End Role="tblTender_Object" EntitySet="tblTender_Object" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblTender_ObjectLabour_tblTender_LabourRate" Association="Self.FK_tblTender_ObjectLabour_tblTender_LabourRate">
+            <End Role="tblTender_LabourRate" EntitySet="tblTender_LabourRate" />
+            <End Role="tblTender_ObjectLabour" EntitySet="tblTender_ObjectLabour" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblTender_Component_tblTender" Association="Self.FK_tblTender_Component_tblTender">
             <End Role="tblTender" EntitySet="tblTender" />
             <End Role="tblTender_Object" EntitySet="tblTender_Object" />
@@ -2047,12 +2064,12 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblTender_Drawing" Relationship="Self.FK_tblTender_Item_tblTender_Drawing" FromRole="tblTender_Item" ToRole="tblTender_Drawing" />
-          <NavigationProperty Name="tblTender_Schedule" Relationship="Self.FK_tblTender_Item_tblTender_Schedule" FromRole="tblTender_Item" ToRole="tblTender_Schedule" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <Property Name="SortOrder" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tblTender" Relationship="WalzExplorerModel.FK_tblTender_Item_tblTender" FromRole="tblTender_Item" ToRole="tblTender" />
           <Property Name="ObjectID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tblTender_Object" Relationship="WalzExplorerModel.FK_tblTender_Item_tblTender_Component" FromRole="tblTender_Item" ToRole="tblTender_Object" />
+          <NavigationProperty Name="tblTender_Schedule" Relationship="WalzExplorerModel.FK_tblTender_Item_tblTender_Schedule" FromRole="tblTender_Item" ToRole="tblTender_Schedule" />
         </EntityType>
         <EntityType Name="tblTender_Material">
           <Key>
@@ -2072,23 +2089,6 @@
           <Property Name="SortOrder" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tblTender" Relationship="WalzExplorerModel.FK_tblTender_Material_tblTender" FromRole="tblTender_Material" ToRole="tblTender" />
           <NavigationProperty Name="tblTender_ObjectMaterial" Relationship="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Material" FromRole="tblTender_Material" ToRole="tblTender_ObjectMaterial" />
-        </EntityType>
-        <EntityType Name="tblTender_Schedule">
-          <Key>
-            <PropertyRef Name="ScheduleID" />
-          </Key>
-          <Property Name="ScheduleID" Type="Int32" Nullable="false" />
-          <Property Name="TenderID" Type="Int32" Nullable="false" />
-          <Property Name="ClientCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ClientDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ParentID" Type="Int32" />
-          <Property Name="SortOrder" Type="Int32" Nullable="false" />
-          <Property Name="CanAllocate" Type="Boolean" Nullable="false" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblTender_Item" Relationship="Self.FK_tblTender_Item_tblTender_Schedule" FromRole="tblTender_Schedule" ToRole="tblTender_Item" />
-          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
         </EntityType>
         <EntityType Name="tblTender_Status">
           <Key>
@@ -2201,18 +2201,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblTender_Item_tblTender_Schedule">
-          <End Role="tblTender_Schedule" Type="Self.tblTender_Schedule" Multiplicity="1" />
-          <End Role="tblTender_Item" Type="Self.tblTender_Item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_Schedule">
-              <PropertyRef Name="ScheduleID" />
-            </Principal>
-            <Dependent Role="tblTender_Item">
-              <PropertyRef Name="ScheduleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblTender_Material_tblTender_UnitOfMeasure">
           <End Role="tblTender_UnitOfMeasure" Type="Self.tblTender_UnitOfMeasure" Multiplicity="1" />
           <End Role="tblTender_Material" Type="Self.tblTender_Material" Multiplicity="*" />
@@ -2250,7 +2238,6 @@
           <EntitySet Name="tblTender_Drawing" EntityType="Self.tblTender_Drawing" />
           <EntitySet Name="tblTender_Item" EntityType="Self.tblTender_Item" />
           <EntitySet Name="tblTender_Material" EntityType="Self.tblTender_Material" />
-          <EntitySet Name="tblTender_Schedule" EntityType="Self.tblTender_Schedule" />
           <EntitySet Name="tblTender_Status" EntityType="Self.tblTender_Status" />
           <EntitySet Name="tblTender_Step" EntityType="Self.tblTender_Step" />
           <EntitySet Name="tblTender_Supplier" EntityType="Self.tblTender_Supplier" />
@@ -2261,10 +2248,6 @@
           <EntitySet Name="tblWEX_Tree" EntityType="Self.tblWEX_Tree" />
           <AssociationSet Name="FK_tblTender_Item_tblTender_Drawing" Association="Self.FK_tblTender_Item_tblTender_Drawing">
             <End Role="tblTender_Drawing" EntitySet="tblTender_Drawing" />
-            <End Role="tblTender_Item" EntitySet="tblTender_Item" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblTender_Item_tblTender_Schedule" Association="Self.FK_tblTender_Item_tblTender_Schedule">
-            <End Role="tblTender_Schedule" EntitySet="tblTender_Schedule" />
             <End Role="tblTender_Item" EntitySet="tblTender_Item" />
           </AssociationSet>
           <AssociationSet Name="FK_tblTender_Material_tblTender_UnitOfMeasure" Association="Self.FK_tblTender_Material_tblTender_UnitOfMeasure">
@@ -2703,6 +2686,15 @@
           <AssociationSet Name="FK_WIMS_TreeNodeType_Tab_WIMS_TreeNodeType" Association="WalzExplorerModel.FK_WIMS_TreeNodeType_Tab_WIMS_TreeNodeType">
             <End Role="tblWEX_TreeNodeType" EntitySet="tblWEX_TreeNodeType" />
             <End Role="tblWEX_TreeNodeType_RHSTab" EntitySet="tblWEX_TreeNodeType_RHSTab" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTender_ObjectLabour_tblTender_LabourRate" Association="WalzExplorerModel.FK_tblTender_ObjectLabour_tblTender_LabourRate">
+            <End Role="tblTender_LabourRate" EntitySet="tblTender_LabourRate" />
+            <End Role="tblTender_ObjectLabour" EntitySet="tblTender_ObjectLabour" />
+          </AssociationSet>
+          <EntitySet Name="tblTender_Schedule" EntityType="WalzExplorerModel.tblTender_Schedule" />
+          <AssociationSet Name="FK_tblTender_Item_tblTender_Schedule" Association="WalzExplorerModel.FK_tblTender_Item_tblTender_Schedule">
+            <End Role="tblTender_Schedule" EntitySet="tblTender_Schedule" />
+            <End Role="tblTender_Item" EntitySet="tblTender_Item" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
@@ -4099,12 +4091,13 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UnitOfMeasureID" Type="Int32" Nullable="false" />
           <Property Name="StandardHours" Type="Double" Nullable="false" />
-          <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="SortOrder" Type="Int32" Nullable="false" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="tblTender" Relationship="WalzExplorerModel.FK_tblTender_LabourStandard_tblTender" FromRole="tblTender_LabourRate" ToRole="tblTender" />
+          <NavigationProperty Name="tblTender_ObjectLabour" Relationship="WalzExplorerModel.FK_tblTender_ObjectLabour_tblTender_LabourRate" FromRole="tblTender_LabourRate" ToRole="tblTender_ObjectLabour" />
         </EntityType>
         <Association Name="FK_tblTender_LabourStandard_tblTender">
           <End Type="WalzExplorerModel.tblTender" Role="tblTender" Multiplicity="1" />
@@ -4182,6 +4175,7 @@
           <NavigationProperty Name="tblTender_Step" Relationship="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_Step" FromRole="tblTender_ObjectLabour" ToRole="tblTender_Step" />
           <NavigationProperty Name="tblTender_UnitOfMeasure" Relationship="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_UnitOfMeasure" FromRole="tblTender_ObjectLabour" ToRole="tblTender_UnitOfMeasure" />
           <NavigationProperty Name="tblTender_Overhead" Relationship="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_WorkGroup" FromRole="tblTender_ObjectLabour" ToRole="tblTender_Overhead" />
+          <NavigationProperty Name="tblTender_LabourRate" Relationship="WalzExplorerModel.FK_tblTender_ObjectLabour_tblTender_LabourRate" FromRole="tblTender_ObjectLabour" ToRole="tblTender_LabourRate" />
         </EntityType>
         <EntityType Name="tblTender_ObjectMaterial">
           <Key>
@@ -4393,6 +4387,7 @@
           <Property Name="TabOrder" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tblWEX_RHSTab" Relationship="WalzExplorerModel.FK_WIMS_TreeNodeType_Tab_WIMS_Tab" FromRole="tblWEX_TreeNodeType_RHSTab" ToRole="tblWEX_RHSTab" />
           <NavigationProperty Name="tblWEX_TreeNodeType" Relationship="WalzExplorerModel.FK_WIMS_TreeNodeType_Tab_WIMS_TreeNodeType" FromRole="tblWEX_TreeNodeType_RHSTab" ToRole="tblWEX_TreeNodeType" />
+          <Property Name="TabTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_WIMS_TreeNodeType_Tab_WIMS_Tab">
           <End Type="WalzExplorerModel.tblWEX_RHSTab" Role="tblWEX_RHSTab" Multiplicity="1" />
@@ -4415,6 +4410,47 @@
             </Principal>
             <Dependent Role="tblWEX_TreeNodeType_RHSTab">
               <PropertyRef Name="TreeNodeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_ObjectLabour_tblTender_LabourRate">
+          <End Type="WalzExplorerModel.tblTender_LabourRate" Role="tblTender_LabourRate" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_ObjectLabour" Role="tblTender_ObjectLabour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_LabourRate">
+              <PropertyRef Name="LabourRateID" />
+            </Principal>
+            <Dependent Role="tblTender_ObjectLabour">
+              <PropertyRef Name="LabourRateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblTender_Schedule">
+          <Key>
+            <PropertyRef Name="ScheduleID" />
+          </Key>
+          <Property Name="ScheduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenderID" Type="Int32" Nullable="false" />
+          <Property Name="ClientCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="CanAllocate" Type="Boolean" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblTender_Item" Relationship="WalzExplorerModel.FK_tblTender_Item_tblTender_Schedule" FromRole="tblTender_Schedule" ToRole="tblTender_Item" />
+        </EntityType>
+        <Association Name="FK_tblTender_Item_tblTender_Schedule">
+          <End Type="WalzExplorerModel.tblTender_Schedule" Role="tblTender_Schedule" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_Item" Role="tblTender_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_Schedule">
+              <PropertyRef Name="ScheduleID" />
+            </Principal>
+            <Dependent Role="tblTender_Item">
+              <PropertyRef Name="ScheduleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4484,23 +4520,6 @@
                 <ScalarProperty Name="SQM" ColumnName="SQM" />
                 <ScalarProperty Name="KG" ColumnName="KG" />
                 <ScalarProperty Name="UnitOfMeasureID" ColumnName="UnitOfMeasureID" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblTender_Schedule">
-            <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Schedule">
-              <MappingFragment StoreEntitySet="tblTender_Schedule">
-                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
-                <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
-                <ScalarProperty Name="TenderID" ColumnName="TenderID" />
-                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
-                <ScalarProperty Name="ClientDescription" ColumnName="ClientDescription" />
-                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-                <ScalarProperty Name="CanAllocate" ColumnName="CanAllocate" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
@@ -5562,9 +5581,27 @@
           <EntitySetMapping Name="tblWEX_TreeNodeType_RHSTab">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblWEX_TreeNodeType_RHSTab">
               <MappingFragment StoreEntitySet="tblWEX_TreeNodeType_RHSTab">
+                <ScalarProperty Name="TabTitle" ColumnName="TabTitle" />
                 <ScalarProperty Name="TabOrder" ColumnName="TabOrder" />
                 <ScalarProperty Name="RHSTabID" ColumnName="RHSTabID" />
                 <ScalarProperty Name="TreeNodeTypeID" ColumnName="TreeNodeTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTender_Schedule">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Schedule">
+              <MappingFragment StoreEntitySet="tblTender_Schedule">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="CanAllocate" ColumnName="CanAllocate" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+                <ScalarProperty Name="TenderID" ColumnName="TenderID" />
+                <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

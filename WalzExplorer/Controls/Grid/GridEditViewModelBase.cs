@@ -167,7 +167,7 @@ namespace WalzExplorer.Controls.Grid
         {
 
             // If item not in database 
-            if (context.Entry(changedItem).State == System.Data.Entity.EntityState.Detached)
+            if (changedItem!=null && context.Entry(changedItem).State == System.Data.Entity.EntityState.Detached)
             {
                 //Add item to dataabse 
                 context.Entry(changedItem).State = System.Data.Entity.EntityState.Added;

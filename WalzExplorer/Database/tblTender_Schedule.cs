@@ -40,11 +40,11 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _clientCode, value); } 
     	}
     
-        private string _clientDescription;
-    	public string ClientDescription 
+        private string _title;
+    	public string Title 
     	{ 
-    		get { return _clientDescription; } 
-    		set { SetProperty(ref _clientDescription, value); } 
+    		get { return _title; } 
+    		set { SetProperty(ref _title, value); } 
     	}
     
         private Nullable<int> _parentID;
@@ -52,13 +52,6 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _parentID; } 
     		set { SetProperty(ref _parentID, value); } 
-    	}
-    
-        private int _sortOrder;
-    	public int SortOrder 
-    	{ 
-    		get { return _sortOrder; } 
-    		set { SetProperty(ref _sortOrder, value); } 
     	}
     
         private bool _canAllocate;
@@ -73,6 +66,13 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _comment; } 
     		set { SetProperty(ref _comment, value); } 
+    	}
+    
+        private int _sortOrder;
+    	public int SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
     	}
     
         private string _updatedBy;

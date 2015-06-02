@@ -35,6 +35,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _tabOrder, value); } 
     	}
     
+        private string _tabTitle;
+    	public string TabTitle 
+    	{ 
+    		get { return _tabTitle; } 
+    		set { SetProperty(ref _tabTitle, value); } 
+    	}
+    
     
         public virtual tblWEX_RHSTab tblWEX_RHSTab { get; set; }
         public virtual tblWEX_TreeNodeType tblWEX_TreeNodeType { get; set; }

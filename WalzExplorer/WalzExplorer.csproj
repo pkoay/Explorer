@@ -228,10 +228,19 @@
       <DependentUpon>Grid_Read.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\DrilldownWindow.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\ItemView.xaml.cs">
+      <DependentUpon>ItemView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RHSTabs\Tender\DrawingView.xaml.cs">
       <DependentUpon>DrawingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\ItemViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\DrawingViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\ScheduleView.xaml.cs">
+      <DependentUpon>ScheduleView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\ScheduleViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\ObjectContractorView.xaml.cs">
       <DependentUpon>ObjectContractorView.xaml</DependentUpon>
     </Compile>
@@ -676,6 +685,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\RHSTabs\Tender\ItemView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\RHSTabs\Tender\DrawingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -695,6 +708,10 @@
     <Page Include="Controls\RHSTabs\Tender\ObjectView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\ScheduleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\RHSTabs\Tender\StepView.xaml">
       <Generator>MSBuild:Compile</Generator>

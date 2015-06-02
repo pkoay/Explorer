@@ -129,13 +129,7 @@ namespace WalzExplorer.Database
         }
     }
    
-    public partial class tblWEX_TreeNodeType_RHSTab
-    {
-        public string this[string columnName]
-        {
-            get { return null; }
-        }
-    }
+
  
 
     public partial class tblWEX_Tree

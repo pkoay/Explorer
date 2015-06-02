@@ -124,5 +124,6 @@ namespace WalzExplorer.Database
         public virtual tblTender_Step tblTender_Step { get; set; }
         public virtual tblTender_UnitOfMeasure tblTender_UnitOfMeasure { get; set; }
         public virtual tblTender_Overhead tblTender_Overhead { get; set; }
+        public virtual tblTender_LabourRate tblTender_LabourRate { get; set; }
     }
 }
