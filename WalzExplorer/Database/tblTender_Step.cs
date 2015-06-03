@@ -18,8 +18,8 @@ namespace WalzExplorer.Database
         {
             this.tblTender_ObjectChildObject = new HashSet<tblTender_ObjectChildObject>();
             this.tblTender_ObjectContractor = new HashSet<tblTender_ObjectContractor>();
-            this.tblTender_ObjectLabour = new HashSet<tblTender_ObjectLabour>();
             this.tblTender_ObjectMaterial = new HashSet<tblTender_ObjectMaterial>();
+            this.tblTender_ObjectLabour = new HashSet<tblTender_ObjectLabour>();
         }
     
         private int _stepID;
@@ -74,7 +74,7 @@ namespace WalzExplorer.Database
     
         public virtual ICollection<tblTender_ObjectChildObject> tblTender_ObjectChildObject { get; set; }
         public virtual ICollection<tblTender_ObjectContractor> tblTender_ObjectContractor { get; set; }
-        public virtual ICollection<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
         public virtual ICollection<tblTender_ObjectMaterial> tblTender_ObjectMaterial { get; set; }
+        public virtual ICollection<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
     }
 }

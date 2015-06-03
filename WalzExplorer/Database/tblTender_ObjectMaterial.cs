@@ -77,6 +77,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _grade, value); } 
     	}
     
+        private double _unitCost;
+    	public double UnitCost 
+    	{ 
+    		get { return _unitCost; } 
+    		set { SetProperty(ref _unitCost, value); } 
+    	}
+    
         private int _quantity;
     	public int Quantity 
     	{ 

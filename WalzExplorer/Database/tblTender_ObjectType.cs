@@ -26,6 +26,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _typeID, value); } 
     	}
     
+        private int _tenderID;
+    	public int TenderID 
+    	{ 
+    		get { return _tenderID; } 
+    		set { SetProperty(ref _tenderID, value); } 
+    	}
+    
         private string _title;
     	public string Title 
     	{ 

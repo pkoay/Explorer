@@ -21,11 +21,11 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _overheadItemID, value); } 
     	}
     
-        private int _overheadID;
-    	public int OverheadID 
+        private int _workGroupID;
+    	public int WorkGroupID 
     	{ 
-    		get { return _overheadID; } 
-    		set { SetProperty(ref _overheadID, value); } 
+    		get { return _workGroupID; } 
+    		set { SetProperty(ref _workGroupID, value); } 
     	}
     
         private int _overheadGroupID;
@@ -99,7 +99,7 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual tblTender_Overhead tblTender_Overhead { get; set; }
         public virtual tblTender_OverheadGroup tblTender_OverheadGroup { get; set; }
+        public virtual tblTender_WorkGroup tblTender_WorkGroup { get; set; }
     }
 }

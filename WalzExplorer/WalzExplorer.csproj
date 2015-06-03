@@ -228,6 +228,10 @@
       <DependentUpon>Grid_Read.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\DrilldownWindow.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\ObjectChildObjectView.xaml.cs">
+      <DependentUpon>ObjectChildObjectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\ObjectChildObjectViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\ItemView.xaml.cs">
       <DependentUpon>ItemView.xaml</DependentUpon>
     </Compile>
@@ -287,15 +291,15 @@
     <Compile Include="Controls\RHSTabs\Tender\OverheadGroupView.xaml.cs">
       <DependentUpon>OverheadGroupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RHSTabs\Tender\OverheadView.xaml.cs">
-      <DependentUpon>OverheadView.xaml</DependentUpon>
+    <Compile Include="Controls\RHSTabs\Tender\WorkGroupView.xaml.cs">
+      <DependentUpon>WorkGroupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Explorer\MimicView.xaml.cs">
       <DependentUpon>MimicView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Tender\OverheadDetailViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\OverheadGroupViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\Tender\OverheadViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\WorkGroupViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Explorer\MimicViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Project\Admin.xaml.cs">
       <DependentUpon>Admin.xaml</DependentUpon>
@@ -586,9 +590,6 @@
     <Compile Include="Database\tblTender_ObjectType.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\tblTender_Overhead.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Database\tblTender_OverheadGroup.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -608,6 +609,9 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblTender_UnitOfMeasure.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_WorkGroup.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblWEX_LHSTab.cs">
@@ -685,6 +689,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\RHSTabs\Tender\ObjectChildObjectView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\RHSTabs\Tender\ItemView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -745,7 +753,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\RHSTabs\Tender\OverheadView.xaml">
+    <Page Include="Controls\RHSTabs\Tender\WorkGroupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

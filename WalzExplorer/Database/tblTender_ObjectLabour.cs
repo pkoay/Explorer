@@ -49,11 +49,11 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _stepID, value); } 
     	}
     
-        private int _overheadID;
-    	public int OverheadID 
+        private int _workGroupID;
+    	public int WorkGroupID 
     	{ 
-    		get { return _overheadID; } 
-    		set { SetProperty(ref _overheadID, value); } 
+    		get { return _workGroupID; } 
+    		set { SetProperty(ref _workGroupID, value); } 
     	}
     
         private double _hours;
@@ -120,10 +120,10 @@ namespace WalzExplorer.Database
     	}
     
     
+        public virtual tblTender_LabourRate tblTender_LabourRate { get; set; }
         public virtual tblTender_Object tblTender_Object { get; set; }
         public virtual tblTender_Step tblTender_Step { get; set; }
         public virtual tblTender_UnitOfMeasure tblTender_UnitOfMeasure { get; set; }
-        public virtual tblTender_Overhead tblTender_Overhead { get; set; }
-        public virtual tblTender_LabourRate tblTender_LabourRate { get; set; }
+        public virtual tblTender_WorkGroup tblTender_WorkGroup { get; set; }
     }
 }

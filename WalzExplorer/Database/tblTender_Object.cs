@@ -16,12 +16,12 @@ namespace WalzExplorer.Database
     {
         public tblTender_Object()
         {
-            this.tblTender_Item = new HashSet<tblTender_Item>();
             this.tblTender_ObjectContractor = new HashSet<tblTender_ObjectContractor>();
-            this.tblTender_ObjectLabour = new HashSet<tblTender_ObjectLabour>();
-            this.tblTender_ObjectMaterial = new HashSet<tblTender_ObjectMaterial>();
             this.tblTender_ObjectChildObject = new HashSet<tblTender_ObjectChildObject>();
             this.tblTender_ObjectChildObject1 = new HashSet<tblTender_ObjectChildObject>();
+            this.tblTender_Item = new HashSet<tblTender_Item>();
+            this.tblTender_ObjectMaterial = new HashSet<tblTender_ObjectMaterial>();
+            this.tblTender_ObjectLabour = new HashSet<tblTender_ObjectLabour>();
         }
     
         private int _objectID;
@@ -96,13 +96,13 @@ namespace WalzExplorer.Database
     
     
         public virtual tblTender tblTender { get; set; }
-        public virtual ICollection<tblTender_Item> tblTender_Item { get; set; }
-        public virtual tblTender_ObjectType tblTender_ObjectType { get; set; }
         public virtual tblTender_UnitOfMeasure tblTender_UnitOfMeasure { get; set; }
         public virtual ICollection<tblTender_ObjectContractor> tblTender_ObjectContractor { get; set; }
-        public virtual ICollection<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
-        public virtual ICollection<tblTender_ObjectMaterial> tblTender_ObjectMaterial { get; set; }
         public virtual ICollection<tblTender_ObjectChildObject> tblTender_ObjectChildObject { get; set; }
         public virtual ICollection<tblTender_ObjectChildObject> tblTender_ObjectChildObject1 { get; set; }
+        public virtual ICollection<tblTender_Item> tblTender_Item { get; set; }
+        public virtual tblTender_ObjectType tblTender_ObjectType { get; set; }
+        public virtual ICollection<tblTender_ObjectMaterial> tblTender_ObjectMaterial { get; set; }
+        public virtual ICollection<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
     }
 }

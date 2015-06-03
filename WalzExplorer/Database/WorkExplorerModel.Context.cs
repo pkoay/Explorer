@@ -29,7 +29,6 @@ namespace WalzExplorer.Database
     
         public virtual DbSet<tblTender_ContractorType> tblTender_ContractorType { get; set; }
         public virtual DbSet<tblTender_Drawing> tblTender_Drawing { get; set; }
-        public virtual DbSet<tblTender_Item> tblTender_Item { get; set; }
         public virtual DbSet<tblTender_Material> tblTender_Material { get; set; }
         public virtual DbSet<tblTender_Status> tblTender_Status { get; set; }
         public virtual DbSet<tblTender_Step> tblTender_Step { get; set; }
@@ -61,19 +60,20 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblProject_Portfolio> tblProject_Portfolio { get; set; }
         public virtual DbSet<tblWEX_Variables> tblWEX_Variables { get; set; }
         public virtual DbSet<tblFavourite> tblFavourites { get; set; }
-        public virtual DbSet<tblTender_Overhead> tblTender_Overhead { get; set; }
         public virtual DbSet<tblTender_OverheadGroup> tblTender_OverheadGroup { get; set; }
-        public virtual DbSet<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
         public virtual DbSet<tblTender_Object> tblTender_Object { get; set; }
-        public virtual DbSet<tblTender_ObjectType> tblTender_ObjectType { get; set; }
         public virtual DbSet<tblTender_LabourRate> tblTender_LabourRate { get; set; }
         public virtual DbSet<tblTender_ObjectChildObject> tblTender_ObjectChildObject { get; set; }
         public virtual DbSet<tblTender_ObjectContractor> tblTender_ObjectContractor { get; set; }
-        public virtual DbSet<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
-        public virtual DbSet<tblTender_ObjectMaterial> tblTender_ObjectMaterial { get; set; }
         public virtual DbSet<tblWEX_TreeNodeType> tblWEX_TreeNodeType { get; set; }
         public virtual DbSet<tblWEX_TreeNodeType_RHSTab> tblWEX_TreeNodeType_RHSTab { get; set; }
         public virtual DbSet<tblTender_Schedule> tblTender_Schedule { get; set; }
+        public virtual DbSet<tblTender_Item> tblTender_Item { get; set; }
+        public virtual DbSet<tblTender_ObjectType> tblTender_ObjectType { get; set; }
+        public virtual DbSet<tblTender_ObjectMaterial> tblTender_ObjectMaterial { get; set; }
+        public virtual DbSet<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
+        public virtual DbSet<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
+        public virtual DbSet<tblTender_WorkGroup> tblTender_WorkGroup { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)

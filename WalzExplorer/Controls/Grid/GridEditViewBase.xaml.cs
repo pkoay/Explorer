@@ -635,7 +635,13 @@ namespace WalzExplorer.Controls.Grid
                 if (colsetting.isGroupable.HasValue) dc.IsGroupable = (bool)colsetting.isGroupable;
                 
                 //order
-                if (colsetting.order != -1) c.DisplayIndex= colsetting.order;
+                if (colsetting.order != -1)
+                {
+                    if (colsetting.order > grd.Columns.Count)
+                        c.DisplayIndex = grd.Columns.Count - 1;
+                    else
+                        c.DisplayIndex = colsetting.order;
+                }
                 
                 
                 

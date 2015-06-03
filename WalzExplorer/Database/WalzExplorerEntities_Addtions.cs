@@ -10,7 +10,7 @@ namespace WalzExplorer.Database
     using System.ComponentModel;
     using System.Collections.Generic;
 
-    public partial class tblTender_Overhead : ModelBase
+    public partial class tblTender_WorkGroup : ModelBase
     {
         public double Total
         {
@@ -22,6 +22,34 @@ namespace WalzExplorer.Database
         public double Total
         {
             get { return Count * Duration * Rate; }
+        }
+    }
+    public partial class tblTender_ObjectLabour: ModelBase
+    {
+        public double HoursTotal
+        {
+            get { return Hours* Quantity * Men; }
+        }
+        public double CostTotal
+        {
+            get
+            {
+                if (tblTender_WorkGroup == null)
+                    return 0;
+                else
+                    return tblTender_WorkGroup.Rate * Hours * Quantity * Men;
+            }
+        }
+        public double Rate
+        {
+            get
+              {
+                if (tblTender_WorkGroup == null)
+                    return 0;
+                else
+                    return tblTender_WorkGroup.Rate;
+            }
+            
         }
     }
 

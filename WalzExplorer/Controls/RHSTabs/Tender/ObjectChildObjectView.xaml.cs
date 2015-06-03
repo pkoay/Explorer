@@ -19,47 +19,36 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
     /// </summary>
 
 
-    public partial class ObjectView : RHSTabViewBase
+    public partial class ObjectChildObjectView : RHSTabViewBase
     {
 
-        ObjectViewModel vm;
+        ObjectChildObjectViewModel vm;
 
-       public ObjectView()
+       public ObjectChildObjectView()
         {
             InitializeComponent();
         }
 
         public override void TabLoad()
         {
-            vm = new ObjectViewModel(settings);
+            vm = new ObjectChildObjectViewModel(settings);
             grd.vm = vm;
             grd.grd.DataContext = vm;
             grd.grd.ItemsSource = vm.data;
-            
+
             if (settings.user.SecurityGroups.Contains("WD_Tender"))
-                switch (settings.node.TypeID)
-                {
-                    case "TenderObjectFolder": 
-                        grd.SetGrid(settings, true, true, true);
-                        break;
-                    default :
-                        grd.SetGrid(settings, false, true,false);
-                        break;
-                }
+                grd.SetGrid(settings, true, true, true);
             else
                 grd.SetGrid(settings, false, false, false);
 
            
+            grd.columnsettings.Add("ObjectChildObjectID", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("ObjectID", new GridEditViewBase.columnSetting() { isDeveloper = true });
-            grd.columnsettings.Add("TenderID", new GridEditViewBase.columnSetting() { isDeveloper = true });
-
-            grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT, format = GridEditViewBase.columnSetting.formatType.TEXT });
- 
+            grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT ,format=  GridEditViewBase.columnSetting.formatType.TEXT});
 
             grd.columnCombo.Clear();
-            grd.columnCombo.Add("UnitOfMeasureID", GridLibrary.CreateCombo("cmbUnitOfMeasureID", "Unit Of Measure", vm.cmbUnitOfMeasureList(), "UnitOfMeasureID", "Title"));
-            grd.columnCombo.Add("TypeID", GridLibrary.CreateCombo("cmbTypeID", "Type", vm.cmbObjectTypeList(), "TypeID", "Title"));
-
+            grd.columnCombo.Add("ChildObjectID", GridLibrary.CreateCombo("cmbChildObjectList", "Child Object", vm.cmbChildObjectList(), "ObjectID", "Title"));
+            grd.columnCombo.Add("StepID", GridLibrary.CreateCombo("cmbStepID", "Step", vm.cmbStepList(), "StepID", "Title"));
         }
 
         public override string IssueIfClosed()

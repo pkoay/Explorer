@@ -42,18 +42,18 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _drawingID, value); } 
     	}
     
-        private string _markNo;
-    	public string MarkNo 
-    	{ 
-    		get { return _markNo; } 
-    		set { SetProperty(ref _markNo, value); } 
-    	}
-    
         private string _title;
     	public string Title 
     	{ 
     		get { return _title; } 
     		set { SetProperty(ref _title, value); } 
+    	}
+    
+        private int _objectID;
+    	public int ObjectID 
+    	{ 
+    		get { return _objectID; } 
+    		set { SetProperty(ref _objectID, value); } 
     	}
     
         private double _quantity;
@@ -77,6 +77,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _comment, value); } 
     	}
     
+        private int _sortOrder;
+    	public int SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
+    	}
+    
         private string _updatedBy;
     	public string UpdatedBy 
     	{ 
@@ -98,23 +105,9 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
-        private int _sortOrder;
-    	public int SortOrder 
-    	{ 
-    		get { return _sortOrder; } 
-    		set { SetProperty(ref _sortOrder, value); } 
-    	}
     
-        private int _objectID;
-    	public int ObjectID 
-    	{ 
-    		get { return _objectID; } 
-    		set { SetProperty(ref _objectID, value); } 
-    	}
-    
-    
-        public virtual tblTender_Drawing tblTender_Drawing { get; set; }
         public virtual tblTender tblTender { get; set; }
+        public virtual tblTender_Drawing tblTender_Drawing { get; set; }
         public virtual tblTender_Object tblTender_Object { get; set; }
         public virtual tblTender_Schedule tblTender_Schedule { get; set; }
     }

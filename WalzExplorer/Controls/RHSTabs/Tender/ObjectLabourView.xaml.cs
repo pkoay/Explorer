@@ -44,16 +44,21 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
            
             grd.columnsettings.Add("ObjectLabourID", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("ObjectID", new GridEditViewBase.columnSetting() { isDeveloper = true });
+            grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT, format = GridEditViewBase.columnSetting.formatType.TEXT });
             grd.columnsettings.Add("Quantity", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
             grd.columnsettings.Add("Men", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
             grd.columnsettings.Add("Hours", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
-            grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT, format = GridEditViewBase.columnSetting.formatType.TEXT });
+            grd.columnsettings.Add("Rate", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.N2, isReadonly = true , order=6});
+            grd.columnsettings.Add("HoursTotal", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.N2, aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, isReadonly = true });
+            grd.columnsettings.Add("CostTotal", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.N2, aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, isReadonly = true });
+            grd.columnsettings.Add("Comment", new GridEditViewBase.columnSetting() { order=99});
+
  
             grd.columnCombo.Clear();
             grd.columnCombo.Add("UnitOfMeasureID", GridLibrary.CreateCombo("cmbUnitOfMeasureID", "Unit Of Measure", vm.cmbUnitOfMeasureList(), "UnitOfMeasureID", "Title"));
-            grd.columnCombo.Add("StepID", GridLibrary.CreateCombo("cmbStepID", "Step", vm.cmbStepList(), "UnitOfMeasureID", "Title"));
-            grd.columnCombo.Add("OverheadID", GridLibrary.CreateCombo("cmbOverheadID", "Overhead", vm.cmbOverheadList(), "UnitOfMeasureID", "Title"));
-            grd.columnCombo.Add("LabourRateID", GridLibrary.CreateCombo("cmbLabourRateID", "LabourRate", vm.cmbLabourRateList(), "UnitOfMeasureID", "Title"));
+            grd.columnCombo.Add("StepID", GridLibrary.CreateCombo("cmbStepID", "Step", vm.cmbStepList(), "StepID", "Title"));
+            grd.columnCombo.Add("WorkGroupID", GridLibrary.CreateCombo("cmbWorkGroupID", "WorkGroup", vm.cmbWorkGroupList(), "WorkGroupID", "Title"));
+            grd.columnCombo.Add("LabourRateID", GridLibrary.CreateCombo("cmbLabourRateID", "LabourRate", vm.cmbLabourRateList(), "LabourRateID", "Title"));
 
         }
 

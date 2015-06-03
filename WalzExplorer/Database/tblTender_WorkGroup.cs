@@ -12,19 +12,19 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_Overhead : ModelBase
+    public partial class tblTender_WorkGroup : ModelBase
     {
-        public tblTender_Overhead()
+        public tblTender_WorkGroup()
         {
-            this.tblTender_OverheadItem = new HashSet<tblTender_OverheadItem>();
             this.tblTender_ObjectLabour = new HashSet<tblTender_ObjectLabour>();
+            this.tblTender_OverheadItem = new HashSet<tblTender_OverheadItem>();
         }
     
-        private int _overheadID;
-    	public int OverheadID 
+        private int _workGroupID;
+    	public int WorkGroupID 
     	{ 
-    		get { return _overheadID; } 
-    		set { SetProperty(ref _overheadID, value); } 
+    		get { return _workGroupID; } 
+    		set { SetProperty(ref _workGroupID, value); } 
     	}
     
         private int _tenderID;
@@ -41,22 +41,22 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _title, value); } 
     	}
     
-        private double _onsiteLabourRate;
-    	public double OnsiteLabourRate 
+        private double _baseRate;
+    	public double BaseRate 
     	{ 
-    		get { return _onsiteLabourRate; } 
-    		set { SetProperty(ref _onsiteLabourRate, value); } 
+    		get { return _baseRate; } 
+    		set { SetProperty(ref _baseRate, value); } 
     	}
     
-        private double _labourMarkup;
-    	public double LabourMarkup 
+        private double _markup;
+    	public double Markup 
     	{ 
-    		get { return _labourMarkup; } 
-    		set { SetProperty(ref _labourMarkup, value); } 
+    		get { return _markup; } 
+    		set { SetProperty(ref _markup, value); } 
     	}
     
-        private int _rate;
-    	public int Rate 
+        private double _rate;
+    	public double Rate 
     	{ 
     		get { return _rate; } 
     		set { SetProperty(ref _rate, value); } 
@@ -99,7 +99,7 @@ namespace WalzExplorer.Database
     
     
         public virtual tblTender tblTender { get; set; }
-        public virtual ICollection<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
         public virtual ICollection<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
+        public virtual ICollection<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
     }
 }
