@@ -16,7 +16,7 @@ namespace WalzExplorer.Database
     {
         public tblTender_Drawing()
         {
-            this.tblTender_Item = new HashSet<tblTender_Item>();
+            this.tblTender_Estimate = new HashSet<tblTender_Estimate>();
         }
     
         private int _drawingID;
@@ -84,6 +84,6 @@ namespace WalzExplorer.Database
     
     
         public virtual tblTender tblTender { get; set; }
-        public virtual ICollection<tblTender_Item> tblTender_Item { get; set; }
+        public virtual ICollection<tblTender_Estimate> tblTender_Estimate { get; set; }
     }
 }

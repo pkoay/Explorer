@@ -86,13 +86,7 @@ namespace WalzExplorer.Database
             get { return null; }
         }
     }
-    public partial class tblTender_Item
-    {
-        public override string this[string columnName]
-        {
-            get { return null; }
-        }
-    }
+  
     public partial class tblTender_Material
     {
         public override string this[string columnName]

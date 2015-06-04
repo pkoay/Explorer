@@ -16,7 +16,7 @@ namespace WalzExplorer.Database
     {
         public tblTender_Schedule()
         {
-            this.tblTender_Item = new HashSet<tblTender_Item>();
+            this.tblTender_Estimate = new HashSet<tblTender_Estimate>();
         }
     
         private int _scheduleID;
@@ -97,6 +97,6 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual ICollection<tblTender_Item> tblTender_Item { get; set; }
+        public virtual ICollection<tblTender_Estimate> tblTender_Estimate { get; set; }
     }
 }

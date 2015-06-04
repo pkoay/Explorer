@@ -19,19 +19,19 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
     /// </summary>
 
 
-    public partial class ItemView : RHSTabViewBase
+    public partial class EstimateView : RHSTabViewBase
     {
 
-        ItemViewModel vm;
+        EstimateViewModel vm;
 
-       public ItemView()
+        public EstimateView()
         {
             InitializeComponent();
         }
 
         public override void TabLoad()
         {
-            vm = new ItemViewModel(settings);
+            vm = new EstimateViewModel(settings);
             grd.vm = vm;
             grd.grd.DataContext = vm;
             grd.grd.ItemsSource = vm.data;
@@ -42,7 +42,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                 grd.SetGrid(settings, false, false, false);
 
            
-            grd.columnsettings.Add("ItemID", new GridEditViewBase.columnSetting() { isDeveloper = true });
+            grd.columnsettings.Add("EstimateID", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("TenderID", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT ,format=  GridEditViewBase.columnSetting.formatType.TEXT});
             grd.columnCombo.Clear();

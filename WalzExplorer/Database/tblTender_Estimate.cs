@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_Item : ModelBase
+    public partial class tblTender_Estimate : ModelBase
     {
         private int _itemID;
     	public int ItemID 

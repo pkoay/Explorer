@@ -14,18 +14,18 @@ using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.RHSTabs.Tender
 {
-    public class ItemViewModel :GridEditViewModelBase
+    public class EstimateViewModel :GridEditViewModelBase
     {
         int TenderID;
-        public ItemViewModel(WEXSettings settings) //(string NodeType, string PersonID, int Id)
+        public EstimateViewModel(WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
             TenderID = ConvertLibrary.StringToInt(settings.node.FindID("TENDER", "-2"), -1);
-            data = new ObservableCollection<ModelBase>(context.tblTender_Item.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder));  
+            data = new ObservableCollection<ModelBase>(context.tblTender_Estimate.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder));  
         }
 
         public override ModelBase DefaultItem()
         {
-            tblTender_Item i = new tblTender_Item();
+            tblTender_Estimate i = new tblTender_Estimate();
             i.TenderID = TenderID;
             return i;
         }

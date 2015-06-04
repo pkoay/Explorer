@@ -68,12 +68,12 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblWEX_TreeNodeType> tblWEX_TreeNodeType { get; set; }
         public virtual DbSet<tblWEX_TreeNodeType_RHSTab> tblWEX_TreeNodeType_RHSTab { get; set; }
         public virtual DbSet<tblTender_Schedule> tblTender_Schedule { get; set; }
-        public virtual DbSet<tblTender_Item> tblTender_Item { get; set; }
         public virtual DbSet<tblTender_ObjectType> tblTender_ObjectType { get; set; }
         public virtual DbSet<tblTender_ObjectMaterial> tblTender_ObjectMaterial { get; set; }
         public virtual DbSet<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
         public virtual DbSet<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
         public virtual DbSet<tblTender_WorkGroup> tblTender_WorkGroup { get; set; }
+        public virtual DbSet<tblTender_Estimate> tblTender_Estimate { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)
@@ -579,6 +579,15 @@ namespace WalzExplorer.Database
                 new ObjectParameter("Committed", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_PurchaseOrder_Detail_Result>("spWEX_RHS_Project_PurchaseOrder_Detail", projectIDParameter, dataAreaIDParameter, purchIDParameter, committedParameter);
+        }
+    
+        public virtual ObjectResult<spTender_ObjectDetail_Result> spTender_ObjectDetail(Nullable<int> objectID)
+        {
+            var objectIDParameter = objectID.HasValue ?
+                new ObjectParameter("ObjectID", objectID) :
+                new ObjectParameter("ObjectID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spTender_ObjectDetail_Result>("spTender_ObjectDetail", objectIDParameter);
         }
     }
 }

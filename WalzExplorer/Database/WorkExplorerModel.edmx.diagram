@@ -98,11 +98,6 @@
         <AssociationConnector Association="WalzExplorerModel.FK_WIMS_TreeNodeType_Tab_WIMS_Tab" />
         <AssociationConnector Association="WalzExplorerModel.FK_WIMS_TreeNodeType_Tab_WIMS_TreeNodeType" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Schedule" Width="1.5" PointX="0.75" PointY="7" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Item" Width="1.5" PointX="11" PointY="33.625" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender_Drawing" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender_Component" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender_Schedule" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ObjectType" Width="1.5" PointX="9.375" PointY="9" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Object_tblTender_ObjectType" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ObjectMaterial" Width="1.5" PointX="16.5" PointY="26.875" />
@@ -121,6 +116,11 @@
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroup_tblTender" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_WorkGroup" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Estimate" Width="1.5" PointX="11" PointY="33.625" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender_Drawing" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender_Component" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender_Schedule" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -232,14 +232,18 @@
       <DependentUpon>ObjectChildObjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Tender\ObjectChildObjectViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\Tender\ItemView.xaml.cs">
-      <DependentUpon>ItemView.xaml</DependentUpon>
+    <Compile Include="Controls\RHSTabs\Tender\EstimateView.xaml.cs">
+      <DependentUpon>EstimateView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Tender\DrawingView.xaml.cs">
       <DependentUpon>DrawingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RHSTabs\Tender\ItemViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\EstimateViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\DrawingViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\ObjectDetailView.xaml.cs">
+      <DependentUpon>ObjectDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\ObjectDetailViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\ScheduleView.xaml.cs">
       <DependentUpon>ScheduleView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -387,6 +391,9 @@
       <DependentUpon>ServicesModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Database\spProject_Admin_WeekList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spTender_ObjectDetail_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\spWEX_Node_AllProjects_Result.cs">
@@ -563,7 +570,7 @@
     <Compile Include="Database\tblTender_Drawing.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\tblTender_Item.cs">
+    <Compile Include="Database\tblTender_Estimate.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblTender_LabourRate.cs">
@@ -693,7 +700,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\RHSTabs\Tender\ItemView.xaml">
+    <Page Include="Controls\RHSTabs\Tender\EstimateView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -710,6 +717,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Tender\ObjectLabourView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\ObjectDetailView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

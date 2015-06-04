@@ -24,8 +24,8 @@ namespace WalzExplorer.Database
             this.tblTender_UnitOfMeasure = new HashSet<tblTender_UnitOfMeasure>();
             this.tblTender_Object = new HashSet<tblTender_Object>();
             this.tblTender_LabourRate = new HashSet<tblTender_LabourRate>();
-            this.tblTender_Item = new HashSet<tblTender_Item>();
             this.tblTender_WorkGroup = new HashSet<tblTender_WorkGroup>();
+            this.tblTender_Estimate = new HashSet<tblTender_Estimate>();
         }
     
         private int _tenderID;
@@ -124,7 +124,7 @@ namespace WalzExplorer.Database
         public virtual tblCustomer tblCustomer { get; set; }
         public virtual ICollection<tblTender_Object> tblTender_Object { get; set; }
         public virtual ICollection<tblTender_LabourRate> tblTender_LabourRate { get; set; }
-        public virtual ICollection<tblTender_Item> tblTender_Item { get; set; }
         public virtual ICollection<tblTender_WorkGroup> tblTender_WorkGroup { get; set; }
+        public virtual ICollection<tblTender_Estimate> tblTender_Estimate { get; set; }
     }
 }
