@@ -25,7 +25,6 @@ namespace WalzExplorer.Controls.RHSTabs
                 window.Owner = Application.Current.MainWindow;
 
                 window.Show();
-                Drilldown.settings = null;
             }
         }
     }

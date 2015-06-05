@@ -14,11 +14,11 @@ namespace WalzExplorer.Database
     using System.Collections.Generic;
     public partial class tblTender_Estimate : ModelBase
     {
-        private int _itemID;
-    	public int ItemID 
+        private int _estimateID;
+    	public int EstimateID 
     	{ 
-    		get { return _itemID; } 
-    		set { SetProperty(ref _itemID, value); } 
+    		get { return _estimateID; } 
+    		set { SetProperty(ref _estimateID, value); } 
     	}
     
         private int _tenderID;

@@ -11,13 +11,27 @@ namespace WalzExplorer.Database
 {
     using System;
     using System.Collections.Generic;
-    public partial class spTender_ObjectDetail_Result : ModelBase
+    public partial class spTender_EstimateDetail_Result : ModelBase
     {
-        private Nullable<int> _tenderID;
-    	public Nullable<int> TenderID 
+        private int _tenderID;
+    	public int TenderID 
     	{ 
     		get { return _tenderID; } 
     		set { SetProperty(ref _tenderID, value); } 
+    	}
+    
+        private string _schedule;
+    	public string Schedule 
+    	{ 
+    		get { return _schedule; } 
+    		set { SetProperty(ref _schedule, value); } 
+    	}
+    
+        private string _title;
+    	public string Title 
+    	{ 
+    		get { return _title; } 
+    		set { SetProperty(ref _title, value); } 
     	}
     
         private Nullable<int> _objectID;
@@ -174,6 +188,20 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _componentQuantity, value); } 
     	}
     
+        private double _estQty;
+    	public double EstQty 
+    	{ 
+    		get { return _estQty; } 
+    		set { SetProperty(ref _estQty, value); } 
+    	}
+    
+        private double _estFac;
+    	public double EstFac 
+    	{ 
+    		get { return _estFac; } 
+    		set { SetProperty(ref _estFac, value); } 
+    	}
+    
         private Nullable<double> _totalHours;
     	public Nullable<double> TotalHours 
     	{ 
@@ -207,6 +235,13 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _objectComment; } 
     		set { SetProperty(ref _objectComment, value); } 
+    	}
+    
+        private string _estimateComment;
+    	public string EstimateComment 
+    	{ 
+    		get { return _estimateComment; } 
+    		set { SetProperty(ref _estimateComment, value); } 
     	}
     
     }

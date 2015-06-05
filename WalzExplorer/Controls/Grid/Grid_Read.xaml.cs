@@ -438,6 +438,7 @@ namespace WalzExplorer.Controls.Grid
             {
                 Drilldown(result, new EventArgs());
             }
+            _settings.drilldown = null;
 
         }
 

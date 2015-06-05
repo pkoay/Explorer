@@ -94,37 +94,10 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     DrilldownWindow.Open(settings);
                     break;
             }
-         
 
+            //settings.drilldown = null;
         }
-        //private void grd_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
-        //{
-           
-        //    GridViewDataColumn column = e.Column as GridViewDataColumn;
-        //    switch (e.Column.Header.ToString())
-        //    {
-        //        case "AXProjectID":
-        //            e.Column.AggregateFunctions.Add(new CountFunction() { Caption = "Count:" });
-        //            column.ShowColumnWhenGrouped = false;
-        //            break;
-        //        case "Contract":
-        //            SetColumn(column, "TWO_DECIMAL");
-        //            ColumnToolTipStatic(grd, column, );
-        //            break;
-        //        case "Cost":
-        //            SetColumn(column, "TWO_DECIMAL");
-        //            ColumnToolTipStatic(grd,column, );
-        //            break;
-        //        case "Committed":
-        //            SetColumn(column, "TWO_DECIMAL");
-        //            ColumnToolTipStatic(grd, column, );
-        //            break;
-        //        case "Invoiced":
-        //            SetColumn(column, "TWO_DECIMAL");
-        //            ColumnToolTipStatic(grd, column,);
-        //            break;
-        //    }
-        //}
+        
 
      
       

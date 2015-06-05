@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>103</ApplicationRevision>
+    <ApplicationRevision>105</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -240,9 +240,21 @@
     </Compile>
     <Compile Include="Controls\RHSTabs\Tender\EstimateViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\DrawingViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\EstimateDetailView.xaml.cs">
+      <DependentUpon>EstimateDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\EstimateWorkGroupRateView.xaml.cs">
+      <DependentUpon>EstimateWorkGroupRateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\ObjectWorkGroupView.xaml.cs">
+      <DependentUpon>ObjectWorkGroupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RHSTabs\Tender\ObjectDetailView.xaml.cs">
       <DependentUpon>ObjectDetailView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\EstimateDetailViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\EstimateWorkGroupRateViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\ObjectWorkGroupViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\ObjectDetailViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\ScheduleView.xaml.cs">
       <DependentUpon>ScheduleView.xaml</DependentUpon>
@@ -391,6 +403,9 @@
       <DependentUpon>ServicesModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Database\spProject_Admin_WeekList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spTender_EstimateDetail_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\spTender_ObjectDetail_Result.cs">
@@ -643,6 +658,12 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Validation.cs" />
+    <Compile Include="Database\vwTender_EstimateWorkGroupRate.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\vwTender_ObjectHoursByWorkGroup.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\WalzExplorerEntites.cs" />
     <Compile Include="Database\WalzExplorerEntities_Addtions.cs" />
     <Compile Include="Database\WalzExplorerViewModel.cs" />
@@ -709,6 +730,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Tender\ObjectContractorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\EstimateDetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\EstimateWorkGroupRateView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\ObjectWorkGroupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -95,22 +95,25 @@ namespace WalzExplorer.Database
             el = octx.MetadataWorkspace.GetItemCollection(DataSpace.CSpace).OfType<EntityType>().ToList();
             foreach (EntityType e in el)
             {
-                if (!ExcludeTables.Contains(e.Name))
+                if (!e.Name.StartsWith("vw")) // exclude views
                 {
-                    //Verify columns exist
-                    foreach (string c in ColumnsToVerify)
+                    if (!ExcludeTables.Contains(e.Name))
                     {
-                        int Count = e.DeclaredMembers.Count(m => m.Name == c);
-                        if (Count == 0) v = v + "Table:" + e.Name + " missing column " + c + Environment.NewLine;
-                    }
-                    //Verify timestamp has concurrecy=fixed
-                    EdmMember em = e.DeclaredMembers.Where(m => m.Name == "RowVersion").FirstOrDefault();
-                    if (em != null)
-                    {
-                        EdmProperty ep = (EdmProperty)em;
-                        if (ep.ConcurrencyMode != ConcurrencyMode.Fixed)
+                        //Verify columns exist
+                        foreach (string c in ColumnsToVerify)
                         {
-                            v = v + "Table:" + e.Name + " column RowVersion not set to ConcurrencyMode=Fixed " + Environment.NewLine;
+                            int Count = e.DeclaredMembers.Count(m => m.Name == c);
+                            if (Count == 0) v = v + "Table:" + e.Name + " missing column " + c + Environment.NewLine;
+                        }
+                        //Verify timestamp has concurrecy=fixed
+                        EdmMember em = e.DeclaredMembers.Where(m => m.Name == "RowVersion").FirstOrDefault();
+                        if (em != null)
+                        {
+                            EdmProperty ep = (EdmProperty)em;
+                            if (ep.ConcurrencyMode != ConcurrencyMode.Fixed)
+                            {
+                                v = v + "Table:" + e.Name + " column RowVersion not set to ConcurrencyMode=Fixed " + Environment.NewLine;
+                            }
                         }
                     }
                 }

@@ -74,6 +74,8 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
         public virtual DbSet<tblTender_WorkGroup> tblTender_WorkGroup { get; set; }
         public virtual DbSet<tblTender_Estimate> tblTender_Estimate { get; set; }
+        public virtual DbSet<vwTender_ObjectHoursByWorkGroup> vwTender_ObjectHoursByWorkGroup { get; set; }
+        public virtual DbSet<vwTender_EstimateWorkGroupRate> vwTender_EstimateWorkGroupRate { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)
@@ -588,6 +590,15 @@ namespace WalzExplorer.Database
                 new ObjectParameter("ObjectID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spTender_ObjectDetail_Result>("spTender_ObjectDetail", objectIDParameter);
+        }
+    
+        public virtual ObjectResult<spTender_EstimateDetail_Result> spTender_EstimateDetail(Nullable<int> tenderID)
+        {
+            var tenderIDParameter = tenderID.HasValue ?
+                new ObjectParameter("TenderID", tenderID) :
+                new ObjectParameter("TenderID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spTender_EstimateDetail_Result>("spTender_EstimateDetail", tenderIDParameter);
         }
     }
 }

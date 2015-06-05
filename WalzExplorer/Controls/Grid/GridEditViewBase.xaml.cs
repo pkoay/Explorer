@@ -520,6 +520,7 @@ namespace WalzExplorer.Controls.Grid
 
             //Ignore foreign key all columns
             if (c.UniqueName.StartsWith("tbl")) { e.Cancel = true; return; }
+            if (c.UniqueName.StartsWith("vw")) { e.Cancel = true; return; }
 
             if (defaultDeveloperColumns.Contains(c.UniqueName) && !_settings.DeveloperMode)
             {

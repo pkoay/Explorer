@@ -423,9 +423,9 @@
         </EntityType>
         <EntityType Name="tblTender_Estimate">
           <Key>
-            <PropertyRef Name="ItemID" />
+            <PropertyRef Name="EstimateID" />
           </Key>
-          <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EstimateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenderID" Type="int" Nullable="false" />
           <Property Name="ScheduleID" Type="int" Nullable="false" />
           <Property Name="DrawingID" Type="int" Nullable="false" />
@@ -678,7 +678,6 @@
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="BaseRate" Type="float" Nullable="false" />
           <Property Name="Markup" Type="float" Nullable="false" />
-          <Property Name="Rate" Type="float" Nullable="false" />
           <Property Name="Comment" Type="varchar(max)" />
           <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
@@ -757,6 +756,38 @@
           <Property Name="Section" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Variable" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Value" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Explorer.dbo.vwTender.EstimateWorkGroupRate' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwTender_EstimateWorkGroupRate">
+          <Key>
+            
+            <PropertyRef Name="WorkGroupID" />
+            
+            
+            
+            
+          </Key>
+          <Property Name="TenderID" Type="int" Nullable="false" />
+          <Property Name="WorkGroupID" Type="int" Nullable="false" />
+          <Property Name="WorkGroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Rate" Type="float" Nullable="false" />
+          <Property Name="Hours" Type="float" Nullable="false" />
+          <Property Name="Overhead" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwTender_ObjectHoursByWorkGroup">
+          <Key>
+            <PropertyRef Name="WorkGroupID" />
+            <PropertyRef Name="WorkGroup" />
+          </Key>
+          <Property Name="TenderID" Type="int" />
+          <Property Name="ObjectID" Type="int" />
+          <Property Name="ObjectName" Type="varchar" MaxLength="255" />
+          <Property Name="WorkGroupID" Type="int" Nullable="false" />
+          <Property Name="WorkGroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LabourHours" Type="float" />
         </EntityType>
         <Association Name="FK_tblPerson_Mimic_tblPerson">
           <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="1" />
@@ -1601,6 +1632,9 @@
         <Function Name="spTender_Drawing_ComboList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spTender.Drawing_ComboList">
           <Parameter Name="TenderID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spTender_EstimateDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spTender.EstimateDetail">
+          <Parameter Name="TenderID" Type="int" Mode="In" />
+        </Function>
         <Function Name="spTender_ObjectDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spTender.ObjectDetail">
           <Parameter Name="ObjectID" Type="int" Mode="In" />
         </Function>
@@ -1727,6 +1761,26 @@
           <EntitySet Name="tblWEX_TreeNodeType" EntityType="Self.tblWEX_TreeNodeType" Schema="dbo" Table="tblWEX.TreeNodeType" store:Type="Tables" />
           <EntitySet Name="tblWEX_TreeNodeType_RHSTab" EntityType="Self.tblWEX_TreeNodeType_RHSTab" Schema="dbo" Table="tblWEX.TreeNodeType_RHSTab" store:Type="Tables" />
           <EntitySet Name="tblWEX_Variables" EntityType="Self.tblWEX_Variables" Schema="dbo" Table="tblWEX.Variables" store:Type="Tables" />
+          <EntitySet Name="vwTender_EstimateWorkGroupRate" EntityType="Self.vwTender_EstimateWorkGroupRate" store:Type="Views" store:Schema="dbo" store:Name="vwTender.EstimateWorkGroupRate">
+            <DefiningQuery>SELECT 
+    [vwTender_EstimateWorkGroupRate].[TenderID] AS [TenderID], 
+    [vwTender_EstimateWorkGroupRate].[WorkGroupID] AS [WorkGroupID], 
+    [vwTender_EstimateWorkGroupRate].[WorkGroup] AS [WorkGroup], 
+    [vwTender_EstimateWorkGroupRate].[Rate] AS [Rate], 
+    [vwTender_EstimateWorkGroupRate].[Hours] AS [Hours], 
+    [vwTender_EstimateWorkGroupRate].[Overhead] AS [Overhead]
+    FROM [dbo].[vwTender.EstimateWorkGroupRate] AS [vwTender_EstimateWorkGroupRate]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwTender_ObjectHoursByWorkGroup" EntityType="Self.vwTender_ObjectHoursByWorkGroup" store:Type="Views" store:Schema="dbo" store:Name="vwTender.ObjectHoursByWorkGroup">
+            <DefiningQuery>SELECT 
+    [vwTender_ObjectHoursByWorkGroup].[TenderID] AS [TenderID], 
+    [vwTender_ObjectHoursByWorkGroup].[ObjectID] AS [ObjectID], 
+    [vwTender_ObjectHoursByWorkGroup].[ObjectName] AS [ObjectName], 
+    [vwTender_ObjectHoursByWorkGroup].[WorkGroupID] AS [WorkGroupID], 
+    [vwTender_ObjectHoursByWorkGroup].[WorkGroup] AS [WorkGroup], 
+    [vwTender_ObjectHoursByWorkGroup].[LabourHours] AS [LabourHours]
+    FROM [dbo].[vwTender.ObjectHoursByWorkGroup] AS [vwTender_ObjectHoursByWorkGroup]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_tblPerson_Mimic_tblPerson" Association="Self.FK_tblPerson_Mimic_tblPerson">
             <End Role="tblPerson" EntitySet="tblPerson" />
             <End Role="tblPerson_Mimic" EntitySet="tblPerson_Mimic" />
@@ -2634,6 +2688,9 @@
           <FunctionImport Name="spTender_ObjectDetail" ReturnType="Collection(WalzExplorerModel.spTender_ObjectDetail_Result)">
           <Parameter Name="ObjectID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="spTender_EstimateDetail" ReturnType="Collection(WalzExplorerModel.spTender_EstimateDetail_Result)">
+          <Parameter Name="TenderID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="tblTender_Estimate" EntityType="WalzExplorerModel.tblTender_Estimate" />
           <AssociationSet Name="FK_tblTender_Item_tblTender" Association="WalzExplorerModel.FK_tblTender_Item_tblTender">
             <End Role="tblTender" EntitySet="tblTenders" />
@@ -2650,6 +2707,12 @@
           <AssociationSet Name="FK_tblTender_Item_tblTender_Schedule" Association="WalzExplorerModel.FK_tblTender_Item_tblTender_Schedule">
             <End Role="tblTender_Schedule" EntitySet="tblTender_Schedule" />
             <End Role="tblTender_Estimate" EntitySet="tblTender_Estimate" />
+          </AssociationSet>
+          <EntitySet Name="vwTender_ObjectHoursByWorkGroup" EntityType="WalzExplorerModel.vwTender_ObjectHoursByWorkGroup" />
+          <EntitySet Name="vwTender_EstimateWorkGroupRate" EntityType="WalzExplorerModel.vwTender_EstimateWorkGroupRate" />
+          <AssociationSet Name="tblTender_WorkGroupvwTender_EstimateWorkGroupRate" Association="WalzExplorerModel.tblTender_WorkGroupvwTender_EstimateWorkGroupRate">
+            <End Role="tblTender_WorkGroup" EntitySet="tblTender_WorkGroup" />
+            <End Role="vwTender_EstimateWorkGroupRate" EntitySet="vwTender_EstimateWorkGroupRate" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
@@ -4329,7 +4392,6 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="BaseRate" Type="Double" Nullable="false" />
           <Property Name="Markup" Type="Double" Nullable="false" />
-          <Property Name="Rate" Type="Double" Nullable="false" />
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="SortOrder" Type="Int32" Nullable="false" />
           <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -4338,6 +4400,7 @@
           <NavigationProperty Name="tblTender" Relationship="WalzExplorerModel.FK_tblTender_WorkGroup_tblTender" FromRole="tblTender_WorkGroup" ToRole="tblTender" />
           <NavigationProperty Name="tblTender_ObjectLabour" Relationship="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_WorkGroup" FromRole="tblTender_WorkGroup" ToRole="tblTender_ObjectLabour" />
           <NavigationProperty Name="tblTender_OverheadItem" Relationship="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" FromRole="tblTender_WorkGroup" ToRole="tblTender_OverheadItem" />
+          <NavigationProperty Name="vwTender_EstimateWorkGroupRate" Relationship="WalzExplorerModel.tblTender_WorkGroupvwTender_EstimateWorkGroupRate" FromRole="tblTender_WorkGroup" ToRole="vwTender_EstimateWorkGroupRate" />
         </EntityType>
         <Association Name="FK_tblTender_WorkGroup_tblTender">
           <End Type="WalzExplorerModel.tblTender" Role="tblTender" Multiplicity="1" />
@@ -4377,9 +4440,9 @@
         </Association>
         <EntityType Name="tblTender_Estimate">
           <Key>
-            <PropertyRef Name="ItemID" />
+            <PropertyRef Name="EstimateID" />
           </Key>
-          <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EstimateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TenderID" Type="Int32" Nullable="false" />
           <Property Name="ScheduleID" Type="Int32" Nullable="false" />
           <Property Name="DrawingID" Type="Int32" Nullable="false" />
@@ -4450,7 +4513,7 @@
           <Property Type="Int32" Name="ObjectID" Nullable="true" />
           <Property Type="String" Name="ObjectName" Nullable="true" MaxLength="255" />
           <Property Type="Int32" Name="ComponentObjectID" Nullable="false" />
-          <Property Type="String" Name="ComponentObjectName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="ComponentName" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="Type" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="LabourRate" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Step" Nullable="false" MaxLength="50" />
@@ -4475,6 +4538,76 @@
           <Property Type="String" Name="ComponentComment" Nullable="true" />
           <Property Type="String" Name="ObjectComment" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="spTender_EstimateDetail_Result">
+          <Property Type="Int32" Name="TenderID" Nullable="false" />
+          <Property Type="String" Name="Schedule" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ObjectID" Nullable="true" />
+          <Property Type="String" Name="ObjectName" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="ComponentObjectID" Nullable="false" />
+          <Property Type="String" Name="ComponentName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="LabourRate" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Step" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Material" Nullable="false" MaxLength="255" />
+          <Property Type="Double" Name="Length" Nullable="false" />
+          <Property Type="Double" Name="Width" Nullable="false" />
+          <Property Type="String" Name="Contractor" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Supplier" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="WorkGroup" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Rate" Nullable="false" />
+          <Property Type="Double" Name="Hours" Nullable="false" />
+          <Property Type="Double" Name="Men" Nullable="false" />
+          <Property Type="Double" Name="Quantity" Nullable="false" />
+          <Property Type="Double" Name="Markup" Nullable="false" />
+          <Property Type="String" Name="UnitOfMeasure" Nullable="false" MaxLength="10" />
+          <Property Type="Double" Name="ComponentHours" Nullable="false" />
+          <Property Type="Double" Name="ComponentCost" Nullable="false" />
+          <Property Type="Double" Name="ComponentQuantity" Nullable="true" />
+          <Property Type="Double" Name="EstQty" Nullable="false" />
+          <Property Type="Double" Name="EstFac" Nullable="false" />
+          <Property Type="Double" Name="TotalHours" Nullable="true" />
+          <Property Type="Double" Name="TotalCost" Nullable="true" />
+          <Property Type="String" Name="LineComment" Nullable="true" />
+          <Property Type="String" Name="ComponentComment" Nullable="true" />
+          <Property Type="String" Name="ObjectComment" Nullable="true" />
+          <Property Type="String" Name="EstimateComment" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="vwTender_ObjectHoursByWorkGroup">
+          <Key>
+            <PropertyRef Name="WorkGroupID" />
+            <PropertyRef Name="WorkGroup" />
+          </Key>
+          <Property Name="TenderID" Type="Int32" />
+          <Property Name="ObjectID" Type="Int32" />
+          <Property Name="ObjectName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="WorkGroupID" Type="Int32" Nullable="false" />
+          <Property Name="WorkGroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LabourHours" Type="Double" />
+        </EntityType>
+        <EntityType Name="vwTender_EstimateWorkGroupRate">
+          <Key>
+            <PropertyRef Name="WorkGroupID" />
+          </Key>
+          <Property Name="TenderID" Type="Int32" Nullable="false" />
+          <Property Name="WorkGroupID" Type="Int32" Nullable="false" />
+          <Property Name="WorkGroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Rate" Type="Double" Nullable="false" />
+          <Property Name="Hours" Type="Double" Nullable="false" />
+          <Property Name="Overhead" Type="Double" Nullable="false" />
+        </EntityType>
+        <Association Name="tblTender_WorkGroupvwTender_EstimateWorkGroupRate">
+          <End Type="WalzExplorerModel.tblTender_WorkGroup" Role="tblTender_WorkGroup" Multiplicity="1" />
+          <End Type="WalzExplorerModel.vwTender_EstimateWorkGroupRate" Role="vwTender_EstimateWorkGroupRate" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_WorkGroup">
+              <PropertyRef Name="WorkGroupID" />
+            </Principal>
+            <Dependent Role="vwTender_EstimateWorkGroupRate">
+              <PropertyRef Name="WorkGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5576,7 +5709,6 @@
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
                 <ScalarProperty Name="Markup" ColumnName="Markup" />
                 <ScalarProperty Name="BaseRate" ColumnName="BaseRate" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -5592,7 +5724,7 @@
                 <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
                 <ScalarProperty Name="ObjectName" ColumnName="ObjectName" />
                 <ScalarProperty Name="ComponentObjectID" ColumnName="ComponentObjectID" />
-                <ScalarProperty Name="ComponentObjectName" ColumnName="ComponentObjectName" />
+                <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="LabourRate" ColumnName="LabourRate" />
                 <ScalarProperty Name="Step" ColumnName="Step" />
@@ -5619,6 +5751,45 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spTender_EstimateDetail" FunctionName="WalzExplorerModel.Store.spTender_EstimateDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spTender_EstimateDetail_Result">
+                <ScalarProperty Name="TenderID" ColumnName="TenderID" />
+                <ScalarProperty Name="Schedule" ColumnName="Schedule" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="ObjectName" ColumnName="ObjectName" />
+                <ScalarProperty Name="ComponentObjectID" ColumnName="ComponentObjectID" />
+                <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="LabourRate" ColumnName="LabourRate" />
+                <ScalarProperty Name="Step" ColumnName="Step" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Contractor" ColumnName="Contractor" />
+                <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+                <ScalarProperty Name="WorkGroup" ColumnName="WorkGroup" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="Men" ColumnName="Men" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Markup" ColumnName="Markup" />
+                <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
+                <ScalarProperty Name="ComponentHours" ColumnName="ComponentHours" />
+                <ScalarProperty Name="ComponentCost" ColumnName="ComponentCost" />
+                <ScalarProperty Name="ComponentQuantity" ColumnName="ComponentQuantity" />
+                <ScalarProperty Name="EstQty" ColumnName="EstQty" />
+                <ScalarProperty Name="EstFac" ColumnName="EstFac" />
+                <ScalarProperty Name="TotalHours" ColumnName="TotalHours" />
+                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+                <ScalarProperty Name="LineComment" ColumnName="LineComment" />
+                <ScalarProperty Name="ComponentComment" ColumnName="ComponentComment" />
+                <ScalarProperty Name="ObjectComment" ColumnName="ObjectComment" />
+                <ScalarProperty Name="EstimateComment" ColumnName="EstimateComment" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="tblTender_Estimate">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_Estimate">
               <MappingFragment StoreEntitySet="tblTender_Estimate">
@@ -5634,7 +5805,31 @@
                 <ScalarProperty Name="DrawingID" ColumnName="DrawingID" />
                 <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
-                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="EstimateID" ColumnName="EstimateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwTender_ObjectHoursByWorkGroup">
+            <EntityTypeMapping TypeName="WalzExplorerModel.vwTender_ObjectHoursByWorkGroup">
+              <MappingFragment StoreEntitySet="vwTender_ObjectHoursByWorkGroup">
+                <ScalarProperty Name="LabourHours" ColumnName="LabourHours" />
+                <ScalarProperty Name="WorkGroup" ColumnName="WorkGroup" />
+                <ScalarProperty Name="WorkGroupID" ColumnName="WorkGroupID" />
+                <ScalarProperty Name="ObjectName" ColumnName="ObjectName" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="TenderID" ColumnName="TenderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwTender_EstimateWorkGroupRate">
+            <EntityTypeMapping TypeName="WalzExplorerModel.vwTender_EstimateWorkGroupRate">
+              <MappingFragment StoreEntitySet="vwTender_EstimateWorkGroupRate">
+                <ScalarProperty Name="Overhead" ColumnName="Overhead" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="WorkGroup" ColumnName="WorkGroup" />
+                <ScalarProperty Name="WorkGroupID" ColumnName="WorkGroupID" />
+                <ScalarProperty Name="TenderID" ColumnName="TenderID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

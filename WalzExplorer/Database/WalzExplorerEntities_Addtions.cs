@@ -12,10 +12,38 @@ namespace WalzExplorer.Database
 
     public partial class tblTender_WorkGroup : ModelBase
     {
-        public double Total
+        public double TotalOverhead
         {
-            get { return tblTender_OverheadItem.Sum(x=>x.Total); }
+            get 
+            {
+                if (vwTender_EstimateWorkGroupRate == null)
+                    return 0;
+                else
+                    return vwTender_EstimateWorkGroupRate.Overhead; 
+            }
         }
+        public double TotalHours
+        {
+            get 
+            { 
+                if (vwTender_EstimateWorkGroupRate == null)
+                    return 0;
+                else
+                    return vwTender_EstimateWorkGroupRate.Hours; 
+            }
+        }
+        public double CalculatedRate
+        {
+            get 
+            { 
+                if (vwTender_EstimateWorkGroupRate == null)
+                    return 0;
+                else
+                    return vwTender_EstimateWorkGroupRate.Rate; 
+            }
+
+        }
+
     }
     public partial class tblTender_OverheadItem : ModelBase
     {
@@ -37,7 +65,7 @@ namespace WalzExplorer.Database
                 if (tblTender_WorkGroup == null)
                     return 0;
                 else
-                    return tblTender_WorkGroup.Rate * Hours * Quantity * Men;
+                    return tblTender_WorkGroup.vwTender_EstimateWorkGroupRate.Rate * Hours * Quantity * Men;
             }
         }
         public double Rate
@@ -47,7 +75,7 @@ namespace WalzExplorer.Database
                 if (tblTender_WorkGroup == null)
                     return 0;
                 else
-                    return tblTender_WorkGroup.Rate;
+                    return tblTender_WorkGroup.vwTender_EstimateWorkGroupRate.Rate;
             }
             
         }

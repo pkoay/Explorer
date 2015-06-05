@@ -1,0 +1,16 @@
+﻿<base:RHSTabViewBase
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:base="clr-namespace:WalzExplorer.Controls.RHSTabs"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:grid="clr-namespace:WalzExplorer.Controls.Grid"
+    
+             xmlns:WalzExplorer="clr-namespace:WalzExplorer"
+             xmlns:tab="clr-namespace:WalzExplorer.Controls.RHSTabs"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="402.09" d:DesignHeight="143.881"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
+             x:Class="WalzExplorer.Controls.RHSTabs.Tender.ObjectWorkGroupView">
+    <Grid>
+        <grid:Grid_Read  x:Name="grd"/>
+    </Grid>
+</base:RHSTabViewBase>

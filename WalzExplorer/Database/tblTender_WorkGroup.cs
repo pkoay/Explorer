@@ -55,13 +55,6 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _markup, value); } 
     	}
     
-        private double _rate;
-    	public double Rate 
-    	{ 
-    		get { return _rate; } 
-    		set { SetProperty(ref _rate, value); } 
-    	}
-    
         private string _comment;
     	public string Comment 
     	{ 
@@ -101,5 +94,6 @@ namespace WalzExplorer.Database
         public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
         public virtual ICollection<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
+        public virtual vwTender_EstimateWorkGroupRate vwTender_EstimateWorkGroupRate { get; set; }
     }
 }
