@@ -341,82 +341,33 @@ namespace WalzExplorer.Controls.Grid
                 columnFormat f = columnSettings.format[c.UniqueName];
                 FormatColumn(dc, f);
             }
+            
+            string foreground = "#FF999999";
+            string background = "#4C35496A";
             //Background
             if (columnSettings.background.ContainsKey(c.UniqueName))
             {
                 //Rename from the dictionary
-                string f = columnSettings.background[c.UniqueName];
-                dc.Background = Common.GraphicsLibrary.BrushFromHex(f);
+                background = columnSettings.background[c.UniqueName];
             }
             //Foreground
             if (columnSettings.foreground.ContainsKey(c.UniqueName))
             {
                 //Rename from the dictionary
-                string f = columnSettings.foreground[c.UniqueName];
-                Style cstyle = new Style(typeof(GridViewCell));
-                cstyle.BasedOn = (Style)FindResource("GridViewCellStyle");
-                cstyle.Setters.Add(new Setter(GridViewCell.ForegroundProperty, Common.GraphicsLibrary.BrushFromHex(f)));
-                cstyle.Seal();
-                dc.CellStyle = cstyle;
+                foreground = columnSettings.foreground[c.UniqueName];
             }
+
+            Style cstyle = new Style(typeof(GridViewCell));
+            cstyle.BasedOn = (Style)FindResource("GridViewCellStyle");
+            cstyle.Setters.Add(new Setter(GridViewCell.ForegroundProperty, Common.GraphicsLibrary.BrushFromHex(foreground)));
+            cstyle.Setters.Add(new Setter(GridViewCell.BackgroundProperty, Common.GraphicsLibrary.BrushFromHex(background)));
+            cstyle.Seal();
+            dc.CellStyle = cstyle;
+            
             //drilldown
             if (columnSettings.drilldown.Contains(c.UniqueName))
             {
-//                string dataTemplateString = @"
-//                    <DataTemplate>
-//                        <Grid  HorizontalAlignment=""Right"">
-//                            <Grid.ColumnDefinitions>
-//                                <ColumnDefinition />
-//                                <ColumnDefinition />
-//                            </Grid.ColumnDefinitions>
-//                            <TextBlock Grid.Column=""0"" Text=""{Binding RelativeSource={RelativeSource AncestorType=telerik:GridViewCell}, Path=Value, StringFormat={}{0:N2}}""  TextAlignment=""Right""  Foreground=""#FFF1F1F1"" Margin=""0,0,5,0""/>
-//                            <Button Grid.Column=""1"" Name=""btnDrilldown"" Click=""btnDrilldown_Click"" ToolTip=""DrillDown (show detail)"" BorderThickness=""0""  Background=""Transparent"">
-//                                <Rectangle   Width=""8"" Height=""8"" Fill=""DarkGray"" Margin=""0,0,0,5"">
-//                                    <Rectangle.OpacityMask>
-//                                        <VisualBrush Stretch=""Fill"" Visual=""{StaticResource appbar_chevron_down}"" />
-//                                    </Rectangle.OpacityMask>
-//                                </Rectangle>
-//                            </Button>
-//                        </Grid>
-//                    </DataTemplate>
-//                        ";
-//                 dataTemplateString = @"
-//                 <DataTemplate>
-//                        <Grid  HorizontalAlignment=""Right"">
-//                            <Grid.ColumnDefinitions>
-//                                <ColumnDefinition />
-//                                <ColumnDefinition />
-//                            </Grid.ColumnDefinitions>
-//                            <TextBlock Grid.Column=""0"" Text=""{Binding RelativeSource={RelativeSource AncestorType=telerik:GridViewCell}, Path=Value, StringFormat={}{0:N2}}""  TextAlignment=""Right""  Foreground=""#FFF1F1F1"" Margin=""0,0,5,0""/>
-//                            <Button Grid.Column=""1"" x:Name=""btnDrilldown""   ToolTip=""DrillDown (show detail)"" BorderThickness=""0""  Background=""Transparent"">
-//                                <Rectangle   Width=""8"" Height=""8"" Fill=""DarkGray"" Margin=""0,0,0,5"">
-//                                    <Rectangle.OpacityMask>
-//                                        <VisualBrush Stretch=""Fill"" Visual=""{StaticResource appbar_chevron_down}"" />
-//                                    </Rectangle.OpacityMask>
-//                                </Rectangle>
-//                            </Button>
-//                        </Grid>
-//                    </DataTemplate>
-//                        ";
-
-//                MemoryStream sr = new MemoryStream(Encoding.ASCII.GetBytes(dataTemplateString));
-//                ParserContext pc = new ParserContext();
-//                pc.XmlnsDictionary.Add("", "http://schemas.microsoft.com/winfx/2006/xaml/presentation");
-//                pc.XmlnsDictionary.Add("x", "http://schemas.microsoft.com/winfx/2006/xaml");
-//                pc.XmlnsDictionary.Add("telerik", "http://schemas.telerik.com/2008/xaml/presentation");
-
-//                DataTemplate template = (DataTemplate)XamlReader.Load(sr, pc);
-//                template.DataType = typeof(GridViewCell);
-//                template.Seal();
-//                this.Resources.Add("RedTempx", template);
-                //Button btnDrilldown = (Button)this.FindName("btnDrilldown");
-               
-                //btnDrilldown.Click += btnDrilldown_Click;
-                //c.CellTemplate = DrilldownDataTemplate();
-
                 c.CellTemplate = (DataTemplate)this.FindResource("dtDrilldown");
-   
-                 
             }
 
             e.Column.IsReadOnly = true;

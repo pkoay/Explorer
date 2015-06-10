@@ -48,8 +48,11 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             grd.columnsettings.Add("Quantity", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
             grd.columnsettings.Add("Rate", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
             grd.columnsettings.Add("MarkUp", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
+            grd.columnsettings.Add("Total", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, format = GridEditViewBase.columnSetting.formatType.N2,isReadonly=true });
+
  
             grd.columnCombo.Clear();
+            grd.columnCombo.Add("UnitOfMeasureID", GridLibrary.CreateCombo("cmbUnitOfMeasureID", "Unit Of Measure", vm.cmbUnitOfMeasureList(), "UnitOfMeasureID", "Title"));
             grd.columnCombo.Add("ContractorID", GridLibrary.CreateCombo("cmbContractorID", "Contractor", vm.cmbContractorList(), "ContractorID", "Title"));
             grd.columnCombo.Add("StepID", GridLibrary.CreateCombo("cmbStepID", "Step", vm.cmbStepList(), "StepID", "Title"));
            

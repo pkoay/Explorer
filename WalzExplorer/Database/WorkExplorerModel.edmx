@@ -512,6 +512,7 @@
           <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="StepID" Type="int" Nullable="false" />
           <Property Name="ContractorID" Type="int" Nullable="false" />
+          <Property Name="UnitOfMeasureID" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="float" Nullable="false" />
           <Property Name="Rate" Type="float" Nullable="false" />
           <Property Name="MarkUp" Type="float" Nullable="false" />
@@ -553,7 +554,7 @@
           <Property Name="SupplierID" Type="int" Nullable="false" />
           <Property Name="Length" Type="float" Nullable="false" />
           <Property Name="Width" Type="float" Nullable="false" />
-          <Property Name="Grade" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Grade" Type="varchar" MaxLength="50" />
           <Property Name="UnitCost" Type="float" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Markup" Type="float" Nullable="false" />
@@ -594,7 +595,7 @@
           <Property Name="OverheadItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WorkGroupID" Type="int" Nullable="false" />
           <Property Name="OverheadGroupID" Type="int" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Count" Type="float" Nullable="false" />
           <Property Name="Duration" Type="float" Nullable="false" />
           <Property Name="Rate" Type="float" Nullable="false" />
@@ -2132,9 +2133,9 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="tblTender_ObjectChildObject" Relationship="WalzExplorerModel.FK_tblTender_ComponentSubcomponent_tblTender_Step" FromRole="tblTender_Step" ToRole="tblTender_ObjectChildObject" />
+          <NavigationProperty Name="tblTender_ObjectLabour" Relationship="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_Step" FromRole="tblTender_Step" ToRole="tblTender_ObjectLabour" />
           <NavigationProperty Name="tblTender_ObjectContractor" Relationship="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Step" FromRole="tblTender_Step" ToRole="tblTender_ObjectContractor" />
           <NavigationProperty Name="tblTender_ObjectMaterial" Relationship="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Step" FromRole="tblTender_Step" ToRole="tblTender_ObjectMaterial" />
-          <NavigationProperty Name="tblTender_ObjectLabour" Relationship="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_Step" FromRole="tblTender_Step" ToRole="tblTender_ObjectLabour" />
         </EntityType>
         <EntityType Name="tblTender_Supplier">
           <Key>
@@ -2592,15 +2593,6 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             <End Role="tblTender_LabourRate" EntitySet="tblTender_LabourRate" />
           </AssociationSet>
           <EntitySet Name="tblTender_ObjectChildObject" EntityType="WalzExplorerModel.tblTender_ObjectChildObject" />
-          <EntitySet Name="tblTender_ObjectContractor" EntityType="WalzExplorerModel.tblTender_ObjectContractor" />
-          <AssociationSet Name="FK_tblTender_ComponentContractor_tblTender_Contractor" Association="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Contractor">
-            <End Role="tblTender_Contractor" EntitySet="tblTender_Contractor" />
-            <End Role="tblTender_ObjectContractor" EntitySet="tblTender_ObjectContractor" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblTender_ComponentContractor_tblTender_Component" Association="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Component">
-            <End Role="tblTender_Object" EntitySet="tblTender_Object" />
-            <End Role="tblTender_ObjectContractor" EntitySet="tblTender_ObjectContractor" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblTender_ComponentSubcomponent_tblTender_Component" Association="WalzExplorerModel.FK_tblTender_ComponentSubcomponent_tblTender_Component">
             <End Role="tblTender_Object" EntitySet="tblTender_Object" />
             <End Role="tblTender_ObjectChildObject" EntitySet="tblTender_ObjectChildObject" />
@@ -2612,10 +2604,6 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <AssociationSet Name="FK_tblTender_ComponentSubcomponent_tblTender_Step" Association="WalzExplorerModel.FK_tblTender_ComponentSubcomponent_tblTender_Step">
             <End Role="tblTender_Step" EntitySet="tblTender_Step" />
             <End Role="tblTender_ObjectChildObject" EntitySet="tblTender_ObjectChildObject" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblTender_ComponentContractor_tblTender_Step" Association="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Step">
-            <End Role="tblTender_Step" EntitySet="tblTender_Step" />
-            <End Role="tblTender_ObjectContractor" EntitySet="tblTender_ObjectContractor" />
           </AssociationSet>
           <EntitySet Name="tblWEX_TreeNodeType" EntityType="WalzExplorerModel.tblWEX_TreeNodeType" />
           <EntitySet Name="tblWEX_TreeNodeType_RHSTab" EntityType="WalzExplorerModel.tblWEX_TreeNodeType_RHSTab" />
@@ -2632,23 +2620,6 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <AssociationSet Name="FK_tblTender_Object_tblTender_ObjectType" Association="WalzExplorerModel.FK_tblTender_Object_tblTender_ObjectType">
             <End Role="tblTender_ObjectType" EntitySet="tblTender_ObjectType" />
             <End Role="tblTender_Object" EntitySet="tblTender_Object" />
-          </AssociationSet>
-          <EntitySet Name="tblTender_ObjectMaterial" EntityType="WalzExplorerModel.tblTender_ObjectMaterial" />
-          <AssociationSet Name="FK_tblTender_ComponentMaterial_tblTender_Material" Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Material">
-            <End Role="tblTender_Material" EntitySet="tblTender_Material" />
-            <End Role="tblTender_ObjectMaterial" EntitySet="tblTender_ObjectMaterial" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblTender_ComponentMaterial_tblTender_Component" Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Component">
-            <End Role="tblTender_Object" EntitySet="tblTender_Object" />
-            <End Role="tblTender_ObjectMaterial" EntitySet="tblTender_ObjectMaterial" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblTender_ComponentMaterial_tblTender_Step" Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Step">
-            <End Role="tblTender_Step" EntitySet="tblTender_Step" />
-            <End Role="tblTender_ObjectMaterial" EntitySet="tblTender_ObjectMaterial" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblTender_ComponentMaterial_tblTender_Supplier" Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Supplier">
-            <End Role="tblTender_Supplier" EntitySet="tblTender_Supplier" />
-            <End Role="tblTender_ObjectMaterial" EntitySet="tblTender_ObjectMaterial" />
           </AssociationSet>
           <EntitySet Name="tblTender_ObjectLabour" EntityType="WalzExplorerModel.tblTender_ObjectLabour" />
           <EntitySet Name="tblTender_OverheadItem" EntityType="WalzExplorerModel.tblTender_OverheadItem" />
@@ -2713,6 +2684,36 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <AssociationSet Name="tblTender_WorkGroupvwTender_EstimateWorkGroupRate" Association="WalzExplorerModel.tblTender_WorkGroupvwTender_EstimateWorkGroupRate">
             <End Role="tblTender_WorkGroup" EntitySet="tblTender_WorkGroup" />
             <End Role="vwTender_EstimateWorkGroupRate" EntitySet="vwTender_EstimateWorkGroupRate" />
+          </AssociationSet>
+          <EntitySet Name="tblTender_ObjectContractor" EntityType="WalzExplorerModel.tblTender_ObjectContractor" />
+          <AssociationSet Name="FK_tblTender_ComponentContractor_tblTender_Contractor" Association="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Contractor">
+            <End Role="tblTender_Contractor" EntitySet="tblTender_Contractor" />
+            <End Role="tblTender_ObjectContractor" EntitySet="tblTender_ObjectContractor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTender_ComponentContractor_tblTender_Component" Association="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Component">
+            <End Role="tblTender_Object" EntitySet="tblTender_Object" />
+            <End Role="tblTender_ObjectContractor" EntitySet="tblTender_ObjectContractor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTender_ComponentContractor_tblTender_Step" Association="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Step">
+            <End Role="tblTender_Step" EntitySet="tblTender_Step" />
+            <End Role="tblTender_ObjectContractor" EntitySet="tblTender_ObjectContractor" />
+          </AssociationSet>
+          <EntitySet Name="tblTender_ObjectMaterial" EntityType="WalzExplorerModel.tblTender_ObjectMaterial" />
+          <AssociationSet Name="FK_tblTender_ComponentMaterial_tblTender_Material" Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Material">
+            <End Role="tblTender_Material" EntitySet="tblTender_Material" />
+            <End Role="tblTender_ObjectMaterial" EntitySet="tblTender_ObjectMaterial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTender_ComponentMaterial_tblTender_Component" Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Component">
+            <End Role="tblTender_Object" EntitySet="tblTender_Object" />
+            <End Role="tblTender_ObjectMaterial" EntitySet="tblTender_ObjectMaterial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTender_ComponentMaterial_tblTender_Step" Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Step">
+            <End Role="tblTender_Step" EntitySet="tblTender_Step" />
+            <End Role="tblTender_ObjectMaterial" EntitySet="tblTender_ObjectMaterial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTender_ComponentMaterial_tblTender_Supplier" Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Supplier">
+            <End Role="tblTender_Supplier" EntitySet="tblTender_Supplier" />
+            <End Role="tblTender_ObjectMaterial" EntitySet="tblTender_ObjectMaterial" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
@@ -3945,13 +3946,13 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="tblTender" Relationship="WalzExplorerModel.FK_tblTender_Component_tblTender" FromRole="tblTender_Object" ToRole="tblTender" />
           <NavigationProperty Name="tblTender_UnitOfMeasure" Relationship="WalzExplorerModel.FK_tblTender_Component_tblTender_UnitOfMeasure" FromRole="tblTender_Object" ToRole="tblTender_UnitOfMeasure" />
-          <NavigationProperty Name="tblTender_ObjectContractor" Relationship="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Component" FromRole="tblTender_Object" ToRole="tblTender_ObjectContractor" />
           <NavigationProperty Name="tblTender_ObjectChildObject" Relationship="WalzExplorerModel.FK_tblTender_ComponentSubcomponent_tblTender_Component" FromRole="tblTender_Object" ToRole="tblTender_ObjectChildObject" />
           <NavigationProperty Name="tblTender_ObjectChildObject1" Relationship="WalzExplorerModel.FK_tblTender_ComponentSubcomponent_tblTender_Component1" FromRole="tblTender_Object" ToRole="tblTender_ObjectChildObject" />
           <NavigationProperty Name="tblTender_ObjectType" Relationship="WalzExplorerModel.FK_tblTender_Object_tblTender_ObjectType" FromRole="tblTender_Object" ToRole="tblTender_ObjectType" />
-          <NavigationProperty Name="tblTender_ObjectMaterial" Relationship="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Component" FromRole="tblTender_Object" ToRole="tblTender_ObjectMaterial" />
           <NavigationProperty Name="tblTender_ObjectLabour" Relationship="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_Component" FromRole="tblTender_Object" ToRole="tblTender_ObjectLabour" />
           <NavigationProperty Name="tblTender_Estimate" Relationship="WalzExplorerModel.FK_tblTender_Item_tblTender_Component" FromRole="tblTender_Object" ToRole="tblTender_Estimate" />
+          <NavigationProperty Name="tblTender_ObjectContractor" Relationship="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Component" FromRole="tblTender_Object" ToRole="tblTender_ObjectContractor" />
+          <NavigationProperty Name="tblTender_ObjectMaterial" Relationship="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Component" FromRole="tblTender_Object" ToRole="tblTender_ObjectMaterial" />
           </EntityType>
         <Association Name="FK_tblTender_Component_tblTender">
           <End Type="WalzExplorerModel.tblTender" Role="tblTender" Multiplicity="1" />
@@ -4027,51 +4028,6 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <NavigationProperty Name="tblTender_Object1" Relationship="WalzExplorerModel.FK_tblTender_ComponentSubcomponent_tblTender_Component1" FromRole="tblTender_ObjectChildObject" ToRole="tblTender_Object" />
           <NavigationProperty Name="tblTender_Step" Relationship="WalzExplorerModel.FK_tblTender_ComponentSubcomponent_tblTender_Step" FromRole="tblTender_ObjectChildObject" ToRole="tblTender_Step" />
         </EntityType>
-        <EntityType Name="tblTender_ObjectContractor">
-          <Key>
-            <PropertyRef Name="ObjectContractorID" />
-          </Key>
-          <Property Name="ObjectContractorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ObjectID" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="StepID" Type="Int32" Nullable="false" />
-          <Property Name="ContractorID" Type="Int32" Nullable="false" />
-          <Property Name="Quantity" Type="Double" Nullable="false" />
-          <Property Name="Rate" Type="Double" Nullable="false" />
-          <Property Name="MarkUp" Type="Double" Nullable="false" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="SortOrder" Type="Double" Nullable="false" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
-          <NavigationProperty Name="tblTender_Contractor" Relationship="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Contractor" FromRole="tblTender_ObjectContractor" ToRole="tblTender_Contractor" />
-          <NavigationProperty Name="tblTender_Object" Relationship="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Component" FromRole="tblTender_ObjectContractor" ToRole="tblTender_Object" />
-          <NavigationProperty Name="tblTender_Step" Relationship="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Step" FromRole="tblTender_ObjectContractor" ToRole="tblTender_Step" />
-        </EntityType>
-        <Association Name="FK_tblTender_ComponentContractor_tblTender_Contractor">
-          <End Type="WalzExplorerModel.tblTender_Contractor" Role="tblTender_Contractor" Multiplicity="1" />
-          <End Type="WalzExplorerModel.tblTender_ObjectContractor" Role="tblTender_ObjectContractor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_Contractor">
-              <PropertyRef Name="ContractorID" />
-            </Principal>
-            <Dependent Role="tblTender_ObjectContractor">
-              <PropertyRef Name="ContractorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblTender_ComponentContractor_tblTender_Component">
-          <End Type="WalzExplorerModel.tblTender_Object" Role="tblTender_Object" Multiplicity="1" />
-          <End Type="WalzExplorerModel.tblTender_ObjectContractor" Role="tblTender_ObjectContractor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_Object">
-              <PropertyRef Name="ObjectID" />
-            </Principal>
-            <Dependent Role="tblTender_ObjectContractor">
-              <PropertyRef Name="ObjectID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblTender_ComponentSubcomponent_tblTender_Component">
           <End Type="WalzExplorerModel.tblTender_Object" Role="tblTender_Object" Multiplicity="1" />
           <End Type="WalzExplorerModel.tblTender_ObjectChildObject" Role="tblTender_ObjectChildObject" Multiplicity="*" />
@@ -4104,18 +4060,6 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
               <PropertyRef Name="StepID" />
             </Principal>
             <Dependent Role="tblTender_ObjectChildObject">
-              <PropertyRef Name="StepID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblTender_ComponentContractor_tblTender_Step">
-          <End Type="WalzExplorerModel.tblTender_Step" Role="tblTender_Step" Multiplicity="1" />
-          <End Type="WalzExplorerModel.tblTender_ObjectContractor" Role="tblTender_ObjectContractor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_Step">
-              <PropertyRef Name="StepID" />
-            </Principal>
-            <Dependent Role="tblTender_ObjectContractor">
               <PropertyRef Name="StepID" />
             </Dependent>
           </ReferentialConstraint>
@@ -4205,80 +4149,6 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="tblTender_ObjectMaterial">
-          <Key>
-            <PropertyRef Name="ObjectMaterialID" />
-          </Key>
-          <Property Name="ObjectMaterialID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ObjectID" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="StepID" Type="Int32" Nullable="false" />
-          <Property Name="MaterialID" Type="Int32" Nullable="false" />
-          <Property Name="SupplierID" Type="Int32" Nullable="false" />
-          <Property Name="Length" Type="Double" Nullable="false" />
-          <Property Name="Width" Type="Double" Nullable="false" />
-          <Property Name="Grade" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UnitCost" Type="Double" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="Markup" Type="Double" Nullable="false" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="SortOrder" Type="Double" Nullable="false" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
-          <NavigationProperty Name="tblTender_Material" Relationship="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Material" FromRole="tblTender_ObjectMaterial" ToRole="tblTender_Material" />
-          <NavigationProperty Name="tblTender_Object" Relationship="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Component" FromRole="tblTender_ObjectMaterial" ToRole="tblTender_Object" />
-          <NavigationProperty Name="tblTender_Step" Relationship="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Step" FromRole="tblTender_ObjectMaterial" ToRole="tblTender_Step" />
-          <NavigationProperty Name="tblTender_Supplier" Relationship="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Supplier" FromRole="tblTender_ObjectMaterial" ToRole="tblTender_Supplier" />
-        </EntityType>
-        <Association Name="FK_tblTender_ComponentMaterial_tblTender_Material">
-          <End Type="WalzExplorerModel.tblTender_Material" Role="tblTender_Material" Multiplicity="1" />
-          <End Type="WalzExplorerModel.tblTender_ObjectMaterial" Role="tblTender_ObjectMaterial" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_Material">
-              <PropertyRef Name="MaterialID" />
-            </Principal>
-            <Dependent Role="tblTender_ObjectMaterial">
-              <PropertyRef Name="MaterialID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblTender_ComponentMaterial_tblTender_Component">
-          <End Type="WalzExplorerModel.tblTender_Object" Role="tblTender_Object" Multiplicity="1" />
-          <End Type="WalzExplorerModel.tblTender_ObjectMaterial" Role="tblTender_ObjectMaterial" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_Object">
-              <PropertyRef Name="ObjectID" />
-            </Principal>
-            <Dependent Role="tblTender_ObjectMaterial">
-              <PropertyRef Name="ObjectID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblTender_ComponentMaterial_tblTender_Step">
-          <End Type="WalzExplorerModel.tblTender_Step" Role="tblTender_Step" Multiplicity="1" />
-          <End Type="WalzExplorerModel.tblTender_ObjectMaterial" Role="tblTender_ObjectMaterial" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_Step">
-              <PropertyRef Name="StepID" />
-            </Principal>
-            <Dependent Role="tblTender_ObjectMaterial">
-              <PropertyRef Name="StepID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblTender_ComponentMaterial_tblTender_Supplier">
-          <End Type="WalzExplorerModel.tblTender_Supplier" Role="tblTender_Supplier" Multiplicity="1" />
-          <End Type="WalzExplorerModel.tblTender_ObjectMaterial" Role="tblTender_ObjectMaterial" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_Supplier">
-              <PropertyRef Name="SupplierID" />
-            </Principal>
-            <Dependent Role="tblTender_ObjectMaterial">
-              <PropertyRef Name="SupplierID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="tblTender_ObjectLabour">
           <Key>
             <PropertyRef Name="ObjectLabourID" />
@@ -4311,7 +4181,7 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <Property Name="OverheadItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="WorkGroupID" Type="Int32" Nullable="false" />
           <Property Name="OverheadGroupID" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Count" Type="Double" Nullable="false" />
           <Property Name="Duration" Type="Double" Nullable="false" />
           <Property Name="Rate" Type="Double" Nullable="false" />
@@ -4605,6 +4475,138 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             </Principal>
             <Dependent Role="vwTender_EstimateWorkGroupRate">
               <PropertyRef Name="WorkGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblTender_ObjectContractor">
+          <Key>
+            <PropertyRef Name="ObjectContractorID" />
+          </Key>
+          <Property Name="ObjectContractorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="StepID" Type="Int32" Nullable="false" />
+          <Property Name="ContractorID" Type="Int32" Nullable="false" />
+          <Property Name="UnitOfMeasureID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="Rate" Type="Double" Nullable="false" />
+          <Property Name="MarkUp" Type="Double" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Double" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblTender_Contractor" Relationship="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Contractor" FromRole="tblTender_ObjectContractor" ToRole="tblTender_Contractor" />
+          <NavigationProperty Name="tblTender_Object" Relationship="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Component" FromRole="tblTender_ObjectContractor" ToRole="tblTender_Object" />
+          <NavigationProperty Name="tblTender_Step" Relationship="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Step" FromRole="tblTender_ObjectContractor" ToRole="tblTender_Step" />
+        </EntityType>
+        <Association Name="FK_tblTender_ComponentContractor_tblTender_Contractor">
+          <End Type="WalzExplorerModel.tblTender_Contractor" Role="tblTender_Contractor" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_ObjectContractor" Role="tblTender_ObjectContractor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_Contractor">
+              <PropertyRef Name="ContractorID" />
+            </Principal>
+            <Dependent Role="tblTender_ObjectContractor">
+              <PropertyRef Name="ContractorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_ComponentContractor_tblTender_Component">
+          <End Type="WalzExplorerModel.tblTender_Object" Role="tblTender_Object" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_ObjectContractor" Role="tblTender_ObjectContractor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_Object">
+              <PropertyRef Name="ObjectID" />
+            </Principal>
+            <Dependent Role="tblTender_ObjectContractor">
+              <PropertyRef Name="ObjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_ComponentContractor_tblTender_Step">
+          <End Type="WalzExplorerModel.tblTender_Step" Role="tblTender_Step" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_ObjectContractor" Role="tblTender_ObjectContractor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_Step">
+              <PropertyRef Name="StepID" />
+            </Principal>
+            <Dependent Role="tblTender_ObjectContractor">
+              <PropertyRef Name="StepID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblTender_ObjectMaterial">
+          <Key>
+            <PropertyRef Name="ObjectMaterialID" />
+          </Key>
+          <Property Name="ObjectMaterialID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="StepID" Type="Int32" Nullable="false" />
+          <Property Name="MaterialID" Type="Int32" Nullable="false" />
+          <Property Name="SupplierID" Type="Int32" Nullable="false" />
+          <Property Name="Length" Type="Double" Nullable="false" />
+          <Property Name="Width" Type="Double" Nullable="false" />
+          <Property Name="Grade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UnitCost" Type="Double" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Markup" Type="Double" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Double" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblTender_Material" Relationship="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Material" FromRole="tblTender_ObjectMaterial" ToRole="tblTender_Material" />
+          <NavigationProperty Name="tblTender_Object" Relationship="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Component" FromRole="tblTender_ObjectMaterial" ToRole="tblTender_Object" />
+          <NavigationProperty Name="tblTender_Step" Relationship="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Step" FromRole="tblTender_ObjectMaterial" ToRole="tblTender_Step" />
+          <NavigationProperty Name="tblTender_Supplier" Relationship="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Supplier" FromRole="tblTender_ObjectMaterial" ToRole="tblTender_Supplier" />
+        </EntityType>
+        <Association Name="FK_tblTender_ComponentMaterial_tblTender_Material">
+          <End Type="WalzExplorerModel.tblTender_Material" Role="tblTender_Material" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_ObjectMaterial" Role="tblTender_ObjectMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_Material">
+              <PropertyRef Name="MaterialID" />
+            </Principal>
+            <Dependent Role="tblTender_ObjectMaterial">
+              <PropertyRef Name="MaterialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_ComponentMaterial_tblTender_Component">
+          <End Type="WalzExplorerModel.tblTender_Object" Role="tblTender_Object" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_ObjectMaterial" Role="tblTender_ObjectMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_Object">
+              <PropertyRef Name="ObjectID" />
+            </Principal>
+            <Dependent Role="tblTender_ObjectMaterial">
+              <PropertyRef Name="ObjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_ComponentMaterial_tblTender_Step">
+          <End Type="WalzExplorerModel.tblTender_Step" Role="tblTender_Step" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_ObjectMaterial" Role="tblTender_ObjectMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_Step">
+              <PropertyRef Name="StepID" />
+            </Principal>
+            <Dependent Role="tblTender_ObjectMaterial">
+              <PropertyRef Name="StepID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_ComponentMaterial_tblTender_Supplier">
+          <End Type="WalzExplorerModel.tblTender_Supplier" Role="tblTender_Supplier" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_ObjectMaterial" Role="tblTender_ObjectMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="tblTender_ObjectMaterial">
+              <PropertyRef Name="SupplierID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5573,25 +5575,6 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblTender_ObjectContractor">
-            <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_ObjectContractor">
-              <MappingFragment StoreEntitySet="tblTender_ObjectContractor">
-                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="MarkUp" ColumnName="MarkUp" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
-                <ScalarProperty Name="StepID" ColumnName="StepID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
-                <ScalarProperty Name="ObjectContractorID" ColumnName="ObjectContractorID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblWEX_TreeNodeType">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblWEX_TreeNodeType">
               <MappingFragment StoreEntitySet="tblWEX_TreeNodeType">
@@ -5636,29 +5619,6 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
                 <ScalarProperty Name="TypeID" ColumnName="TypeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblTender_ObjectMaterial">
-            <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_ObjectMaterial">
-              <MappingFragment StoreEntitySet="tblTender_ObjectMaterial">
-                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="Markup" ColumnName="Markup" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
-                <ScalarProperty Name="Grade" ColumnName="Grade" />
-                <ScalarProperty Name="Width" ColumnName="Width" />
-                <ScalarProperty Name="Length" ColumnName="Length" />
-                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
-                <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
-                <ScalarProperty Name="StepID" ColumnName="StepID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
-                <ScalarProperty Name="ObjectMaterialID" ColumnName="ObjectMaterialID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5830,6 +5790,49 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
                 <ScalarProperty Name="WorkGroup" ColumnName="WorkGroup" />
                 <ScalarProperty Name="WorkGroupID" ColumnName="WorkGroupID" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTender_ObjectContractor">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_ObjectContractor">
+              <MappingFragment StoreEntitySet="tblTender_ObjectContractor">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="MarkUp" ColumnName="MarkUp" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UnitOfMeasureID" ColumnName="UnitOfMeasureID" />
+                <ScalarProperty Name="ContractorID" ColumnName="ContractorID" />
+                <ScalarProperty Name="StepID" ColumnName="StepID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="ObjectContractorID" ColumnName="ObjectContractorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTender_ObjectMaterial">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_ObjectMaterial">
+              <MappingFragment StoreEntitySet="tblTender_ObjectMaterial">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Markup" ColumnName="Markup" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
+                <ScalarProperty Name="StepID" ColumnName="StepID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="ObjectMaterialID" ColumnName="ObjectMaterialID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

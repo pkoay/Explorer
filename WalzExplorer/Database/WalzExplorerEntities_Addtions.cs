@@ -10,6 +10,15 @@ namespace WalzExplorer.Database
     using System.ComponentModel;
     using System.Collections.Generic;
 
+
+    public partial class tblTender_ObjectMaterial:ModelBase
+    {
+        public double Total
+        {
+            get { return Quantity * UnitCost * (1+Markup); }
+        }
+
+    }
     public partial class tblTender_WorkGroup : ModelBase
     {
         public double TotalOverhead

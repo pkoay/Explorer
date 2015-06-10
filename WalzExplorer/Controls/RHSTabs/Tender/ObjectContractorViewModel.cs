@@ -39,6 +39,10 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         {
             return context.tblTender_Step.Where(x => x.TenderID == TenderID).OrderBy(x => x.Title).ToList<object>();
         }
+        public List<object> cmbUnitOfMeasureList()
+        {
+            return context.tblTender_UnitOfMeasure.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).ToList<object>();
+        }
         
     }
 }

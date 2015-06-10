@@ -43,17 +43,19 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
            
             grd.columnsettings.Add("ObjectMaterialID", new GridEditViewBase.columnSetting() { isDeveloper = true });
-            grd.columnsettings.Add("ObjectID", new GridEditViewBase.columnSetting() { isDeveloper = true });
+            grd.columnsettings.Add("ObjectID", new GridEditViewBase.columnSetting() { isDeveloper = (settings.node.TypeID == "TenderObject") });
             grd.columnsettings.Add("Markup", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
             grd.columnsettings.Add("Quantity", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
             grd.columnsettings.Add("Width", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
             grd.columnsettings.Add("Length", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
             grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT, format = GridEditViewBase.columnSetting.formatType.TEXT });
- 
+            grd.columnsettings.Add("Total", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.N2, aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, isReadonly = true });
             grd.columnCombo.Clear();
             grd.columnCombo.Add("MaterialID", GridLibrary.CreateCombo("cmbMaterialID", "Material", vm.cmbMaterialList(), "MaterialID", "Title"));
             grd.columnCombo.Add("StepID", GridLibrary.CreateCombo("cmbStepID", "Step", vm.cmbStepList(), "StepID", "Title"));
             grd.columnCombo.Add("SupplierID", GridLibrary.CreateCombo("cmbSupplierID", "Supplier", vm.cmbSupplierList(), "SupplierID", "Title"));
+            //grd.columnCombo.Add("ObjectID", GridLibrary.CreateCombo("cmbObjectID", "Object", vm.cmbObjectList(), "ObjectID", "Title"));
+           
 
         }
 

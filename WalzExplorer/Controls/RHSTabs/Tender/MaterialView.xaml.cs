@@ -51,7 +51,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
             
             grd.columnCombo.Clear();
-            grd.columnCombo.Add("UnitOfMeasureID", GridLibrary.CreateCombo("cmbUnitOfMeasureID", "Overhead Group", vm.cmbUnitOfMeasureList(), "UnitOfMeasureID", "Title"));
+            grd.columnCombo.Add("UnitOfMeasureID", GridLibrary.CreateCombo("cmbUnitOfMeasureID", "Unit of Measure", vm.cmbUnitOfMeasureList(), "UnitOfMeasureID", "Title"));
 
         }
 

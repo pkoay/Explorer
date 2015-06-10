@@ -49,6 +49,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _contractorID, value); } 
     	}
     
+        private int _unitOfMeasureID;
+    	public int UnitOfMeasureID 
+    	{ 
+    		get { return _unitOfMeasureID; } 
+    		set { SetProperty(ref _unitOfMeasureID, value); } 
+    	}
+    
         private double _quantity;
     	public double Quantity 
     	{ 
