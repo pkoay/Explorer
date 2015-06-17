@@ -27,9 +27,9 @@ namespace WalzExplorer.Controls.Grid
     /// <summary>
     /// Interaction logic for Grid_Edit.xaml
     /// </summary>
-    public partial class GridEditViewBase : UserControl
+    public partial class GridEditViewBase2 : UserControl
     {
-        public GridEditViewModelBase vm;
+        public GridEditViewModelBase2 vm;
         public WEXSettings _settings;
 
         //defaults
@@ -85,7 +85,7 @@ namespace WalzExplorer.Controls.Grid
         protected GridViewRow ContextMenuRow;
         
        //Setup
-        public GridEditViewBase()
+        public GridEditViewBase2()
         {
             InitializeComponent();
         }

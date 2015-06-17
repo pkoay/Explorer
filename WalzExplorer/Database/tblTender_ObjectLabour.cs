@@ -28,13 +28,6 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _objectID, value); } 
     	}
     
-        private int _labourRateID;
-    	public int LabourRateID 
-    	{ 
-    		get { return _labourRateID; } 
-    		set { SetProperty(ref _labourRateID, value); } 
-    	}
-    
         private string _title;
     	public string Title 
     	{ 
@@ -70,11 +63,11 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _men, value); } 
     	}
     
-        private int _unitOfMeasureID;
-    	public int UnitOfMeasureID 
+        private double _days;
+    	public double Days 
     	{ 
-    		get { return _unitOfMeasureID; } 
-    		set { SetProperty(ref _unitOfMeasureID, value); } 
+    		get { return _days; } 
+    		set { SetProperty(ref _days, value); } 
     	}
     
         private double _quantity;
@@ -120,10 +113,8 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual tblTender_LabourRate tblTender_LabourRate { get; set; }
         public virtual tblTender_Object tblTender_Object { get; set; }
         public virtual tblTender_Step tblTender_Step { get; set; }
-        public virtual tblTender_UnitOfMeasure tblTender_UnitOfMeasure { get; set; }
         public virtual tblTender_WorkGroup tblTender_WorkGroup { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.Grid
 {
-    abstract public class GridEditViewModelBase : ViewModelBase
+    abstract public class GridEditViewModelBase2 : ViewModelBase
     // important to consider when writing new routines that they are an attomic commit. i.e. all changes commit or don't commit
     // note commit is completed on 
     {
@@ -25,7 +25,7 @@ namespace WalzExplorer.Controls.Grid
         //protected Dictionary<string, object> columnDefault = new Dictionary<string, object>();
 
 
-        public GridEditViewModelBase()
+        public GridEditViewModelBase2()
         {
             this.context = new WalzExplorerEntities(false);
         }

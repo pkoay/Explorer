@@ -96,16 +96,10 @@
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Schedule" Width="1.5" PointX="12.75" PointY="19.625" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ObjectType" Width="1.5" PointX="13" PointY="76.25" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Object_tblTender_ObjectType" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ObjectLabour" Width="3" PointX="20.5" PointY="42.75" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_OverheadItem" Width="2.625" PointX="14.625" PointY="31.25" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ObjectLabour_tblTender_LabourRate" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_Component" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_Step" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_UnitOfMeasure" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkGroup" Width="2.625" PointX="8.25" PointY="31.25" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroup_tblTender" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_WorkGroup" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_Estimate" Width="1.5" PointX="15" PointY="43.25" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Item_tblTender" />
@@ -124,6 +118,10 @@
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Component" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Step" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentMaterial_tblTender_Supplier" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ObjectLabour" Width="1.5" PointX="22.875" PointY="35.75" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_Component" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_Step" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_WorkGroup" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

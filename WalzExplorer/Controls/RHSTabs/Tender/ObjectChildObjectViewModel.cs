@@ -14,15 +14,18 @@ using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.RHSTabs.Tender
 {
+    
     public class ObjectChildObjectViewModel :GridEditViewModelBase
     {
+        //override public  ObservableCollection<tblTender_ObjectChildObject> data ;
         int TenderID;
         int ObjectID;
         public ObjectChildObjectViewModel(WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
             TenderID = ConvertLibrary.StringToInt(settings.node.FindID("TENDER", "-2"), -1);
             ObjectID = ConvertLibrary.StringToInt(settings.node.FindID("OBJECT", "-2"), -1);
-            data = new ObservableCollection<ModelBase>(context.tblTender_ObjectChildObject.Where(x => x.ObjectID == ObjectID).OrderBy(x => x.SortOrder));  
+            data = new ObservableCollection<ModelBase>(context.tblTender_ObjectChildObject.Where(x => x.ObjectID == ObjectID).OrderBy(x => x.SortOrder));
+            //ObservableCollection<tblTender_ObjectChildObject> xx = new ObservableCollection<tblTender_ObjectChildObject>(context.tblTender_ObjectChildObject.Where(x => x.ObjectID == ObjectID).OrderBy(x => x.SortOrder));  
         }
 
         public override ModelBase DefaultItem()

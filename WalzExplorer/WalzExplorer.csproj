@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>105</ApplicationRevision>
+    <ApplicationRevision>106</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -221,9 +221,13 @@
     <Compile Include="Common\Logging.cs" />
     <Compile Include="Common\ObjectLibrary.cs" />
     <Compile Include="Common\WaitCursor.cs" />
+    <Compile Include="Controls\Grid\GridEditViewBase2.xaml.cs">
+      <DependentUpon>GridEditViewBase2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Grid\GridEditViewBase.xaml.cs">
       <DependentUpon>GridEditViewBase.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Grid\GridEditViewModelBase2.cs" />
     <Compile Include="Controls\Grid\Grid_Read.xaml.cs">
       <DependentUpon>Grid_Read.xaml</DependentUpon>
     </Compile>
@@ -695,6 +699,9 @@
     <Compile Include="SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="test.xaml.cs">
+      <DependentUpon>test.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\DrilldownView.xaml.cs">
       <DependentUpon>DrilldownView.xaml</DependentUpon>
     </Compile>
@@ -709,6 +716,10 @@
     </Compile>
     <Compile Include="Windows\FeedbackDialogViewModel.cs" />
     <Compile Include="Windows\MimicDialogViewModel.cs" />
+    <Page Include="Controls\Grid\GridEditViewBase2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Grid\GridEditViewBase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -873,6 +884,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SplashScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="test.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

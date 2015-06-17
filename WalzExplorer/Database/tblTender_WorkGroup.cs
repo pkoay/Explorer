@@ -16,8 +16,8 @@ namespace WalzExplorer.Database
     {
         public tblTender_WorkGroup()
         {
-            this.tblTender_ObjectLabour = new HashSet<tblTender_ObjectLabour>();
             this.tblTender_OverheadItem = new HashSet<tblTender_OverheadItem>();
+            this.tblTender_ObjectLabour = new HashSet<tblTender_ObjectLabour>();
         }
     
         private int _workGroupID;
@@ -92,8 +92,8 @@ namespace WalzExplorer.Database
     
     
         public virtual tblTender tblTender { get; set; }
-        public virtual ICollection<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
         public virtual ICollection<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
         public virtual vwTender_EstimateWorkGroupRate vwTender_EstimateWorkGroupRate { get; set; }
+        public virtual ICollection<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
     }
 }
