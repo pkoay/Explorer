@@ -192,6 +192,9 @@ namespace WalzExplorer.Controls.Grid
             mi = new MenuItem() { Name = "miDelete", Header = "Delete", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_scissor", 16, 16) };
             if (!canDelete) mi.IsEnabled = false;
             cm.Items.Add(mi);
+            //cm.Items.Add(new Separator());
+            //mi = new MenuItem() { Name = "miUndo", Header = "Undo", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_undo_point", 16, 16) };
+            //cm.Items.Add(mi);
             cm.Items.Add(new Separator());
             mi = new MenuItem() { Name = "miInsert", Header = "Insert <New line>", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_cell_insert_above", 16, 16) };
             if (!canAdd) mi.IsEnabled = false;
@@ -356,6 +359,10 @@ namespace WalzExplorer.Controls.Grid
                     grd.ClipboardPasteMode = GridViewClipboardPasteMode.None;
                     vm.SavePaste();
                     break;
+                // Can't do undo, as currently it saves on every operation (i.e. not when the form is left)
+                //case "miUndo":
+                //    vm.context.RollBackUncommitedChanges();
+                //    break;
                 case "miInsert":
                     if (ContextMenuRow != null)
                     {

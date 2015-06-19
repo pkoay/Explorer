@@ -4250,71 +4250,6 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="spTender_ObjectDetail_Result">
-          <Property Type="Int32" Name="TenderID" Nullable="true" />
-          <Property Type="Int32" Name="ObjectID" Nullable="true" />
-          <Property Type="String" Name="ObjectName" Nullable="true" MaxLength="255" />
-          <Property Type="Int32" Name="ComponentObjectID" Nullable="false" />
-          <Property Type="String" Name="ComponentName" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="Type" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="LabourRate" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Step" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Material" Nullable="false" MaxLength="255" />
-          <Property Type="Double" Name="Length" Nullable="false" />
-          <Property Type="Double" Name="Width" Nullable="false" />
-          <Property Type="String" Name="Contractor" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="Supplier" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="WorkGroup" Nullable="false" MaxLength="50" />
-          <Property Type="Double" Name="Rate" Nullable="false" />
-          <Property Type="Double" Name="Hours" Nullable="false" />
-          <Property Type="Double" Name="Men" Nullable="false" />
-          <Property Type="Double" Name="Quantity" Nullable="false" />
-          <Property Type="Double" Name="Markup" Nullable="false" />
-          <Property Type="String" Name="UnitOfMeasure" Nullable="false" MaxLength="10" />
-          <Property Type="Double" Name="ComponentHours" Nullable="false" />
-          <Property Type="Double" Name="ComponentCost" Nullable="false" />
-          <Property Type="Double" Name="ComponentQuantity" Nullable="true" />
-          <Property Type="Double" Name="TotalHours" Nullable="true" />
-          <Property Type="Double" Name="TotalCost" Nullable="true" />
-          <Property Type="String" Name="LineComment" Nullable="true" />
-          <Property Type="String" Name="ComponentComment" Nullable="true" />
-          <Property Type="String" Name="ObjectComment" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="spTender_EstimateDetail_Result">
-          <Property Type="Int32" Name="TenderID" Nullable="false" />
-          <Property Type="String" Name="Schedule" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Title" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="ObjectID" Nullable="true" />
-          <Property Type="String" Name="ObjectName" Nullable="true" MaxLength="255" />
-          <Property Type="Int32" Name="ComponentObjectID" Nullable="false" />
-          <Property Type="String" Name="ComponentName" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="Type" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="LabourRate" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Step" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Material" Nullable="false" MaxLength="255" />
-          <Property Type="Double" Name="Length" Nullable="false" />
-          <Property Type="Double" Name="Width" Nullable="false" />
-          <Property Type="String" Name="Contractor" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="Supplier" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="WorkGroup" Nullable="false" MaxLength="50" />
-          <Property Type="Double" Name="Rate" Nullable="false" />
-          <Property Type="Double" Name="Hours" Nullable="false" />
-          <Property Type="Double" Name="Men" Nullable="false" />
-          <Property Type="Double" Name="Quantity" Nullable="false" />
-          <Property Type="Double" Name="Markup" Nullable="false" />
-          <Property Type="String" Name="UnitOfMeasure" Nullable="false" MaxLength="10" />
-          <Property Type="Double" Name="ComponentHours" Nullable="false" />
-          <Property Type="Double" Name="ComponentCost" Nullable="false" />
-          <Property Type="Double" Name="ComponentQuantity" Nullable="true" />
-          <Property Type="Double" Name="EstQty" Nullable="false" />
-          <Property Type="Double" Name="EstFac" Nullable="false" />
-          <Property Type="Double" Name="TotalHours" Nullable="true" />
-          <Property Type="Double" Name="TotalCost" Nullable="true" />
-          <Property Type="String" Name="LineComment" Nullable="true" />
-          <Property Type="String" Name="ComponentComment" Nullable="true" />
-          <Property Type="String" Name="ObjectComment" Nullable="true" />
-          <Property Type="String" Name="EstimateComment" Nullable="true" />
-        </ComplexType>
         <EntityType Name="vwTender_ObjectHoursByWorkGroup">
           <Key>
             <PropertyRef Name="WorkGroupID" />
@@ -4540,6 +4475,69 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="spTender_EstimateDetail_Result">
+          <Property Type="Int32" Name="TenderID" Nullable="false" />
+          <Property Type="String" Name="Schedule" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ObjectID" Nullable="true" />
+          <Property Type="String" Name="ObjectName" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="ComponentObjectID" Nullable="false" />
+          <Property Type="String" Name="ComponentName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Step" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Material" Nullable="false" MaxLength="255" />
+          <Property Type="Double" Name="Length" Nullable="false" />
+          <Property Type="Double" Name="Width" Nullable="false" />
+          <Property Type="String" Name="Contractor" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Supplier" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="WorkGroup" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Rate" Nullable="false" />
+          <Property Type="Double" Name="Hours" Nullable="false" />
+          <Property Type="Double" Name="Men" Nullable="false" />
+          <Property Type="Double" Name="Quantity" Nullable="false" />
+          <Property Type="Double" Name="Markup" Nullable="false" />
+          <Property Type="String" Name="UnitOfMeasure" Nullable="false" MaxLength="1" />
+          <Property Type="Double" Name="ComponentHours" Nullable="false" />
+          <Property Type="Double" Name="ComponentCost" Nullable="false" />
+          <Property Type="Double" Name="ComponentQuantity" Nullable="true" />
+          <Property Type="Double" Name="EstQty" Nullable="false" />
+          <Property Type="Double" Name="EstFac" Nullable="false" />
+          <Property Type="Double" Name="TotalHours" Nullable="true" />
+          <Property Type="Double" Name="TotalCost" Nullable="true" />
+          <Property Type="String" Name="LineComment" Nullable="true" />
+          <Property Type="String" Name="ComponentComment" Nullable="true" />
+          <Property Type="String" Name="ObjectComment" Nullable="true" />
+          <Property Type="String" Name="EstimateComment" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spTender_ObjectDetail_Result">
+          <Property Type="Int32" Name="TenderID" Nullable="true" />
+          <Property Type="Int32" Name="ObjectID" Nullable="true" />
+          <Property Type="String" Name="ObjectName" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="ComponentObjectID" Nullable="false" />
+          <Property Type="String" Name="ComponentName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Step" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Material" Nullable="false" MaxLength="255" />
+          <Property Type="Double" Name="Length" Nullable="false" />
+          <Property Type="Double" Name="Width" Nullable="false" />
+          <Property Type="String" Name="Contractor" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Supplier" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="WorkGroup" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Rate" Nullable="false" />
+          <Property Type="Double" Name="Hours" Nullable="false" />
+          <Property Type="Double" Name="Men" Nullable="false" />
+          <Property Type="Double" Name="Quantity" Nullable="false" />
+          <Property Type="Double" Name="Markup" Nullable="false" />
+          <Property Type="String" Name="UnitOfMeasure" Nullable="false" MaxLength="1" />
+          <Property Type="Double" Name="ComponentHours" Nullable="false" />
+          <Property Type="Double" Name="ComponentCost" Nullable="false" />
+          <Property Type="Double" Name="ComponentQuantity" Nullable="true" />
+          <Property Type="Double" Name="TotalHours" Nullable="true" />
+          <Property Type="Double" Name="TotalCost" Nullable="true" />
+          <Property Type="String" Name="LineComment" Nullable="true" />
+          <Property Type="String" Name="ComponentComment" Nullable="true" />
+          <Property Type="String" Name="ObjectComment" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5595,7 +5593,6 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
                 <ScalarProperty Name="ComponentObjectID" ColumnName="ComponentObjectID" />
                 <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="LabourRate" ColumnName="LabourRate" />
                 <ScalarProperty Name="Step" ColumnName="Step" />
                 <ScalarProperty Name="Material" ColumnName="Material" />
                 <ScalarProperty Name="Length" ColumnName="Length" />
@@ -5631,7 +5628,6 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
                 <ScalarProperty Name="ComponentObjectID" ColumnName="ComponentObjectID" />
                 <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="LabourRate" ColumnName="LabourRate" />
                 <ScalarProperty Name="Step" ColumnName="Step" />
                 <ScalarProperty Name="Material" ColumnName="Material" />
                 <ScalarProperty Name="Length" ColumnName="Length" />

@@ -55,13 +55,6 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _type, value); } 
     	}
     
-        private string _labourRate;
-    	public string LabourRate 
-    	{ 
-    		get { return _labourRate; } 
-    		set { SetProperty(ref _labourRate, value); } 
-    	}
-    
         private string _step;
     	public string Step 
     	{ 

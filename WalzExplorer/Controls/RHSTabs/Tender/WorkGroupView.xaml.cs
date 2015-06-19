@@ -43,7 +43,9 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             grd.columnsettings.Add("WorkGroupID", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("TenderID", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT, format = GridEditViewBase.columnSetting.formatType.TEXT });
-            grd.columnsettings.Add("Total", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, format = GridEditViewBase.columnSetting.formatType.N2, isReadonly=true});
+            grd.columnsettings.Add("TotalHours", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, format = GridEditViewBase.columnSetting.formatType.N2, isReadonly = true });
+            grd.columnsettings.Add("TotalOverhead", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, format = GridEditViewBase.columnSetting.formatType.N2, isReadonly = true });
+            grd.columnsettings.Add("CalculatedRate", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, format = GridEditViewBase.columnSetting.formatType.N2, isReadonly = true });
         }
 
         public override string IssueIfClosed()

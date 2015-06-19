@@ -65,7 +65,7 @@ namespace WalzExplorer.Database
     {
         public double HoursTotal
         {
-            get { return Hours* Quantity * Men; }
+            get { return Hours* Quantity * Men * Days; }
         }
         public double CostTotal
         {
@@ -74,7 +74,7 @@ namespace WalzExplorer.Database
                 if (tblTender_WorkGroup == null)
                     return 0;
                 else
-                    return tblTender_WorkGroup.vwTender_EstimateWorkGroupRate.Rate * Hours * Quantity * Men;
+                    return tblTender_WorkGroup.vwTender_EstimateWorkGroupRate.Rate * Hours * Quantity * Men * Days;
             }
         }
         public double Rate

@@ -220,7 +220,11 @@ namespace WalzExplorer.Database
             
         }
 
-        
+        public void RollBackUncommitedChanges()
+        {
+            var changedEntries = this.ChangeTracker.Entries().Where(x => x.State != EntityState.Unchanged).ToList();
+            RollBackUncommitedChanges(changedEntries);
+        }
         public void RollBackUncommitedChanges(IEnumerable <DbEntityEntry> changes)
         {
 

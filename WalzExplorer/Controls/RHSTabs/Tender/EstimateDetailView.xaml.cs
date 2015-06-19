@@ -46,6 +46,10 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             grd.columnSettings.developer.Add("ComponentObjectID");
             grd.columnSettings.developer.Add("ObjectName");
 
+            grd.columnSettings.format.Add("ComponentCost", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("TotalHours", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("TotalCost", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+
         }
 
         public override string IssueIfClosed()
