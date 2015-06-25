@@ -45,9 +45,9 @@ namespace WalzExplorer.Database
             var result = new DbEntityValidationResult(entityEntry, new List<DbValidationError>());
             if (entityEntry.Entity is tblTender_Contractor && entityEntry.State == EntityState.Added)
             {
-                tblTender_Contractor contractor = entityEntry.Entity as tblTender_Contractor;
+                tblTender_Subcontractor contractor = entityEntry.Entity as tblTender_Subcontractor;
                 //check for uniqueness of post title 
-                if (contractor.ContractorTypeID<1)
+                if (contractor.SubcontractorTypeID<1)
                 {
                     result.ValidationErrors.Add(new System.Data.Entity.Validation.DbValidationError("cmbContractorTypeID", "Must not be blank."));
                 }

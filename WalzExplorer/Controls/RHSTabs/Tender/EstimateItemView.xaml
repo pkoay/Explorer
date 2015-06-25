@@ -20,7 +20,7 @@
             <telerik:RadRadioButton GroupName="rcb" Content="Labour"  Click="RadRadioButton_Click"/>
             <telerik:RadRadioButton GroupName="rcb"  Content="Subcontractors" Click="RadRadioButton_Click" />
             <telerik:RadRadioButton GroupName="rcb" Content="Materials" Click="RadRadioButton_Click"/>
-            <telerik:RadRadioButton GroupName="rcb"  Content="Labour,Subcontractors" Click="RadRadioButton_Click" />
+            <telerik:RadRadioButton GroupName="rcb"  Content="   Basic   " Click="RadRadioButton_Click" />
             <telerik:RadRadioButton GroupName="rcb" Content="    All    " Click="RadRadioButton_Click"/>
         </WrapPanel>
         <grid:GridEditViewBase  x:Name="grd" Grid.Row="1" />

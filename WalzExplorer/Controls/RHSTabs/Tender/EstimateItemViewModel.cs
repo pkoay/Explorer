@@ -17,7 +17,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
     public class EstimateItemViewModel : GridEditViewModelBase
     {
         int TenderID;
-        int Default_SubContractorID;
+        int Default_SubcontractorID;
         int Default_WorkGroupID;
         int Default_UnitOfMeasureID;
 
@@ -25,7 +25,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         {
             TenderID = ConvertLibrary.StringToInt(settings.node.FindID("TENDER", "-2"), -1);
             data = new ObservableCollection<ModelBase>(context.tblTender_EstimateItem.Where(x => x.TenderID == TenderID).OrderBy(x =>x.ScheduleID).ThenBy(x=>x.SortOrder));
-            Default_SubContractorID = context.tblTender_Contractor.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().ContractorID;
+            Default_SubcontractorID = context.tblTender_Subcontractor.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().SubcontractorID;
             Default_WorkGroupID = context.tblTender_WorkGroup.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().WorkGroupID;
             Default_UnitOfMeasureID = context.tblTender_UnitOfMeasure.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().UnitOfMeasureID;
             
@@ -39,7 +39,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             i.TenderID = TenderID;
             if (nearItem != null) i.ScheduleID = nearItem.ScheduleID;
             i.WorkGroupID = Default_WorkGroupID;
-            i.SubcontractorID = Default_SubContractorID;
+            i.SubcontractorID = Default_SubcontractorID;
             i.EstimateItemTypeID = 1;
             
             i.UnitOfMeasureID = Default_UnitOfMeasureID;
@@ -60,7 +60,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         }
         public List<object> cmbSubContractorList()
         {
-            return context.tblTender_Contractor.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).ToList<object>();
+            return context.tblTender_Subcontractor.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).ToList<object>();
         }
         public List<object> cmbUnitOfMeasureList()
         {
@@ -69,6 +69,14 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         public List<object> cmbDrawingList()
         {
             return context.tblTender_Drawing.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).ToList<object>();
+        }
+        public List<object> cmbMaterialList()
+        {
+            return context.tblTender_Material.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).ToList<object>();
+        }
+        public List<object> cmbSupplierList()
+        {
+            return context.tblTender_Supplier.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).ToList<object>();
         }
 
     }

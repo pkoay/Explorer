@@ -27,7 +27,6 @@ namespace WalzExplorer.Database
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<tblTender_ContractorType> tblTender_ContractorType { get; set; }
         public virtual DbSet<tblTender_Drawing> tblTender_Drawing { get; set; }
         public virtual DbSet<tblTender_Material> tblTender_Material { get; set; }
         public virtual DbSet<tblTender_Status> tblTender_Status { get; set; }
@@ -38,7 +37,6 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblWEX_NTSecurityGroup> tblWEX_NTSecurityGroup { get; set; }
         public virtual DbSet<tblWEX_RHSTab> tblWEX_RHSTab { get; set; }
         public virtual DbSet<tblWEX_Tree> tblWEX_Tree { get; set; }
-        public virtual DbSet<tblTender_Contractor> tblTender_Contractor { get; set; }
         public virtual DbSet<tblProject_History> tblProject_History { get; set; }
         public virtual DbSet<tblProject_HistoryMilestone> tblProject_HistoryMilestone { get; set; }
         public virtual DbSet<tblProject_Status> tblProject_Status { get; set; }
@@ -75,9 +73,11 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblTender_ObjectContractor> tblTender_ObjectContractor { get; set; }
         public virtual DbSet<tblTender_ObjectMaterial> tblTender_ObjectMaterial { get; set; }
         public virtual DbSet<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
-        public virtual DbSet<tblTender_EstimateItem> tblTender_EstimateItem { get; set; }
         public virtual DbSet<tblTender_EstimateItemType> tblTender_EstimateItemType { get; set; }
         public virtual DbSet<tblTender_Estimate> tblTender_Estimate { get; set; }
+        public virtual DbSet<tblTender_Subcontractor> tblTender_Subcontractor { get; set; }
+        public virtual DbSet<tblTender_SubcontractorType> tblTender_SubcontractorType { get; set; }
+        public virtual DbSet<tblTender_EstimateItem> tblTender_EstimateItem { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)

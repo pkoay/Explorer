@@ -12,7 +12,7 @@ namespace WalzExplorer.Database
 
     
 
-    public partial class tblTender_Contractor
+    public partial class tblTender_Subcontractor
     {
        public override string this[string columnName]
         {
@@ -27,13 +27,13 @@ namespace WalzExplorer.Database
                         return "Title cannot be blank!!!";
                     }
                 }
-                
 
-                if (columnName == "ContractorTypeID")
+
+                if (columnName == "SubcontractorTypeID")
                 {
-                    if (this.ContractorTypeID<1)
+                    if (this.SubcontractorTypeID<1)
                     {
-                        return "Contractor Type cannot be blank!!!";
+                        return "Subcontractor Type cannot be blank!!!";
                     }
                 }
                 hasError = false;
@@ -58,7 +58,7 @@ namespace WalzExplorer.Database
         }
     }
 
-    public partial class tblTender_ContractorType
+    public partial class tblTender_SubcontractorType
     {
         public override string this[string columnName]
         {

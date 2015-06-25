@@ -113,8 +113,8 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual tblTender_Contractor tblTender_Contractor { get; set; }
         public virtual tblTender_Object tblTender_Object { get; set; }
         public virtual tblTender_Step tblTender_Step { get; set; }
+        public virtual tblTender_Subcontractor tblTender_Subcontractor { get; set; }
     }
 }

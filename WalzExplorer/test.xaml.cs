@@ -26,7 +26,7 @@ namespace WalzExplorer
         {
             InitializeComponent();
             this.context = new WalzExplorerEntities(false);
-            grd.ItemsSource = new ObservableCollection<tblTender_ContractorType>(context.tblTender_ContractorType.Where(x => x.TenderID == 1));
+            grd.ItemsSource = new ObservableCollection<tblTender_SubcontractorType>(context.tblTender_SubcontractorType.Where(x => x.TenderID == 1));
         }
     }
 }

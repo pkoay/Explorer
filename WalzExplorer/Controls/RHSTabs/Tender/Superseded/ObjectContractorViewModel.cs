@@ -31,9 +31,9 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             i.ObjectID = ObjectID;
             return i;
         }
-        public List<object> cmbContractorList()
+        public List<object> cmbSubcontractorList()
         {
-            return context.tblTender_Contractor.Where(x => x.TenderID == TenderID).OrderBy(x => x.Title).ToList<object>();
+            return context.tblTender_Subcontractor.Where(x => x.TenderID == TenderID).OrderBy(x => x.Title).ToList<object>();
         }
         public List<object> cmbStepList()
         {
@@ -43,6 +43,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         {
             return context.tblTender_UnitOfMeasure.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).ToList<object>();
         }
+       
         
     }
 }

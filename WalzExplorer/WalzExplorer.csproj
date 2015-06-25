@@ -584,12 +584,6 @@
     <Compile Include="Database\tblTender.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\tblTender_Contractor.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Database\tblTender_ContractorType.cs">
-      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Database\tblTender_Drawing.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -639,6 +633,12 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblTender_Step.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_Subcontractor.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_SubcontractorType.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblTender_Supplier.cs">

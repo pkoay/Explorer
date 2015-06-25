@@ -12,19 +12,19 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_Contractor : ModelBase
+    public partial class tblTender_Subcontractor : ModelBase
     {
-        public tblTender_Contractor()
+        public tblTender_Subcontractor()
         {
             this.tblTender_ObjectContractor = new HashSet<tblTender_ObjectContractor>();
             this.tblTender_EstimateItem = new HashSet<tblTender_EstimateItem>();
         }
     
-        private int _contractorID;
-    	public int ContractorID 
+        private int _subcontractorID;
+    	public int SubcontractorID 
     	{ 
-    		get { return _contractorID; } 
-    		set { SetProperty(ref _contractorID, value); } 
+    		get { return _subcontractorID; } 
+    		set { SetProperty(ref _subcontractorID, value); } 
     	}
     
         private int _tenderID;
@@ -41,11 +41,11 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _title, value); } 
     	}
     
-        private int _contractorTypeID;
-    	public int ContractorTypeID 
+        private int _subcontractorTypeID;
+    	public int SubcontractorTypeID 
     	{ 
-    		get { return _contractorTypeID; } 
-    		set { SetProperty(ref _contractorTypeID, value); } 
+    		get { return _subcontractorTypeID; } 
+    		set { SetProperty(ref _subcontractorTypeID, value); } 
     	}
     
         private string _comment;
@@ -53,6 +53,13 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _comment; } 
     		set { SetProperty(ref _comment, value); } 
+    	}
+    
+        private int _sortOrder;
+    	public int SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
     	}
     
         private string _updatedBy;
@@ -76,17 +83,10 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
-        private int _sortOrder;
-    	public int SortOrder 
-    	{ 
-    		get { return _sortOrder; } 
-    		set { SetProperty(ref _sortOrder, value); } 
-    	}
     
-    
-        public virtual tblTender_ContractorType tblTender_ContractorType { get; set; }
         public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_ObjectContractor> tblTender_ObjectContractor { get; set; }
+        public virtual tblTender_SubcontractorType tblTender_SubcontractorType { get; set; }
         public virtual ICollection<tblTender_EstimateItem> tblTender_EstimateItem { get; set; }
     }
 }

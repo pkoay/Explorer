@@ -35,6 +35,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _scheduleID, value); } 
     	}
     
+        private string _title;
+    	public string Title 
+    	{ 
+    		get { return _title; } 
+    		set { SetProperty(ref _title, value); } 
+    	}
+    
         private int _estimateItemTypeID;
     	public int EstimateItemTypeID 
     	{ 
@@ -47,13 +54,6 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _workGroupID; } 
     		set { SetProperty(ref _workGroupID, value); } 
-    	}
-    
-        private string _title;
-    	public string Title 
-    	{ 
-    		get { return _title; } 
-    		set { SetProperty(ref _title, value); } 
     	}
     
         private double _men;
@@ -77,20 +77,6 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _days, value); } 
     	}
     
-        private int _subcontractorID;
-    	public int SubcontractorID 
-    	{ 
-    		get { return _subcontractorID; } 
-    		set { SetProperty(ref _subcontractorID, value); } 
-    	}
-    
-        private double _subcontractorRate;
-    	public double SubcontractorRate 
-    	{ 
-    		get { return _subcontractorRate; } 
-    		set { SetProperty(ref _subcontractorRate, value); } 
-    	}
-    
         private int _unitOfMeasureID;
     	public int UnitOfMeasureID 
     	{ 
@@ -105,11 +91,18 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _quantity, value); } 
     	}
     
-        private int _materialTakeoffID;
-    	public int MaterialTakeoffID 
+        private double _unitCost;
+    	public double UnitCost 
     	{ 
-    		get { return _materialTakeoffID; } 
-    		set { SetProperty(ref _materialTakeoffID, value); } 
+    		get { return _unitCost; } 
+    		set { SetProperty(ref _unitCost, value); } 
+    	}
+    
+        private double _cost;
+    	public double Cost 
+    	{ 
+    		get { return _cost; } 
+    		set { SetProperty(ref _cost, value); } 
     	}
     
         private double _markup;
@@ -117,6 +110,62 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _markup; } 
     		set { SetProperty(ref _markup, value); } 
+    	}
+    
+        private int _subcontractorID;
+    	public int SubcontractorID 
+    	{ 
+    		get { return _subcontractorID; } 
+    		set { SetProperty(ref _subcontractorID, value); } 
+    	}
+    
+        private double _subcontractorRate;
+    	public double SubcontractorRate 
+    	{ 
+    		get { return _subcontractorRate; } 
+    		set { SetProperty(ref _subcontractorRate, value); } 
+    	}
+    
+        private int _materialID;
+    	public int MaterialID 
+    	{ 
+    		get { return _materialID; } 
+    		set { SetProperty(ref _materialID, value); } 
+    	}
+    
+        private int _supplierID;
+    	public int SupplierID 
+    	{ 
+    		get { return _supplierID; } 
+    		set { SetProperty(ref _supplierID, value); } 
+    	}
+    
+        private double _length;
+    	public double Length 
+    	{ 
+    		get { return _length; } 
+    		set { SetProperty(ref _length, value); } 
+    	}
+    
+        private double _width;
+    	public double Width 
+    	{ 
+    		get { return _width; } 
+    		set { SetProperty(ref _width, value); } 
+    	}
+    
+        private string _grade;
+    	public string Grade 
+    	{ 
+    		get { return _grade; } 
+    		set { SetProperty(ref _grade, value); } 
+    	}
+    
+        private int _drawingID;
+    	public int DrawingID 
+    	{ 
+    		get { return _drawingID; } 
+    		set { SetProperty(ref _drawingID, value); } 
     	}
     
         private string _comment;
@@ -156,7 +205,10 @@ namespace WalzExplorer.Database
     
     
         public virtual tblTender tblTender { get; set; }
-        public virtual tblTender_Contractor tblTender_Contractor { get; set; }
+        public virtual tblTender_Drawing tblTender_Drawing { get; set; }
+        public virtual tblTender_Material tblTender_Material { get; set; }
+        public virtual tblTender_Supplier tblTender_Supplier { get; set; }
+        public virtual tblTender_Subcontractor tblTender_Subcontractor { get; set; }
         public virtual tblTender_Schedule tblTender_Schedule { get; set; }
         public virtual tblTender_UnitOfMeasure tblTender_UnitOfMeasure { get; set; }
         public virtual tblTender_WorkGroup tblTender_WorkGroup { get; set; }

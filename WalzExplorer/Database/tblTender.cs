@@ -16,8 +16,6 @@ namespace WalzExplorer.Database
     {
         public tblTender()
         {
-            this.tblTender_Contractor = new HashSet<tblTender_Contractor>();
-            this.tblTender_ContractorType = new HashSet<tblTender_ContractorType>();
             this.tblTender_Drawing = new HashSet<tblTender_Drawing>();
             this.tblTender_Material = new HashSet<tblTender_Material>();
             this.tblTender_Supplier = new HashSet<tblTender_Supplier>();
@@ -25,8 +23,10 @@ namespace WalzExplorer.Database
             this.tblTender_Object = new HashSet<tblTender_Object>();
             this.tblTender_LabourRate = new HashSet<tblTender_LabourRate>();
             this.tblTender_WorkGroup = new HashSet<tblTender_WorkGroup>();
-            this.tblTender_EstimateItem = new HashSet<tblTender_EstimateItem>();
             this.tblTender_Estimate = new HashSet<tblTender_Estimate>();
+            this.tblTender_Subcontractor = new HashSet<tblTender_Subcontractor>();
+            this.tblTender_SubcontractorType = new HashSet<tblTender_SubcontractorType>();
+            this.tblTender_EstimateItem = new HashSet<tblTender_EstimateItem>();
         }
     
         private int _tenderID;
@@ -115,8 +115,6 @@ namespace WalzExplorer.Database
     
     
         public virtual tblPerson tblPerson { get; set; }
-        public virtual ICollection<tblTender_Contractor> tblTender_Contractor { get; set; }
-        public virtual ICollection<tblTender_ContractorType> tblTender_ContractorType { get; set; }
         public virtual ICollection<tblTender_Drawing> tblTender_Drawing { get; set; }
         public virtual ICollection<tblTender_Material> tblTender_Material { get; set; }
         public virtual ICollection<tblTender_Supplier> tblTender_Supplier { get; set; }
@@ -126,7 +124,9 @@ namespace WalzExplorer.Database
         public virtual ICollection<tblTender_Object> tblTender_Object { get; set; }
         public virtual ICollection<tblTender_LabourRate> tblTender_LabourRate { get; set; }
         public virtual ICollection<tblTender_WorkGroup> tblTender_WorkGroup { get; set; }
-        public virtual ICollection<tblTender_EstimateItem> tblTender_EstimateItem { get; set; }
         public virtual ICollection<tblTender_Estimate> tblTender_Estimate { get; set; }
+        public virtual ICollection<tblTender_Subcontractor> tblTender_Subcontractor { get; set; }
+        public virtual ICollection<tblTender_SubcontractorType> tblTender_SubcontractorType { get; set; }
+        public virtual ICollection<tblTender_EstimateItem> tblTender_EstimateItem { get; set; }
     }
 }

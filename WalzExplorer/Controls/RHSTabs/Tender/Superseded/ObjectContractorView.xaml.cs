@@ -53,7 +53,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
  
             grd.columnCombo.Clear();
             grd.columnCombo.Add("UnitOfMeasureID", GridLibrary.CreateCombo("cmbUnitOfMeasureID", "Unit Of Measure", vm.cmbUnitOfMeasureList(), "UnitOfMeasureID", "Title"));
-            grd.columnCombo.Add("ContractorID", GridLibrary.CreateCombo("cmbContractorID", "Contractor", vm.cmbContractorList(), "ContractorID", "Title"));
+            grd.columnCombo.Add("ContractorID", GridLibrary.CreateCombo("cmbContractorID", "Contractor", vm.cmbSubcontractorList(), "ContractorID", "Title"));
             grd.columnCombo.Add("StepID", GridLibrary.CreateCombo("cmbStepID", "Step", vm.cmbStepList(), "StepID", "Title"));
            
 

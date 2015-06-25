@@ -20,12 +20,12 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         public ContractorTypeViewModel(WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
             TenderID = ConvertLibrary.StringToInt(settings.node.FindID("TENDER", "-2"), -1);
-            data = new ObservableCollection<ModelBase>(context.tblTender_ContractorType.Where(x => x.TenderID == TenderID  && x.SortOrder>=0).OrderBy(x => x.SortOrder));  
+            data = new ObservableCollection<ModelBase>(context.tblTender_SubcontractorType.Where(x => x.TenderID == TenderID  && x.SortOrder>=0).OrderBy(x => x.SortOrder));  
         }
 
         public override ModelBase DefaultItem(ModelBase NearItem)
         {
-            tblTender_ContractorType i = new tblTender_ContractorType();
+            tblTender_SubcontractorType i = new tblTender_SubcontractorType();
             i.TenderID = TenderID;
             return i;
         }

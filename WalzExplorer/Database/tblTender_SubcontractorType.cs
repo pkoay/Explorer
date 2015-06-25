@@ -12,18 +12,18 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_ContractorType : ModelBase
+    public partial class tblTender_SubcontractorType : ModelBase
     {
-        public tblTender_ContractorType()
+        public tblTender_SubcontractorType()
         {
-            this.tblTender_Contractor = new HashSet<tblTender_Contractor>();
+            this.tblTender_Subcontractor = new HashSet<tblTender_Subcontractor>();
         }
     
-        private int _contractorTypeID;
-    	public int ContractorTypeID 
+        private int _subcontractorTypeID;
+    	public int SubcontractorTypeID 
     	{ 
-    		get { return _contractorTypeID; } 
-    		set { SetProperty(ref _contractorTypeID, value); } 
+    		get { return _subcontractorTypeID; } 
+    		set { SetProperty(ref _subcontractorTypeID, value); } 
     	}
     
         private int _tenderID;
@@ -47,6 +47,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _comment, value); } 
     	}
     
+        private int _sortOrder;
+    	public int SortOrder 
+    	{ 
+    		get { return _sortOrder; } 
+    		set { SetProperty(ref _sortOrder, value); } 
+    	}
+    
         private string _updatedBy;
     	public string UpdatedBy 
     	{ 
@@ -68,15 +75,8 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _rowVersion, value); } 
     	}
     
-        private int _sortOrder;
-    	public int SortOrder 
-    	{ 
-    		get { return _sortOrder; } 
-    		set { SetProperty(ref _sortOrder, value); } 
-    	}
     
-    
-        public virtual ICollection<tblTender_Contractor> tblTender_Contractor { get; set; }
         public virtual tblTender tblTender { get; set; }
+        public virtual ICollection<tblTender_Subcontractor> tblTender_Subcontractor { get; set; }
     }
 }
