@@ -12,27 +12,18 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_WorkGroup : ModelBase
+    public partial class tblTender_EstimateItemType : ModelBase
     {
-        public tblTender_WorkGroup()
+        public tblTender_EstimateItemType()
         {
-            this.tblTender_OverheadItem = new HashSet<tblTender_OverheadItem>();
-            this.tblTender_ObjectLabour = new HashSet<tblTender_ObjectLabour>();
             this.tblTender_EstimateItem = new HashSet<tblTender_EstimateItem>();
         }
     
-        private int _workGroupID;
-    	public int WorkGroupID 
+        private int _estimateItemTypeID;
+    	public int EstimateItemTypeID 
     	{ 
-    		get { return _workGroupID; } 
-    		set { SetProperty(ref _workGroupID, value); } 
-    	}
-    
-        private int _tenderID;
-    	public int TenderID 
-    	{ 
-    		get { return _tenderID; } 
-    		set { SetProperty(ref _tenderID, value); } 
+    		get { return _estimateItemTypeID; } 
+    		set { SetProperty(ref _estimateItemTypeID, value); } 
     	}
     
         private string _title;
@@ -42,25 +33,11 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _title, value); } 
     	}
     
-        private double _baseRate;
-    	public double BaseRate 
+        private string _shortTitle;
+    	public string ShortTitle 
     	{ 
-    		get { return _baseRate; } 
-    		set { SetProperty(ref _baseRate, value); } 
-    	}
-    
-        private double _markup;
-    	public double Markup 
-    	{ 
-    		get { return _markup; } 
-    		set { SetProperty(ref _markup, value); } 
-    	}
-    
-        private string _comment;
-    	public string Comment 
-    	{ 
-    		get { return _comment; } 
-    		set { SetProperty(ref _comment, value); } 
+    		get { return _shortTitle; } 
+    		set { SetProperty(ref _shortTitle, value); } 
     	}
     
         private int _sortOrder;
@@ -92,10 +69,6 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual tblTender tblTender { get; set; }
-        public virtual ICollection<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
-        public virtual vwTender_EstimateWorkGroupRate vwTender_EstimateWorkGroupRate { get; set; }
-        public virtual ICollection<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
         public virtual ICollection<tblTender_EstimateItem> tblTender_EstimateItem { get; set; }
     }
 }

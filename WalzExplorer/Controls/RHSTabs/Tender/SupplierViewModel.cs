@@ -23,7 +23,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             data = new ObservableCollection<ModelBase>(context.tblTender_Supplier.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder));  
         }
 
-        public override ModelBase DefaultItem()
+        public override ModelBase DefaultItem(ModelBase NearItem)
         {
             tblTender_Supplier i = new tblTender_Supplier();
             i.TenderID = TenderID;

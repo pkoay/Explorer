@@ -49,8 +49,8 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _workGroup, value); } 
     	}
     
-        private Nullable<double> _labourHours;
-    	public Nullable<double> LabourHours 
+        private double _labourHours;
+    	public double LabourHours 
     	{ 
     		get { return _labourHours; } 
     		set { SetProperty(ref _labourHours, value); } 

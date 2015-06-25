@@ -56,6 +56,8 @@ namespace WalzExplorer.Controls.Grid
                 G2,
                 N2,
                 N,
+                P2,
+                P,
             }
             public string rename = null;
             public string background = null;
@@ -67,7 +69,7 @@ namespace WalzExplorer.Controls.Grid
             public bool isReadonly = false;
             public bool isDeveloper = false;
             public bool? isGroupable = null; // default set by format
-
+            public Style CellStyle = null;
             public void Dispose()
             {
             }
@@ -530,7 +532,8 @@ namespace WalzExplorer.Controls.Grid
                 {
                     //Set the name from PascalCase to Logical (e.g. 'UpdatedBy' to 'Updated By')
                     Regex r = new Regex("([A-Z]+[a-z]+)");
-                    c.Header = r.Replace(c.UniqueName, m => (m.Value.Length > 3 ? m.Value : m.Value.ToLower()) + " ");
+                    //c.Header = r.Replace(c.UniqueName, m => (m.Value.Length > 3 ? m.Value : m.Value.ToLower()) + " ");
+                    c.Header = r.Replace(c.UniqueName, m => (m.Value ) + " ");
                 }
 
                 //determine foreground/background
@@ -544,7 +547,7 @@ namespace WalzExplorer.Controls.Grid
                 }
                 if (colsetting.background != null) background = colsetting.background;
                 if (colsetting.foreground != null) foreground = colsetting.foreground;
-                c.CellStyle = CellStyle(foreground, background);
+                c.CellStyle = CellStyle(colsetting.CellStyle,foreground, background);
                 
                 //tooltip
                 if (colsetting.tooltip != null)
@@ -557,6 +560,8 @@ namespace WalzExplorer.Controls.Grid
                 dc.TextAlignment = TextAlignment.Right;
                 dc.HeaderTextAlignment = TextAlignment.Right;
                 dc.FooterTextAlignment = TextAlignment.Right;
+
+                format = colsetting.format.ToString();
                 switch (colsetting.format)
                 {
                     case columnSetting.formatType.TEXT:
@@ -574,23 +579,8 @@ namespace WalzExplorer.Controls.Grid
                         format = "dd/MMM/yy";
                         dc.IsGroupable = true;
                         break;
-                    case columnSetting.formatType.G:
+                    default: //G,G2,N,N2,P,P2
                         dc.IsGroupable = false;
-                        format = "G";
-                        break;
-                    case columnSetting.formatType.G2:
-                        dc.IsGroupable = false;
-                        format = "G2";
-                        break;
-                    case columnSetting.formatType.N2:
-                        dc.IsGroupable = false;
-                        format = "N2";
-                        break;
-                    case columnSetting.formatType.N:
-                        dc.IsGroupable = false;
-                        format = "N";
-                        break;
-                    default:
                         break;
                 }
 
@@ -636,7 +626,7 @@ namespace WalzExplorer.Controls.Grid
             {
                 if (!_canEdit)
                 {
-                    c.CellStyle=CellStyle("#FF999999","#4C35496A");
+                    c.CellStyle=CellStyle(null,"#FF999999","#4C35496A");
                 }
             }
 
@@ -658,6 +648,7 @@ namespace WalzExplorer.Controls.Grid
                     cmb.GotFocus += gcb_GotFocus;
                     cmb.LostFocus += gcb_LostFocus;
 
+                    cmb.AggregateFunctions.Clear();
                     foreach (AggregateFunction af in c.AggregateFunctions)
                         cmb.AggregateFunctions.Add(af);
 
@@ -665,7 +656,7 @@ namespace WalzExplorer.Controls.Grid
                     {
                         cmb.IsReadOnly = true;
                         //cmb.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#4C35496A");
-                        cmb.CellStyle = CellStyle("#FF999999", "#4C35496A");
+                        cmb.CellStyle = CellStyle(null ,"#FF999999", "#4C35496A");
                     }
                 }
             }
@@ -674,10 +665,18 @@ namespace WalzExplorer.Controls.Grid
             grd.Rebind();
 
         }
-        private Style CellStyle(string foreground, string background)
+        private Style CellStyle(Style baseStyle,string foreground, string background)
         {
-            Style cstyle = new Style(typeof(GridViewCell));
-            cstyle.BasedOn = (Style)FindResource("GridViewCellStyle");
+            Style cstyle;
+            if (baseStyle == null)
+            {
+                cstyle = new Style(typeof(GridViewCell));
+                cstyle.BasedOn = (Style)FindResource("GridViewCellStyle");
+            }
+            else
+            {
+                cstyle = baseStyle;
+            }
             if (foreground!=null)
                 cstyle.Setters.Add(new Setter(GridViewCell.ForegroundProperty, Common.GraphicsLibrary.BrushFromHex(foreground)));
             if (background != null)

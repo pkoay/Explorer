@@ -22,7 +22,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             data = new ObservableCollection<ModelBase>(context.tblTender_OverheadGroup.Where(x=>x.TenderID==TenderID));  
         }
 
-        public override ModelBase DefaultItem()
+        public override ModelBase DefaultItem(ModelBase NearItem)
         {
             tblTender_OverheadGroup i = new tblTender_OverheadGroup();
             i.TenderID = TenderID;

@@ -19,6 +19,76 @@ namespace WalzExplorer.Database
         }
 
     }
+
+    public partial class tblTender_EstimateItem : ModelBase
+    {
+        public bool IsHeader
+        {
+            get
+            {
+                return (EstimateItemTypeID == 3);
+            }
+        }
+        public int Level
+        {
+            get
+            {
+                if (tblTender_Schedule != null) return tblTender_Schedule.ClientCode.Length;
+                else return 0;
+            }
+        }
+        public double? WorkGroupRate
+        {
+            get
+            {
+                double? value = null;
+                switch (EstimateItemID)
+                {
+                    case 1: if (tblTender_WorkGroup != null)  value = tblTender_WorkGroup.vwTender_EstimateWorkGroupRate.Rate;
+                        break;
+                    default: value = null;
+                        break;
+                }
+                return value;
+            }
+
+        }
+        public double TotalLabourHours
+        {
+            get
+            {
+                double value = 0;
+                switch (EstimateItemID)
+                {
+                    case 1: value = Men * HoursPerDay * Days;
+                        break;
+                    default: value = 0;
+                        break;
+                }
+                return value;
+            }
+
+        }
+        public double TotalCost
+        {
+            get 
+            {
+                double value = 0;
+                switch (EstimateItemID)
+                {
+                    case 1: if (tblTender_WorkGroup!=null) value = Men * HoursPerDay * Days * tblTender_WorkGroup.vwTender_EstimateWorkGroupRate.Rate * (1 + Markup);
+                        break;
+                    case 2: value = Quantity * SubcontractorRate * (1 + Markup);
+                        break;
+                    case 3: value = 0;
+                        break;
+                }
+                return value; 
+            }
+        }
+
+
+    }
     public partial class tblTender_WorkGroup : ModelBase
     {
         public double TotalOverhead

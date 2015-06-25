@@ -19,7 +19,7 @@ namespace WalzExplorer.Controls.RHSTabs.Explorer
             data = new ObservableCollection<ModelBase>(context.tblPerson_Mimic);  
         }
 
-        public override ModelBase DefaultItem()
+        public override ModelBase DefaultItem(ModelBase NearItem)
         {
            tblPerson_Mimic i = new tblPerson_Mimic();
             return i;

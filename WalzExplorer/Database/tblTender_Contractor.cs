@@ -17,6 +17,7 @@ namespace WalzExplorer.Database
         public tblTender_Contractor()
         {
             this.tblTender_ObjectContractor = new HashSet<tblTender_ObjectContractor>();
+            this.tblTender_EstimateItem = new HashSet<tblTender_EstimateItem>();
         }
     
         private int _contractorID;
@@ -86,5 +87,6 @@ namespace WalzExplorer.Database
         public virtual tblTender_ContractorType tblTender_ContractorType { get; set; }
         public virtual tblTender tblTender { get; set; }
         public virtual ICollection<tblTender_ObjectContractor> tblTender_ObjectContractor { get; set; }
+        public virtual ICollection<tblTender_EstimateItem> tblTender_EstimateItem { get; set; }
     }
 }

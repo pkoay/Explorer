@@ -1,0 +1,29 @@
+﻿<base:RHSTabViewBase
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:base="clr-namespace:WalzExplorer.Controls.RHSTabs"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:grid="clr-namespace:WalzExplorer.Controls.Grid"
+    
+             xmlns:WalzExplorer="clr-namespace:WalzExplorer"
+             xmlns:tab="clr-namespace:WalzExplorer.Controls.RHSTabs"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d:DesignWidth="402.09" d:DesignHeight="143.881"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
+             x:Class="WalzExplorer.Controls.RHSTabs.Tender.EstimateItemView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+        
+        <WrapPanel HorizontalAlignment="Right">
+            <telerik:RadRadioButton GroupName="rcb" Content="Labour"  Click="RadRadioButton_Click"/>
+            <telerik:RadRadioButton GroupName="rcb"  Content="Subcontractors" Click="RadRadioButton_Click" />
+            <telerik:RadRadioButton GroupName="rcb" Content="Materials" Click="RadRadioButton_Click"/>
+            <telerik:RadRadioButton GroupName="rcb"  Content="Labour,Subcontractors" Click="RadRadioButton_Click" />
+            <telerik:RadRadioButton GroupName="rcb" Content="    All    " Click="RadRadioButton_Click"/>
+        </WrapPanel>
+        <grid:GridEditViewBase  x:Name="grd" Grid.Row="1" />
+        
+    </Grid>
+</base:RHSTabViewBase>

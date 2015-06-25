@@ -25,6 +25,7 @@ namespace WalzExplorer.Database
             this.tblTender_Object = new HashSet<tblTender_Object>();
             this.tblTender_LabourRate = new HashSet<tblTender_LabourRate>();
             this.tblTender_WorkGroup = new HashSet<tblTender_WorkGroup>();
+            this.tblTender_EstimateItem = new HashSet<tblTender_EstimateItem>();
             this.tblTender_Estimate = new HashSet<tblTender_Estimate>();
         }
     
@@ -125,6 +126,7 @@ namespace WalzExplorer.Database
         public virtual ICollection<tblTender_Object> tblTender_Object { get; set; }
         public virtual ICollection<tblTender_LabourRate> tblTender_LabourRate { get; set; }
         public virtual ICollection<tblTender_WorkGroup> tblTender_WorkGroup { get; set; }
+        public virtual ICollection<tblTender_EstimateItem> tblTender_EstimateItem { get; set; }
         public virtual ICollection<tblTender_Estimate> tblTender_Estimate { get; set; }
     }
 }

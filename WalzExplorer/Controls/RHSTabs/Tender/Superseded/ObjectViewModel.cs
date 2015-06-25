@@ -34,7 +34,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             }
         }
 
-        public override ModelBase DefaultItem()
+        public override ModelBase DefaultItem(ModelBase NearItem)
         {
             tblTender_Object i = new tblTender_Object();
             i.TenderID = TenderID;

@@ -20,10 +20,10 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         public UnitOfMeasureViewModel(WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
             TenderID = ConvertLibrary.StringToInt(settings.node.FindID("TENDER", "-2"), -1);
-            data = new ObservableCollection<ModelBase>(context.tblTender_UnitOfMeasure.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder));  
+            data = new ObservableCollection<ModelBase>(context.tblTender_UnitOfMeasure.Where(x => x.TenderID == TenderID && x.SortOrder >= 0).OrderBy(x => x.SortOrder));  
         }
 
-        public override ModelBase DefaultItem()
+        public override ModelBase DefaultItem(ModelBase NearItem)
         {
             tblTender_UnitOfMeasure i = new tblTender_UnitOfMeasure();
             i.TenderID = TenderID;

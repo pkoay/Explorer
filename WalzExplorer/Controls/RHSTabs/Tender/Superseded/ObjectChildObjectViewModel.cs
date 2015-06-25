@@ -28,10 +28,12 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             //ObservableCollection<tblTender_ObjectChildObject> xx = new ObservableCollection<tblTender_ObjectChildObject>(context.tblTender_ObjectChildObject.Where(x => x.ObjectID == ObjectID).OrderBy(x => x.SortOrder));  
         }
 
-        public override ModelBase DefaultItem()
+        public override ModelBase DefaultItem(ModelBase NearItem)
         {
             tblTender_ObjectChildObject i = new tblTender_ObjectChildObject();
             i.ObjectID = ObjectID;
+            i.Quantity = 1;
+            i.Factor = 0;
             return i;
         }
 

@@ -27,6 +27,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _schedule, value); } 
     	}
     
+        private string _structure;
+    	public string Structure 
+    	{ 
+    		get { return _structure; } 
+    		set { SetProperty(ref _structure, value); } 
+    	}
+    
         private string _title;
     	public string Title 
     	{ 
@@ -34,32 +41,18 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _title, value); } 
     	}
     
-        private Nullable<int> _objectID;
-    	public Nullable<int> ObjectID 
+        private int _isHeader;
+    	public int IsHeader 
     	{ 
-    		get { return _objectID; } 
-    		set { SetProperty(ref _objectID, value); } 
+    		get { return _isHeader; } 
+    		set { SetProperty(ref _isHeader, value); } 
     	}
     
-        private string _objectName;
-    	public string ObjectName 
+        private Nullable<int> _level;
+    	public Nullable<int> Level 
     	{ 
-    		get { return _objectName; } 
-    		set { SetProperty(ref _objectName, value); } 
-    	}
-    
-        private int _componentObjectID;
-    	public int ComponentObjectID 
-    	{ 
-    		get { return _componentObjectID; } 
-    		set { SetProperty(ref _componentObjectID, value); } 
-    	}
-    
-        private string _componentName;
-    	public string ComponentName 
-    	{ 
-    		get { return _componentName; } 
-    		set { SetProperty(ref _componentName, value); } 
+    		get { return _level; } 
+    		set { SetProperty(ref _level, value); } 
     	}
     
         private string _type;
@@ -97,18 +90,11 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _width, value); } 
     	}
     
-        private string _contractor;
-    	public string Contractor 
+        private string _contractorSupplier;
+    	public string ContractorSupplier 
     	{ 
-    		get { return _contractor; } 
-    		set { SetProperty(ref _contractor, value); } 
-    	}
-    
-        private string _supplier;
-    	public string Supplier 
-    	{ 
-    		get { return _supplier; } 
-    		set { SetProperty(ref _supplier, value); } 
+    		get { return _contractorSupplier; } 
+    		set { SetProperty(ref _contractorSupplier, value); } 
     	}
     
         private string _workGroup;

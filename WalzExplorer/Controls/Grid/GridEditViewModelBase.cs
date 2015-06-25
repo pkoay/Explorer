@@ -35,21 +35,21 @@ namespace WalzExplorer.Controls.Grid
             _canOrder = canOrder;
         }
 
-        public virtual ModelBase DefaultItem()
+        public virtual ModelBase DefaultItem(ModelBase NearItem)
         {
             return null;
         }
        
         public ModelBase InsertNew()
         {
-            ModelBase i = DefaultItem();
+            ModelBase i = DefaultItem(null);
             data.Insert(0, i );
             return i;
             
         }
         public ModelBase InsertNew(ModelBase InsertAbove)
         {
-            ModelBase i = DefaultItem();
+            ModelBase i = DefaultItem(InsertAbove);
             if (InsertAbove != null)
                 data.Insert(this.data.IndexOf(InsertAbove), i);
             else
@@ -127,7 +127,7 @@ namespace WalzExplorer.Controls.Grid
         public void SetDefaultsForPaste(object currentitem)
         {
             //default item is with defaults set
-            object defaultItem = DefaultItem();
+            object defaultItem = DefaultItem(null);
             Type defaultItemType = defaultItem.GetType();
 
             //create new object (no defaults set)

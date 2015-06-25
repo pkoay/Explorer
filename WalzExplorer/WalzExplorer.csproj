@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>107</ApplicationRevision>
+    <ApplicationRevision>108</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -232,10 +232,14 @@
       <DependentUpon>Grid_Read.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\DrilldownWindow.cs" />
-    <Compile Include="Controls\RHSTabs\Tender\ObjectChildObjectView.xaml.cs">
+    <Compile Include="Controls\RHSTabs\Tender\EstimateItemView.xaml.cs">
+      <DependentUpon>EstimateItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\EstimateItemViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectChildObjectView.xaml.cs">
       <DependentUpon>ObjectChildObjectView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RHSTabs\Tender\ObjectChildObjectViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectChildObjectViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\EstimateView.xaml.cs">
       <DependentUpon>EstimateView.xaml</DependentUpon>
     </Compile>
@@ -250,37 +254,37 @@
     <Compile Include="Controls\RHSTabs\Tender\EstimateWorkGroupRateView.xaml.cs">
       <DependentUpon>EstimateWorkGroupRateView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RHSTabs\Tender\ObjectWorkGroupView.xaml.cs">
+    <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectWorkGroupView.xaml.cs">
       <DependentUpon>ObjectWorkGroupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RHSTabs\Tender\ObjectDetailView.xaml.cs">
+    <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectDetailView.xaml.cs">
       <DependentUpon>ObjectDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Tender\EstimateDetailViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\EstimateWorkGroupRateViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\Tender\ObjectWorkGroupViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\Tender\ObjectDetailViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectWorkGroupViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectDetailViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\ScheduleView.xaml.cs">
       <DependentUpon>ScheduleView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controls\RHSTabs\Tender\ScheduleViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\Tender\ObjectContractorView.xaml.cs">
+    <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectContractorView.xaml.cs">
       <DependentUpon>ObjectContractorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RHSTabs\Tender\ObjectMaterialView.xaml.cs">
+    <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectMaterialView.xaml.cs">
       <DependentUpon>ObjectMaterialView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RHSTabs\Tender\ObjectLabourView.xaml.cs">
+    <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectLabourView.xaml.cs">
       <DependentUpon>ObjectLabourView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RHSTabs\Tender\ObjectContractorViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\Tender\ObjectMaterialViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\Tender\ObjectView.xaml.cs">
+    <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectContractorViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectMaterialViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectView.xaml.cs">
       <DependentUpon>ObjectView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RHSTabs\Tender\ObjectLabourViewModel.cs" />
-    <Compile Include="Controls\RHSTabs\Tender\ObjectViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectLabourViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\StepView.xaml.cs">
       <DependentUpon>StepView.xaml</DependentUpon>
     </Compile>
@@ -592,6 +596,12 @@
     <Compile Include="Database\tblTender_Estimate.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\tblTender_EstimateItem.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_EstimateItemType.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\tblTender_LabourRate.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -728,7 +738,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\RHSTabs\Tender\ObjectChildObjectView.xaml">
+    <Page Include="Controls\RHSTabs\Tender\EstimateItemView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\Superseded\ObjectChildObjectView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -740,7 +754,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\RHSTabs\Tender\ObjectContractorView.xaml">
+    <Page Include="Controls\RHSTabs\Tender\Superseded\ObjectContractorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -752,23 +766,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\RHSTabs\Tender\ObjectWorkGroupView.xaml">
+    <Page Include="Controls\RHSTabs\Tender\Superseded\ObjectWorkGroupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\RHSTabs\Tender\ObjectMaterialView.xaml">
+    <Page Include="Controls\RHSTabs\Tender\Superseded\ObjectMaterialView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\RHSTabs\Tender\ObjectLabourView.xaml">
+    <Page Include="Controls\RHSTabs\Tender\Superseded\ObjectLabourView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\RHSTabs\Tender\ObjectDetailView.xaml">
+    <Page Include="Controls\RHSTabs\Tender\Superseded\ObjectDetailView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\RHSTabs\Tender\ObjectView.xaml">
+    <Page Include="Controls\RHSTabs\Tender\Superseded\ObjectView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

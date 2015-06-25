@@ -54,6 +54,8 @@ namespace WalzExplorer.Controls.Grid
 
         public class GridColumnSettings : IDisposable
         {
+            public Dictionary<string, int> order = new Dictionary<string, int>();
+            public Dictionary<string, string> replace = new Dictionary<string, string>();
             public Dictionary<string, string> rename = new Dictionary<string, string>();
             public Dictionary<string, string> background = new Dictionary<string, string>();
             public Dictionary<string, string> foreground = new Dictionary<string, string>();
@@ -300,7 +302,11 @@ namespace WalzExplorer.Controls.Grid
             //Ignore foreign key all columns
             if (c.UniqueName.StartsWith("tbl")) { e.Cancel = true; return; }
 
-
+            //replace (may replace developer columns)
+            if (columnSettings.replace.ContainsKey(c.UniqueName))
+            {
+                grd.Columns[columnSettings.replace[c.UniqueName]].DisplayIndex = grd.Columns.Count;
+            }
             //Ignore Columns for developers only while not in development mode
             if (columnSettings.developer.Contains(c.UniqueName, StringComparer.OrdinalIgnoreCase) && !_settings.DeveloperMode) { e.Cancel = true; return; }
 
@@ -372,6 +378,18 @@ namespace WalzExplorer.Controls.Grid
 
             e.Column.IsReadOnly = true;
 
+            //order
+            if (columnSettings.order.ContainsKey(c.UniqueName))
+            {
+                if (columnSettings.order[c.UniqueName] != -1)
+                {
+                    if (columnSettings.order[c.UniqueName] > grd.Columns.Count)
+                        c.DisplayIndex = grd.Columns.Count;
+                    else
+                        c.DisplayIndex = columnSettings.order[c.UniqueName];
+                }
+            }
+            
 
             grd.Rebind();
         }

@@ -10,6 +10,47 @@ using System.Windows.Data;
 
 namespace WalzExplorer.Common
 {
+
+    public class HeaderLevelConverter:IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo language)
+        {
+            if (value != null)
+            {
+                return new Thickness((int)value*10,0,0,0);
+            }
+            else
+            {
+                return new Thickness(0, 0, 0, 0);
+            }
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo language)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class NonHeaderLevelConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo language)
+        {
+            if (value != null)
+            {
+                return new Thickness(((int)value+1)*10, 0, 0, 0);
+            }
+            else
+            {
+                return new Thickness(0, 0, 0, 0);
+            }
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo language)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public class CanvasFromString : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo language)

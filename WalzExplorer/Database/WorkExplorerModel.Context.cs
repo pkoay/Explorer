@@ -70,12 +70,14 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblTender_ObjectType> tblTender_ObjectType { get; set; }
         public virtual DbSet<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
         public virtual DbSet<tblTender_WorkGroup> tblTender_WorkGroup { get; set; }
-        public virtual DbSet<tblTender_Estimate> tblTender_Estimate { get; set; }
         public virtual DbSet<vwTender_ObjectHoursByWorkGroup> vwTender_ObjectHoursByWorkGroup { get; set; }
         public virtual DbSet<vwTender_EstimateWorkGroupRate> vwTender_EstimateWorkGroupRate { get; set; }
         public virtual DbSet<tblTender_ObjectContractor> tblTender_ObjectContractor { get; set; }
         public virtual DbSet<tblTender_ObjectMaterial> tblTender_ObjectMaterial { get; set; }
         public virtual DbSet<tblTender_ObjectLabour> tblTender_ObjectLabour { get; set; }
+        public virtual DbSet<tblTender_EstimateItem> tblTender_EstimateItem { get; set; }
+        public virtual DbSet<tblTender_EstimateItemType> tblTender_EstimateItemType { get; set; }
+        public virtual DbSet<tblTender_Estimate> tblTender_Estimate { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)

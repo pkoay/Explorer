@@ -11,6 +11,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
              x:Class="WalzExplorer.Controls.RHSTabs.Tender.EstimateDetailView">
     <Grid>
-        <grid:Grid_Read  x:Name="grd"/>
+        <Grid.Resources>
+            <Style TargetType="{x:Type DataGridCell}">
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding isHeader}" Value="1">
+                        <Setter Property="FontWeight" Value="ExtraBold"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+        <grid:Grid_Read x:Name="grd"> 
+        </grid:Grid_Read>
     </Grid>
 </base:RHSTabViewBase>
