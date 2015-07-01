@@ -47,7 +47,7 @@ namespace WalzExplorer
                 // if pkoay then mimic tim rigby (ease of testing)
                 if (loginID.ToUpper() == "WALZ\\PKOAY")
                 {
-                    MimicedPerson = db.tblPersons.Where(x => x.Login == "WALZ\\trigby").FirstOrDefault();
+                    MimicedPerson = db.tblPersons.Where(x => x.Login == "WALZ\\swoodward").FirstOrDefault();
                 }
                 else
                 {

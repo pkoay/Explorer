@@ -122,7 +122,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                         BasicSetup();
                         break;
                     case 2: //Advanced (P6)
-                        AdvancedSetup();
+                        //RevenueTab();
+                       CostTab_Setup();
+                       HoursTab_Setup();
                         break;
                     case 3: //notes only
                         //Nothing
@@ -424,20 +426,24 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 switch (vm.historyData.TypeID)
                 {
                     case 1: //Basic Cost performance & Notes
-                        tcHistory.Visibility = System.Windows.Visibility.Visible;
-                        TabBasic.Visibility = System.Windows.Visibility.Visible;
-                        tcHistory.SelectedItem = TabBasic;
-                        TabRevenue.Visibility = System.Windows.Visibility.Hidden;
+                        //tcHistory.Visibility = System.Windows.Visibility.Visible;
+                        //TabBasic.Visibility = System.Windows.Visibility.Visible;
+                        //tcHistory.SelectedItem = TabBasic;
+                        
+
+                         TabBasic.Visibility = System.Windows.Visibility.Hidden;
+                        //TabRevenue.Visibility = System.Windows.Visibility.Hidden;
+                        tcHistory.Visibility = System.Windows.Visibility.Hidden;
                         break;
                     case 2: //Advanced (P6)
                         tcHistory.Visibility = System.Windows.Visibility.Visible;
-                        TabRevenue.Visibility = System.Windows.Visibility.Visible;
-                        tcHistory.SelectedItem = TabRevenue;
+                        //TabRevenue.Visibility = System.Windows.Visibility.Visible;
+                        tcHistory.SelectedItem = TabCost;
                         TabBasic.Visibility = System.Windows.Visibility.Hidden;
                         break;
                     case 3: //notes only
                         TabBasic.Visibility = System.Windows.Visibility.Hidden;
-                        TabRevenue.Visibility = System.Windows.Visibility.Hidden;
+                        //TabRevenue.Visibility = System.Windows.Visibility.Hidden;
                         tcHistory.Visibility = System.Windows.Visibility.Hidden;
                         break;
                     
@@ -458,10 +464,11 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             }
             isTabLoad = false;
         }
-        void AdvancedSetup()
+
+        void RevenueTab_Setup()
         {
 
-            #region Revenue Tab
+           
             //***********************
             //REVENUE
 
@@ -620,8 +627,333 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                "   Lower than  0.90         Light Red (Very bad)",
                "");
             grdRevenueSummary.columnSettings.toolTip.Add("CPI", cpi);
-            #endregion
+            
         }
+        
+
+        void CostTab_Setup()
+        {
+
+
+            string strPeriod = ((spWEX_RHS_Project_Performance_History_Result)cmbPeriodEnd.SelectedItem).PeriodEnd.ToString("dd-MMM-yyyy");
+
+            //Rating
+            //tbCostRating.Focusable = false;
+            //tbCostRating.ToolTip = String.Join(
+            //    Environment.NewLine,
+            //    "Cost Rating",
+            //    "",
+            //    "This rating is calculated by taking the lowest of the cost SPI or CPI rating",
+            //    "");
+
+            ////Comments
+            //tbCostComments.DataContext = vm.historyData;
+            //tbCostComments.SetBinding(TextBox.TextProperty, new Binding("CostComments"));
+            //tbCostComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
+
+
+            //Legend
+            var legendItems = new LegendItemCollection();
+            //string dataSeparator = ";";
+            foreach (var item in vm.costLegendData)
+            {
+                legendItems.Add(new LegendItem()
+                {
+                    MarkerFill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(item.Color)),
+                    Title = item.Title + dataSeparator + item.ToolTip,
+                    MarkerGeometry = new RectangleGeometry() { Rect = new Rect(0, 0, 15, 15) },
+                });
+            }
+            lgdCost.Items = legendItems;
+
+
+            //Chart
+            chartCost.Series.Clear();
+
+            //List<CartesianSeries> generatedSeries = new List<CartesianSeries>();
+            foreach (tblProject_EarnedValueType ev in vm.earnedValueList)
+            {
+                SplineSeries series = new SplineSeries();
+                series.Name = ev.Title;
+                series.DataContext = vm;
+                string TemplateName = string.Format("EllipseTemplate{0}", ev.Title);
+
+                series.PointTemplate = chartCost.Resources[TemplateName] as DataTemplate;
+                series.CategoryBinding = new PropertyNameDataPointBinding("WeekEnd");
+                series.ValueBinding = new PropertyNameDataPointBinding("Value");
+                var bc = new BrushConverter();
+                series.Stroke = (Brush)bc.ConvertFrom(ev.Color);
+
+
+                //TrackBall template
+                string dataTemplateString = @"     
+                             
+                                <DataTemplate>
+                                    <StackPanel Orientation=""Horizontal"" Margin=""5,5,10,5"" Background=""#FF1E1E1E"">
+                                        <Rectangle Height=""10"" Width=""10"" Fill=""" + ev.Color + @""" Margin=""5,5,5,5"" />
+                                        <TextBlock Text=""{Binding Path=DataPoint.Value, StringFormat='" + ev.Title + @" {0:#,##0}'}""
+                                       FontFamily=""Segoe UI""  Foreground=""#FFF1F1F1""/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            ";
+
+                MemoryStream sr = null;
+                ParserContext pc = null;
+                sr = new MemoryStream(Encoding.ASCII.GetBytes(dataTemplateString));
+                pc = new ParserContext();
+                pc.XmlnsDictionary.Add("", "http://schemas.microsoft.com/winfx/2006/xaml/presentation");
+                pc.XmlnsDictionary.Add("x", "http://schemas.microsoft.com/winfx/2006/xaml");
+                pc.XmlnsDictionary.Add("telerik", "http://schemas.telerik.com/2008/xaml/presentation");
+
+                DataTemplate datatemplate = (DataTemplate)XamlReader.Load(sr, pc);
+                series.TrackBallInfoTemplate = datatemplate;
+
+                chartCost.Series.Add(series);
+            }
+
+            //Cost Summary
+            lblCostSummary.Content = "Cost Summary (as at " + strPeriod + "):";
+
+            //Summary Grid
+            grdCostSummary.SetGrid(settings);
+            //grdCostSummary.Reset();
+            grdCostSummary.grd.ShowGroupPanel = false;
+            grdCostSummary.grd.ShowColumnFooters = false;
+            grdCostSummary.grd.CanUserFreezeColumns = false;
+            grdCostSummary.grd.IsFilteringAllowed = false;
+            grdCostSummary.grd.DataContext = vm;
+
+            grdCostSummary.columnSettings.format.Add("Planned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grdCostSummary.columnSettings.format.Add("Earned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grdCostSummary.columnSettings.format.Add("Actual", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grdCostSummary.columnSettings.format.Add("ScheduleVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grdCostSummary.columnSettings.format.Add("CostVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grdCostSummary.columnSettings.format.Add("SPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grdCostSummary.columnSettings.format.Add("CPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+
+            grdCostSummary.columnSettings.background.Add("SPI", vm.costSPIcolor);
+            grdCostSummary.columnSettings.background.Add("CPI", vm.costCPIcolor);
+            grdCostSummary.columnSettings.foreground.Add("SPI", "#FF000000");
+            grdCostSummary.columnSettings.foreground.Add("CPI", "#FF000000");
+
+            grdCostSummary.columnSettings.toolTip.Add("Planned", vm.costToolTipPlanned);
+            grdCostSummary.columnSettings.toolTip.Add("Earned", vm.costToolTipEarned);
+            grdCostSummary.columnSettings.toolTip.Add("Actual", vm.costToolTipActual);
+
+            string scheduleVariance = String.Join(
+               Environment.NewLine,
+               "Schedule Variance",
+               "",
+               "This figure calculated by Earned - Planned",
+               "",
+               "This figure is shows the 'Direct Cost' we are in front (if positive) or behind (if negative) from our plan",
+               "");
+
+            grdCostSummary.columnSettings.toolTip.Add("ScheduleVariance", scheduleVariance);
+            string costVariance = String.Join(
+             Environment.NewLine,
+             "Cost Variance",
+             "",
+             "This figure calculated by Earned - Actual",
+             "",
+             "This figure is shows the 'Direct Cost' we are in front (if positive) or behind (if negative) from our actual spend",
+             "");
+
+            grdCostSummary.columnSettings.toolTip.Add("CostVariance", costVariance);
+            string spi = String.Join(
+                Environment.NewLine,
+                "Schedule Performance Indicator",
+                "",
+                "This value is calculated by Earned/Planned",
+                "",
+                "The colours are calculated by:",
+                "   Greater than 1.10        Light green (Very good) ",
+                "   Between 1.10 and 1.00    Green (Good)",
+                "   Between 1.00 and 0.95    Yellow (Concern)",
+                "   Between 0.95 and 0.900   Red (Bad)",
+                "   Lower than  0.90         Light Red (Very bad)",
+                "");
+            grdCostSummary.columnSettings.toolTip.Add("SPI", spi);
+
+            string cpi = String.Join(
+               Environment.NewLine,
+               "Cost Performance Indicator",
+               "",
+               "This value is calculated by Earned/Actual",
+               "",
+               "The colours are calculated by:",
+               "   Greater than 1.10        Light green (Very good) ",
+               "   Between 1.10 and 1.00    Green (Good)",
+               "   Between 1.00 and 0.95    Yellow (Concern)",
+               "   Between 0.95 and 0.900   Red (Bad)",
+               "   Lower than  0.90         Light Red (Very bad)",
+               "");
+            grdCostSummary.columnSettings.toolTip.Add("CPI", cpi);
+            
+        }
+
+        void HoursTab_Setup()
+        {
+
+
+            string strPeriod = ((spWEX_RHS_Project_Performance_History_Result)cmbPeriodEnd.SelectedItem).PeriodEnd.ToString("dd-MMM-yyyy");
+
+            //Rating
+            //tbHoursRating.Focusable = false;
+            //tbHoursRating.ToolTip = String.Join(
+            //    Environment.NewLine,
+            //    "Hours Rating",
+            //    "",
+            //    "This rating is calculated by taking the lowest of the hours SPI or CPI rating",
+            //    "");
+
+            ////Comments
+            //tbHoursComments.DataContext = vm.historyData;
+            //tbHoursComments.SetBinding(TextBox.TextProperty, new Binding("HoursComments"));
+            //tbHoursComments.MouseDoubleClick += MouseDoubleClick_TextDialog;
+
+
+            //Legend
+            var legendItems = new LegendItemCollection();
+            //string dataSeparator = ";";
+            foreach (var item in vm.hoursLegendData)
+            {
+                legendItems.Add(new LegendItem()
+                {
+                    MarkerFill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(item.Color)),
+                    Title = item.Title + dataSeparator + item.ToolTip,
+                    MarkerGeometry = new RectangleGeometry() { Rect = new Rect(0, 0, 15, 15) },
+                });
+            }
+            lgdHours.Items = legendItems;
+
+
+            //Chart
+            chartHours.Series.Clear();
+
+            //List<CartesianSeries> generatedSeries = new List<CartesianSeries>();
+            foreach (tblProject_EarnedValueType ev in vm.earnedValueList)
+            {
+                SplineSeries series = new SplineSeries();
+                series.Name = ev.Title;
+                series.DataContext = vm;
+                string TemplateName = string.Format("EllipseTemplate{0}", ev.Title);
+
+                series.PointTemplate = chartHours.Resources[TemplateName] as DataTemplate;
+                series.CategoryBinding = new PropertyNameDataPointBinding("WeekEnd");
+                series.ValueBinding = new PropertyNameDataPointBinding("Value");
+                var bc = new BrushConverter();
+                series.Stroke = (Brush)bc.ConvertFrom(ev.Color);
+
+
+                //TrackBall template
+                string dataTemplateString = @"     
+                             
+                                <DataTemplate>
+                                    <StackPanel Orientation=""Horizontal"" Margin=""5,5,10,5"" Background=""#FF1E1E1E"">
+                                        <Rectangle Height=""10"" Width=""10"" Fill=""" + ev.Color + @""" Margin=""5,5,5,5"" />
+                                        <TextBlock Text=""{Binding Path=DataPoint.Value, StringFormat='" + ev.Title + @" {0:#,##0}'}""
+                                       FontFamily=""Segoe UI""  Foreground=""#FFF1F1F1""/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            ";
+
+                MemoryStream sr = null;
+                ParserContext pc = null;
+                sr = new MemoryStream(Encoding.ASCII.GetBytes(dataTemplateString));
+                pc = new ParserContext();
+                pc.XmlnsDictionary.Add("", "http://schemas.microsoft.com/winfx/2006/xaml/presentation");
+                pc.XmlnsDictionary.Add("x", "http://schemas.microsoft.com/winfx/2006/xaml");
+                pc.XmlnsDictionary.Add("telerik", "http://schemas.telerik.com/2008/xaml/presentation");
+
+                DataTemplate datatemplate = (DataTemplate)XamlReader.Load(sr, pc);
+                series.TrackBallInfoTemplate = datatemplate;
+
+                chartHours.Series.Add(series);
+            }
+
+            //Hours Summary
+            lblHoursSummary.Content = "Hours Summary (as at " + strPeriod + "):";
+
+            //Summary Grid
+            grdHoursSummary.SetGrid(settings);
+            //grdHoursSummary.Reset();
+            grdHoursSummary.grd.ShowGroupPanel = false;
+            grdHoursSummary.grd.ShowColumnFooters = false;
+            grdHoursSummary.grd.CanUserFreezeColumns = false;
+            grdHoursSummary.grd.IsFilteringAllowed = false;
+            grdHoursSummary.grd.DataContext = vm;
+
+            grdHoursSummary.columnSettings.format.Add("Planned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grdHoursSummary.columnSettings.format.Add("Earned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grdHoursSummary.columnSettings.format.Add("Actual", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grdHoursSummary.columnSettings.format.Add("ScheduleVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grdHoursSummary.columnSettings.format.Add("HoursVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grdHoursSummary.columnSettings.format.Add("SPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grdHoursSummary.columnSettings.format.Add("CPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+
+            grdHoursSummary.columnSettings.background.Add("SPI", vm.hoursSPIcolor);
+            grdHoursSummary.columnSettings.background.Add("CPI", vm.hoursCPIcolor);
+            grdHoursSummary.columnSettings.foreground.Add("SPI", "#FF000000");
+            grdHoursSummary.columnSettings.foreground.Add("CPI", "#FF000000");
+
+            grdHoursSummary.columnSettings.toolTip.Add("Planned", vm.hoursToolTipPlanned);
+            grdHoursSummary.columnSettings.toolTip.Add("Earned", vm.hoursToolTipEarned);
+            grdHoursSummary.columnSettings.toolTip.Add("Actual", vm.hoursToolTipActual);
+
+            string scheduleVariance = String.Join(
+               Environment.NewLine,
+               "Schedule Variance",
+               "",
+               "This figure calculated by Earned - Planned",
+               "",
+               "This figure is shows the 'Direct Hours' we are in front (if positive) or behind (if negative) from our plan",
+               "");
+
+            grdHoursSummary.columnSettings.toolTip.Add("ScheduleVariance", scheduleVariance);
+            string hoursVariance = String.Join(
+             Environment.NewLine,
+             "Hours Variance",
+             "",
+             "This figure calculated by Earned - Actual",
+             "",
+             "This figure is shows the 'Direct Hours' we are in front (if positive) or behind (if negative) from our actual spend",
+             "");
+
+            grdHoursSummary.columnSettings.toolTip.Add("HoursVariance", hoursVariance);
+            string spi = String.Join(
+                Environment.NewLine,
+                "Schedule Performance Indicator",
+                "",
+                "This value is calculated by Earned/Planned",
+                "",
+                "The colours are calculated by:",
+                "   Greater than 1.10        Light green (Very good) ",
+                "   Between 1.10 and 1.00    Green (Good)",
+                "   Between 1.00 and 0.95    Yellow (Concern)",
+                "   Between 0.95 and 0.900   Red (Bad)",
+                "   Lower than  0.90         Light Red (Very bad)",
+                "");
+            grdHoursSummary.columnSettings.toolTip.Add("SPI", spi);
+
+            string cpi = String.Join(
+               Environment.NewLine,
+               "Hours Performance Indicator",
+               "",
+               "This value is calculated by Earned/Actual",
+               "",
+               "The colours are calculated by:",
+               "   Greater than 1.10        Light green (Very good) ",
+               "   Between 1.10 and 1.00    Green (Good)",
+               "   Between 1.00 and 0.95    Yellow (Concern)",
+               "   Between 0.95 and 0.900   Red (Bad)",
+               "   Lower than  0.90         Light Red (Very bad)",
+               "");
+            grdHoursSummary.columnSettings.toolTip.Add("CPI", cpi);
+
+        }
+
+
         void BasicSetup()
         {
             string strPeriod = ((spWEX_RHS_Project_Performance_History_Result)cmbPeriodEnd.SelectedItem).PeriodEnd.ToString("dd-MMM-yyyy");
@@ -1049,6 +1381,65 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             vm.context.SaveChanges();
         }
 
+
+        private void RevenueTab_Refresh()
+        {
+            foreach (CartesianSeries series in chartRevenue.Series)
+            {
+                switch (series.Name)
+                {
+                    case "Planned":
+                        series.ItemsSource = vm.revenuePlannedData;
+                        break;
+                    case "Earned":
+                        series.ItemsSource = vm.revenueEarnedData;
+                        break;
+                    case "Actual":
+                        series.ItemsSource = vm.revenueActualData;
+                        break;
+                }
+            }
+            grdRevenueSummary.grd.ItemsSource = vm.revenueSummaryData;
+        }
+        private void CostTab_Refresh()
+        {
+            foreach (CartesianSeries series in chartCost.Series)
+            {
+                switch (series.Name)
+                {
+                    case "Planned":
+                        series.ItemsSource = vm.costPlannedData;
+                        break;
+                    case "Earned":
+                        series.ItemsSource = vm.costEarnedData;
+                        break;
+                    case "Actual":
+                        series.ItemsSource = vm.costActualData;
+                        break;
+                }
+            }
+            grdCostSummary.grd.ItemsSource = vm.costSummaryData;
+        }
+        private void HoursTab_Refresh()
+        {
+            foreach (CartesianSeries series in chartHours.Series)
+            {
+                switch (series.Name)
+                {
+                    case "Planned":
+                        series.ItemsSource = vm.hoursPlannedData;
+                        break;
+                    case "Earned":
+                        series.ItemsSource = vm.hoursEarnedData;
+                        break;
+                    case "Actual":
+                        series.ItemsSource = vm.hoursActualData;
+                        break;
+                }
+            }
+            grdHoursSummary.grd.ItemsSource = vm.hoursSummaryData;
+        }
+
         private void setItemSource()
         {
             //summary
@@ -1067,23 +1458,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     break;
                 case 2: //Advanced (P6)
                     //Revenue
-                    //tbCostComments.DataContext = vm.historyData;
-                    foreach (CartesianSeries series in chartRevenue.Series)
-                    {
-                        switch (series.Name)
-                        {
-                            case "Planned":
-                                series.ItemsSource = vm.revenuePlannedData;
-                                break;
-                            case "Earned":
-                                series.ItemsSource = vm.revenueEarnedData;
-                                break;
-                            case "Actual":
-                                series.ItemsSource = vm.revenueActualData;
-                                break;
-                        }
-                    }
-                    grdRevenueSummary.grd.ItemsSource = vm.revenueSummaryData;
+                    //RevenueTab_Refresh();
+                    CostTab_Refresh();
+                    HoursTab_Refresh();
                     break;
                 case 3: //notes only
                     

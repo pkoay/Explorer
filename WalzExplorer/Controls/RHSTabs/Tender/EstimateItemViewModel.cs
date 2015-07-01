@@ -20,6 +20,9 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         int Default_SubcontractorID;
         int Default_WorkGroupID;
         int Default_UnitOfMeasureID;
+        int Default_DrawingID;
+        int Default_SupplierID;
+        int Default_MaterialID;
 
         public EstimateItemViewModel(WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
@@ -28,6 +31,9 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             Default_SubcontractorID = context.tblTender_Subcontractor.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().SubcontractorID;
             Default_WorkGroupID = context.tblTender_WorkGroup.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().WorkGroupID;
             Default_UnitOfMeasureID = context.tblTender_UnitOfMeasure.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().UnitOfMeasureID;
+            Default_DrawingID = context.tblTender_Drawing.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().DrawingID;
+            Default_SupplierID = context.tblTender_Supplier.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().SupplierID;
+            Default_MaterialID = context.tblTender_Material.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().MaterialID;
             
         }
 
@@ -41,8 +47,11 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             i.WorkGroupID = Default_WorkGroupID;
             i.SubcontractorID = Default_SubcontractorID;
             i.EstimateItemTypeID = 1;
-            
+            i.Markup = .1;
             i.UnitOfMeasureID = Default_UnitOfMeasureID;
+            i.DrawingID = Default_DrawingID;
+            i.SupplierID = Default_SupplierID;
+            i.MaterialID = Default_MaterialID;
             return i;
         }
 

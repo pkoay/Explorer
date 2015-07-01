@@ -22,6 +22,12 @@ namespace WalzExplorer.Database
 
     public partial class tblTender_EstimateItem : ModelBase
     {
+        public string Seperator
+
+        {
+            get { return ""; }
+        }
+
         public bool IsHeader
         {
             get
@@ -42,7 +48,7 @@ namespace WalzExplorer.Database
             get
             {
                 double? value = null;
-                switch (EstimateItemID)
+                switch (EstimateItemTypeID)
                 {
                     case 1: if (tblTender_WorkGroup != null)  value = tblTender_WorkGroup.vwTender_EstimateWorkGroupRate.Rate;
                         break;
@@ -58,7 +64,7 @@ namespace WalzExplorer.Database
             get
             {
                 double value = 0;
-                switch (EstimateItemID)
+                switch (EstimateItemTypeID)
                 {
                     case 1: value = Men * HoursPerDay * Days;
                         break;
@@ -74,14 +80,18 @@ namespace WalzExplorer.Database
             get 
             {
                 double value = 0;
-                switch (EstimateItemID)
+                switch (EstimateItemTypeID)
                 {
                     case 1: if (tblTender_WorkGroup!=null) value = Men * HoursPerDay * Days * tblTender_WorkGroup.vwTender_EstimateWorkGroupRate.Rate * (1 + Markup);
                         break;
-                    case 2: value = Quantity * SubcontractorRate * (1 + Markup);
+                    case 2:
+                    case 4:
+                        value = Cost* (1 + Markup);
                         break;
-                    case 3: value = 0;
+                    case 3:
+                        value = 0;
                         break;
+                    
                 }
                 return value; 
             }

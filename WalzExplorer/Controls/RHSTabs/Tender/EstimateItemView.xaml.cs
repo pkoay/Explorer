@@ -23,6 +23,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
     public partial class EstimateItemView : RHSTabViewBase
     {
+        private HashSet<string> defaultColumns = new HashSet<string>() { "cmbScheduleID", "UpdatedBy", "UpdatedDate", "SortOrder" };
 
         EstimateItemViewModel vm;
 
@@ -54,11 +55,11 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             grd.columnsettings.Add("Days", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
             grd.columnsettings.Add("Quantity", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G, rename = "Qty" });
             grd.columnsettings.Add("SubcontractorRate", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G, rename = "Subcon Rate" });
-            grd.columnsettings.Add("Markup", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.P2 });
+            grd.columnsettings.Add("Markup", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.P0});
             grd.columnsettings.Add("Comment", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.TEXT });
             grd.columnsettings.Add("WorkGroupRate", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.N2, rename = "WG Rate", isReadonly = true });
             grd.columnsettings.Add("TotalLabourHours", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.N2, aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, rename = "Hours" ,isReadonly=true});
-            grd.columnsettings.Add("TotalCost", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.N2, aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, rename = "Cost", isReadonly = true });
+            grd.columnsettings.Add("TotalCost", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.N2, aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, isReadonly = true });
             grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { CellStyle = CellStyle(), format = GridEditViewBase.columnSetting.formatType.TEXT ,order =2});
             grd.columnsettings.Add("UnitCost", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
             grd.columnsettings.Add("Cost", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
@@ -133,12 +134,39 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             return rstyle;
         }
 
+        private void HideColumn(GridViewColumn c)
+        {
+            // note don't use invisible here as cannot copy paste invisible columns . Therefore when we want to copy large sections (and even lines) we lose columns that are invisible (not what we want). 
+            // E.g. when in a labour view and we copy and paste a material we lose all material fields not visible e.g. length,width  etc.
+           
+                c.MaxWidth = 0;
+                c.TabStopMode = GridViewTabStop.Skip;
+        }
+
+        private void UnhideColumn(GridViewColumn c,int index)
+        {
+            {
+                c.MaxWidth = double.PositiveInfinity;
+                c.TabStopMode = GridViewTabStop.Stop;
+                c.DisplayIndex = index;
+            }
+        }
+
         private void RadRadioButton_Click(object sender, RoutedEventArgs e)
         {
+            //Hide all columns
+            foreach (GridViewColumn c in grd.grd.Columns)
+            {
+                if (c.IsVisible == true) // not a developer column, related table column etc..
+                {
+                    HideColumn(c);
+                }
+            }
             RadRadioButton btn = (RadRadioButton)e.Source;
             string display = btn.Content.ToString().Trim();
 
-            //display all columns
+          
+            
             grd.grd.Columns["Men"].IsVisible = true;
             grd.grd.Columns["HoursPerDay"].IsVisible = true;
             grd.grd.Columns["Days"].IsVisible = true;
@@ -157,6 +185,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             grd.grd.Columns["Cost"].IsVisible = true;
             grd.grd.Columns["WorkGroupRate"].IsVisible = true;
             grd.grd.Columns["cmbWorkGroupID"].IsVisible = true;
+            grd.grd.Columns["TotalLabourHours"].IsVisible = true;
             
             switch (display)
             {
@@ -164,7 +193,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                     //nothing
                     break;
                 case "Labour":
-                    grd.grd.Columns["cmbWorkGroupID"].DisplayIndex = 5;
+                    UnhideColumn(grd.grd.Columns["cmbWorkGroupID"],5);
                     grd.grd.Columns["Men"].DisplayIndex = 6;
                     grd.grd.Columns["HoursPerDay"].DisplayIndex = 7;
                     grd.grd.Columns["Days"].DisplayIndex = 8;
@@ -175,6 +204,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                     grd.grd.Columns["TotalCost"].DisplayIndex = 13;
                     grd.grd.Columns["cmbDrawingID"].DisplayIndex = 14;
                     grd.grd.Columns["Comment"].DisplayIndex = 15;
+                    grd.grd.Columns["Seperator"].DisplayIndex = 16;
                     grd.grd.Columns["cmbSubcontractorID"].IsVisible = false;
                     grd.grd.Columns["SubcontractorRate"].IsVisible = false;
                     grd.grd.Columns["cmbUnitOfMeasureID"].IsVisible = false;
@@ -183,11 +213,24 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                     grd.grd.Columns["cmbSupplierID"].IsVisible = false;
                     grd.grd.Columns["Length"].IsVisible = false;
                     grd.grd.Columns["Width"].IsVisible = false;
-                    grd.grd.Columns["Grade"].IsVisible = false;
+                    grd.grd.Columns["Grade"].MaxWidth=0;
+                    //grd.grd.Columns["Grade"].IsReadOnly = true;
                     grd.grd.Columns["UnitCost"].IsVisible = false;
                     grd.grd.Columns["Cost"].IsVisible = false;
                     break;
                 case "Subcontractors":
+                    grd.grd.Columns["Cost"].DisplayIndex = 5;
+                    grd.grd.Columns["cmbUnitOfMeasureID"].DisplayIndex = 6;
+                    grd.grd.Columns["Quantity"].DisplayIndex =7;
+                    grd.grd.Columns["UnitCost"].DisplayIndex = 8;
+                    grd.grd.Columns["Markup"].DisplayIndex = 9;
+                    grd.grd.Columns["TotalCost"].DisplayIndex = 10;
+                    grd.grd.Columns["cmbSubcontractorID"].DisplayIndex = 11;
+                    grd.grd.Columns["Length"].DisplayIndex = 12;
+                    grd.grd.Columns["Width"].DisplayIndex = 13;
+                    grd.grd.Columns["Grade"].DisplayIndex = 14;
+                    grd.grd.Columns["cmbDrawingID"].DisplayIndex = 15;
+                    grd.grd.Columns["Comment"].DisplayIndex = 16;
                     grd.grd.Columns["cmbWorkGroupID"].IsVisible = false;
                     grd.grd.Columns["Men"].IsVisible = false;
                     grd.grd.Columns["HoursPerDay"].IsVisible = false;
@@ -198,8 +241,22 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                     grd.grd.Columns["Length"].IsVisible = false;
                     grd.grd.Columns["Width"].IsVisible = false;
                     grd.grd.Columns["Grade"].IsVisible = false;
+                    grd.grd.Columns["WorkGroupRate"].IsVisible = false;
+                    grd.grd.Columns["TotalLabourHours"].IsVisible = false;
                     break;
                 case "Materials":
+                    grd.grd.Columns["Cost"].DisplayIndex = 5;
+                    grd.grd.Columns["cmbMaterialID"].DisplayIndex = 6;
+                    grd.grd.Columns["Quantity"].DisplayIndex =7;
+                    grd.grd.Columns["UnitCost"].DisplayIndex = 8;
+                    grd.grd.Columns["Markup"].DisplayIndex = 9;
+                    grd.grd.Columns["TotalCost"].DisplayIndex = 10;
+                    grd.grd.Columns["cmbSupplierID"].DisplayIndex = 11;
+                    grd.grd.Columns["Length"].DisplayIndex = 12;
+                    grd.grd.Columns["Width"].DisplayIndex = 13;
+                    grd.grd.Columns["Grade"].DisplayIndex = 14;
+                    grd.grd.Columns["cmbDrawingID"].DisplayIndex = 15;
+                    grd.grd.Columns["Comment"].DisplayIndex = 16;
                     grd.grd.Columns["cmbWorkGroupID"].IsVisible = false;
                     grd.grd.Columns["Men"].IsVisible = false;
                     grd.grd.Columns["HoursPerDay"].IsVisible = false;
@@ -208,8 +265,23 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                     grd.grd.Columns["cmbSubcontractorID"].IsVisible = false;
                     grd.grd.Columns["cmbSupplierID"].IsVisible = false;
                     grd.grd.Columns["cmbUnitOfMeasureID"].IsVisible = false;
+                    grd.grd.Columns["TotalLabourHours"].IsVisible = false;
+                    grd.grd.Columns["WorkGroupRate"].IsVisible = false;
+                    grd.grd.Columns["Grade"].MaxWidth = 1000000;
                     break;
                 case "Basic":
+                    grd.grd.Columns["Cost"].DisplayIndex = 5;
+                    grd.grd.Columns["cmbWorkGroupID"].DisplayIndex = 6;
+                    grd.grd.Columns["Men"].DisplayIndex = 7;
+                    grd.grd.Columns["HoursPerDay"].DisplayIndex = 8;
+                    grd.grd.Columns["Days"].DisplayIndex = 9;
+                    grd.grd.Columns["Quantity"].DisplayIndex = 10;
+                    grd.grd.Columns["TotalLabourHours"].DisplayIndex = 11;
+                    grd.grd.Columns["WorkGroupRate"].DisplayIndex = 12;
+                    grd.grd.Columns["Markup"].DisplayIndex = 13;
+                    grd.grd.Columns["TotalCost"].DisplayIndex = 14;
+                    grd.grd.Columns["cmbDrawingID"].DisplayIndex = 15;
+                    grd.grd.Columns["Comment"].DisplayIndex = 16;
                     grd.grd.Columns["cmbSubcontractorID"].IsVisible = false;
                     grd.grd.Columns["SubcontractorRate"].IsVisible = false;
                     grd.grd.Columns["cmbMaterialID"].IsVisible = false;

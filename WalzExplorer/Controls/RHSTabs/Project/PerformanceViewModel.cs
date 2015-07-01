@@ -52,18 +52,33 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         public tblProject_HistoryRating revenueRating;
 
 
+
+        //Cost
+        public ObservableCollection<tblProject_HistoryDollars> costPlannedData;
+        public ObservableCollection<tblProject_HistoryDollars> costEarnedData;
+        public ObservableCollection<tblProject_HistoryDollars> costActualData;
+        public ObservableCollection<EarnedValueSummarydata> costSummaryData = new ObservableCollection<EarnedValueSummarydata>();
+        public ObservableCollection<CustomLegendItem> costLegendData = new ObservableCollection<CustomLegendItem>();
+        public string costSPIcolor;
+        public string costCPIcolor;
+        public string costToolTipPlanned;
+        public string costToolTipEarned;
+        public string costToolTipActual;
+        public tblProject_HistoryRating costRating;
+
+
         //Hours
-        //public ObservableCollection<tblProject_HistoryHours> hoursPlannedData;
-        //public ObservableCollection<tblProject_HistoryHours> hoursEarnedData;
-        //public ObservableCollection<tblProject_HistoryHours> hoursActualData;
-        //public ObservableCollection<EarnedValueSummarydata> hoursSummaryData = new ObservableCollection<EarnedValueSummarydata>();
-        //public ObservableCollection<CustomLegendItem> hoursLegendData = new ObservableCollection<CustomLegendItem>();
-        //public string hoursSPIcolor;
-        //public string hoursCPIcolor;
-        //public string hoursToolTipPlanned;
-        //public string hoursToolTipEarned;
-        //public string hoursToolTipActual;
-        //public tblProject_HistoryRating hoursRating;
+        public ObservableCollection<tblProject_HistoryHours> hoursPlannedData;
+        public ObservableCollection<tblProject_HistoryHours> hoursEarnedData;
+        public ObservableCollection<tblProject_HistoryHours> hoursActualData;
+        public ObservableCollection<EarnedValueSummarydata> hoursSummaryData = new ObservableCollection<EarnedValueSummarydata>();
+        public ObservableCollection<CustomLegendItem> hoursLegendData = new ObservableCollection<CustomLegendItem>();
+        public string hoursSPIcolor;
+        public string hoursCPIcolor;
+        public string hoursToolTipPlanned;
+        public string hoursToolTipEarned;
+        public string hoursToolTipActual;
+        public tblProject_HistoryRating hoursRating;
 
 
         //Basic
@@ -124,12 +139,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             isOperationsManager = (_settings.user.MimicedPerson.PersonID == projectData.OperationsManagerID);
             isAdministrator = (_settings.user.SecurityGroups.Contains("WP_Admin_Senior") || _settings.user.SecurityGroups.Contains("WD_IT"));
 
-          
-
-          
-
-         
-
             //Hours
             //hoursActualData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 3));
             //hoursEarnedData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 2));
@@ -172,6 +181,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     break;
                 case 2: //Advanced (P6)
                     RevenueDataSetup(HistoryID);
+                    CostDataSetup(HistoryID);
+                    HoursDataSetup(HistoryID);
                     break;
                 case 3: //notes only
                     //Nothing
@@ -227,6 +238,100 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             {
                 CustomLegendItem costLegendItem = new CustomLegendItem() { Title = evt.Title, Color = evt.Color, ToolTip = evt.ToolTipCost };
                 revenueLegendData.Add(costLegendItem);
+            }
+
+        }
+
+        private void CostDataSetup(int HistoryID)
+        {
+            //General
+            DateTime dtPeriodEnd = historyData.PeriodEnd;
+
+            double dPlanned;
+            double dEarned;
+            double dActual;
+
+            //Cost
+            costActualData = new ObservableCollection<tblProject_HistoryDollars>(context.tblProject_HistoryDollars.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 3));
+            costEarnedData = new ObservableCollection<tblProject_HistoryDollars>(context.tblProject_HistoryDollars.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 2));
+            costPlannedData = new ObservableCollection<tblProject_HistoryDollars>(context.tblProject_HistoryDollars.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 1));
+            costToolTipPlanned = earnedValueList.Where(x => x.Title == "Planned").First().ToolTipCost;
+            costToolTipEarned = earnedValueList.Where(x => x.Title == "Earned").First().ToolTipCost;
+            costToolTipActual = earnedValueList.Where(x => x.Title == "Actual").First().ToolTipCost;
+
+            dPlanned = (costPlannedData.Count == 0) ? 0 : costPlannedData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
+            dEarned = (costEarnedData.Count == 0) ? 0 : costEarnedData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
+            dActual = (costActualData.Count == 0) ? 0 : costActualData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
+
+            costSummaryData.Clear();
+            costSummaryData.Add(new EarnedValueSummarydata()
+            {
+                Planned = dPlanned,
+                Earned = dEarned,
+                Actual = dActual,
+                ScheduleVariance = dEarned - dPlanned,
+                CostVariance = dEarned - dActual,
+                SPI = dEarned / dPlanned,
+                CPI = dEarned / dActual,
+            });
+
+            costSPIcolor = GetRating(dEarned / dPlanned, "CostCPISPI").Color;
+            costCPIcolor = GetRating(dEarned / dActual, "CostCPISPI").Color;
+            costRating = GetRating(dEarned / Math.Max(dPlanned, dActual), "CostCPISPI");
+            summaryRating = costRating;
+
+            //Cost Legend
+            foreach (tblProject_EarnedValueType evt in earnedValueList)
+            {
+                CustomLegendItem costLegendItem = new CustomLegendItem() { Title = evt.Title, Color = evt.Color, ToolTip = evt.ToolTipCost };
+                costLegendData.Add(costLegendItem);
+            }
+
+        }
+
+        private void HoursDataSetup(int HistoryID)
+        {
+            //General
+            DateTime dtPeriodEnd = historyData.PeriodEnd;
+
+            double dPlanned;
+            double dEarned;
+            double dActual;
+
+            //Hours
+            hoursActualData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 3));
+            hoursEarnedData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 2));
+            hoursPlannedData = new ObservableCollection<tblProject_HistoryHours>(context.tblProject_HistoryHours.Where(x => x.HistoryID == HistoryID && x.EarnedValueTypeID == 1));
+            hoursToolTipPlanned = earnedValueList.Where(x => x.Title == "Planned").First().ToolTipHours;
+            hoursToolTipEarned = earnedValueList.Where(x => x.Title == "Earned").First().ToolTipHours;
+            hoursToolTipActual = earnedValueList.Where(x => x.Title == "Actual").First().ToolTipHours;
+
+            dPlanned = (hoursPlannedData.Count == 0) ? 0 : hoursPlannedData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
+            dEarned = (hoursEarnedData.Count == 0) ? 0 : hoursEarnedData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
+            dActual = (hoursActualData.Count == 0) ? 0 : hoursActualData.Where(x => x.WeekEnd == dtPeriodEnd).FirstOrDefault().Value;
+
+            hoursSummaryData.Clear();
+            hoursSummaryData.Add(new EarnedValueSummarydata()
+            {
+                Planned = dPlanned,
+                Earned = dEarned,
+                Actual = dActual,
+                ScheduleVariance = dEarned - dPlanned,
+                CostVariance = dEarned - dActual,
+                SPI = dEarned / dPlanned,
+                CPI = dEarned / dActual,
+            });
+
+            hoursSPIcolor = GetRating(dEarned / dPlanned, "HoursCPISPI").Color;
+            hoursCPIcolor = GetRating(dEarned / dActual, "HoursCPISPI").Color;
+            hoursRating = GetRating(dEarned / Math.Max(dPlanned, dActual), "HoursCPISPI");
+            summaryRating = hoursRating;
+
+            //Hours Legend
+            foreach (tblProject_EarnedValueType evt in earnedValueList)
+            {
+                CustomLegendItem hoursLegendItem = new CustomLegendItem() { Title = evt.Title, Color = evt.Color, ToolTip = evt.ToolTipHours };
+                hoursLegendData.Add(hoursLegendItem);
             }
 
         }

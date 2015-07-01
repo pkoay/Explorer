@@ -57,7 +57,7 @@ namespace WalzExplorer.Controls.Grid
                 N2,
                 N,
                 P2,
-                P,
+                P0,
             }
             public string rename = null;
             public string background = null;
@@ -220,6 +220,7 @@ namespace WalzExplorer.Controls.Grid
                 }
             }
             grd.ContextMenu = cm;
+            
         }
         
         //isEditing
