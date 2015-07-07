@@ -119,7 +119,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 switch (vm.historyData.TypeID)
                 {
                     case 1: //Basic Cost performance & Notes
-                        BasicSetup();
+                        Basic_Setup();
                         break;
                     case 2: //Advanced (P6)
                         //RevenueTab();
@@ -465,6 +465,8 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             isTabLoad = false;
         }
 
+
+        //SETUP
         void RevenueTab_Setup()
         {
 
@@ -629,8 +631,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grdRevenueSummary.columnSettings.toolTip.Add("CPI", cpi);
             
         }
-        
-
         void CostTab_Setup()
         {
 
@@ -746,7 +746,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                "",
                "This figure calculated by Earned - Planned",
                "",
-               "This figure is shows the 'Direct Cost' we are in front (if positive) or behind (if negative) from our plan",
+               "This figure is shows the 'Cost Dollars' we are in front (if positive) or behind (if negative) from our plan",
                "");
 
             grdCostSummary.columnSettings.toolTip.Add("ScheduleVariance", scheduleVariance);
@@ -756,7 +756,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
              "",
              "This figure calculated by Earned - Actual",
              "",
-             "This figure is shows the 'Direct Cost' we are in front (if positive) or behind (if negative) from our actual spend",
+             "This figure is shows the 'Cost Dollars' we are in front (if positive) or behind (if negative) from our actual spend",
              "");
 
             grdCostSummary.columnSettings.toolTip.Add("CostVariance", costVariance);
@@ -791,7 +791,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grdCostSummary.columnSettings.toolTip.Add("CPI", cpi);
             
         }
-
         void HoursTab_Setup()
         {
 
@@ -888,7 +887,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grdHoursSummary.columnSettings.format.Add("Earned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grdHoursSummary.columnSettings.format.Add("Actual", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grdHoursSummary.columnSettings.format.Add("ScheduleVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
-            grdHoursSummary.columnSettings.format.Add("HoursVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grdHoursSummary.columnSettings.format.Add("CostVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grdHoursSummary.columnSettings.format.Add("SPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grdHoursSummary.columnSettings.format.Add("CPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
 
@@ -913,14 +912,14 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grdHoursSummary.columnSettings.toolTip.Add("ScheduleVariance", scheduleVariance);
             string hoursVariance = String.Join(
              Environment.NewLine,
-             "Hours Variance",
+             "Cost Variance",
              "",
              "This figure calculated by Earned - Actual",
              "",
              "This figure is shows the 'Direct Hours' we are in front (if positive) or behind (if negative) from our actual spend",
              "");
 
-            grdHoursSummary.columnSettings.toolTip.Add("HoursVariance", hoursVariance);
+            grdHoursSummary.columnSettings.toolTip.Add("CostVariance", hoursVariance);
             string spi = String.Join(
                 Environment.NewLine,
                 "Schedule Performance Indicator",
@@ -938,7 +937,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 
             string cpi = String.Join(
                Environment.NewLine,
-               "Hours Performance Indicator",
+               "Cost Performance Indicator",
                "",
                "This value is calculated by Earned/Actual",
                "",
@@ -952,9 +951,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grdHoursSummary.columnSettings.toolTip.Add("CPI", cpi);
 
         }
-
-
-        void BasicSetup()
+        void Basic_Setup()
         {
             string strPeriod = ((spWEX_RHS_Project_Performance_History_Result)cmbPeriodEnd.SelectedItem).PeriodEnd.ToString("dd-MMM-yyyy");
             #region Basic Tab
@@ -1073,7 +1070,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 niBasicCostAtCompletion.Value = actual / niBasicPercentComplete.Value * 100;
             BasicCalculateEarnedandCPIandRating();
         }
-
         void niBasicCostAtCompletion_LostFocus(object sender, RoutedEventArgs e)
         {
             float actual = ConvertLibrary.StringToFloat(tbBasicActual.Text, 0);
@@ -1083,7 +1079,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             niBasicPercentComplete.Value = actual / niBasicCostAtCompletion.Value *100;
             BasicCalculateEarnedandCPIandRating();
         }
-
         void BasicCalculateEarnedandCPIandRating()
         {
             vm.BasicSetEarnedAndCPIAndRating();

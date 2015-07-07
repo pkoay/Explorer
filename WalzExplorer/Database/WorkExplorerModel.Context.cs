@@ -78,6 +78,7 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblTender_Subcontractor> tblTender_Subcontractor { get; set; }
         public virtual DbSet<tblTender_SubcontractorType> tblTender_SubcontractorType { get; set; }
         public virtual DbSet<tblTender_EstimateItem> tblTender_EstimateItem { get; set; }
+        public virtual DbSet<vwProject_CostCodeIndirectView> vwProject_CostCodeIndirectView { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)
@@ -601,6 +602,28 @@ namespace WalzExplorer.Database
                 new ObjectParameter("TenderID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spTender_EstimateDetail_Result>("spTender_EstimateDetail", tenderIDParameter);
+        }
+    
+        public virtual int spProject_CostcodeIsIndirectUpdate(Nullable<int> projectID, Nullable<bool> isIndirect)
+        {
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            var isIndirectParameter = isIndirect.HasValue ?
+                new ObjectParameter("IsIndirect", isIndirect) :
+                new ObjectParameter("IsIndirect", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProject_CostcodeIsIndirectUpdate", projectIDParameter, isIndirectParameter);
+        }
+    
+        public virtual ObjectResult<spWEX_RHS_Project_CostBudgetVsActualWithoutCategory_Result> spWEX_RHS_Project_CostBudgetVsActualWithoutCategory(Nullable<int> projectID)
+        {
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_CostBudgetVsActualWithoutCategory_Result>("spWEX_RHS_Project_CostBudgetVsActualWithoutCategory", projectIDParameter);
         }
     }
 }

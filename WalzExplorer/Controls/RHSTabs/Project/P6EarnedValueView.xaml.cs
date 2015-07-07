@@ -51,7 +51,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.columnSettings.developer.Add("BudgetedMaterialQty");
             grd.columnSettings.developer.Add("BudgetedNonLabourQty");
 
-            grd.columnSettings.rename.Add("BudgetedTotalCost", "Contract Value");
+            grd.columnSettings.rename.Add("BudgetedTotalCost", "Cost Budget");
             grd.columnSettings.rename.Add("BudgetedLabourQty", "Direct Labour Budget");
             grd.columnSettings.rename.Add("target_start_date", "Baseline Start");
             grd.columnSettings.rename.Add("target_end_date", "Baseline End");

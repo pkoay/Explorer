@@ -180,9 +180,13 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                     BasicSetEarnedAndCPIAndRating();
                     break;
                 case 2: //Advanced (P6)
-                    RevenueDataSetup(HistoryID);
+                    //RevenueDataSetup(HistoryID);
                     CostDataSetup(HistoryID);
                     HoursDataSetup(HistoryID);
+
+                    int WorstRating = Math.Min(hoursRating.RatingID,costRating.RatingID);
+                    summaryRating = context.tblProject_HistoryRating.Where(x => x.RatingID == WorstRating).First();
+                    
                     break;
                 case 3: //notes only
                     //Nothing
@@ -325,7 +329,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             hoursSPIcolor = GetRating(dEarned / dPlanned, "HoursCPISPI").Color;
             hoursCPIcolor = GetRating(dEarned / dActual, "HoursCPISPI").Color;
             hoursRating = GetRating(dEarned / Math.Max(dPlanned, dActual), "HoursCPISPI");
-            summaryRating = hoursRating;
+            
 
             //Hours Legend
             foreach (tblProject_EarnedValueType evt in earnedValueList)

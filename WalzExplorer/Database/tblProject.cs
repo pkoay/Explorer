@@ -208,6 +208,13 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _tempContractType, value); } 
     	}
     
+        private bool _tempIsIndirect;
+    	public bool TempIsIndirect 
+    	{ 
+    		get { return _tempIsIndirect; } 
+    		set { SetProperty(ref _tempIsIndirect, value); } 
+    	}
+    
     
         public virtual tblPerson tblPerson { get; set; }
         public virtual tblPerson tblPerson1 { get; set; }

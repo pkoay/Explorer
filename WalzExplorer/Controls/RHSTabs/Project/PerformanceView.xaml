@@ -51,7 +51,7 @@
                 </telerik:RadTabItem>-->
 
                 <!--BASIC TAB-->
-                <telerik:RadTabItem Name="TabBasic" Header="Basic" Margin="0">
+                <telerik:RadTabItem Name="TabBasic" Header="Basic" Margin="0" Visibility="Collapsed">
 
                     <Grid Background="Transparent">
                         <Grid.RowDefinitions>
@@ -247,7 +247,7 @@
 
 
                             <telerik:RadCartesianChart.HorizontalAxis>
-                                <telerik:DateTimeCategoricalAxis   ElementBrush ="{DynamicResource TextBrush}" LabelFormat="dd-MMM-yy"/>
+                                <telerik:DateTimeCategoricalAxis   ElementBrush ="{DynamicResource TextBrush}" LabelFormat="dd-MMM-yy" LabelFitMode="Rotate"/>
                             </telerik:RadCartesianChart.HorizontalAxis>
                             <telerik:RadCartesianChart.VerticalAxis>
                                 <telerik:LinearAxis Title="COST DOLLARS"  ElementBrush="{DynamicResource TextBrush}" LabelFormat="#,##0"/>
@@ -338,7 +338,7 @@
 
 
                             <telerik:RadCartesianChart.HorizontalAxis>
-                                <telerik:DateTimeCategoricalAxis   ElementBrush ="{DynamicResource TextBrush}" LabelFormat="dd-MMM-yy"/>
+                                <telerik:DateTimeCategoricalAxis   ElementBrush ="{DynamicResource TextBrush}" LabelFormat="dd-MMM-yy"   LabelFitMode="Rotate"/>
                             </telerik:RadCartesianChart.HorizontalAxis>
                             <telerik:RadCartesianChart.VerticalAxis>
                                 <telerik:LinearAxis Title="DIRECT HOURS"  ElementBrush="{DynamicResource TextBrush}" LabelFormat="#,##0"/>
@@ -464,7 +464,7 @@
                 </telerik:RadTabItem>-->
 
                 <!--SAFETY TAB-->
-                <telerik:RadTabItem Header="Safety" Margin="0" Visibility="Hidden">
+                <telerik:RadTabItem Header="Safety" Margin="0" Visibility="Collapsed">
                     <Grid Background="Transparent">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="90"/>
