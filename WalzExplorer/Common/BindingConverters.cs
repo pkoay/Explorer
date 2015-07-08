@@ -59,7 +59,9 @@ namespace WalzExplorer.Common
             {
                 ResourceDictionary rdIcon = new ResourceDictionary();
                 rdIcon.Source = new Uri("/WalzExplorer;component/Resources/Icons.xaml", UriKind.RelativeOrAbsolute);
-                return rdIcon[value as string] as Canvas;
+                Canvas c = rdIcon[value as string] as Canvas;
+                return c;
+                //return rdIcon[value as string] as Canvas;
             }
             else
             {

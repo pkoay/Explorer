@@ -1,0 +1,24 @@
+﻿<Window x:Class="WalzExplorer.Windows.PaletteView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
+        Title="Pallete" Height="300" Width="300" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="Colour_CellStyle" TargetType="telerik:GridViewCell" BasedOn="{StaticResource GridViewCellStyle}">
+            <Setter Property="Background" Value="{Binding ccolor}" />
+            <Setter Property="Foreground" Value="Blue"/>
+        </Style>
+    </Window.Resources>
+    <Grid x:Name="grid">
+        
+        <telerik:RadGridView Name="grd" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
+        
+          
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding name}" Header="name" />
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ccolor}" Header="colour" />
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding display}" Header="display"  CellStyle="{StaticResource Colour_CellStyle}"/>
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+    </Grid>
+</Window>

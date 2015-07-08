@@ -5,9 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WalzExplorer.Controls.TreeView.ViewModel"
              xmlns:Common="clr-namespace:WalzExplorer.Common"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Background="#FF252526">
+    <Grid Background="{telerik:VisualStudio2013Resource ResourceKey=MainBrush}">
         <!--<Label Name="lblSearch" Content="Search:" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <TextBox Name="tbSearch" HorizontalAlignment="Stretch" Margin="53,10,40,0" Height="10" VerticalAlignment="Top" KeyDown="tbSearch_KeyDown"/>
         <Button Name="btnSearch" Width ="25" Height="22"  Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" ToolTip="Search" Click="btnSearch_Click">
@@ -42,7 +43,7 @@
           ItemsSource="{Binding Children}"
           >
                 <StackPanel Orientation="Horizontal" Margin="2,2,2,2" ToolTip="{Binding NodeToolTip}">
-                    <Rectangle Width="12" Height="12" Fill="White" Margin="0,0,10,0" >
+                        <Rectangle Width="12" Height="12" Fill="{telerik:VisualStudio2013Resource ResourceKey=MarkerBrush}" Margin="0,0,10,0" >
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill" Visual="{Binding NodeIcon,Converter={StaticResource CanvasFromString}}" />
                         </Rectangle.OpacityMask>

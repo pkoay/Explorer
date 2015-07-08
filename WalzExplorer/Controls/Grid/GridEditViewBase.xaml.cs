@@ -34,6 +34,8 @@ namespace WalzExplorer.Controls.Grid
 
         //defaults
         private HashSet<string> defaultDeveloperColumns = new HashSet<string>() {"RowVersion","UpdatedBy","UpdatedDate","SortOrder"};
+        private string defaultForegroundReadonly = GraphicsLibrary.HexOfColorWithAlpha(VisualStudio2013Palette.Palette.StrongColor, 255);
+        private string defaultBackgroundReadonly = GraphicsLibrary.HexOfColorWithAlpha(VisualStudio2013Palette.Palette.PrimaryColor, 128);
 
         //Display settings
         public class columnSetting : IDisposable
@@ -540,8 +542,9 @@ namespace WalzExplorer.Controls.Grid
                 //determine foreground/background
                 if (colsetting.isReadonly ||!_canEdit || colsetting.isDeveloper)
                 {
-                    foreground = "#FF999999";
-                    background = "#4C35496A";
+
+                    foreground = defaultForegroundReadonly;
+                    background = defaultBackgroundReadonly;
                     c.IsReadOnly = true;
                     c.IsEnabled = true;
                     
@@ -627,7 +630,8 @@ namespace WalzExplorer.Controls.Grid
             {
                 if (!_canEdit)
                 {
-                    c.CellStyle=CellStyle(null,"#FF999999","#4C35496A");
+
+                    c.CellStyle = CellStyle(null, defaultForegroundReadonly, defaultBackgroundReadonly);
                 }
             }
 
@@ -657,7 +661,7 @@ namespace WalzExplorer.Controls.Grid
                     {
                         cmb.IsReadOnly = true;
                         //cmb.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#4C35496A");
-                        cmb.CellStyle = CellStyle(null ,"#FF999999", "#4C35496A");
+                        cmb.CellStyle = CellStyle(null, defaultForegroundReadonly, defaultBackgroundReadonly);
                     }
                 }
             }

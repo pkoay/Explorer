@@ -726,6 +726,10 @@
     <Compile Include="test.xaml.cs">
       <DependentUpon>test.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\PaletteViewModel.cs" />
+    <Compile Include="Windows\PaletteView.xaml.cs">
+      <DependentUpon>PaletteView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\DrilldownView.xaml.cs">
       <DependentUpon>DrilldownView.xaml</DependentUpon>
     </Compile>
@@ -952,6 +956,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\VisualStudio2013\Telerik.Windows.Controls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\PaletteView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

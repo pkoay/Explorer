@@ -10,6 +10,8 @@ using WalzExplorer.Database;
 using WalzExplorer.Common;
 using System.Security.Principal;
 using System.Windows.Controls;
+using WalzExplorer.Windows;
+using System.Windows.Media;
 
 namespace WalzExplorer
 {
@@ -44,9 +46,20 @@ namespace WalzExplorer
 
             if (DatabseVariable.Read("System", "Enable_Login") != "N")
             {
-                //UtilityTest ut = new UtilityTest();
-                //ut.FindConflictingReferences();
-                VisualStudio2013Palette.LoadPreset(VisualStudio2013Palette.ColorVariation.Dark);
+                //Blues to reds
+                VisualStudio2013Palette.LoadPreset(VisualStudio2013Palette.ColorVariation.Light);
+                VisualStudio2013Palette.Palette.AccentColor = (Color)ColorConverter.ConvertFromString("#FFD71037");
+                VisualStudio2013Palette.Palette.AccentMainColor = (Color)ColorConverter.ConvertFromString("#FFF42655");
+                VisualStudio2013Palette.Palette.AccentDarkColor = (Color)ColorConverter.ConvertFromString("#FFD71037");
+                VisualStudio2013Palette.Palette.HeaderColor = (Color)ColorConverter.ConvertFromString("#FFD71037");
+
+                //Validation from Red to yellow
+                VisualStudio2013Palette.Palette.ValidationColor = (Color)ColorConverter.ConvertFromString("#FFFFFF00");
+
+
+              
+
+
                 this.InitializeComponent();
 
 #if DEBUG

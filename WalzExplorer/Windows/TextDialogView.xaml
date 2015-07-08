@@ -5,7 +5,7 @@
        
         Title="Text" Height="254" Width="437" ShowInTaskbar="False"   Loaded="Window_Loaded">
 
-    <Grid  Background="#FF252526">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="85*"/>
             <RowDefinition Height="30"/>

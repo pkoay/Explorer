@@ -439,6 +439,12 @@ namespace WalzExplorer
                     if (OriginalMimic != settings.user.MimicedPerson.PersonID)
                         LoadFormForMimic();
                     break;
+                case "miPalette":
+                    Window wPalette = new Windows.PaletteView();
+                    wPalette.Owner = Application.Current.MainWindow;
+                    wPalette.ShowDialog();
+
+                    break;
 
                 default:
                     MessageBox.Show(mi.Header.ToString(), "Configuration menu", MessageBoxButton.OK, MessageBoxImage.Information);

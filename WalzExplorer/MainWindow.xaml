@@ -76,6 +76,7 @@
             <MenuItem Name="miMimic" Header="Mimic User" Click="ConfigurationMenu_Click"  />
             <MenuItem Name="miHistory" Header="History" Click="ConfigurationMenu_Click"  />
             <MenuItem Name="miDeveloper" Header="Developer Mode" IsCheckable="True" Click="ConfigurationMenu_Click"  />
+            <MenuItem Name="miPalette" Header="Palette"  Click="ConfigurationMenu_Click"  />
             <MenuItem Name="miAbout"  Header="About" Click="ConfigurationMenu_Click" />
         </ContextMenu>
     </MahApps:MetroWindow.Resources>
@@ -143,7 +144,7 @@
                     <telerik:RadTabControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" >
-                                <Rectangle Width="12" Height="12"  Margin="0,0,10,0" Fill="{DynamicResource TextBrush}" >
+                                <Rectangle Width="12" Height="12"  Margin="0,0,10,0" Fill="{ telerik:VisualStudio2013Resource ResourceKey=MarkerBrush}" >
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Fill" Visual="{Binding Icon , Converter={StaticResource CanvasFromString}}" />
                                     </Rectangle.OpacityMask>

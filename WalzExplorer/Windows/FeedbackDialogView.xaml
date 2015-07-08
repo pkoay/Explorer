@@ -5,7 +5,7 @@
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         Title="Feedback" Height="457" Width="513" ShowInTaskbar="False" Loaded="Window_Loaded">
 
-    <Grid Background="#FF252526">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="111*"/>
             <RowDefinition Height="13*"/>

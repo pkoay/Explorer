@@ -347,9 +347,10 @@ namespace WalzExplorer.Controls.Grid
                 columnFormat f = columnSettings.format[c.UniqueName];
                 FormatColumn(dc, f);
             }
-            
-            string foreground = "#FF999999";
-            string background = "#4C35496A";
+
+            string foreground = GraphicsLibrary.HexOfColorWithAlpha (VisualStudio2013Palette.Palette.StrongColor,255);
+            string background = GraphicsLibrary.HexOfColorWithAlpha(VisualStudio2013Palette.Palette.PrimaryColor,128);
+
             //Background
             if (columnSettings.background.ContainsKey(c.UniqueName))
             {

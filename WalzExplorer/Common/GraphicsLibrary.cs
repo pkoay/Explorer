@@ -28,6 +28,13 @@ namespace WalzExplorer.Common
             return r;
         }
 
+
+        public static string HexOfColorWithAlpha (Color c, byte alpha)
+        {
+            c.A = alpha;
+            return c.ToString();
+
+        }
         public static SolidColorBrush BrushFromHex(string hex)
         {
          return   (SolidColorBrush)(new BrushConverter().ConvertFrom(hex));
