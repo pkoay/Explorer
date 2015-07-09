@@ -42,12 +42,12 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                 grd.SetGrid(settings, false, false, false);
 
            
-            grd.columnsettings.Add("ContractorID", new GridEditViewBase.columnSetting() { isDeveloper = true });
+            grd.columnsettings.Add("SubcontractorID", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("TenderID", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT ,format=  GridEditViewBase.columnSetting.formatType.TEXT});
          
             grd.columnCombo.Clear();
-            grd.columnCombo.Add("ContractorTypeID", GridLibrary.CreateCombo("cmbContractorTypeID", "Contractor Type", vm.cmbContractorTypeList(), "ContractorTypeID", "Title"));
+            grd.columnCombo.Add("SubcontractorTypeID", GridLibrary.CreateCombo("cmbSubcontractorTypeID", "Subcontractor Type", vm.cmbContractorTypeList(), "SubcontractorTypeID", "Title"));
 
         }
 
