@@ -55,8 +55,9 @@ namespace WalzExplorer
 
                 //Validation from Red to yellow
                 VisualStudio2013Palette.Palette.ValidationColor = (Color)ColorConverter.ConvertFromString("#FFFFFF00");
-
-
+                
+                //Readonly background
+                VisualStudio2013Palette.Palette.PrimaryColor = (Color)ColorConverter.ConvertFromString("#FFCCCEDB");
               
 
 

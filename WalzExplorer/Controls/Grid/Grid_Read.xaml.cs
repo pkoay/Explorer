@@ -348,7 +348,7 @@ namespace WalzExplorer.Controls.Grid
                 FormatColumn(dc, f);
             }
 
-            string foreground = GraphicsLibrary.HexOfColorWithAlpha (VisualStudio2013Palette.Palette.StrongColor,255);
+            string foreground = GraphicsLibrary.HexOfColorWithAlpha (VisualStudio2013Palette.Palette.MarkerColor,255);
             string background = GraphicsLibrary.HexOfColorWithAlpha(VisualStudio2013Palette.Palette.PrimaryColor,128);
 
             //Background

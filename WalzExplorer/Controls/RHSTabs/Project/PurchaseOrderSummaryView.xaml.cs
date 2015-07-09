@@ -46,8 +46,19 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.columnSettings.format.Add("CreateDate", Grid.Grid_Read.columnFormat.DATE);
             grd.columnSettings.format.Add("DeliveryDate", Grid.Grid_Read.columnFormat.DATE);
             grd.columnSettings.format.Add("OrderAmount", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.toolTip.Add("OrderAmount", "The price the purchase order was raised for (excluding GST)");
             grd.columnSettings.format.Add("CommittedAmount", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.toolTip.Add("CommittedAmount", "Amount not yet paid (excluding GST)");
             grd.columnSettings.format.Add("PaidAmount", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.toolTip.Add("PaidAmount", "Amount paid to vendor to date (excluding GST)");
+            grd.columnSettings.format.Add("Variance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.toolTip.Add("Variance",  
+                string.Join(Environment.NewLine
+                ,"Variance between Order ,Paid and Committed amounts"
+                ,"  Calculated by  OrderAmount - PaidAmount - CommittedAmount"
+                , "  Normally this value should be zero"
+                , "  If greater than zero closed the purchase order befroe you have fully paid it (maybe items not recieved)"
+                , "  If Less than zero you have over paid this purchase order"));
             grd.columnSettings.toolTip.Add("Status",
                 string.Join(Environment.NewLine
                 ,"Open Order - Order sent"

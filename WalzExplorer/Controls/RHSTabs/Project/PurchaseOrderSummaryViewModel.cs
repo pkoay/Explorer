@@ -14,7 +14,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 {
     public class PurchaseOrderSummaryViewModel 
     {
-        public ObservableCollection<spWEX_RHS_Project_PurchaseOrderSummary_v2_Result> data;
+        public ObservableCollection<spWEX_RHS_Project_PurchaseOrderSummary_v3_Result> data;
         public WalzExplorerEntities context = new WalzExplorerEntities(false);
         int ProjectID;
         //string CustomerID;
@@ -30,10 +30,10 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             switch (NodeTypeID.ToUpper())
             {
                 case "PROJECTPURCHASEORDER":
-                    data = new ObservableCollection<spWEX_RHS_Project_PurchaseOrderSummary_v2_Result>(context.spWEX_RHS_Project_PurchaseOrderSummary_v2(ProjectID,-1)); 
+                    data = new ObservableCollection<spWEX_RHS_Project_PurchaseOrderSummary_v3_Result>(context.spWEX_RHS_Project_PurchaseOrderSummary_v3(ProjectID,-1)); 
                     break;
                  case "PROJECTSMYOPEN":
-                    data = new ObservableCollection<spWEX_RHS_Project_PurchaseOrderSummary_v2_Result>(context.spWEX_RHS_Project_PurchaseOrderSummary_v2(-1, UserPersonID)); 
+                    data = new ObservableCollection<spWEX_RHS_Project_PurchaseOrderSummary_v3_Result>(context.spWEX_RHS_Project_PurchaseOrderSummary_v3(-1, UserPersonID)); 
                     break;
                 default:
                     MessageBox.Show("Not  valid node for 'Purchase order summmary'");

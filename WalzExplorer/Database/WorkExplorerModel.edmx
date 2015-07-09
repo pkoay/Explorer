@@ -1845,6 +1845,10 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <Parameter Name="ProjectID" Type="int" Mode="In" />
           <Parameter Name="PersonID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spWEX_RHS_Project_PurchaseOrderSummary_v3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_PurchaseOrderSummary_v3">
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
+          <Parameter Name="PersonID" Type="int" Mode="In" />
+        </Function>
         <Function Name="spWEX_RHS_Project_Summary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Summary">
           <Parameter Name="UserPersonID" Type="nvarchar" Mode="In" />
           <Parameter Name="NodeTypeID" Type="varchar" Mode="In" />
@@ -2929,7 +2933,11 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             <Parameter Name="IsIndirect" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="spWEX_RHS_Project_CostBudgetVsActualWithoutCategory" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_CostBudgetVsActualWithoutCategory_Result)">
+          <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_RHS_Project_PurchaseOrderSummary_v3" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_PurchaseOrderSummary_v3_Result)">
             <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+            <Parameter Name="PersonID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
@@ -4997,6 +5005,23 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <Property Type="Decimal" Name="Committed" Nullable="true" Precision="38" Scale="12" />
           <Property Type="Decimal" Name="Remaining" Nullable="true" Precision="38" Scale="6" />
         </ComplexType>
+        <ComplexType Name="spWEX_RHS_Project_PurchaseOrderSummary_v3_Result">
+          <Property Type="String" Name="DataAreaID" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="ProjID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjectName" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="PurchaseOrderID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="PurchaseName" Nullable="false" MaxLength="60" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="255" />
+          <Property Type="DateTime" Name="DeliveryDate" Nullable="true" />
+          <Property Type="Decimal" Name="OrderAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="CommittedAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="PaidAmount" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="Variance" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="String" Name="Requisitioner" Nullable="false" MaxLength="51" />
+          <Property Type="String" Name="PurchasePlacer" Nullable="false" MaxLength="51" />
+          <Property Type="String" Name="VendorName" Nullable="true" MaxLength="60" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6297,6 +6322,27 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
                 <ScalarProperty Name="Actual" ColumnName="Actual" />
                 <ScalarProperty Name="Committed" ColumnName="Committed" />
                 <ScalarProperty Name="Remaining" ColumnName="Remaining" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_PurchaseOrderSummary_v3" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_PurchaseOrderSummary_v3">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_PurchaseOrderSummary_v3_Result">
+                <ScalarProperty Name="DataAreaID" ColumnName="DataAreaID" />
+                <ScalarProperty Name="ProjID" ColumnName="ProjID" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="PurchaseOrderID" ColumnName="PurchaseOrderID" />
+                <ScalarProperty Name="PurchaseName" ColumnName="PurchaseName" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="OrderAmount" ColumnName="OrderAmount" />
+                <ScalarProperty Name="CommittedAmount" ColumnName="CommittedAmount" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="Variance" ColumnName="Variance" />
+                <ScalarProperty Name="Requisitioner" ColumnName="Requisitioner" />
+                <ScalarProperty Name="PurchasePlacer" ColumnName="PurchasePlacer" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

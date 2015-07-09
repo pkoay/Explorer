@@ -77,7 +77,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             grd.columnCombo.Add("MaterialID", GridLibrary.CreateCombo("cmbMaterialID", "Material", vm.cmbMaterialList(), "MaterialID", "Title"));
             grd.columnCombo.Add("SupplierID", GridLibrary.CreateCombo("cmbSupplierID", "Supplier", vm.cmbSupplierList(), "SupplierID", "Title"));
 
-            grd.grd.AlternationCount = 0;
+            //grd.grd.AlternationCount = 4;
             grd.grd.RowStyle = RowStyle();
            
         }
@@ -126,8 +126,11 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             dataTrigger.Binding = new Binding("IsHeader");
             dataTrigger.Value = true;
             dataTrigger.Setters.Add(new Setter(GridViewCell.FontWeightProperty, FontWeights.Bold));
-            dataTrigger.Setters.Add(new Setter(GridViewRow.ForegroundProperty, Common.GraphicsLibrary.BrushFromHex("#FF000000")));
-            dataTrigger.Setters.Add(new Setter(GridViewRow.BackgroundProperty, Common.GraphicsLibrary.BrushFromHex("#FF999999")));
+            dataTrigger.Setters.Add(new Setter(GridViewRow.ForegroundProperty, Common.GraphicsLibrary.BrushFromHex(VisualStudio2013Palette.Palette.MarkerColor.ToString())));
+            dataTrigger.Setters.Add(new Setter(GridViewRow.BackgroundProperty, Common.GraphicsLibrary.BrushFromHex(VisualStudio2013Palette.Palette.AccentDarkColor.ToString())));
+
+            
+             
             rstyle.Triggers.Add(dataTrigger);
 
             rstyle.Seal();

@@ -113,6 +113,7 @@ namespace WalzExplorer.Controls.Grid
             grd.SelectionMode = System.Windows.Controls.SelectionMode.Extended;
             //grd.SelectionUnit = GridViewSelectionUnit.FullRow;
             grd.SelectionUnit = GridViewSelectionUnit.Mixed;
+            
             grd.AlternationCount = 4;
             grd.CanUserFreezeColumns = true;
             grd.GridLinesVisibility = GridLinesVisibility.None;
@@ -660,7 +661,7 @@ namespace WalzExplorer.Controls.Grid
                     if (c.IsReadOnly || !_canEdit)
                     {
                         cmb.IsReadOnly = true;
-                        //cmb.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#4C35496A");
+                        
                         cmb.CellStyle = CellStyle(null, defaultForegroundReadonly, defaultBackgroundReadonly);
                     }
                 }

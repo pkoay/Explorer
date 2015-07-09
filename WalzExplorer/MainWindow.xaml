@@ -11,7 +11,7 @@
     <!--WINDOW TITLEBAR ICON-->
     <MahApps:MetroWindow.IconTemplate>
         <ItemContainerTemplate>
-            <Rectangle Width="24" Height="12"  Margin="0,0,0,0" Fill="{DynamicResource TextBrush}" ToolTip="WalzExplorer">
+            <Rectangle Width="24" Height="12"  Margin="0,0,0,0" Fill="{telerik:VisualStudio2013Resource ResourceKey=MainBrush}" ToolTip="WalzExplorer">
                 <Rectangle.OpacityMask>
                     <VisualBrush Stretch="Fill" Visual="{StaticResource WalzIcon}" />
                 </Rectangle.OpacityMask>
