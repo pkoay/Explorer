@@ -66,7 +66,6 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblWEX_TreeNodeType_RHSTab> tblWEX_TreeNodeType_RHSTab { get; set; }
         public virtual DbSet<tblTender_Schedule> tblTender_Schedule { get; set; }
         public virtual DbSet<tblTender_ObjectType> tblTender_ObjectType { get; set; }
-        public virtual DbSet<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
         public virtual DbSet<tblTender_WorkGroup> tblTender_WorkGroup { get; set; }
         public virtual DbSet<vwTender_ObjectHoursByWorkGroup> vwTender_ObjectHoursByWorkGroup { get; set; }
         public virtual DbSet<vwTender_EstimateWorkGroupRate> vwTender_EstimateWorkGroupRate { get; set; }
@@ -79,6 +78,9 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblTender_SubcontractorType> tblTender_SubcontractorType { get; set; }
         public virtual DbSet<tblTender_EstimateItem> tblTender_EstimateItem { get; set; }
         public virtual DbSet<vwProject_CostCodeIndirectView> vwProject_CostCodeIndirectView { get; set; }
+        public virtual DbSet<tblTender_WorkgroupFuel> tblTender_WorkgroupFuel { get; set; }
+        public virtual DbSet<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
+        public virtual DbSet<tblTender_OverheadType> tblTender_OverheadType { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)

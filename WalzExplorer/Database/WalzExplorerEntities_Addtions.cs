@@ -22,12 +22,7 @@ namespace WalzExplorer.Database
 
     public partial class tblTender_EstimateItem : ModelBase
     {
-        public string Seperator
-
-        {
-            get { return ""; }
-        }
-
+      
         public bool IsHeader
         {
             get
@@ -66,7 +61,7 @@ namespace WalzExplorer.Database
                 double value = 0;
                 switch (EstimateItemTypeID)
                 {
-                    case 1: value = Men * HoursPerDay * Days;
+                    case 1: value = Men * HoursPerDay * Days * Quantity;
                         break;
                     default: value = 0;
                         break;
@@ -75,6 +70,7 @@ namespace WalzExplorer.Database
             }
 
         }
+
         public double TotalCost
         {
             get 
@@ -82,7 +78,7 @@ namespace WalzExplorer.Database
                 double value = 0;
                 switch (EstimateItemTypeID)
                 {
-                    case 1: if (tblTender_WorkGroup!=null) value = Men * HoursPerDay * Days * tblTender_WorkGroup.vwTender_EstimateWorkGroupRate.Rate * (1 + Markup);
+                    case 1: if (tblTender_WorkGroup!=null) value = Men * HoursPerDay * Days *Quantity * tblTender_WorkGroup.vwTender_EstimateWorkGroupRate.Rate ;
                         break;
                     case 2:
                     case 4:
@@ -94,6 +90,47 @@ namespace WalzExplorer.Database
                     
                 }
                 return value; 
+            }
+        }
+        public double Weight
+        {
+            get
+            {
+                double value = 0;
+                switch (EstimateItemTypeID)
+                {
+                   
+                    case 1:
+                    case 2:
+                    case 3:
+                        value = 0;
+                        break;
+                    case 4: 
+                        value = Quantity * Length * Width * tblTender_Material.KG;
+                        break;
+
+                }
+                return value;
+            }
+        }
+
+        public double MetresSquared
+        {
+            get
+            {
+                double value = 0;
+                switch (EstimateItemTypeID)
+                {
+                    case 4: value = Quantity * Length * Width * tblTender_Material.SQM;
+                        break;
+                    case 1:
+                    case 2:
+                    case 3:
+                        value = 0;
+                        break;
+
+                }
+                return value;
             }
         }
 
@@ -134,11 +171,39 @@ namespace WalzExplorer.Database
         }
 
     }
+    public partial class tblTender_WorkgroupFuel : ModelBase
+    {
+        public double TotalForProject
+        {
+            get { return Count * Week  * HoursPerWeek * LitrePerHour * .06; }
+        }
+
+        public double CostTotalPerItem
+        {
+            get { return Count * Week  * HoursPerWeek * LitrePerHour * .06 * CostPerLitre; }
+        }
+
+        public double FuelCost
+        {
+            get { return Count * Week  * HoursPerWeek * LitrePerHour * .06 * CostPerLitre * 0.825; }
+        }
+    }
+
     public partial class tblTender_OverheadItem : ModelBase
     {
         public double Total
         {
-            get { return Count * Duration * Rate; }
+            get
+            {
+                if (OverheadTypeID == 1)
+                {
+                    return Count * Duration * Rate;
+                }
+                else
+                {
+                    return Count * Rate * tblTender_WorkGroup.TotalHours;
+                }
+            }
         }
     }
     public partial class tblTender_ObjectLabour: ModelBase

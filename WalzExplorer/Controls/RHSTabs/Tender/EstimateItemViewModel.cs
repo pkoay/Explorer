@@ -14,7 +14,7 @@ using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.RHSTabs.Tender
 {
-    public class EstimateItemViewModel : GridEditViewModelBase
+    public class EstimateItemViewModel : GridEditViewModelBase2
     {
         int TenderID;
         int Default_SubcontractorID;
@@ -27,7 +27,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         public EstimateItemViewModel(WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
             TenderID = ConvertLibrary.StringToInt(settings.node.FindID("TENDER", "-2"), -1);
-            data = new ObservableCollection<ModelBase>(context.tblTender_EstimateItem.Where(x => x.TenderID == TenderID).OrderBy(x =>x.ScheduleID).ThenBy(x=>x.SortOrder));
+            data = new ObservableCollection<ModelBase>(context.tblTender_EstimateItem.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder));
             Default_SubcontractorID = context.tblTender_Subcontractor.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().SubcontractorID;
             Default_WorkGroupID = context.tblTender_WorkGroup.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().WorkGroupID;
             Default_UnitOfMeasureID = context.tblTender_UnitOfMeasure.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().UnitOfMeasureID;

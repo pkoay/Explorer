@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>111</ApplicationRevision>
+    <ApplicationRevision>112</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -244,6 +244,10 @@
       <DependentUpon>EstimateItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Tender\EstimateItemViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\WorkgroupFuelView.xaml.cs">
+      <DependentUpon>WorkgroupFuelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\WorkgroupFuelViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectChildObjectView.xaml.cs">
       <DependentUpon>ObjectChildObjectView.xaml</DependentUpon>
     </Compile>
@@ -640,6 +644,9 @@
     <Compile Include="Database\tblTender_OverheadItem.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\tblTender_OverheadType.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\tblTender_Schedule.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -662,6 +669,9 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblTender_WorkGroup.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\tblTender_WorkgroupFuel.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\tblWEX_LHSTab.cs">
@@ -697,7 +707,6 @@
     </Compile>
     <Compile Include="Database\WalzExplorerEntites.cs" />
     <Compile Include="Database\WalzExplorerEntities_Addtions.cs" />
-    <Compile Include="Database\WalzExplorerViewModel.cs" />
     <Compile Include="Model\WEXDrilldown.cs" />
     <Compile Include="Model\WEXLHSTab.cs" />
     <Compile Include="Model\WEXTreeRoot.cs" />
@@ -768,6 +777,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Tender\EstimateItemView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\WorkgroupFuelView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

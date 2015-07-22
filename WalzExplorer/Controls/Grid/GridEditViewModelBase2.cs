@@ -20,6 +20,7 @@ namespace WalzExplorer.Controls.Grid
 
         public ObservableCollection<ModelBase> data;
         public WalzExplorerEntities context;
+        public bool isSaveOnButton = false;
 
         private bool _canOrder;
         //protected Dictionary<string, object> columnDefault = new Dictionary<string, object>();
@@ -35,21 +36,21 @@ namespace WalzExplorer.Controls.Grid
             _canOrder = canOrder;
         }
 
-        public virtual ModelBase DefaultItem()
+        public virtual ModelBase DefaultItem(ModelBase NearItem)
         {
             return null;
         }
        
         public ModelBase InsertNew()
         {
-            ModelBase i = DefaultItem();
+            ModelBase i = DefaultItem(null);
             data.Insert(0, i );
             return i;
             
         }
         public ModelBase InsertNew(ModelBase InsertAbove)
         {
-            ModelBase i = DefaultItem();
+            ModelBase i = DefaultItem(InsertAbove);
             if (InsertAbove != null)
                 data.Insert(this.data.IndexOf(InsertAbove), i);
             else
@@ -66,7 +67,7 @@ namespace WalzExplorer.Controls.Grid
            {
                this.data.Move(this.data.IndexOf(i), index);
            }
-           return SaveWithValidationAndUpdateSortOrder();
+           return Save();
        }
 
         public EfStatus MoveItemsToItem(List<ModelBase> items, ModelBase MoveAbove)
@@ -81,12 +82,12 @@ namespace WalzExplorer.Controls.Grid
             {
                 context.Entry(item).State = System.Data.Entity.EntityState.Deleted;
             }
-            return SaveWithValidationAndUpdateSortOrder();
+            return Save();
         }
 
        public void SavePaste()
        {
-            SaveWithValidationAndUpdateSortOrder();
+            Save();
 
        }
        public void SavePaste(List<ModelBase> items)
@@ -127,7 +128,7 @@ namespace WalzExplorer.Controls.Grid
         public void SetDefaultsForPaste(object currentitem)
         {
             //default item is with defaults set
-            object defaultItem = DefaultItem();
+            object defaultItem = DefaultItem(null);
             Type defaultItemType = defaultItem.GetType();
 
             //create new object (no defaults set)
@@ -150,9 +151,23 @@ namespace WalzExplorer.Controls.Grid
 
         }
 
-        private EfStatus SaveWithValidationAndUpdateSortOrder()
+        private EfStatus Save()
         {
-            if (_canOrder)
+           
+            if (isSaveOnButton)
+            {
+                return new  EfStatus();
+                //do nothing - save button press will fire SaveWithValidationAndUpdateSortOrder
+            }
+            else
+            {
+                return SaveWithValidationAndUpdateSortOrder();
+            }
+        }
+
+        public EfStatus SaveWithValidationAndUpdateSortOrder()
+        {
+             if (_canOrder)
             {
                 // update sort order
                 int i = 0;
@@ -163,7 +178,6 @@ namespace WalzExplorer.Controls.Grid
                 }
             }
             return context.SaveChangesWithValidation();
-            
         }
 
         public EfStatus ManualChange(ModelBase changedItem)
@@ -175,7 +189,7 @@ namespace WalzExplorer.Controls.Grid
                 //Add item to dataabse 
                 context.Entry(changedItem).State = System.Data.Entity.EntityState.Added;
             }
-            return SaveWithValidationAndUpdateSortOrder();
+            return Save();
             
         }
         public bool HasErrors()

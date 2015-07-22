@@ -12,13 +12,13 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_OverheadItem : ModelBase
+    public partial class tblTender_WorkgroupFuel : ModelBase
     {
-        private int _overheadItemID;
-    	public int OverheadItemID 
+        private int _fuelItemID;
+    	public int FuelItemID 
     	{ 
-    		get { return _overheadItemID; } 
-    		set { SetProperty(ref _overheadItemID, value); } 
+    		get { return _fuelItemID; } 
+    		set { SetProperty(ref _fuelItemID, value); } 
     	}
     
         private int _workGroupID;
@@ -26,20 +26,6 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _workGroupID; } 
     		set { SetProperty(ref _workGroupID, value); } 
-    	}
-    
-        private int _overheadTypeID;
-    	public int OverheadTypeID 
-    	{ 
-    		get { return _overheadTypeID; } 
-    		set { SetProperty(ref _overheadTypeID, value); } 
-    	}
-    
-        private int _overheadGroupID;
-    	public int OverheadGroupID 
-    	{ 
-    		get { return _overheadGroupID; } 
-    		set { SetProperty(ref _overheadGroupID, value); } 
     	}
     
         private string _title;
@@ -56,18 +42,39 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _count, value); } 
     	}
     
-        private double _duration;
-    	public double Duration 
+        private double _week;
+    	public double Week 
     	{ 
-    		get { return _duration; } 
-    		set { SetProperty(ref _duration, value); } 
+    		get { return _week; } 
+    		set { SetProperty(ref _week, value); } 
     	}
     
-        private double _rate;
-    	public double Rate 
+        private double _c10DayFortnight;
+    	public double C10DayFortnight 
     	{ 
-    		get { return _rate; } 
-    		set { SetProperty(ref _rate, value); } 
+    		get { return _c10DayFortnight; } 
+    		set { SetProperty(ref _c10DayFortnight, value); } 
+    	}
+    
+        private double _hoursPerWeek;
+    	public double HoursPerWeek 
+    	{ 
+    		get { return _hoursPerWeek; } 
+    		set { SetProperty(ref _hoursPerWeek, value); } 
+    	}
+    
+        private double _litrePerHour;
+    	public double LitrePerHour 
+    	{ 
+    		get { return _litrePerHour; } 
+    		set { SetProperty(ref _litrePerHour, value); } 
+    	}
+    
+        private double _costPerLitre;
+    	public double CostPerLitre 
+    	{ 
+    		get { return _costPerLitre; } 
+    		set { SetProperty(ref _costPerLitre, value); } 
     	}
     
         private string _comments;
@@ -106,8 +113,6 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual tblTender_OverheadGroup tblTender_OverheadGroup { get; set; }
-        public virtual tblTender_OverheadType tblTender_OverheadType { get; set; }
         public virtual tblTender_WorkGroup tblTender_WorkGroup { get; set; }
     }
 }

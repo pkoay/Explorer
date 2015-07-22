@@ -82,7 +82,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         {
            //extract data from grid for drilldown
            WalzExplorer.Controls.Grid.Grid_Read.DrilldownResult ddInfo=(WalzExplorer.Controls.Grid.Grid_Read.DrilldownResult) sender;
-           spWEX_RHS_Project_PurchaseOrderSummary_v2_Result ddRowdata = (spWEX_RHS_Project_PurchaseOrderSummary_v2_Result) ddInfo.RowData;
+           spWEX_RHS_Project_PurchaseOrderSummary_v3_Result ddRowdata = (spWEX_RHS_Project_PurchaseOrderSummary_v3_Result) ddInfo.RowData;
 
            //Pass data to drilldown
            string title="";

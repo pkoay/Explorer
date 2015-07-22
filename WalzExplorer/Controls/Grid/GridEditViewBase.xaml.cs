@@ -72,6 +72,7 @@ namespace WalzExplorer.Controls.Grid
             public bool isDeveloper = false;
             public bool? isGroupable = null; // default set by format
             public Style CellStyle = null;
+            public Style ColumnStyle = null;
             public void Dispose()
             {
             }
@@ -552,8 +553,11 @@ namespace WalzExplorer.Controls.Grid
                 }
                 if (colsetting.background != null) background = colsetting.background;
                 if (colsetting.foreground != null) foreground = colsetting.foreground;
-                c.CellStyle = CellStyle(colsetting.CellStyle,foreground, background);
                 
+                //styles
+                c.CellStyle = CellStyle(colsetting.CellStyle,foreground, background);
+                c.Style = colsetting.ColumnStyle;
+
                 //tooltip
                 if (colsetting.tooltip != null)
                 {

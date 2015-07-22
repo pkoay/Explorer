@@ -12,21 +12,12 @@ namespace WalzExplorer.Database
     using System;
     using System.ComponentModel;
     using System.Collections.Generic;
-    public partial class tblTender_OverheadItem : ModelBase
+    public partial class tblTender_OverheadType : ModelBase
     {
-        private int _overheadItemID;
-    	public int OverheadItemID 
-    	{ 
-    		get { return _overheadItemID; } 
-    		set { SetProperty(ref _overheadItemID, value); } 
-    	}
-    
-        private int _workGroupID;
-    	public int WorkGroupID 
-    	{ 
-    		get { return _workGroupID; } 
-    		set { SetProperty(ref _workGroupID, value); } 
-    	}
+        public tblTender_OverheadType()
+        {
+            this.tblTender_OverheadItem = new HashSet<tblTender_OverheadItem>();
+        }
     
         private int _overheadTypeID;
     	public int OverheadTypeID 
@@ -35,46 +26,11 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _overheadTypeID, value); } 
     	}
     
-        private int _overheadGroupID;
-    	public int OverheadGroupID 
-    	{ 
-    		get { return _overheadGroupID; } 
-    		set { SetProperty(ref _overheadGroupID, value); } 
-    	}
-    
         private string _title;
     	public string Title 
     	{ 
     		get { return _title; } 
     		set { SetProperty(ref _title, value); } 
-    	}
-    
-        private double _count;
-    	public double Count 
-    	{ 
-    		get { return _count; } 
-    		set { SetProperty(ref _count, value); } 
-    	}
-    
-        private double _duration;
-    	public double Duration 
-    	{ 
-    		get { return _duration; } 
-    		set { SetProperty(ref _duration, value); } 
-    	}
-    
-        private double _rate;
-    	public double Rate 
-    	{ 
-    		get { return _rate; } 
-    		set { SetProperty(ref _rate, value); } 
-    	}
-    
-        private string _comments;
-    	public string Comments 
-    	{ 
-    		get { return _comments; } 
-    		set { SetProperty(ref _comments, value); } 
     	}
     
         private int _sortOrder;
@@ -106,8 +62,6 @@ namespace WalzExplorer.Database
     	}
     
     
-        public virtual tblTender_OverheadGroup tblTender_OverheadGroup { get; set; }
-        public virtual tblTender_OverheadType tblTender_OverheadType { get; set; }
-        public virtual tblTender_WorkGroup tblTender_WorkGroup { get; set; }
+        public virtual ICollection<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
     }
 }

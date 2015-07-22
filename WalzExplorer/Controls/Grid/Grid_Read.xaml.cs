@@ -151,9 +151,6 @@ namespace WalzExplorer.Controls.Grid
         }
 
 
-
-
-
         private ContextMenu GenerateContextMenu()
         {
             // add context menu
@@ -417,7 +414,6 @@ namespace WalzExplorer.Controls.Grid
     
         }
 
-
         public void ColumnToolTipStatic(GridViewDataColumn column, string ToolTipString)
         {
             //Create the template
@@ -438,7 +434,6 @@ namespace WalzExplorer.Controls.Grid
             //Apply template to column
             column.ToolTipTemplate = this.Resources[TemplateName] as DataTemplate;
         }
-
 
 
         public void FormatColumn(GridViewDataColumn column, columnFormat type)

@@ -14,16 +14,17 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="100*"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
-        
-        <WrapPanel HorizontalAlignment="Right">
+
+        <WrapPanel HorizontalAlignment="Right" Grid.Row="0">
             <telerik:RadRadioButton GroupName="rcb" Content="Labour"  Click="RadRadioButton_Click"/>
             <telerik:RadRadioButton GroupName="rcb"  Content="Subcontractors" Click="RadRadioButton_Click" />
             <telerik:RadRadioButton GroupName="rcb" Content="Materials" Click="RadRadioButton_Click"/>
             <telerik:RadRadioButton GroupName="rcb"  Content="   Basic   " Click="RadRadioButton_Click" />
             <telerik:RadRadioButton GroupName="rcb" Content="    All    " Click="RadRadioButton_Click"/>
         </WrapPanel>
-        <grid:GridEditViewBase  x:Name="grd" Grid.Row="1" />
-        
+        <grid:GridEditViewBase2  x:Name="grd" Grid.Row="1" />
+        <Button x:Name="btnSave"  Click="btnSave_Click"  Content="Save" Grid.Row="2" Width="100" HorizontalAlignment="Right" />
     </Grid>
 </base:RHSTabViewBase>

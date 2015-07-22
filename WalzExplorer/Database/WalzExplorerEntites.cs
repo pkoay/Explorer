@@ -291,7 +291,7 @@ namespace WalzExplorer.Database
 
 
 
-
+        // this stuff realls should't be here this stuff was done before I started using EF then I converted it so that it would work with EF, really the underlying storder procedures should be added to ef and then those access directly in the approriate VM code.
         public List<WEXNode> GetRootNodes(string strLHSTabID, WEXUser user, Dictionary<string, string> dicSQLSubsitutes)
         {
 

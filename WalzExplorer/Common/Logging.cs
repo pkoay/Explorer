@@ -34,6 +34,7 @@ namespace WalzExplorer.Common
             }
          }
 
+
         private static void GetAuditRecordsForChange(DbEntityEntry dbEntry, ObjectContext oc)
         {
             List<string> PropertiesToSkip = new List<string> () {"RowVersion", "UpdatedDate", "UpdatedBy" };
@@ -58,7 +59,7 @@ namespace WalzExplorer.Common
             }
 
             //determine reference fro values (original,
-            using (ServicesEntities db = new ServicesEntities(false))
+            //using (ServicesEntities db = new ServicesEntities(false))
             {
                 //DbPropertyValues values = dbEntry.OriginalValues;
                 switch (dbEntry.State)
@@ -69,7 +70,8 @@ namespace WalzExplorer.Common
                             if (!PropertiesToSkip.Contains(propertyName))
                             {
                                 string AddedValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString();
-                                db.spLogChangev2("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(),"<new>", AddedValue);
+                                LogAsync("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), "<new>", AddedValue);
+                                
                             }
                         }
                         break;
@@ -79,7 +81,7 @@ namespace WalzExplorer.Common
                             if (!PropertiesToSkip.Contains(propertyName))
                             {
                                 string OldValue = dbEntry.OriginalValues.GetValue<object>(propertyName) == null ? null : dbEntry.OriginalValues.GetValue<object>(propertyName).ToString();
-                                db.spLogChangev2("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(),OldValue,"<deleted>");
+                                LogAsync("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), OldValue, "<deleted>");
                             }
                         }
                         break;
@@ -93,13 +95,34 @@ namespace WalzExplorer.Common
                                     string NewValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString();
                                     string OldValue = dbEntry.OriginalValues.GetValue<object>(propertyName) == null ? null : dbEntry.OriginalValues.GetValue<object>(propertyName).ToString();
 
-                                    db.spLogChangev2("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(),OldValue, NewValue);
+                                    LogAsync("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), OldValue, NewValue);
                                 }
                             }
                         }
                         break;
                 }
 
+            }
+
+        }
+
+        private static async void LogAsync(string database,string table, string column, string user,string key, string operation,string oldvalue,string newvalue)
+        {
+            //database,table,column,user,key,operation,oldvalue,newvalue
+            if (database != null) database = database.Replace("'", "''");
+            if (table != null) table = table.Replace("'", "''");
+            if (column != null) column = column.Replace("'", "''");
+            if (user != null) user = user.Replace("'", "''");
+            if (key != null) key = key.Replace("'", "''");
+            if (operation != null) operation = operation.Replace("'", "''");
+            if (oldvalue != null) oldvalue = oldvalue.Replace("'", "''");
+            if (newvalue != null) newvalue = newvalue.Replace("'", "''");
+
+            // Asyc logging so we don't have to wait for it. If it fails no real issue. But should do something.. nothing set as yet
+            using (ServicesEntities db = new ServicesEntities(false))
+            {
+                string LogSql =String.Format("EXECUTE [dbo].[spLogChangev2] @Database='{0}',@Table='{1}',@Column='{2}',@User='{3}',@Row='{4}',@Operation='{5}',@OldValue='{6}',@NewValue='{7}'",database,table,column,user,key,operation,oldvalue,newvalue);
+                await db.Database.ExecuteSqlCommandAsync(LogSql);
             }
 
         }

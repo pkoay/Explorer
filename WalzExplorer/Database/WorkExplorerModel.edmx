@@ -611,12 +611,24 @@
           </Key>
           <Property Name="OverheadItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WorkGroupID" Type="int" Nullable="false" />
+          <Property Name="OverheadTypeID" Type="int" Nullable="false" />
           <Property Name="OverheadGroupID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Count" Type="float" Nullable="false" />
           <Property Name="Duration" Type="float" Nullable="false" />
           <Property Name="Rate" Type="float" Nullable="false" />
           <Property Name="Comments" Type="varchar(max)" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblTender_OverheadType">
+          <Key>
+            <PropertyRef Name="OverheadTypeID" />
+          </Key>
+          <Property Name="OverheadTypeID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
@@ -724,6 +736,25 @@
           <Property Name="BaseRate" Type="float" Nullable="false" />
           <Property Name="Markup" Type="float" Nullable="false" />
           <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblTender_WorkgroupFuel">
+          <Key>
+            <PropertyRef Name="FuelItemID" />
+          </Key>
+          <Property Name="FuelItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkGroupID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Count" Type="float" Nullable="false" />
+          <Property Name="Week" Type="float" Nullable="false" />
+          <Property Name="10DayFortnight" Type="float" Nullable="false" />
+          <Property Name="HoursPerWeek" Type="float" Nullable="false" />
+          <Property Name="LitrePerHour" Type="float" Nullable="false" />
+          <Property Name="CostPerLitre" Type="float" Nullable="false" />
+          <Property Name="Comments" Type="varchar(max)" />
           <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
@@ -1210,6 +1241,18 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblTender_OverheadItem_tblTender_OverheadType">
+          <End Role="tblTender_OverheadType" Type="Self.tblTender_OverheadType" Multiplicity="1" />
+          <End Role="tblTender_OverheadItem" Type="Self.tblTender_OverheadItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_OverheadType">
+              <PropertyRef Name="OverheadTypeID" />
+            </Principal>
+            <Dependent Role="tblTender_OverheadItem">
+              <PropertyRef Name="OverheadTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblTender_UnitOfMeasure_tblTender">
           <End Role="tblTender" Type="Self.tblTender" Multiplicity="1" />
           <End Role="tblTender_UnitOfMeasure" Type="Self.tblTender_UnitOfMeasure" Multiplicity="*" />
@@ -1291,6 +1334,18 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             </Principal>
             <Dependent Role="tblTender_EstimateItem">
               <PropertyRef Name="EstimateItemTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_WorkgroupFuel_tblTender_WorkGroup">
+          <End Role="tblTender_WorkGroup" Type="Self.tblTender_WorkGroup" Multiplicity="1" />
+          <End Role="tblTender_WorkgroupFuel" Type="Self.tblTender_WorkgroupFuel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_WorkGroup">
+              <PropertyRef Name="WorkGroupID" />
+            </Principal>
+            <Dependent Role="tblTender_WorkgroupFuel">
+              <PropertyRef Name="WorkGroupID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1902,6 +1957,7 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <EntitySet Name="tblTender_ObjectType" EntityType="Self.tblTender_ObjectType" Schema="dbo" Table="tblTender.ObjectType" store:Type="Tables" />
           <EntitySet Name="tblTender_OverheadGroup" EntityType="Self.tblTender_OverheadGroup" Schema="dbo" Table="tblTender.OverheadGroup" store:Type="Tables" />
           <EntitySet Name="tblTender_OverheadItem" EntityType="Self.tblTender_OverheadItem" Schema="dbo" Table="tblTender.OverheadItem" store:Type="Tables" />
+          <EntitySet Name="tblTender_OverheadType" EntityType="Self.tblTender_OverheadType" Schema="dbo" Table="tblTender.OverheadType" store:Type="Tables" />
           <EntitySet Name="tblTender_Schedule" EntityType="Self.tblTender_Schedule" Schema="dbo" Table="tblTender.Schedule" store:Type="Tables" />
           <EntitySet Name="tblTender_Status" EntityType="Self.tblTender_Status" Schema="dbo" Table="tblTender.Status" store:Type="Tables" />
           <EntitySet Name="tblTender_Step" EntityType="Self.tblTender_Step" Schema="dbo" Table="tblTender.Step" store:Type="Tables" />
@@ -1910,6 +1966,7 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <EntitySet Name="tblTender_Supplier" EntityType="Self.tblTender_Supplier" Schema="dbo" Table="tblTender.Supplier" store:Type="Tables" />
           <EntitySet Name="tblTender_UnitOfMeasure" EntityType="Self.tblTender_UnitOfMeasure" Schema="dbo" Table="tblTender.UnitOfMeasure" store:Type="Tables" />
           <EntitySet Name="tblTender_WorkGroup" EntityType="Self.tblTender_WorkGroup" Schema="dbo" Table="tblTender.WorkGroup" store:Type="Tables" />
+          <EntitySet Name="tblTender_WorkgroupFuel" EntityType="Self.tblTender_WorkgroupFuel" Schema="dbo" Table="tblTender.WorkgroupFuel" store:Type="Tables" />
           <EntitySet Name="tblWEX_LHSTab" EntityType="Self.tblWEX_LHSTab" Schema="dbo" Table="tblWEX.LHSTab" store:Type="Tables" />
           <EntitySet Name="tblWEX_NTSecurityGroup" EntityType="Self.tblWEX_NTSecurityGroup" Schema="dbo" Table="tblWEX.NTSecurityGroup" store:Type="Tables" />
           <EntitySet Name="tblWEX_RHSTab" EntityType="Self.tblWEX_RHSTab" Schema="dbo" Table="tblWEX.RHSTab" store:Type="Tables" />
@@ -2068,6 +2125,10 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             <End Role="tblTender_ObjectType" EntitySet="tblTender_ObjectType" />
             <End Role="tblTender_Object" EntitySet="tblTender_Object" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblTender_OverheadItem_tblTender_OverheadType" Association="Self.FK_tblTender_OverheadItem_tblTender_OverheadType">
+            <End Role="tblTender_OverheadType" EntitySet="tblTender_OverheadType" />
+            <End Role="tblTender_OverheadItem" EntitySet="tblTender_OverheadItem" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblTender_UnitOfMeasure_tblTender" Association="Self.FK_tblTender_UnitOfMeasure_tblTender">
             <End Role="tblTender" EntitySet="tblTender" />
             <End Role="tblTender_UnitOfMeasure" EntitySet="tblTender_UnitOfMeasure" />
@@ -2095,6 +2156,10 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <AssociationSet Name="FK_tblTender_Work_tblTender_WorkType" Association="Self.FK_tblTender_Work_tblTender_WorkType">
             <End Role="tblTender_EstimateItemType" EntitySet="tblTender_EstimateItemType" />
             <End Role="tblTender_EstimateItem" EntitySet="tblTender_EstimateItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTender_WorkgroupFuel_tblTender_WorkGroup" Association="Self.FK_tblTender_WorkgroupFuel_tblTender_WorkGroup">
+            <End Role="tblTender_WorkGroup" EntitySet="tblTender_WorkGroup" />
+            <End Role="tblTender_WorkgroupFuel" EntitySet="tblTender_WorkgroupFuel" />
           </AssociationSet>
           <AssociationSet Name="FK_tblTender_Component_tblTender" Association="Self.FK_tblTender_Component_tblTender">
             <End Role="tblTender" EntitySet="tblTender" />
@@ -2789,19 +2854,10 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             <End Role="tblTender_ObjectType" EntitySet="tblTender_ObjectType" />
             <End Role="tblTender_Object" EntitySet="tblTender_Object" />
           </AssociationSet>
-          <EntitySet Name="tblTender_OverheadItem" EntityType="WalzExplorerModel.tblTender_OverheadItem" />
-          <AssociationSet Name="FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader" Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader">
-            <End Role="tblTender_OverheadGroup" EntitySet="tblTender_OverheadGroup" />
-            <End Role="tblTender_OverheadItem" EntitySet="tblTender_OverheadItem" />
-          </AssociationSet>
           <EntitySet Name="tblTender_WorkGroup" EntityType="WalzExplorerModel.tblTender_WorkGroup" />
           <AssociationSet Name="FK_tblTender_WorkGroup_tblTender" Association="WalzExplorerModel.FK_tblTender_WorkGroup_tblTender">
             <End Role="tblTender" EntitySet="tblTenders" />
             <End Role="tblTender_WorkGroup" EntitySet="tblTender_WorkGroup" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblTender_WorkGroupItem_tblTender_WorkGroup" Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup">
-            <End Role="tblTender_WorkGroup" EntitySet="tblTender_WorkGroup" />
-            <End Role="tblTender_OverheadItem" EntitySet="tblTender_OverheadItem" />
           </AssociationSet>
           <FunctionImport Name="spTender_ObjectDetail" ReturnType="Collection(WalzExplorerModel.spTender_ObjectDetail_Result)">
           <Parameter Name="ObjectID" Mode="In" Type="Int32" />
@@ -2939,6 +2995,25 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             <Parameter Name="ProjectID" Mode="In" Type="Int32" />
             <Parameter Name="PersonID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="tblTender_WorkgroupFuel" EntityType="WalzExplorerModel.tblTender_WorkgroupFuel" />
+          <AssociationSet Name="FK_tblTender_WorkgroupFuel_tblTender_WorkGroup" Association="WalzExplorerModel.FK_tblTender_WorkgroupFuel_tblTender_WorkGroup">
+            <End Role="tblTender_WorkGroup" EntitySet="tblTender_WorkGroup" />
+            <End Role="tblTender_WorkgroupFuel" EntitySet="tblTender_WorkgroupFuel" />
+          </AssociationSet>
+          <EntitySet Name="tblTender_OverheadItem" EntityType="WalzExplorerModel.tblTender_OverheadItem" />
+          <EntitySet Name="tblTender_OverheadType" EntityType="WalzExplorerModel.tblTender_OverheadType" />
+          <AssociationSet Name="FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader" Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader">
+            <End Role="tblTender_OverheadGroup" EntitySet="tblTender_OverheadGroup" />
+            <End Role="tblTender_OverheadItem" EntitySet="tblTender_OverheadItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTender_OverheadItem_tblTender_OverheadType" Association="WalzExplorerModel.FK_tblTender_OverheadItem_tblTender_OverheadType">
+            <End Role="tblTender_OverheadType" EntitySet="tblTender_OverheadType" />
+            <End Role="tblTender_OverheadItem" EntitySet="tblTender_OverheadItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTender_WorkGroupItem_tblTender_WorkGroup" Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup">
+            <End Role="tblTender_WorkGroup" EntitySet="tblTender_WorkGroup" />
+            <End Role="tblTender_OverheadItem" EntitySet="tblTender_OverheadItem" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -4322,37 +4397,6 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="tblTender_OverheadItem">
-          <Key>
-            <PropertyRef Name="OverheadItemID" />
-          </Key>
-          <Property Name="OverheadItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="WorkGroupID" Type="Int32" Nullable="false" />
-          <Property Name="OverheadGroupID" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Count" Type="Double" Nullable="false" />
-          <Property Name="Duration" Type="Double" Nullable="false" />
-          <Property Name="Rate" Type="Double" Nullable="false" />
-          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="SortOrder" Type="Int32" Nullable="false" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
-          <NavigationProperty Name="tblTender_OverheadGroup" Relationship="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader" FromRole="tblTender_OverheadItem" ToRole="tblTender_OverheadGroup" />
-          <NavigationProperty Name="tblTender_WorkGroup" Relationship="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" FromRole="tblTender_OverheadItem" ToRole="tblTender_WorkGroup" />
-        </EntityType>
-        <Association Name="FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader">
-          <End Type="WalzExplorerModel.tblTender_OverheadGroup" Role="tblTender_OverheadGroup" Multiplicity="1" />
-          <End Type="WalzExplorerModel.tblTender_OverheadItem" Role="tblTender_OverheadItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_OverheadGroup">
-              <PropertyRef Name="OverheadGroupID" />
-            </Principal>
-            <Dependent Role="tblTender_OverheadItem">
-              <PropertyRef Name="OverheadGroupID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="tblTender_WorkGroup">
           <Key>
             <PropertyRef Name="WorkGroupID" />
@@ -4368,10 +4412,11 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="tblTender" Relationship="WalzExplorerModel.FK_tblTender_WorkGroup_tblTender" FromRole="tblTender_WorkGroup" ToRole="tblTender" />
-          <NavigationProperty Name="tblTender_OverheadItem" Relationship="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" FromRole="tblTender_WorkGroup" ToRole="tblTender_OverheadItem" />
           <NavigationProperty Name="vwTender_EstimateWorkGroupRate" Relationship="WalzExplorerModel.tblTender_WorkGroupvwTender_EstimateWorkGroupRate" FromRole="tblTender_WorkGroup" ToRole="vwTender_EstimateWorkGroupRate" />
           <NavigationProperty Name="tblTender_ObjectLabour" Relationship="WalzExplorerModel.FK_tblTender_ComponentLabour_tblTender_WorkGroup" FromRole="tblTender_WorkGroup" ToRole="tblTender_ObjectLabour" />
           <NavigationProperty Name="tblTender_EstimateItem" Relationship="WalzExplorerModel.FK_tblTender_Work_tblTender_WorkGroup" FromRole="tblTender_WorkGroup" ToRole="tblTender_EstimateItem" />
+          <NavigationProperty Name="tblTender_WorkgroupFuel" Relationship="WalzExplorerModel.FK_tblTender_WorkgroupFuel_tblTender_WorkGroup" FromRole="tblTender_WorkGroup" ToRole="tblTender_WorkgroupFuel" />
+          <NavigationProperty Name="tblTender_OverheadItem" Relationship="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" FromRole="tblTender_WorkGroup" ToRole="tblTender_OverheadItem" />
         </EntityType>
         <Association Name="FK_tblTender_WorkGroup_tblTender">
           <End Type="WalzExplorerModel.tblTender" Role="tblTender" Multiplicity="1" />
@@ -4382,18 +4427,6 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             </Principal>
             <Dependent Role="tblTender_WorkGroup">
               <PropertyRef Name="TenderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblTender_WorkGroupItem_tblTender_WorkGroup">
-          <End Type="WalzExplorerModel.tblTender_WorkGroup" Role="tblTender_WorkGroup" Multiplicity="1" />
-          <End Type="WalzExplorerModel.tblTender_OverheadItem" Role="tblTender_OverheadItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblTender_WorkGroup">
-              <PropertyRef Name="WorkGroupID" />
-            </Principal>
-            <Dependent Role="tblTender_OverheadItem">
-              <PropertyRef Name="WorkGroupID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5022,6 +5055,107 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <Property Type="String" Name="PurchasePlacer" Nullable="false" MaxLength="51" />
           <Property Type="String" Name="VendorName" Nullable="true" MaxLength="60" />
         </ComplexType>
+        <EntityType Name="tblTender_WorkgroupFuel">
+          <Key>
+            <PropertyRef Name="FuelItemID" />
+          </Key>
+          <Property Name="FuelItemID" Type="Int32" Nullable="false" />
+          <Property Name="WorkGroupID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Count" Type="Double" Nullable="false" />
+          <Property Name="Week" Type="Double" Nullable="false" />
+          <Property Name="C10DayFortnight" Type="Double" Nullable="false" />
+          <Property Name="HoursPerWeek" Type="Double" Nullable="false" />
+          <Property Name="LitrePerHour" Type="Double" Nullable="false" />
+          <Property Name="CostPerLitre" Type="Double" Nullable="false" />
+          <NavigationProperty Name="tblTender_WorkGroup" Relationship="WalzExplorerModel.FK_tblTender_WorkgroupFuel_tblTender_WorkGroup" FromRole="tblTender_WorkgroupFuel" ToRole="tblTender_WorkGroup" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+        </EntityType>
+        <Association Name="FK_tblTender_WorkgroupFuel_tblTender_WorkGroup">
+          <End Type="WalzExplorerModel.tblTender_WorkGroup" Role="tblTender_WorkGroup" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_WorkgroupFuel" Role="tblTender_WorkgroupFuel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_WorkGroup">
+              <PropertyRef Name="WorkGroupID" />
+            </Principal>
+            <Dependent Role="tblTender_WorkgroupFuel">
+              <PropertyRef Name="WorkGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblTender_OverheadItem">
+          <Key>
+            <PropertyRef Name="OverheadItemID" />
+          </Key>
+          <Property Name="OverheadItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkGroupID" Type="Int32" Nullable="false" />
+          <Property Name="OverheadTypeID" Type="Int32" Nullable="false" />
+          <Property Name="OverheadGroupID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Count" Type="Double" Nullable="false" />
+          <Property Name="Duration" Type="Double" Nullable="false" />
+          <Property Name="Rate" Type="Double" Nullable="false" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblTender_OverheadGroup" Relationship="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader" FromRole="tblTender_OverheadItem" ToRole="tblTender_OverheadGroup" />
+          <NavigationProperty Name="tblTender_OverheadType" Relationship="WalzExplorerModel.FK_tblTender_OverheadItem_tblTender_OverheadType" FromRole="tblTender_OverheadItem" ToRole="tblTender_OverheadType" />
+          <NavigationProperty Name="tblTender_WorkGroup" Relationship="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" FromRole="tblTender_OverheadItem" ToRole="tblTender_WorkGroup" />
+        </EntityType>
+        <EntityType Name="tblTender_OverheadType">
+          <Key>
+            <PropertyRef Name="OverheadTypeID" />
+          </Key>
+          <Property Name="OverheadTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblTender_OverheadItem" Relationship="WalzExplorerModel.FK_tblTender_OverheadItem_tblTender_OverheadType" FromRole="tblTender_OverheadType" ToRole="tblTender_OverheadItem" />
+        </EntityType>
+        <Association Name="FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader">
+          <End Type="WalzExplorerModel.tblTender_OverheadGroup" Role="tblTender_OverheadGroup" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_OverheadItem" Role="tblTender_OverheadItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_OverheadGroup">
+              <PropertyRef Name="OverheadGroupID" />
+            </Principal>
+            <Dependent Role="tblTender_OverheadItem">
+              <PropertyRef Name="OverheadGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_OverheadItem_tblTender_OverheadType">
+          <End Type="WalzExplorerModel.tblTender_OverheadType" Role="tblTender_OverheadType" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_OverheadItem" Role="tblTender_OverheadItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_OverheadType">
+              <PropertyRef Name="OverheadTypeID" />
+            </Principal>
+            <Dependent Role="tblTender_OverheadItem">
+              <PropertyRef Name="OverheadTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_WorkGroupItem_tblTender_WorkGroup">
+          <End Type="WalzExplorerModel.tblTender_WorkGroup" Role="tblTender_WorkGroup" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_OverheadItem" Role="tblTender_OverheadItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_WorkGroup">
+              <PropertyRef Name="WorkGroupID" />
+            </Principal>
+            <Dependent Role="tblTender_OverheadItem">
+              <PropertyRef Name="WorkGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6006,24 +6140,6 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblTender_OverheadItem">
-            <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_OverheadItem">
-              <MappingFragment StoreEntitySet="tblTender_OverheadItem">
-                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="OverheadGroupID" ColumnName="OverheadGroupID" />
-                <ScalarProperty Name="WorkGroupID" ColumnName="WorkGroupID" />
-                <ScalarProperty Name="OverheadItemID" ColumnName="OverheadItemID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblTender_WorkGroup">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_WorkGroup">
               <MappingFragment StoreEntitySet="tblTender_WorkGroup">
@@ -6346,6 +6462,57 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblTender_WorkgroupFuel">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_WorkgroupFuel">
+              <MappingFragment StoreEntitySet="tblTender_WorkgroupFuel">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CostPerLitre" ColumnName="CostPerLitre" />
+                <ScalarProperty Name="LitrePerHour" ColumnName="LitrePerHour" />
+                <ScalarProperty Name="HoursPerWeek" ColumnName="HoursPerWeek" />
+                <ScalarProperty Name="C10DayFortnight" ColumnName="10DayFortnight" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="WorkGroupID" ColumnName="WorkGroupID" />
+                <ScalarProperty Name="FuelItemID" ColumnName="FuelItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTender_OverheadItem">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_OverheadItem">
+              <MappingFragment StoreEntitySet="tblTender_OverheadItem">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="OverheadGroupID" ColumnName="OverheadGroupID" />
+                <ScalarProperty Name="OverheadTypeID" ColumnName="OverheadTypeID" />
+                <ScalarProperty Name="WorkGroupID" ColumnName="WorkGroupID" />
+                <ScalarProperty Name="OverheadItemID" ColumnName="OverheadItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTender_OverheadType">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_OverheadType">
+              <MappingFragment StoreEntitySet="tblTender_OverheadType">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="OverheadTypeID" ColumnName="OverheadTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
