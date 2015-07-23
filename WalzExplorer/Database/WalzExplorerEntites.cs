@@ -160,11 +160,18 @@ namespace WalzExplorer.Database
         {
             return !(this.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified).Count()==0);
         }
+
+        
         public override int SaveChanges()
         {
             
             List<DbEntityEntry> LogEntries =  this.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified).ToList();
-            Logging.LogChanges(LogEntries,this._ObjectContext);
+            //Task.Factory.StartNew(Logging.LogChanges(LogEntries, this._ObjectContext));
+            new Task(() => { Logging.LogChanges(LogEntries, this._ObjectContext); }).Start();
+            //Logging.LogChanges(LogEntries, this._ObjectContext);
+
+
+            //Task.Run(Logging.LogChanges(LogEntries, this._ObjectContext));
 
             //Add logging info
             var modifiedEntries = ChangeTracker.Entries()
@@ -188,9 +195,9 @@ namespace WalzExplorer.Database
             }
             try
             {
-                
+
                 return base.SaveChanges();
-                
+
             }
             catch (DbEntityValidationException ex)
             {
@@ -213,11 +220,6 @@ namespace WalzExplorer.Database
             {
                 throw;
             }
-
-           
-
-
-            
         }
 
         public void RollBackUncommitedChanges()

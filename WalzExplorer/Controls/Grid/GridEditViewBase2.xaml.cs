@@ -123,6 +123,7 @@ namespace WalzExplorer.Controls.Grid
             grd.ClipboardCopyMode = GridViewClipboardCopyMode.Cells;
             grd.ValidatesOnDataErrors = GridViewValidationMode.Default;
             grd.AutoGeneratingColumn += g_AutoGeneratingColumn;
+            grd.DataLoaded += g_DataLoaded;
             grd.ElementExporting += grd_ElementExporting;
 
             grd.ContextMenuOpening += g_ContextMenuOpening;
@@ -302,7 +303,7 @@ namespace WalzExplorer.Controls.Grid
                             if (grd.SelectedItems.Contains(item)) moveItems.Add(item);
                         }
                         MessageEfStatus(vm.MoveItemsToItem(moveItems, (ModelBase)row.Item));
-                        grd.Rebind(); //redisplay new values such as ID, sort order
+                        //grd.Rebind(); //redisplay new values such as ID, sort order
                     }
                     else
                         MessageBox.Show("Can't drop rows on selected rows to move", "Drag Drop", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -326,7 +327,7 @@ namespace WalzExplorer.Controls.Grid
         public void g_Deleted(object sender, GridViewDeletedEventArgs e)
         {
             MessageEfStatus(vm.Delete(e.Items));
-            grd.Rebind();         //redisplay new values such as ID, sort order
+            //grd.Rebind();         //redisplay new values such as ID, sort order
 
         }
         public bool IsValid()
@@ -344,7 +345,12 @@ namespace WalzExplorer.Controls.Grid
         {
             // this is required to be overridden by each RHSTabView
         }
-        
+        protected virtual void g_DataLoaded(object sender, EventArgs e)
+        {
+
+        }
+
+
         //Context menu actions
         public void g_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
@@ -431,7 +437,7 @@ namespace WalzExplorer.Controls.Grid
                         }
 
                         //vm.SavePaste(items);
-                        grd.Rebind();         //redisplay new values such as ID, sort order
+                        //grd.Rebind();         //redisplay new values such as ID, sort order
                     }
                     else
                     {
@@ -675,7 +681,7 @@ namespace WalzExplorer.Controls.Grid
             }
 
 
-            grd.Rebind();
+            //grd.Rebind();
 
         }
         private Style CellStyle(Style baseStyle,string foreground, string background)
@@ -739,10 +745,10 @@ namespace WalzExplorer.Controls.Grid
 
         private void g_AddingNewDataItem(object sender, GridViewAddingNewEventArgs e)
         {
-            grd.Rebind();
+            //grd.Rebind();
             e.Cancel = true;
             e.NewObject = vm.InsertNew();
-            grd.Rebind();         //redisplay new values such as ID, sort order
+            //grd.Rebind();         //redisplay new values such as ID, sort order
             grd.ScrollIntoViewAsync(e.NewObject, (f) =>
             {
                 GridViewRow row = f as GridViewRow;
@@ -761,7 +767,7 @@ namespace WalzExplorer.Controls.Grid
             if (!_isSaveOnButton)
             {
                 // this required?
-                grd.Rebind();         //redisplay new values such as ID, sort order
+                //grd.Rebind();         //redisplay new values such as ID, sort order
             }
         }
 

@@ -25,17 +25,25 @@ namespace WalzExplorer.Common
         }
 
         //Note issue that on an ADD it does not save the new Identity values these are not know until after save. 
-        public static void LogChanges(List<DbEntityEntry> changes,ObjectContext oc)
+        public static  void LogChanges(List<DbEntityEntry> changes,ObjectContext oc)
         {
-
+            string LogSql = "";
             foreach (var entry in changes)
             {
-                GetAuditRecordsForChange(entry,oc);
+                LogSql = LogSql + Environment.NewLine +GetAuditRecordsForChange(entry, oc);
+            }
+
+            if (LogSql != "")
+            {
+                using (ServicesEntities db = new ServicesEntities(false))
+                {
+                    db.Database.ExecuteSqlCommand(LogSql);
+                }
             }
          }
 
 
-        private static void GetAuditRecordsForChange(DbEntityEntry dbEntry, ObjectContext oc)
+        private static string  GetAuditRecordsForChange(DbEntityEntry dbEntry, ObjectContext oc)
         {
             List<string> PropertiesToSkip = new List<string> () {"RowVersion", "UpdatedDate", "UpdatedBy" };
 
@@ -45,6 +53,7 @@ namespace WalzExplorer.Common
             // Determine ID string for change (potentially multiple keys
             EntityKey entityKey = oc.ObjectStateManager.GetObjectStateEntry(dbEntry.Entity).EntityKey;
             string keyName = "";
+            string sql = "";
             if (entityKey.EntityKeyValues == null)
             {
                 keyName = "NEW IDENTITY";
@@ -58,55 +67,54 @@ namespace WalzExplorer.Common
                 if (keyName != "") keyName = keyName.TrimEnd(',');
             }
 
-            //determine reference fro values (original,
-            //using (ServicesEntities db = new ServicesEntities(false))
+          
+                
+            switch (dbEntry.State)
             {
-                //DbPropertyValues values = dbEntry.OriginalValues;
-                switch (dbEntry.State)
-                {
-                    case EntityState.Added:
-                        foreach (string propertyName in dbEntry.CurrentValues.PropertyNames)
+                case EntityState.Added:
+                    foreach (string propertyName in dbEntry.CurrentValues.PropertyNames)
+                    {
+                        if (!PropertiesToSkip.Contains(propertyName))
                         {
-                            if (!PropertiesToSkip.Contains(propertyName))
-                            {
-                                string AddedValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString();
-                                LogAsync("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), "<new>", AddedValue);
-                                
-                            }
+                            string AddedValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString();
+                            sql = SqlLogString("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), "<new>", AddedValue);
+
                         }
-                        break;
-                    case EntityState.Deleted:
-                        foreach (string propertyName in dbEntry.OriginalValues.PropertyNames)
+                    }
+                    break;
+                case EntityState.Deleted:
+                    foreach (string propertyName in dbEntry.OriginalValues.PropertyNames)
+                    {
+                        if (!PropertiesToSkip.Contains(propertyName))
                         {
-                            if (!PropertiesToSkip.Contains(propertyName))
+                            string OldValue = dbEntry.OriginalValues.GetValue<object>(propertyName) == null ? null : dbEntry.OriginalValues.GetValue<object>(propertyName).ToString();
+                            sql = SqlLogString("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), OldValue, "<deleted>");
+                        }
+                    }
+                    break;
+                case EntityState.Modified:
+                    foreach (string propertyName in dbEntry.OriginalValues.PropertyNames)
+                    {
+                        if (!PropertiesToSkip.Contains(propertyName))
+                        {
+                            if (!object.Equals(dbEntry.OriginalValues.GetValue<object>(propertyName), dbEntry.CurrentValues.GetValue<object>(propertyName)))
                             {
+                                string NewValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString();
                                 string OldValue = dbEntry.OriginalValues.GetValue<object>(propertyName) == null ? null : dbEntry.OriginalValues.GetValue<object>(propertyName).ToString();
-                                LogAsync("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), OldValue, "<deleted>");
+
+                                sql = SqlLogString("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), OldValue, NewValue);
                             }
                         }
-                        break;
-                    case EntityState.Modified:
-                        foreach (string propertyName in dbEntry.OriginalValues.PropertyNames)
-                        {
-                            if (!PropertiesToSkip.Contains(propertyName))
-                            {
-                                if (!object.Equals(dbEntry.OriginalValues.GetValue<object>(propertyName), dbEntry.CurrentValues.GetValue<object>(propertyName)))
-                                {
-                                    string NewValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString();
-                                    string OldValue = dbEntry.OriginalValues.GetValue<object>(propertyName) == null ? null : dbEntry.OriginalValues.GetValue<object>(propertyName).ToString();
 
-                                    LogAsync("Explorer", tableName, propertyName, WindowsIdentity.GetCurrent().Name, keyName, dbEntry.State.ToString(), OldValue, NewValue);
-                                }
-                            }
-                        }
-                        break;
-                }
-
+                    }
+                    break;
+            
+                    
             }
-
+            return sql;
         }
 
-        private static async void LogAsync(string database,string table, string column, string user,string key, string operation,string oldvalue,string newvalue)
+        private static  string SqlLogString(string database,string table, string column, string user,string key, string operation,string oldvalue,string newvalue)
         {
             //database,table,column,user,key,operation,oldvalue,newvalue
             if (database != null) database = database.Replace("'", "''");
@@ -118,12 +126,10 @@ namespace WalzExplorer.Common
             if (oldvalue != null) oldvalue = oldvalue.Replace("'", "''");
             if (newvalue != null) newvalue = newvalue.Replace("'", "''");
 
-            // Asyc logging so we don't have to wait for it. If it fails no real issue. But should do something.. nothing set as yet
-            using (ServicesEntities db = new ServicesEntities(false))
-            {
-                string LogSql =String.Format("EXECUTE [dbo].[spLogChangev2] @Database='{0}',@Table='{1}',@Column='{2}',@User='{3}',@Row='{4}',@Operation='{5}',@OldValue='{6}',@NewValue='{7}'",database,table,column,user,key,operation,oldvalue,newvalue);
-                await db.Database.ExecuteSqlCommandAsync(LogSql);
-            }
+            
+            return String.Format("EXECUTE [dbo].[spLogChangev2] @Database='{0}',@Table='{1}',@Column='{2}',@User='{3}',@Row='{4}',@Operation='{5}',@OldValue='{6}',@NewValue='{7}'",database,table,column,user,key,operation,oldvalue,newvalue);
+                
+            
 
         }
 

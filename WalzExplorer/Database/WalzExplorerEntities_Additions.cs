@@ -10,6 +10,14 @@ namespace WalzExplorer.Database
     using System.ComponentModel;
     using System.Collections.Generic;
 
+    public partial class tblTender_Drawing: ModelBase
+    {
+        public double Used
+        {
+            get { return tblTender_EstimateItem.Count(x => x.DrawingID == DrawingID); }
+        }
+
+    }
 
     public partial class tblTender_ObjectMaterial:ModelBase
     {

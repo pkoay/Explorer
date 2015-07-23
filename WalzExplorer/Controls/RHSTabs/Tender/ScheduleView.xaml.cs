@@ -37,15 +37,13 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             grd.grd.ItemsSource = vm.data;
             
             if (settings.user.SecurityGroups.Contains("WD_Tender"))
-                grd.SetGrid(settings,true,true,true);
+                grd.SetGrid(settings,true,true,true,true);
             else
                 grd.SetGrid(settings, false, false, false);
 
            
             grd.columnsettings.Add("ScheduleID", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("TenderID", new GridEditViewBase.columnSetting() { isDeveloper = true });
-            grd.columnsettings.Add("SQM", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
-            grd.columnsettings.Add("KG", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
             grd.columnsettings.Add("ClientCode", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT, format = GridEditViewBase.columnSetting.formatType.TEXT });
 
             

@@ -44,7 +44,8 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
            
             grd.columnsettings.Add("DrawingID", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("TenderID", new GridEditViewBase.columnSetting() { isDeveloper = true });
-            grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT ,format=  GridEditViewBase.columnSetting.formatType.TEXT});
+            grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT, format = GridEditViewBase.columnSetting.formatType.TEXT });
+            grd.columnsettings.Add("Used", new GridEditViewBase.columnSetting() { tooltip="Number of times the Drawing has been selected in the estimate", format = GridEditViewBase.columnSetting.formatType.G, isReadonly=true });
           
         }
 

@@ -98,8 +98,8 @@ namespace WalzExplorer.Controls.Grid
             grd.ValidatesOnDataErrors = GridViewValidationMode.Default;
             grd.AutoGeneratingColumn += g_AutoGeneratingColumn;
             grd.ElementExporting += grd_ElementExporting;
-            
 
+           
 
             grd.ShowColumnHeaders = true;
             grd.ShowGroupPanel = true;
@@ -125,6 +125,8 @@ namespace WalzExplorer.Controls.Grid
 
           
         }
+
+       
 
         void grd_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
@@ -287,7 +289,7 @@ namespace WalzExplorer.Controls.Grid
 
         public void g_AutoGeneratingColumn(object sender, GridViewAutoGeneratingColumnEventArgs e)
         {
-
+           
             Telerik.Windows.Controls.GridViewColumn c = e.Column;
             GridViewDataColumn dc = e.Column as GridViewDataColumn;
 

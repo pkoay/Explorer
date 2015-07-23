@@ -24,6 +24,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
     public partial class EstimateItemView : RHSTabViewBase
     {
         private HashSet<string> defaultColumns = new HashSet<string>() { "cmbScheduleID", "UpdatedBy", "UpdatedDate", "SortOrder" };
+        private string radioButtonLayout="";
 
         EstimateItemViewModel vm;
 
@@ -44,7 +45,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             else
                 grd.SetGrid(settings, false, false, false);
 
-
+            grd.grd.DataLoaded += grd_DataLoaded;
             grd.columnsettings.Add("EstimateItemID", new GridEditViewBase2.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("TenderID", new GridEditViewBase2.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("IsHeader", new GridEditViewBase2.columnSetting() { isDeveloper = true });
@@ -84,15 +85,33 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
            
         }
 
+        void grd_DataLoaded(object sender, EventArgs e)
+        {
+            if (radioButtonLayout == "")
+            {
+                rbBasic.IsChecked = true;
+                rbBasic.RaiseEvent(new RoutedEventArgs(RadRadioButton.ClickEvent));
+            }
+        }
+
         public override string IssueIfClosed()
         {
+            grd.grd.CommitEdit();
             bool isvalid = grd.IsValid();
-            if (!isvalid)
+            
+            if (!isvalid )
             {
                 return "Not all data in the tab is saved (data in error not saved). Press ok to fix the errors, or press cancel to lose changes in error";
             }
+            bool isSaved = ! vm.context.HasChanged();
+            if (!isSaved)
+             {
+                return "The changes to the data have not been saved. Press ok and then press the save button to save the changes, or press cancel to lose changes";
+            }
             return "";
         }
+
+       
 
         private Style TitleCellStyle()
         {
@@ -173,7 +192,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         {
            
             RadRadioButton btn = (RadRadioButton)e.Source;
-            string display = btn.Content.ToString().Trim();
+            radioButtonLayout = btn.Content.ToString().Trim();
             grd.grd.Columns["Title"].TextWrapping = TextWrapping.Wrap;
             grd.grd.Columns["Title"].Width = 400;
 
@@ -206,7 +225,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             //not used
             grd.grd.Columns["SubcontractorRate"].IsVisible = false;
             grd.grd.Columns["UnitCost"].IsVisible= false;
-            switch (display)
+            switch (radioButtonLayout)
             {
                 case "All":
                     break;

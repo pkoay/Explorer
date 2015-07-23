@@ -17,6 +17,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
     public class EstimateItemViewModel : GridEditViewModelBase2
     {
         int TenderID;
+        int ScheduleID;
         int Default_SubcontractorID;
         int Default_WorkGroupID;
         int Default_UnitOfMeasureID;
@@ -27,7 +28,16 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         public EstimateItemViewModel(WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
             TenderID = ConvertLibrary.StringToInt(settings.node.FindID("TENDER", "-2"), -1);
-            data = new ObservableCollection<ModelBase>(context.tblTender_EstimateItem.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder));
+            ScheduleID = ConvertLibrary.StringToInt(settings.node.FindID("EstimateScheduleID", "-2"), -1);
+            if (ScheduleID == -1) // all items (not for a given scheduleID
+            {
+                data = new ObservableCollection<ModelBase>(context.tblTender_EstimateItem.Where(x => x.TenderID == TenderID).OrderBy(x => x.tblTender_Schedule.SortOrder).ThenBy(x => x.SortOrder));
+            }
+            else
+            {
+                data = new ObservableCollection<ModelBase>(context.tblTender_EstimateItem.Where(x => x.TenderID == TenderID && x.ScheduleID == ScheduleID).OrderBy(x => x.tblTender_Schedule.SortOrder).ThenBy(x => x.SortOrder));
+
+            }
             Default_SubcontractorID = context.tblTender_Subcontractor.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().SubcontractorID;
             Default_WorkGroupID = context.tblTender_WorkGroup.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().WorkGroupID;
             Default_UnitOfMeasureID = context.tblTender_UnitOfMeasure.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().UnitOfMeasureID;
@@ -54,7 +64,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             i.MaterialID = Default_MaterialID;
             return i;
         }
-
+        
         public List<object> cmbScheduleList()
         {
             return context.tblTender_Schedule.Where(x => x.TenderID == TenderID).OrderBy(x => x.ClientCode).ToList<object>();

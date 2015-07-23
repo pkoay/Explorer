@@ -20,7 +20,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         public SupplierViewModel(WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
             TenderID = ConvertLibrary.StringToInt(settings.node.FindID("TENDER", "-2"), -1);
-            data = new ObservableCollection<ModelBase>(context.tblTender_Supplier.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder));  
+            data = new ObservableCollection<ModelBase>(context.tblTender_Supplier.Where(x => x.TenderID == TenderID && x.SortOrder >= 0).OrderBy(x => x.SortOrder));  
         }
 
         public override ModelBase DefaultItem(ModelBase NearItem)
