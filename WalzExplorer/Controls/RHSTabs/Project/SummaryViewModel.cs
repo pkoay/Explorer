@@ -13,7 +13,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
 {
     public class SummaryViewModel 
     {
-        public ObservableCollection<spWEX_RHS_Project_Summary_Result> data;
+        public ObservableCollection<spWEX_RHS_Project_Summary_v2_Result> data;
         public WalzExplorerEntities context = new WalzExplorerEntities(false);
         int ProjectID;
         int ManagerID;
@@ -35,7 +35,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             //var pNTSecurityGroupsSeperator = new SqlParameter("@NTSecurityGroupsSeperator", "|");
             //data = context.Database.SqlQuery( "spWEX.RHSTabList", pTreeNodeTypeID, pNodeTypeID, pNTSecurityGroupsSeperator).ToList();
 
-            data = new ObservableCollection<spWEX_RHS_Project_Summary_Result>(context.spWEX_RHS_Project_Summary(UserPersonID, NodeTypeID, settings.SearchCriteria, ProjectID, ManagerID, CustomerID));  
+            data = new ObservableCollection<spWEX_RHS_Project_Summary_v2_Result>(context.spWEX_RHS_Project_Summary_v2(UserPersonID, NodeTypeID, settings.SearchCriteria, ProjectID, ManagerID, CustomerID));  
         }
     }
 }

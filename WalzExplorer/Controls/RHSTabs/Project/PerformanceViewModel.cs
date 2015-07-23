@@ -454,6 +454,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                         historyData.StatusID = 2;
                         context.SaveChanges();
                         RefreshHistory();
+                        
                     }
                     else
                         throw new Exception("Should not be able to sign as Project manager");
@@ -466,6 +467,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                         historyData.StatusID = 3;
                         context.SaveChanges();
                         RefreshHistory();
+                        context.spProject_UpdateSignedCostFields(historyData.ProjectID);
                     }
                     else
                         throw new Exception("Should not be able to sign as Operational manager");
@@ -485,6 +487,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                         historyData.ProjectManagerSignID = null;
                         historyData.ProjectManagerSignDate = null;
                         historyData.StatusID = 1;
+                        context.SaveChanges();
+                        RefreshHistory();
+
                     }
                     else
                         throw new Exception("Should not be able to unsign Project manager");
@@ -495,14 +500,16 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                         historyData.OperationsManagerSignID = null;
                         historyData.OperationsManagerSignDate = null;
                         historyData.StatusID = 2;
+                        context.SaveChanges();
+                        RefreshHistory();
+                        context.spProject_UpdateSignedCostFields(historyData.ProjectID);
                     }
                     else
                         throw new Exception("Should not be able to unsign Operational manager");
                     break;
 
             }
-            context.SaveChanges();
-            RefreshHistory();
+
         }
     }
 

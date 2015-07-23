@@ -215,6 +215,34 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _tempIsIndirect, value); } 
     	}
     
+        private Nullable<System.DateTime> _latestSignedCostPeriodEnd;
+    	public Nullable<System.DateTime> LatestSignedCostPeriodEnd 
+    	{ 
+    		get { return _latestSignedCostPeriodEnd; } 
+    		set { SetProperty(ref _latestSignedCostPeriodEnd, value); } 
+    	}
+    
+        private Nullable<double> _latestSignedCostPlanned;
+    	public Nullable<double> LatestSignedCostPlanned 
+    	{ 
+    		get { return _latestSignedCostPlanned; } 
+    		set { SetProperty(ref _latestSignedCostPlanned, value); } 
+    	}
+    
+        private Nullable<double> _latestSignedCostEarned;
+    	public Nullable<double> LatestSignedCostEarned 
+    	{ 
+    		get { return _latestSignedCostEarned; } 
+    		set { SetProperty(ref _latestSignedCostEarned, value); } 
+    	}
+    
+        private Nullable<double> _latestSignedCostActual;
+    	public Nullable<double> LatestSignedCostActual 
+    	{ 
+    		get { return _latestSignedCostActual; } 
+    		set { SetProperty(ref _latestSignedCostActual, value); } 
+    	}
+    
     
         public virtual tblPerson tblPerson { get; set; }
         public virtual tblPerson tblPerson1 { get; set; }

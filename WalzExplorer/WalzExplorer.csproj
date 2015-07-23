@@ -244,9 +244,13 @@
       <DependentUpon>EstimateItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Tender\EstimateItemViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\WorkgroupAdditionalHoursView.xaml.cs">
+      <DependentUpon>WorkgroupAdditionalHoursView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RHSTabs\Tender\WorkgroupFuelView.xaml.cs">
       <DependentUpon>WorkgroupFuelView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RHSTabs\Tender\WorkgroupAdditionalHoursViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\WorkgroupFuelViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\Superseded\ObjectChildObjectView.xaml.cs">
       <DependentUpon>ObjectChildObjectView.xaml</DependentUpon>
@@ -521,6 +525,9 @@
     <Compile Include="Database\spWEX_RHS_Project_Summary_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\spWEX_RHS_Project_Summary_v2_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\spWEX_TreeRootList_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -671,6 +678,9 @@
     <Compile Include="Database\tblTender_WorkGroup.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\tblTender_WorkgroupAdditionalHours.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\tblTender_WorkgroupFuel.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
@@ -777,6 +787,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Tender\EstimateItemView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\WorkgroupAdditionalHoursView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -56,5 +56,12 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _overhead, value); } 
     	}
     
+        private double _additionalHours;
+    	public double AdditionalHours 
+    	{ 
+    		get { return _additionalHours; } 
+    		set { SetProperty(ref _additionalHours, value); } 
+    	}
+    
     }
 }

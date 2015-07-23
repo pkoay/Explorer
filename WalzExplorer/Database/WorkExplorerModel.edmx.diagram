@@ -138,6 +138,8 @@
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_OverheadItem_tblTender_OverheadType" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkgroupAdditionalHours" Width="1.5" PointX="11.625" PointY="11.875" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkgroupAddtionalHours_tblTender_WorkGroup" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

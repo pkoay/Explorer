@@ -59,6 +59,16 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.columnSettings.toolTip.Add("Committed", "Committed Costs to date (Open purchase orders)");
             grd.columnSettings.toolTip.Add("Invoiced", "Invoiced to client to date");
 
+
+            grd.columnSettings.toolTip.Add("CostSignDate", "Latest signed Date for CostPlanned,CostEarned and CostActual columns (from Performance tab) ");
+            grd.columnSettings.toolTip.Add("CostPlanned", "Latest signed Planned cost amount (from Performance tab)");
+            grd.columnSettings.toolTip.Add("CostEarned", "Latest signed Earned cost amount (from Performance tab)");
+            grd.columnSettings.toolTip.Add("CostActual", "Latest signed Actual cost amount (from Performance tab)");
+            grd.columnSettings.format.Add("CostSignDate", Grid.Grid_Read.columnFormat.DATE);
+            grd.columnSettings.format.Add("CostPlanned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("CostEarned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("CostActual", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+
             grd.columnSettings.drilldown.Add("Committed");
             grd.columnSettings.drilldown.Add("Cost");
 

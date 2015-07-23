@@ -85,6 +85,10 @@
           <Property Name="P6ProjID" Type="int" />
           <Property Name="TempIsIndirect" Type="bit" Nullable="false" />
           <Property Name="TempContractType" Type="int" Nullable="false" />
+          <Property Name="LatestSignedCostPeriodEnd" Type="datetime" />
+          <Property Name="LatestSignedCostPlanned" Type="float" />
+          <Property Name="LatestSignedCostEarned" Type="float" />
+          <Property Name="LatestSignedCostActual" Type="float" />
           <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -741,6 +745,21 @@
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblTender_WorkgroupAdditionalHours">
+          <Key>
+            <PropertyRef Name="AdditionalItemID" />
+          </Key>
+          <Property Name="AdditionalItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkgroupID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Count" Type="float" Nullable="false" />
+          <Property Name="Hours" Type="float" Nullable="false" />
+          <Property Name="Comments" Type="varchar(max)" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblTender_WorkgroupFuel">
           <Key>
             <PropertyRef Name="FuelItemID" />
@@ -858,6 +877,7 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.EstimateWorkGroupRate' does 
             
             
             
+            
           </Key>
           <Property Name="TenderID" Type="int" Nullable="false" />
           <Property Name="WorkGroupID" Type="int" Nullable="false" />
@@ -865,6 +885,7 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.EstimateWorkGroupRate' does 
           <Property Name="Rate" Type="float" Nullable="false" />
           <Property Name="Hours" Type="float" Nullable="false" />
           <Property Name="Overhead" Type="float" Nullable="false" />
+          <Property Name="AdditionalHours" Type="float" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1334,6 +1355,18 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             </Principal>
             <Dependent Role="tblTender_EstimateItem">
               <PropertyRef Name="EstimateItemTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTender_WorkgroupAddtionalHours_tblTender_WorkGroup">
+          <End Role="tblTender_WorkGroup" Type="Self.tblTender_WorkGroup" Multiplicity="1" />
+          <End Role="tblTender_WorkgroupAdditionalHours" Type="Self.tblTender_WorkgroupAdditionalHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_WorkGroup">
+              <PropertyRef Name="WorkGroupID" />
+            </Principal>
+            <Dependent Role="tblTender_WorkgroupAdditionalHours">
+              <PropertyRef Name="WorkgroupID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1829,6 +1862,9 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <Parameter Name="HistoryID" Type="int" Mode="In" />
           <Parameter Name="PeriodEnd" Type="date" Mode="In" />
         </Function>
+        <Function Name="spProject_UpdateSignedCostFields" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spProject.UpdateSignedCostFields">
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
+        </Function>
         <Function Name="spTender_CloneActivity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spTender.CloneActivity">
           <Parameter Name="ComponentID" Type="int" Mode="In" />
           <Parameter Name="Factor" Type="int" Mode="In" />
@@ -1912,6 +1948,14 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <Parameter Name="ManagerID" Type="int" Mode="In" />
           <Parameter Name="CustomerID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spWEX_RHS_Project_Summary_v2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Summary_v2">
+          <Parameter Name="UserPersonID" Type="nvarchar" Mode="In" />
+          <Parameter Name="NodeTypeID" Type="varchar" Mode="In" />
+          <Parameter Name="SearchCriteria" Type="varchar(max)" Mode="In" />
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
+          <Parameter Name="ManagerID" Type="int" Mode="In" />
+          <Parameter Name="CustomerID" Type="int" Mode="In" />
+        </Function>
         <Function Name="spWEX_RHSTabList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHSTabList">
           <Parameter Name="TreeNodeTypeID" Type="varchar" Mode="In" />
           <Parameter Name="NTSecurityGroups" Type="varchar(max)" Mode="In" />
@@ -1966,6 +2010,7 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <EntitySet Name="tblTender_Supplier" EntityType="Self.tblTender_Supplier" Schema="dbo" Table="tblTender.Supplier" store:Type="Tables" />
           <EntitySet Name="tblTender_UnitOfMeasure" EntityType="Self.tblTender_UnitOfMeasure" Schema="dbo" Table="tblTender.UnitOfMeasure" store:Type="Tables" />
           <EntitySet Name="tblTender_WorkGroup" EntityType="Self.tblTender_WorkGroup" Schema="dbo" Table="tblTender.WorkGroup" store:Type="Tables" />
+          <EntitySet Name="tblTender_WorkgroupAdditionalHours" EntityType="Self.tblTender_WorkgroupAdditionalHours" Schema="dbo" Table="tblTender.WorkgroupAdditionalHours" store:Type="Tables" />
           <EntitySet Name="tblTender_WorkgroupFuel" EntityType="Self.tblTender_WorkgroupFuel" Schema="dbo" Table="tblTender.WorkgroupFuel" store:Type="Tables" />
           <EntitySet Name="tblWEX_LHSTab" EntityType="Self.tblWEX_LHSTab" Schema="dbo" Table="tblWEX.LHSTab" store:Type="Tables" />
           <EntitySet Name="tblWEX_NTSecurityGroup" EntityType="Self.tblWEX_NTSecurityGroup" Schema="dbo" Table="tblWEX.NTSecurityGroup" store:Type="Tables" />
@@ -1992,7 +2037,8 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
     [vwTender_EstimateWorkGroupRate].[WorkGroup] AS [WorkGroup], 
     [vwTender_EstimateWorkGroupRate].[Rate] AS [Rate], 
     [vwTender_EstimateWorkGroupRate].[Hours] AS [Hours], 
-    [vwTender_EstimateWorkGroupRate].[Overhead] AS [Overhead]
+    [vwTender_EstimateWorkGroupRate].[Overhead] AS [Overhead], 
+    [vwTender_EstimateWorkGroupRate].[AdditionalHours] AS [AdditionalHours]
     FROM [dbo].[vwTender.EstimateWorkGroupRate] AS [vwTender_EstimateWorkGroupRate]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwTender_ObjectHoursByWorkGroup" EntityType="Self.vwTender_ObjectHoursByWorkGroup" store:Type="Views" store:Schema="dbo" store:Name="vwTender.ObjectHoursByWorkGroup">
@@ -2156,6 +2202,10 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <AssociationSet Name="FK_tblTender_Work_tblTender_WorkType" Association="Self.FK_tblTender_Work_tblTender_WorkType">
             <End Role="tblTender_EstimateItemType" EntitySet="tblTender_EstimateItemType" />
             <End Role="tblTender_EstimateItem" EntitySet="tblTender_EstimateItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTender_WorkgroupAddtionalHours_tblTender_WorkGroup" Association="Self.FK_tblTender_WorkgroupAddtionalHours_tblTender_WorkGroup">
+            <End Role="tblTender_WorkGroup" EntitySet="tblTender_WorkGroup" />
+            <End Role="tblTender_WorkgroupAdditionalHours" EntitySet="tblTender_WorkgroupAdditionalHours" />
           </AssociationSet>
           <AssociationSet Name="FK_tblTender_WorkgroupFuel_tblTender_WorkGroup" Association="Self.FK_tblTender_WorkgroupFuel_tblTender_WorkGroup">
             <End Role="tblTender_WorkGroup" EntitySet="tblTender_WorkGroup" />
@@ -3014,6 +3064,22 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             <End Role="tblTender_WorkGroup" EntitySet="tblTender_WorkGroup" />
             <End Role="tblTender_OverheadItem" EntitySet="tblTender_OverheadItem" />
           </AssociationSet>
+          <EntitySet Name="tblTender_WorkgroupAdditionalHours" EntityType="WalzExplorerModel.tblTender_WorkgroupAdditionalHours" />
+          <AssociationSet Name="FK_tblTender_WorkgroupAddtionalHours_tblTender_WorkGroup" Association="WalzExplorerModel.FK_tblTender_WorkgroupAddtionalHours_tblTender_WorkGroup">
+            <End Role="tblTender_WorkGroup" EntitySet="tblTender_WorkGroup" />
+            <End Role="tblTender_WorkgroupAdditionalHours" EntitySet="tblTender_WorkgroupAdditionalHours" />
+          </AssociationSet>
+          <FunctionImport Name="spProject_UpdateSignedCostFields">
+          <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_RHS_Project_Summary_v2" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Summary_v2_Result)">
+            <Parameter Name="UserPersonID" Mode="In" Type="String" />
+            <Parameter Name="NodeTypeID" Mode="In" Type="String" />
+            <Parameter Name="SearchCriteria" Mode="In" Type="String" />
+            <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+            <Parameter Name="ManagerID" Mode="In" Type="Int32" />
+            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -3405,6 +3471,10 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <Property Name="P6ProjID" Type="Int32" />
           <Property Name="TempContractType" Type="Int32" Nullable="false" />
           <Property Name="TempIsIndirect" Type="Boolean" Nullable="false" />
+          <Property Name="LatestSignedCostPeriodEnd" Type="DateTime" Precision="3" />
+          <Property Name="LatestSignedCostPlanned" Type="Double" />
+          <Property Name="LatestSignedCostEarned" Type="Double" />
+          <Property Name="LatestSignedCostActual" Type="Double" />
         </EntityType>
         <EntityType Name="tblTender">
           <Key>
@@ -4417,6 +4487,7 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <NavigationProperty Name="tblTender_EstimateItem" Relationship="WalzExplorerModel.FK_tblTender_Work_tblTender_WorkGroup" FromRole="tblTender_WorkGroup" ToRole="tblTender_EstimateItem" />
           <NavigationProperty Name="tblTender_WorkgroupFuel" Relationship="WalzExplorerModel.FK_tblTender_WorkgroupFuel_tblTender_WorkGroup" FromRole="tblTender_WorkGroup" ToRole="tblTender_WorkgroupFuel" />
           <NavigationProperty Name="tblTender_OverheadItem" Relationship="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" FromRole="tblTender_WorkGroup" ToRole="tblTender_OverheadItem" />
+          <NavigationProperty Name="tblTender_WorkgroupAdditionalHours" Relationship="WalzExplorerModel.FK_tblTender_WorkgroupAddtionalHours_tblTender_WorkGroup" FromRole="tblTender_WorkGroup" ToRole="tblTender_WorkgroupAdditionalHours" />
         </EntityType>
         <Association Name="FK_tblTender_WorkGroup_tblTender">
           <End Type="WalzExplorerModel.tblTender" Role="tblTender" Multiplicity="1" />
@@ -4452,6 +4523,7 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <Property Name="Rate" Type="Double" Nullable="false" />
           <Property Name="Hours" Type="Double" Nullable="false" />
           <Property Name="Overhead" Type="Double" Nullable="false" />
+          <Property Name="AdditionalHours" Type="Double" Nullable="false" />
         </EntityType>
         <Association Name="tblTender_WorkGroupvwTender_EstimateWorkGroupRate">
           <End Type="WalzExplorerModel.tblTender_WorkGroup" Role="tblTender_WorkGroup" Multiplicity="1" />
@@ -5156,6 +5228,57 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tblTender_WorkgroupAdditionalHours">
+          <Key>
+            <PropertyRef Name="AdditionalItemID" />
+          </Key>
+          <Property Name="AdditionalItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkgroupID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Count" Type="Double" Nullable="false" />
+          <Property Name="Hours" Type="Double" Nullable="false" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="tblTender_WorkGroup" Relationship="WalzExplorerModel.FK_tblTender_WorkgroupAddtionalHours_tblTender_WorkGroup" FromRole="tblTender_WorkgroupAdditionalHours" ToRole="tblTender_WorkGroup" />
+        </EntityType>
+        <Association Name="FK_tblTender_WorkgroupAddtionalHours_tblTender_WorkGroup">
+          <End Type="WalzExplorerModel.tblTender_WorkGroup" Role="tblTender_WorkGroup" Multiplicity="1" />
+          <End Type="WalzExplorerModel.tblTender_WorkgroupAdditionalHours" Role="tblTender_WorkgroupAdditionalHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_WorkGroup">
+              <PropertyRef Name="WorkGroupID" />
+            </Principal>
+            <Dependent Role="tblTender_WorkgroupAdditionalHours">
+              <PropertyRef Name="WorkgroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="spWEX_RHS_Project_Summary_v2_Result">
+          <Property Type="Int32" Name="ProjectID" Nullable="false" />
+          <Property Type="String" Name="AXProjectID" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="AXDataAreaID" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Manager" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="OperationsManager" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Customer" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+          <Property Type="Double" Name="Contract" Nullable="true" />
+          <Property Type="Double" Name="CostBudget" Nullable="true" />
+          <Property Type="Double" Name="Cost" Nullable="true" />
+          <Property Type="Double" Name="Committed" Nullable="true" />
+          <Property Type="Double" Name="Invoiced" Nullable="true" />
+          <Property Type="String" Name="ContractType" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="CostPlanned" Nullable="true" />
+          <Property Type="Double" Name="CostEarned" Nullable="true" />
+          <Property Type="Double" Name="CostActual" Nullable="true" />
+          <Property Type="DateTime" Name="CostSignDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="UpdatedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5556,6 +5679,10 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <EntitySetMapping Name="tblProjects">
             <EntityTypeMapping TypeName="WalzExplorerModel.tblProject">
               <MappingFragment StoreEntitySet="tblProject">
+                <ScalarProperty Name="LatestSignedCostActual" ColumnName="LatestSignedCostActual" />
+                <ScalarProperty Name="LatestSignedCostEarned" ColumnName="LatestSignedCostEarned" />
+                <ScalarProperty Name="LatestSignedCostPlanned" ColumnName="LatestSignedCostPlanned" />
+                <ScalarProperty Name="LatestSignedCostPeriodEnd" ColumnName="LatestSignedCostPeriodEnd" />
                 <ScalarProperty Name="TempIsIndirect" ColumnName="TempIsIndirect" />
                 <ScalarProperty Name="TempContractType" ColumnName="TempContractType" />
                 <ScalarProperty Name="P6ProjID" ColumnName="P6ProjID" />
@@ -6240,6 +6367,7 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <EntitySetMapping Name="vwTender_EstimateWorkGroupRate">
             <EntityTypeMapping TypeName="WalzExplorerModel.vwTender_EstimateWorkGroupRate">
               <MappingFragment StoreEntitySet="vwTender_EstimateWorkGroupRate">
+                <ScalarProperty Name="AdditionalHours" ColumnName="AdditionalHours" />
                 <ScalarProperty Name="Overhead" ColumnName="Overhead" />
                 <ScalarProperty Name="Hours" ColumnName="Hours" />
                 <ScalarProperty Name="Rate" ColumnName="Rate" />
@@ -6513,6 +6641,50 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblTender_WorkgroupAdditionalHours">
+            <EntityTypeMapping TypeName="WalzExplorerModel.tblTender_WorkgroupAdditionalHours">
+              <MappingFragment StoreEntitySet="tblTender_WorkgroupAdditionalHours">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="WorkgroupID" ColumnName="WorkgroupID" />
+                <ScalarProperty Name="AdditionalItemID" ColumnName="AdditionalItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spProject_UpdateSignedCostFields" FunctionName="WalzExplorerModel.Store.spProject_UpdateSignedCostFields" />
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_Summary_v2" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_Summary_v2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_Summary_v2_Result">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="AXProjectID" ColumnName="AXProjectID" />
+                <ScalarProperty Name="AXDataAreaID" ColumnName="AXDataAreaID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+                <ScalarProperty Name="OperationsManager" ColumnName="OperationsManager" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Contract" ColumnName="Contract" />
+                <ScalarProperty Name="CostBudget" ColumnName="CostBudget" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Committed" ColumnName="Committed" />
+                <ScalarProperty Name="Invoiced" ColumnName="Invoiced" />
+                <ScalarProperty Name="ContractType" ColumnName="ContractType" />
+                <ScalarProperty Name="CostPlanned" ColumnName="CostPlanned" />
+                <ScalarProperty Name="CostEarned" ColumnName="CostEarned" />
+                <ScalarProperty Name="CostActual" ColumnName="CostActual" />
+                <ScalarProperty Name="CostSignDate" ColumnName="CostSignDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

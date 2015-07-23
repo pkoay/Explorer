@@ -81,6 +81,7 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblTender_WorkgroupFuel> tblTender_WorkgroupFuel { get; set; }
         public virtual DbSet<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
         public virtual DbSet<tblTender_OverheadType> tblTender_OverheadType { get; set; }
+        public virtual DbSet<tblTender_WorkgroupAdditionalHours> tblTender_WorkgroupAdditionalHours { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)
@@ -639,6 +640,44 @@ namespace WalzExplorer.Database
                 new ObjectParameter("PersonID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_PurchaseOrderSummary_v3_Result>("spWEX_RHS_Project_PurchaseOrderSummary_v3", projectIDParameter, personIDParameter);
+        }
+    
+        public virtual int spProject_UpdateSignedCostFields(Nullable<int> projectID)
+        {
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProject_UpdateSignedCostFields", projectIDParameter);
+        }
+    
+        public virtual ObjectResult<spWEX_RHS_Project_Summary_v2_Result> spWEX_RHS_Project_Summary_v2(string userPersonID, string nodeTypeID, string searchCriteria, Nullable<int> projectID, Nullable<int> managerID, Nullable<int> customerID)
+        {
+            var userPersonIDParameter = userPersonID != null ?
+                new ObjectParameter("UserPersonID", userPersonID) :
+                new ObjectParameter("UserPersonID", typeof(string));
+    
+            var nodeTypeIDParameter = nodeTypeID != null ?
+                new ObjectParameter("NodeTypeID", nodeTypeID) :
+                new ObjectParameter("NodeTypeID", typeof(string));
+    
+            var searchCriteriaParameter = searchCriteria != null ?
+                new ObjectParameter("SearchCriteria", searchCriteria) :
+                new ObjectParameter("SearchCriteria", typeof(string));
+    
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            var managerIDParameter = managerID.HasValue ?
+                new ObjectParameter("ManagerID", managerID) :
+                new ObjectParameter("ManagerID", typeof(int));
+    
+            var customerIDParameter = customerID.HasValue ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_Summary_v2_Result>("spWEX_RHS_Project_Summary_v2", userPersonIDParameter, nodeTypeIDParameter, searchCriteriaParameter, projectIDParameter, managerIDParameter, customerIDParameter);
         }
     }
 }
