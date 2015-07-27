@@ -46,6 +46,11 @@ namespace WalzExplorer
 
             if (DatabseVariable.Read("System", "Enable_Login") != "N")
             {
+                //notes: http://docs.telerik.com/devtools/wpf/styling-and-appearance/common-styling-appearance-visualstudio2013-theme.html
+                //MarkerBrush  is default for foreground (text)
+                //MainBrush  is default background of controls with direct input such as TextBox, MaskedInput, Editable ComboBox, AutoCompleteBox  
+                //PrimaryBrush is used for background of most of the controls that have no direct input in their normal state.  
+
                 //Blues to reds
                 VisualStudio2013Palette.LoadPreset(VisualStudio2013Palette.ColorVariation.Light);
                 VisualStudio2013Palette.Palette.AccentColor = (Color)ColorConverter.ConvertFromString("#FFD71037");
@@ -53,8 +58,8 @@ namespace WalzExplorer
                 VisualStudio2013Palette.Palette.AccentDarkColor = (Color)ColorConverter.ConvertFromString("#FFD71037");
                 VisualStudio2013Palette.Palette.HeaderColor = (Color)ColorConverter.ConvertFromString("#FFD71037");
 
-                //Validation from Red to yellow
-                VisualStudio2013Palette.Palette.ValidationColor = (Color)ColorConverter.ConvertFromString("#FFFFFF00");
+                //Validation from Red to orange
+                VisualStudio2013Palette.Palette.ValidationColor = (Color)ColorConverter.ConvertFromString("#FFFF8000");
                 
                 //Readonly background
                 VisualStudio2013Palette.Palette.PrimaryColor = (Color)ColorConverter.ConvertFromString("#FFCCCEDB");

@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>112</ApplicationRevision>
+    <ApplicationRevision>115</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -232,6 +232,14 @@
       <DependentUpon>Grid_Read.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\DrilldownWindow.cs" />
+    <Compile Include="Controls\RHSTabs\FixedAsset\ChargeView.xaml.cs">
+      <DependentUpon>ChargeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\FixedAsset\SummaryView.xaml.cs">
+      <DependentUpon>SummaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\FixedAsset\ChargeViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\FixedAsset\SummaryViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Project\CostBudgetVsActualWithoutCategoryView.xaml.cs">
       <DependentUpon>CostBudgetVsActualWithoutCategoryView.xaml</DependentUpon>
     </Compile>
@@ -475,6 +483,15 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\spWEX_RHSTabList_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_RHS_FixedAsset_Charge_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_RHS_FixedAsset_Summary2_Result.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\spWEX_RHS_FixedAsset_Summary_Result.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\spWEX_RHS_Project_Committed_Result.cs">
@@ -742,11 +759,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WorkExplorerModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="MessageScreen.xaml.cs">
+      <DependentUpon>MessageScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="test.xaml.cs">
-      <DependentUpon>test.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\PaletteViewModel.cs" />
     <Compile Include="Windows\PaletteView.xaml.cs">
@@ -777,6 +794,14 @@
     <Page Include="Controls\Grid\Grid_Read.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RHSTabs\FixedAsset\ChargeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\FixedAsset\SummaryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Project\CostBudgetVsActualWithoutCategoryView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -953,11 +978,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SplashScreen.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="MessageScreen.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="test.xaml">
+    <Page Include="SplashScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1383,6 +1408,7 @@
   <ItemGroup>
     <Resource Include="Resources\WalzIcon2.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

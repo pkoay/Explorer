@@ -1893,6 +1893,23 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
         <Function Name="spWEX_Node_TenderSetupList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.Node_TenderSetupList">
           <Parameter Name="TenderID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spWEX_RHS_FixedAsset_Charge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_FixedAsset_Charge">
+          <Parameter Name="NodeTypeID" Type="varchar" Mode="In" />
+          <Parameter Name="AssetID" Type="varchar" Mode="In" />
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spWEX_RHS_FixedAsset_Summary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_FixedAsset_Summary">
+          <Parameter Name="NodeTypeID" Type="varchar" Mode="In" />
+          <Parameter Name="SearchCriteria" Type="varchar(max)" Mode="In" />
+          <Parameter Name="AssetID" Type="varchar" Mode="In" />
+          <Parameter Name="AssetGroup" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spWEX_RHS_FixedAsset_Summary2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_FixedAsset_Summary2">
+          <Parameter Name="NodeTypeID" Type="varchar" Mode="In" />
+          <Parameter Name="SearchCriteria" Type="varchar(max)" Mode="In" />
+          <Parameter Name="AssetID" Type="varchar" Mode="In" />
+          <Parameter Name="AssetGroup" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="spWEX_RHS_Project_Committed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Committed">
           <Parameter Name="ProjectID" Type="int" Mode="In" />
         </Function>
@@ -3079,6 +3096,23 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             <Parameter Name="ProjectID" Mode="In" Type="Int32" />
             <Parameter Name="ManagerID" Mode="In" Type="Int32" />
             <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_RHS_FixedAsset_Summary" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_FixedAsset_Summary_Result)">
+            <Parameter Name="NodeTypeID" Mode="In" Type="String" />
+            <Parameter Name="SearchCriteria" Mode="In" Type="String" />
+            <Parameter Name="AssetID" Mode="In" Type="String" />
+            <Parameter Name="AssetGroup" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_RHS_FixedAsset_Charge" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_FixedAsset_Charge_Result)">
+            <Parameter Name="NodeTypeID" Mode="In" Type="String" />
+            <Parameter Name="AssetID" Mode="In" Type="String" />
+            <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_RHS_FixedAsset_Summary2" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_FixedAsset_Summary2_Result)">
+            <Parameter Name="NodeTypeID" Mode="In" Type="String" />
+            <Parameter Name="SearchCriteria" Mode="In" Type="String" />
+            <Parameter Name="AssetID" Mode="In" Type="String" />
+            <Parameter Name="AssetGroup" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
@@ -5279,6 +5313,49 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
           <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" />
         </ComplexType>
+        <ComplexType Name="spWEX_RHS_FixedAsset_Summary_Result">
+          <Property Type="String" Name="AssetID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="AssetGroup" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SerialNumber" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Make" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Model" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="ModelYear" Nullable="false" MaxLength="10" />
+          <Property Type="Decimal" Name="InsuredValue" Nullable="false" Precision="28" Scale="12" />
+          <Property Type="String" Name="Reference" Nullable="false" MaxLength="254" />
+          <Property Type="String" Name="MajorType" Nullable="false" MaxLength="20" />
+          <Property Type="Boolean" Name="IsOpen" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spWEX_RHS_FixedAsset_Charge_Result">
+          <Property Type="String" Name="AssetID" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="DateFrom" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="DateTo" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Location" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="ProjID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjCategoryID" Nullable="false" MaxLength="10" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="28" Scale="12" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="60" />
+          <Property Type="Int32" Name="Reversed" Nullable="false" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="5" />
+        </ComplexType>
+        <ComplexType Name="spWEX_RHS_FixedAsset_Summary2_Result">
+          <Property Type="String" Name="AssetID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="AssetGroup" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="LastDateFrom" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="LastDateTo" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="DaysUnitlAvail" Nullable="true" />
+          <Property Type="String" Name="LastProject" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="SerialNumber" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Make" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Model" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="ModelYear" Nullable="false" MaxLength="10" />
+          <Property Type="Decimal" Name="InsuredValue" Nullable="false" Precision="28" Scale="12" />
+          <Property Type="String" Name="Reference" Nullable="false" MaxLength="254" />
+          <Property Type="String" Name="MajorType" Nullable="false" MaxLength="20" />
+          <Property Type="Boolean" Name="IsOpen" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6682,6 +6759,61 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_FixedAsset_Summary" FunctionName="WalzExplorerModel.Store.spWEX_RHS_FixedAsset_Summary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_FixedAsset_Summary_Result">
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+                <ScalarProperty Name="AssetGroup" ColumnName="AssetGroup" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="Make" ColumnName="Make" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ModelYear" ColumnName="ModelYear" />
+                <ScalarProperty Name="InsuredValue" ColumnName="InsuredValue" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="MajorType" ColumnName="MajorType" />
+                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_FixedAsset_Charge" FunctionName="WalzExplorerModel.Store.spWEX_RHS_FixedAsset_Charge">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_FixedAsset_Charge_Result">
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+                <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+                <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="ProjID" ColumnName="ProjID" />
+                <ScalarProperty Name="ProjCategoryID" ColumnName="ProjCategoryID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Reversed" ColumnName="Reversed" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_FixedAsset_Summary2" FunctionName="WalzExplorerModel.Store.spWEX_RHS_FixedAsset_Summary2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_FixedAsset_Summary2_Result">
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
+                <ScalarProperty Name="AssetGroup" ColumnName="AssetGroup" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LastDateFrom" ColumnName="LastDateFrom" />
+                <ScalarProperty Name="LastDateTo" ColumnName="LastDateTo" />
+                <ScalarProperty Name="DaysUnitlAvail" ColumnName="DaysUnitlAvail" />
+                <ScalarProperty Name="LastProject" ColumnName="LastProject" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="Make" ColumnName="Make" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ModelYear" ColumnName="ModelYear" />
+                <ScalarProperty Name="InsuredValue" ColumnName="InsuredValue" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="MajorType" ColumnName="MajorType" />
+                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

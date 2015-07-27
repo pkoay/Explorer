@@ -1,0 +1,15 @@
+﻿<Window x:Class="WalzExplorer.MessageScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        Title="SplashScreen" Height="100" Width="300" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="{telerik:VisualStudio2013Resource ResourceKey=AccentMainBrush}" BorderBrush="{telerik:VisualStudio2013Resource ResourceKey=AccentDarkBrush}" BorderThickness="3" ShowInTaskbar="False" ResizeMode="NoResize" AllowsTransparency="True">
+    <Grid>
+        <Label  Name="lblMessage" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Foreground="{telerik:VisualStudio2013Resource ResourceKey=MarkerBrush}"   FontSize="30"  Content="Text" FontFamily="Segoe WP Semibold">
+            <Label.BitmapEffect>
+                <OuterGlowBitmapEffect GlowSize="15" />
+            </Label.BitmapEffect>
+        </Label>
+      
+
+    </Grid>
+</Window>

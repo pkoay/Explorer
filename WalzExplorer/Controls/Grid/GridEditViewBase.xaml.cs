@@ -34,7 +34,7 @@ namespace WalzExplorer.Controls.Grid
 
         //defaults
         private HashSet<string> defaultDeveloperColumns = new HashSet<string>() {"RowVersion","UpdatedBy","UpdatedDate","SortOrder"};
-        private string defaultForegroundReadonly = GraphicsLibrary.HexOfColorWithAlpha(VisualStudio2013Palette.Palette.StrongColor, 255);
+        private string defaultForegroundReadonly = GraphicsLibrary.HexOfColorWithAlpha(VisualStudio2013Palette.Palette.MarkerColor, 255);
         private string defaultBackgroundReadonly = GraphicsLibrary.HexOfColorWithAlpha(VisualStudio2013Palette.Palette.PrimaryColor, 128);
 
         //Display settings

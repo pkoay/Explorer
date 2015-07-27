@@ -10,7 +10,46 @@ using System.ComponentModel;
 namespace WalzExplorer.Database
 {
 
-    
+    public partial class tblTender_EstimateItem
+    {
+        public override string this[string columnName]
+        {
+            get
+            {
+                hasError = true;
+                if (columnName == "Men")
+                {
+                    if (this.Men != 0 && this.EstimateItemTypeID !=1)
+                    {
+                        return "Menu should be zero for when type is not 'Labour'";
+                    }
+                }
+                hasError = false;
+                return null;
+            }
+        }
+    }
+
+    public partial class tblTender_OverheadItem
+    {
+        public override string this[string columnName]
+        {
+            get
+            {
+                hasError = true;
+                if (columnName == "Duration")
+                {
+                    if (this.Duration>0 && this.OverheadTypeID==2)
+                    {
+                        return "Duration should be zero for Overheads of type 'Hours'";
+                    }
+                }
+
+                hasError = false;
+                return null;
+            }
+        }
+    }
 
     public partial class tblTender_Subcontractor
     {

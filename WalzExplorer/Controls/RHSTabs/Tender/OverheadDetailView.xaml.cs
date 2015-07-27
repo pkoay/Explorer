@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
@@ -12,6 +13,9 @@ using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
 using WalzExplorer.Common;
 using WalzExplorer.Controls.Grid;
+using System.Linq;
+using System.Data;
+using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.RHSTabs.Tender
 {
@@ -73,7 +77,25 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             grd.columnCombo.Add("OverheadGroupID", GridLibrary.CreateCombo("cmbOverheadGroupID", "Overhead Group", vm.cmbOverheadGroupList(), "OverheadGroupID", "Title"));
             grd.columnCombo.Add("OverheadTypeID", GridLibrary.CreateCombo("cmbOverheadTypeID", "Overhead Type", vm.cmbOverheadTypeList(), "OverheadTypeID", "Title"));
 
-            
+
+            grd.grd.CellEditEnded += grd_CellEditEnded;
+        }
+
+        void grd_CellEditEnded(object sender, GridViewCellEditEndedEventArgs e)
+        {
+
+            if (e.EditAction == GridViewEditAction.Commit)
+            {
+                if (e.Cell.Column.UniqueName == "cmbOverheadTypeID")
+                {
+                    if ((int)e.NewData==2)
+                    {
+                      //Example how to change cell values on user action
+                        ((tblTender_OverheadItem)e.Cell.ParentRow.DataContext).Duration= 0;
+                    }
+
+                }
+            }
         }
 
         public override string IssueIfClosed()

@@ -44,6 +44,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
            
             grd.columnsettings.Add("ScheduleID", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("TenderID", new GridEditViewBase.columnSetting() { isDeveloper = true });
+            grd.columnsettings.Add("CanAllocate", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("ClientCode", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT, format = GridEditViewBase.columnSetting.formatType.TEXT });
 
             

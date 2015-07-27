@@ -14,7 +14,11 @@ namespace WalzExplorer.Database
     {
         public double Used
         {
-            get { return tblTender_EstimateItem.Count(x => x.DrawingID == DrawingID); }
+            get
+            {
+                return ((tblTender_EstimateItem != null) ? tblTender_EstimateItem.Count(x => x.DrawingID == DrawingID) : 0);
+            }
+          
         }
 
     }
@@ -42,8 +46,8 @@ namespace WalzExplorer.Database
         {
             get
             {
-                if (tblTender_Schedule != null) return tblTender_Schedule.ClientCode.Length;
-                else return 0;
+                return ( (tblTender_Schedule != null)? tblTender_Schedule.ClientCode.Length:0);
+               
             }
         }
         public double? WorkGroupRate
@@ -113,8 +117,8 @@ namespace WalzExplorer.Database
                     case 3:
                         value = 0;
                         break;
-                    case 4: 
-                        value = Quantity * Length * Width * tblTender_Material.KG;
+                    case 4:
+                        if (tblTender_Material != null) value = Quantity * Length * Width * tblTender_Material.KG;
                         break;
 
                 }
@@ -129,7 +133,7 @@ namespace WalzExplorer.Database
                 double value = 0;
                 switch (EstimateItemTypeID)
                 {
-                    case 4: value = Quantity * Length * Width * tblTender_Material.SQM;
+                    case 4: if (tblTender_Material != null) value = Quantity * Length * Width * tblTender_Material.SQM;
                         break;
                     case 1:
                     case 2:
@@ -215,13 +219,13 @@ namespace WalzExplorer.Database
     {
         public double BaseRate
         {
-            get {return tblTender_WorkGroup.BaseRate;}
+            get {return (tblTender_WorkGroup!=null?tblTender_WorkGroup.BaseRate:0);}
                 
         }
 
          public double Total
          {
-             get { return tblTender_WorkGroup.BaseRate * Count * Hours; }
+             get { return (tblTender_WorkGroup!=null?tblTender_WorkGroup.BaseRate * Count * Hours:0); }
 
         }
      

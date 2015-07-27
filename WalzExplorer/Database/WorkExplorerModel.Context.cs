@@ -679,5 +679,64 @@ namespace WalzExplorer.Database
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_Summary_v2_Result>("spWEX_RHS_Project_Summary_v2", userPersonIDParameter, nodeTypeIDParameter, searchCriteriaParameter, projectIDParameter, managerIDParameter, customerIDParameter);
         }
+    
+        public virtual ObjectResult<spWEX_RHS_FixedAsset_Summary_Result> spWEX_RHS_FixedAsset_Summary(string nodeTypeID, string searchCriteria, string assetID, string assetGroup)
+        {
+            var nodeTypeIDParameter = nodeTypeID != null ?
+                new ObjectParameter("NodeTypeID", nodeTypeID) :
+                new ObjectParameter("NodeTypeID", typeof(string));
+    
+            var searchCriteriaParameter = searchCriteria != null ?
+                new ObjectParameter("SearchCriteria", searchCriteria) :
+                new ObjectParameter("SearchCriteria", typeof(string));
+    
+            var assetIDParameter = assetID != null ?
+                new ObjectParameter("AssetID", assetID) :
+                new ObjectParameter("AssetID", typeof(string));
+    
+            var assetGroupParameter = assetGroup != null ?
+                new ObjectParameter("AssetGroup", assetGroup) :
+                new ObjectParameter("AssetGroup", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_FixedAsset_Summary_Result>("spWEX_RHS_FixedAsset_Summary", nodeTypeIDParameter, searchCriteriaParameter, assetIDParameter, assetGroupParameter);
+        }
+    
+        public virtual ObjectResult<spWEX_RHS_FixedAsset_Charge_Result> spWEX_RHS_FixedAsset_Charge(string nodeTypeID, string assetID, Nullable<int> projectID)
+        {
+            var nodeTypeIDParameter = nodeTypeID != null ?
+                new ObjectParameter("NodeTypeID", nodeTypeID) :
+                new ObjectParameter("NodeTypeID", typeof(string));
+    
+            var assetIDParameter = assetID != null ?
+                new ObjectParameter("AssetID", assetID) :
+                new ObjectParameter("AssetID", typeof(string));
+    
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_FixedAsset_Charge_Result>("spWEX_RHS_FixedAsset_Charge", nodeTypeIDParameter, assetIDParameter, projectIDParameter);
+        }
+    
+        public virtual ObjectResult<spWEX_RHS_FixedAsset_Summary2_Result> spWEX_RHS_FixedAsset_Summary2(string nodeTypeID, string searchCriteria, string assetID, string assetGroup)
+        {
+            var nodeTypeIDParameter = nodeTypeID != null ?
+                new ObjectParameter("NodeTypeID", nodeTypeID) :
+                new ObjectParameter("NodeTypeID", typeof(string));
+    
+            var searchCriteriaParameter = searchCriteria != null ?
+                new ObjectParameter("SearchCriteria", searchCriteria) :
+                new ObjectParameter("SearchCriteria", typeof(string));
+    
+            var assetIDParameter = assetID != null ?
+                new ObjectParameter("AssetID", assetID) :
+                new ObjectParameter("AssetID", typeof(string));
+    
+            var assetGroupParameter = assetGroup != null ?
+                new ObjectParameter("AssetGroup", assetGroup) :
+                new ObjectParameter("AssetGroup", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_FixedAsset_Summary2_Result>("spWEX_RHS_FixedAsset_Summary2", nodeTypeIDParameter, searchCriteriaParameter, assetIDParameter, assetGroupParameter);
+        }
     }
 }

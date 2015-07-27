@@ -34,7 +34,7 @@ namespace WalzExplorer.Controls.Grid
 
         //defaults
         private HashSet<string> defaultDeveloperColumns = new HashSet<string>() {"RowVersion","UpdatedBy","UpdatedDate","SortOrder"};
-        private string defaultForegroundReadonly = GraphicsLibrary.HexOfColorWithAlpha(VisualStudio2013Palette.Palette.StrongColor, 255);
+        private string defaultForegroundReadonly = GraphicsLibrary.HexOfColorWithAlpha(VisualStudio2013Palette.Palette.MarkerColor, 255);
         private string defaultBackgroundReadonly = GraphicsLibrary.HexOfColorWithAlpha(VisualStudio2013Palette.Palette.PrimaryColor, 128);
 
         //Display settings
@@ -776,7 +776,11 @@ namespace WalzExplorer.Controls.Grid
         {
             if (_isSaveOnButton==true)
             {
+                MessageScreen messageWindow = new MessageScreen("Saving....");
+                messageWindow.Owner = Application.Current.MainWindow;
+                messageWindow.Show();
                 vm.SaveWithValidationAndUpdateSortOrder();
+                messageWindow.CloseAfterCount(1.5);
             }
             else
             {

@@ -82,7 +82,29 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
             grd.grd.AlternationCount =0;// it overrides headers
             grd.grd.RowStyle = RowStyle();
-           
+
+            grd.grd.CellEditEnded += grd_CellEditEnded;
+        }
+
+        void grd_CellEditEnded(object sender, GridViewCellEditEndedEventArgs e)
+        {
+            if (e.EditAction == GridViewEditAction.Commit)
+            {
+                if (e.Cell.Column.UniqueName == "")
+                {
+
+                }
+            }
+        }
+
+        void grd_CurrentCellChanged(object sender, GridViewCurrentCellChangedEventArgs e)
+        {
+            //e.;
+        }
+
+        void grd_RowValidating(object sender, GridViewRowValidatingEventArgs e)
+        {
+           // throw new NotImplementedException();
         }
 
         void grd_DataLoaded(object sender, EventArgs e)
@@ -190,107 +212,108 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
         private void RadRadioButton_Click(object sender, RoutedEventArgs e)
         {
-           
-            RadRadioButton btn = (RadRadioButton)e.Source;
-            radioButtonLayout = btn.Content.ToString().Trim();
-            grd.grd.Columns["Title"].TextWrapping = TextWrapping.Wrap;
-            grd.grd.Columns["Title"].Width = 400;
-
-            //columnn order must remain the same for cut and paste in different displays
-            UnhideColumn(grd.grd.Columns["cmbScheduleID"], 1);
-            UnhideColumn(grd.grd.Columns["Title"], 2);
-            UnhideColumn(grd.grd.Columns["cmbEstimateItemTypeID"], 3);
-            UnhideColumn(grd.grd.Columns["cmbWorkGroupID"], 4);
-            UnhideColumn(grd.grd.Columns["Men"], 5);
-            UnhideColumn(grd.grd.Columns["HoursPerDay"], 6);
-            UnhideColumn(grd.grd.Columns["Days"], 7);
-            UnhideColumn(grd.grd.Columns["cmbSubcontractorID"], 8);
-            UnhideColumn(grd.grd.Columns["Quantity"], 9);
-            UnhideColumn(grd.grd.Columns["cmbUnitOfMeasureID"], 10);
-            UnhideColumn(grd.grd.Columns["Cost"], 11);
-            UnhideColumn(grd.grd.Columns["Markup"], 12);
-            UnhideColumn(grd.grd.Columns["cmbMaterialID"], 13);
-            UnhideColumn(grd.grd.Columns["cmbSupplierID"], 14);
-            UnhideColumn(grd.grd.Columns["Length"], 15);
-            UnhideColumn(grd.grd.Columns["Width"], 16);
-            UnhideColumn(grd.grd.Columns["Grade"], 17);
-            UnhideColumn(grd.grd.Columns["cmbDrawingID"], 18);
-            UnhideColumn(grd.grd.Columns["Comment"], 19);
-            UnhideColumn(grd.grd.Columns["WorkGroupRate"], 20);
-            UnhideColumn(grd.grd.Columns["TotalLabourHours"], 21);
-            UnhideColumn(grd.grd.Columns["TotalCost"], 22);
-            UnhideColumn(grd.grd.Columns["Weight"], 23);
-            UnhideColumn(grd.grd.Columns["MetresSquared"], 24);
-           
-            //not used
-            grd.grd.Columns["SubcontractorRate"].IsVisible = false;
-            grd.grd.Columns["UnitCost"].IsVisible= false;
-            switch (radioButtonLayout)
+            if (grd.grd.Columns.Count > 0)
             {
-                case "All":
-                    break;
-                case "Labour":
-                    HideColumn(grd.grd.Columns["UnitCost"]);
-                    HideColumn(grd.grd.Columns["Cost"]);
-                    HideColumn(grd.grd.Columns["Markup"]);
-                    HideColumn(grd.grd.Columns["cmbSubcontractorID"]);
-                    HideColumn(grd.grd.Columns["cmbMaterialID"]);
-                    HideColumn(grd.grd.Columns["cmbSupplierID"]);
-                    HideColumn(grd.grd.Columns["Length"]);
-                    HideColumn(grd.grd.Columns["Width"]);
-                    HideColumn(grd.grd.Columns["Grade"]);
-                    
-                    HideColumn(grd.grd.Columns["Weight"]);
-                    HideColumn(grd.grd.Columns["MetresSquared"]);
-                    break;
-                case "Subcontractors":
-                    HideColumn(grd.grd.Columns["cmbWorkGroupID"]);
-                    HideColumn(grd.grd.Columns["Men"]);
-                    HideColumn(grd.grd.Columns["HoursPerDay"]);
-                    HideColumn(grd.grd.Columns["Days"]);
-                    HideColumn(grd.grd.Columns["cmbMaterialID"]);
-                    HideColumn(grd.grd.Columns["cmbSupplierID"]);
-                    HideColumn(grd.grd.Columns["Length"]);
-                    HideColumn(grd.grd.Columns["Width"]);
-                    HideColumn(grd.grd.Columns["Grade"]);
-                    HideColumn(grd.grd.Columns["TotalLabourHours"]);
-                    HideColumn(grd.grd.Columns["WorkGroupRate"]);
-                    
-                    HideColumn(grd.grd.Columns["Weight"]);
-                    HideColumn(grd.grd.Columns["MetresSquared"]);
-                    break;
-                case "Materials":
-                    HideColumn(grd.grd.Columns["cmbWorkGroupID"]);
-                    HideColumn(grd.grd.Columns["Men"]);
-                    HideColumn(grd.grd.Columns["HoursPerDay"]);
-                    HideColumn(grd.grd.Columns["Days"]);
-                    
-                    HideColumn(grd.grd.Columns["cmbSubcontractorID"]);
-                    HideColumn(grd.grd.Columns["TotalLabourHours"]);
-                    HideColumn(grd.grd.Columns["WorkGroupRate"]);
-                    break;
-                case "Basic":
-                    HideColumn(grd.grd.Columns["cmbSubcontractorID"]);
-                    
-                    HideColumn(grd.grd.Columns["cmbMaterialID"]);
-                    HideColumn(grd.grd.Columns["cmbSupplierID"]);
-                    HideColumn(grd.grd.Columns["cmbUnitOfMeasureID"]);
-                
-                    HideColumn(grd.grd.Columns["Length"]);
-                    HideColumn(grd.grd.Columns["Width"]);
-                    HideColumn(grd.grd.Columns["Grade"]);
-                   
-                    HideColumn(grd.grd.Columns["Weight"]);
-                    HideColumn(grd.grd.Columns["MetresSquared"]);
-                    break;
+                RadRadioButton btn = (RadRadioButton)e.Source;
+                radioButtonLayout = btn.Content.ToString().Trim();
+                grd.grd.Columns["Title"].TextWrapping = TextWrapping.Wrap;
+                grd.grd.Columns["Title"].Width = 400;
 
+                //columnn order must remain the same for cut and paste in different displays
+                UnhideColumn(grd.grd.Columns["cmbScheduleID"], 1);
+                UnhideColumn(grd.grd.Columns["Title"], 2);
+                UnhideColumn(grd.grd.Columns["cmbEstimateItemTypeID"], 3);
+                UnhideColumn(grd.grd.Columns["cmbWorkGroupID"], 4);
+                UnhideColumn(grd.grd.Columns["Men"], 5);
+                UnhideColumn(grd.grd.Columns["HoursPerDay"], 6);
+                UnhideColumn(grd.grd.Columns["Days"], 7);
+                UnhideColumn(grd.grd.Columns["cmbSubcontractorID"], 8);
+                UnhideColumn(grd.grd.Columns["Quantity"], 9);
+                UnhideColumn(grd.grd.Columns["cmbUnitOfMeasureID"], 10);
+                UnhideColumn(grd.grd.Columns["Cost"], 11);
+                UnhideColumn(grd.grd.Columns["Markup"], 12);
+                UnhideColumn(grd.grd.Columns["cmbMaterialID"], 13);
+                UnhideColumn(grd.grd.Columns["cmbSupplierID"], 14);
+                UnhideColumn(grd.grd.Columns["Length"], 15);
+                UnhideColumn(grd.grd.Columns["Width"], 16);
+                UnhideColumn(grd.grd.Columns["Grade"], 17);
+                UnhideColumn(grd.grd.Columns["cmbDrawingID"], 18);
+                UnhideColumn(grd.grd.Columns["Comment"], 19);
+                UnhideColumn(grd.grd.Columns["WorkGroupRate"], 20);
+                UnhideColumn(grd.grd.Columns["TotalLabourHours"], 21);
+                UnhideColumn(grd.grd.Columns["TotalCost"], 22);
+                UnhideColumn(grd.grd.Columns["Weight"], 23);
+                UnhideColumn(grd.grd.Columns["MetresSquared"], 24);
 
+                //not used
+                grd.grd.Columns["SubcontractorRate"].IsVisible = false;
+                grd.grd.Columns["UnitCost"].IsVisible = false;
+                switch (radioButtonLayout)
+                {
+                    case "All":
+                        break;
+                    case "Labour":
+                        HideColumn(grd.grd.Columns["UnitCost"]);
+                        HideColumn(grd.grd.Columns["Cost"]);
+                        HideColumn(grd.grd.Columns["Markup"]);
+                        HideColumn(grd.grd.Columns["cmbSubcontractorID"]);
+                        HideColumn(grd.grd.Columns["cmbMaterialID"]);
+                        HideColumn(grd.grd.Columns["cmbSupplierID"]);
+                        HideColumn(grd.grd.Columns["Length"]);
+                        HideColumn(grd.grd.Columns["Width"]);
+                        HideColumn(grd.grd.Columns["Grade"]);
+
+                        HideColumn(grd.grd.Columns["Weight"]);
+                        HideColumn(grd.grd.Columns["MetresSquared"]);
+                        break;
+                    case "Subcontractors":
+                        HideColumn(grd.grd.Columns["cmbWorkGroupID"]);
+                        HideColumn(grd.grd.Columns["Men"]);
+                        HideColumn(grd.grd.Columns["HoursPerDay"]);
+                        HideColumn(grd.grd.Columns["Days"]);
+                        HideColumn(grd.grd.Columns["cmbMaterialID"]);
+                        HideColumn(grd.grd.Columns["cmbSupplierID"]);
+                        HideColumn(grd.grd.Columns["Length"]);
+                        HideColumn(grd.grd.Columns["Width"]);
+                        HideColumn(grd.grd.Columns["Grade"]);
+                        HideColumn(grd.grd.Columns["TotalLabourHours"]);
+                        HideColumn(grd.grd.Columns["WorkGroupRate"]);
+
+                        HideColumn(grd.grd.Columns["Weight"]);
+                        HideColumn(grd.grd.Columns["MetresSquared"]);
+                        break;
+                    case "Materials":
+                        HideColumn(grd.grd.Columns["cmbWorkGroupID"]);
+                        HideColumn(grd.grd.Columns["Men"]);
+                        HideColumn(grd.grd.Columns["HoursPerDay"]);
+                        HideColumn(grd.grd.Columns["Days"]);
+
+                        HideColumn(grd.grd.Columns["cmbSubcontractorID"]);
+                        HideColumn(grd.grd.Columns["TotalLabourHours"]);
+                        HideColumn(grd.grd.Columns["WorkGroupRate"]);
+                        break;
+                    case "Basic":
+                        HideColumn(grd.grd.Columns["cmbSubcontractorID"]);
+
+                        HideColumn(grd.grd.Columns["cmbMaterialID"]);
+                        HideColumn(grd.grd.Columns["cmbSupplierID"]);
+                        HideColumn(grd.grd.Columns["cmbUnitOfMeasureID"]);
+
+                        HideColumn(grd.grd.Columns["Length"]);
+                        HideColumn(grd.grd.Columns["Width"]);
+                        HideColumn(grd.grd.Columns["Grade"]);
+
+                        HideColumn(grd.grd.Columns["Weight"]);
+                        HideColumn(grd.grd.Columns["MetresSquared"]);
+                        break;
+
+                }
             }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            vm.SaveWithValidationAndUpdateSortOrder();
+            grd.Save();
         }
        
       
