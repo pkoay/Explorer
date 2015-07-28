@@ -94,7 +94,7 @@
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkGroup" Width="2.625" PointX="8.25" PointY="31.25" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroup_tblTender" />
         <EntityTypeShape EntityType="WalzExplorerModel.vwTender_ObjectHoursByWorkGroup" Width="1.5" PointX="0.75" PointY="9.875" />
-        <EntityTypeShape EntityType="WalzExplorerModel.vwTender_EstimateWorkGroupRate" Width="1.5" PointX="11.625" PointY="32" />
+        <EntityTypeShape EntityType="WalzExplorerModel.vwTender_EstimateWorkGroupRate" Width="3" PointX="3.625" PointY="30.375" />
         <AssociationConnector Association="WalzExplorerModel.tblTender_WorkGroupvwTender_EstimateWorkGroupRate" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_ObjectContractor" Width="2.5" PointX="18.5" PointY="48.875" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_ComponentContractor_tblTender_Component" />
@@ -133,13 +133,13 @@
         <EntityTypeShape EntityType="WalzExplorerModel.vwProject_CostCodeIndirectView" Width="1.5" PointX="8.375" PointY="5.75" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkgroupFuel" Width="1.5" PointX="11.625" PointY="15.875" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkgroupFuel_tblTender_WorkGroup" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_OverheadItem" Width="1.5" PointX="17.625" PointY="25.625" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_OverheadType" Width="1.5" PointX="15.375" PointY="31.375" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkgroupAdditionalHours" Width="1.5" PointX="11.625" PointY="11.875" />
+        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkgroupAddtionalHours_tblTender_WorkGroup" />
+        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_OverheadItem" Width="1.5" PointX="17.625" PointY="25.625" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_OverheadItem_tblTender_OverheadType" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" />
-        <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkgroupAdditionalHours" Width="1.5" PointX="11.625" PointY="11.875" />
-        <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkgroupAddtionalHours_tblTender_WorkGroup" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

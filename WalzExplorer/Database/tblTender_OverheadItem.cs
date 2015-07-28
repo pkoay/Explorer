@@ -28,13 +28,6 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _workGroupID, value); } 
     	}
     
-        private int _overheadTypeID;
-    	public int OverheadTypeID 
-    	{ 
-    		get { return _overheadTypeID; } 
-    		set { SetProperty(ref _overheadTypeID, value); } 
-    	}
-    
         private int _overheadGroupID;
     	public int OverheadGroupID 
     	{ 
@@ -68,6 +61,13 @@ namespace WalzExplorer.Database
     	{ 
     		get { return _rate; } 
     		set { SetProperty(ref _rate, value); } 
+    	}
+    
+        private int _overheadTypeID;
+    	public int OverheadTypeID 
+    	{ 
+    		get { return _overheadTypeID; } 
+    		set { SetProperty(ref _overheadTypeID, value); } 
     	}
     
         private string _comments;

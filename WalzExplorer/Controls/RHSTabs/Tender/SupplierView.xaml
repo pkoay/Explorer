@@ -11,6 +11,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  mc:Ignorable="d"
              x:Class="WalzExplorer.Controls.RHSTabs.Tender.SupplierView">
     <Grid>
-        <grid:GridEditViewBase  x:Name="grd"/>
+        <grid:GridEditViewBase2  x:Name="grd"/>
     </Grid>
 </base:RHSTabViewBase>

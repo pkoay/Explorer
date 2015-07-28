@@ -58,7 +58,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                 aggregation = GridEditViewBase.columnSetting.aggregationType.SUM,
                 isReadonly = true,
                 order = 5,
-                tooltip = "Calculated from Count*Week*HoursPerWeek*LitrePerHour*.06"
+                tooltip = "Calculated from Count*Week*HoursPerWeek*LitrePerHour*.6"
             });
             grd.columnsettings.Add("CostTotalPerItem", new GridEditViewBase.columnSetting()
            {

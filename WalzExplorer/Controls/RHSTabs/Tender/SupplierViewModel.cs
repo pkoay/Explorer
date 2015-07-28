@@ -14,7 +14,7 @@ using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.RHSTabs.Tender
 {
-    public class SupplierViewModel :GridEditViewModelBase
+    public class SupplierViewModel :GridEditViewModelBase2
     {
         int TenderID;
         public SupplierViewModel(WEXSettings settings) //(string NodeType, string PersonID, int Id)

@@ -42,29 +42,30 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             grd.grd.ItemsSource = vm.data;
 
             if (settings.user.SecurityGroups.Contains("WD_Tender"))
-                grd.SetGrid(settings, true, true, true);
+                grd.SetGrid(settings, true, true, true,true);
             else
                 grd.SetGrid(settings, false, false, false);
 
-            grd.columnsettings.Add("OverheadTypeID", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT });
-            grd.columnsettings.Add("WorkGroupID", new GridEditViewBase.columnSetting() { isDeveloper = true });
-            grd.columnsettings.Add("OverheadItemID", new GridEditViewBase.columnSetting() { isDeveloper = true });
-            grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { format=  GridEditViewBase.columnSetting.formatType.TEXT});
-            grd.columnsettings.Add("Duration", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
-            grd.columnsettings.Add("Count", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
-            grd.columnsettings.Add("Rate", new GridEditViewBase.columnSetting() { format = GridEditViewBase.columnSetting.formatType.G });
-            grd.columnsettings.Add("Hours", new GridEditViewBase.columnSetting()
+            
+            grd.columnsettings.Add("WorkGroupID", new GridEditViewBase2.columnSetting() { isDeveloper = true });
+            grd.columnsettings.Add("OverheadItemID", new GridEditViewBase2.columnSetting() { isDeveloper = true });
+            grd.columnsettings.Add("Title", new GridEditViewBase2.columnSetting() { format = GridEditViewBase2.columnSetting.formatType.TEXT });
+            grd.columnsettings.Add("Duration", new GridEditViewBase2.columnSetting() { format = GridEditViewBase2.columnSetting.formatType.G });
+            grd.columnsettings.Add("Count", new GridEditViewBase2.columnSetting() { format = GridEditViewBase2.columnSetting.formatType.G });
+            grd.columnsettings.Add("Rate", new GridEditViewBase2.columnSetting() { format = GridEditViewBase2.columnSetting.formatType.G });
+            grd.columnsettings.Add("OverheadGroupID", new GridEditViewBase2.columnSetting() { aggregation = GridEditViewBase2.columnSetting.aggregationType.COUNT });
+           
+            grd.columnsettings.Add("Hours", new GridEditViewBase2.columnSetting()
             {
-                format = GridEditViewBase.columnSetting.formatType.N2,
-                aggregation = GridEditViewBase.columnSetting.aggregationType.SUM,
+                format = GridEditViewBase2.columnSetting.formatType.N2,
                 isReadonly = true,
                 order = 8,
                 tooltip = "Calculated from Estimate hours (for the workgroup) + Additional hours (for the workgroup)" 
             });
-            grd.columnsettings.Add("Total", new GridEditViewBase.columnSetting()
+            grd.columnsettings.Add("Total", new GridEditViewBase2.columnSetting()
             {
-                format = GridEditViewBase.columnSetting.formatType.N2,
-                aggregation = GridEditViewBase.columnSetting.aggregationType.SUM,
+                format = GridEditViewBase2.columnSetting.formatType.N2,
+                aggregation = GridEditViewBase2.columnSetting.aggregationType.SUM,
                 isReadonly = true,
                 order = 9,
                 tooltip = String.Join(
@@ -78,25 +79,25 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             grd.columnCombo.Add("OverheadTypeID", GridLibrary.CreateCombo("cmbOverheadTypeID", "Overhead Type", vm.cmbOverheadTypeList(), "OverheadTypeID", "Title"));
 
 
-            grd.grd.CellEditEnded += grd_CellEditEnded;
+            //grd.grd.CellEditEnded += grd_CellEditEnded;
         }
 
-        void grd_CellEditEnded(object sender, GridViewCellEditEndedEventArgs e)
-        {
+        //void grd_CellEditEnded(object sender, GridViewCellEditEndedEventArgs e)
+        //{
 
-            if (e.EditAction == GridViewEditAction.Commit)
-            {
-                if (e.Cell.Column.UniqueName == "cmbOverheadTypeID")
-                {
-                    if ((int)e.NewData==2)
-                    {
-                      //Example how to change cell values on user action
-                        ((tblTender_OverheadItem)e.Cell.ParentRow.DataContext).Duration= 0;
-                    }
+        //    if (e.EditAction == GridViewEditAction.Commit)
+        //    {
+        //        if (e.Cell.Column.UniqueName == "cmbOverheadTypeID")
+        //        {
+        //            if ((int)e.NewData==2)
+        //            {
+        //              //Example how to change cell values on user action
+        //                ((tblTender_OverheadItem)e.Cell.ParentRow.DataContext).Duration= 0;
+        //            }
 
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
 
         public override string IssueIfClosed()
         {

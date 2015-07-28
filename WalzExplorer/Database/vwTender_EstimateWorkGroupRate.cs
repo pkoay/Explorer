@@ -49,18 +49,39 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _hours, value); } 
     	}
     
-        private double _overhead;
-    	public double Overhead 
-    	{ 
-    		get { return _overhead; } 
-    		set { SetProperty(ref _overhead, value); } 
-    	}
-    
         private double _additionalHours;
     	public double AdditionalHours 
     	{ 
     		get { return _additionalHours; } 
     		set { SetProperty(ref _additionalHours, value); } 
+    	}
+    
+        private double _workGroupOverhead;
+    	public double WorkGroupOverhead 
+    	{ 
+    		get { return _workGroupOverhead; } 
+    		set { SetProperty(ref _workGroupOverhead, value); } 
+    	}
+    
+        private double _fuelOverhead;
+    	public double FuelOverhead 
+    	{ 
+    		get { return _fuelOverhead; } 
+    		set { SetProperty(ref _fuelOverhead, value); } 
+    	}
+    
+        private double _addtionalHoursOverhead;
+    	public double AddtionalHoursOverhead 
+    	{ 
+    		get { return _addtionalHoursOverhead; } 
+    		set { SetProperty(ref _addtionalHoursOverhead, value); } 
+    	}
+    
+        private double _totalOverhead;
+    	public double TotalOverhead 
+    	{ 
+    		get { return _totalOverhead; } 
+    		set { SetProperty(ref _totalOverhead, value); } 
     	}
     
     }

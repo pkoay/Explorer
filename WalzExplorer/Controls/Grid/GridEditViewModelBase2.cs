@@ -40,6 +40,10 @@ namespace WalzExplorer.Controls.Grid
         {
             return null;
         }
+        public virtual ModelBase OverwriteItem(ModelBase NearItem)
+        {
+            return null;
+        }
        
         public ModelBase InsertNew()
         {
@@ -142,7 +146,8 @@ namespace WalzExplorer.Controls.Grid
                 {
                     object defaultValue = propertyInfo.GetValue(defaultItem, null);
                     object basicValue = propertyInfo.GetValue(basicItem, null);
-                    if (!object.Equals(defaultValue, basicValue))
+                    object currentValue = propertyInfo.GetValue(currentitem, null);
+                    if (object.Equals(currentValue, basicValue))
                     {
                         propertyInfo.SetValue(currentitem, defaultValue);
                     }

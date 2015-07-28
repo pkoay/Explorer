@@ -12,14 +12,14 @@ using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.RHSTabs.Tender
 {
-    public class OverheadGroupViewModel :GridEditViewModelBase
+    public class OverheadGroupViewModel :GridEditViewModelBase2
     {
         int TenderID;
 
         public OverheadGroupViewModel(WEXSettings settings) //(string NodeType, string PersonID, int Id)
         {
             TenderID = ConvertLibrary.StringToInt(settings.node.FindID("TENDER", "-2"), -1);
-            data = new ObservableCollection<ModelBase>(context.tblTender_OverheadGroup.Where(x=>x.TenderID==TenderID));  
+            data = new ObservableCollection<ModelBase>(context.tblTender_OverheadGroup.Where(x=>x.TenderID==TenderID).OrderBy(x=>x.SortOrder));  
         }
 
         public override ModelBase DefaultItem(ModelBase NearItem)

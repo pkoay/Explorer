@@ -14,7 +14,7 @@ using WalzExplorer.Database;
 
 namespace WalzExplorer.Controls.RHSTabs.Tender
 {
-    public class OverheadDetailViewModel :GridEditViewModelBase
+    public class OverheadDetailViewModel :GridEditViewModelBase2
     {
         int WorkGroupID;
         int TenderID;
@@ -23,13 +23,14 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         {
             TenderID = ConvertLibrary.StringToInt(settings.node.FindID("TENDER", "-2"), -1);
             WorkGroupID = ConvertLibrary.StringToInt(settings.node.FindID("TENDER_WORKGROUP", "-2"), -1);
-            data = new ObservableCollection<ModelBase>(context.tblTender_OverheadItem.Where(x => x.WorkGroupID == WorkGroupID).OrderBy(x => x.SortOrder));  
+            data = new ObservableCollection<ModelBase>(context.tblTender_OverheadItem.Where(x => x.WorkGroupID == WorkGroupID).OrderBy(x => x.tblTender_OverheadGroup.SortOrder).ThenBy(x=>x.SortOrder));  
         }
 
         public override ModelBase DefaultItem(ModelBase NearItem)
         {
             tblTender_OverheadItem i = new tblTender_OverheadItem();
             i.WorkGroupID = WorkGroupID;
+            i.OverheadTypeID = 1;
             return i;
         }
         public List<object> cmbOverheadGroupList()

@@ -158,12 +158,14 @@ namespace WalzExplorer.Controls.Grid
 
                 grd.NewRowPosition = GridViewNewRowPosition.Top;
                 grd.AddingNewDataItem += g_AddingNewDataItem;
+               
             }
             if (canEdit)
             {
                 // Cell edit
                 grd.BeginningEdit += g_BeginningEdit;
                 grd.RowEditEnded += g_RowEditEnded;
+                
 
                 //Validation
                 grd.CellValidating += g_CellValidating;
@@ -371,6 +373,7 @@ namespace WalzExplorer.Controls.Grid
                     break;
                 case "miPaste":
                     grd.ClipboardPasteMode = GridViewClipboardPasteMode.AllSelectedCells | GridViewClipboardPasteMode.SkipHiddenColumns;
+                    
                     ApplicationCommands.Paste.Execute(this, null);
                     grd.ClipboardPasteMode = GridViewClipboardPasteMode.None;
                     vm.SavePaste();
@@ -394,13 +397,13 @@ namespace WalzExplorer.Controls.Grid
                     }
 
                     break;
-
+                    
                 case "miInsertPaste":
                     //Note: paste does not invoke g_AddingNewDataItem so has to be treated seperatly
 
 
                     int before = grd.Items.Count;
-
+                    
                     //insert rows using standard telerik methodology
                     grd.ClipboardPasteMode = GridViewClipboardPasteMode.InsertNewRows | GridViewClipboardPasteMode.OverwriteWithEmptyValues| GridViewClipboardPasteMode.SkipHiddenColumns;                    //Note OverwriteWithEmptyValues allows pasting of blank cells otherwise as if cell does not exist (e.g. copy 4 columns with one blank cell, will be like copying 3 columns)
                     ApplicationCommands.Paste.Execute(grd, grd);
@@ -487,6 +490,11 @@ namespace WalzExplorer.Controls.Grid
                     break;
             }
         }
+
+        //void grd_PastingCellClipboardContent(object sender, GridViewCellClipboardEventArgs e)
+        //{
+          
+        //}
         void grd_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
             if (e.Element == ExportElement.Cell)

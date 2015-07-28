@@ -38,13 +38,13 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                 data = new ObservableCollection<ModelBase>(context.tblTender_EstimateItem.Where(x => x.TenderID == TenderID && x.ScheduleID == ScheduleID).OrderBy(x => x.tblTender_Schedule.SortOrder).ThenBy(x => x.SortOrder));
 
             }
+            
             Default_SubcontractorID = context.tblTender_Subcontractor.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().SubcontractorID;
             Default_WorkGroupID = context.tblTender_WorkGroup.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().WorkGroupID;
             Default_UnitOfMeasureID = context.tblTender_UnitOfMeasure.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().UnitOfMeasureID;
             Default_DrawingID = context.tblTender_Drawing.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().DrawingID;
             Default_SupplierID = context.tblTender_Supplier.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().SupplierID;
             Default_MaterialID = context.tblTender_Material.Where(x => x.TenderID == TenderID).OrderBy(x => x.SortOrder).First().MaterialID;
-            
         }
 
         public override ModelBase DefaultItem(ModelBase NearItem)
@@ -64,6 +64,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             i.MaterialID = Default_MaterialID;
             return i;
         }
+
         
         public List<object> cmbScheduleList()
         {

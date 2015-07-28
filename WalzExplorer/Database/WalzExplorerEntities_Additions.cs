@@ -150,6 +150,36 @@ namespace WalzExplorer.Database
     }
     public partial class tblTender_WorkGroup : ModelBase
     {
+        public double WorkGroupOverhead
+        {
+            get
+            {
+                if (vwTender_EstimateWorkGroupRate == null)
+                    return 0;
+                else
+                    return vwTender_EstimateWorkGroupRate.WorkGroupOverhead;
+            }
+        }
+        public double FuelOverhead
+        {
+            get
+            {
+                if (vwTender_EstimateWorkGroupRate == null)
+                    return 0;
+                else
+                    return vwTender_EstimateWorkGroupRate.FuelOverhead;
+            }
+        }
+        public double AddtionalHoursOverhead
+        {
+            get
+            {
+                if (vwTender_EstimateWorkGroupRate == null)
+                    return 0;
+                else
+                    return vwTender_EstimateWorkGroupRate.AddtionalHoursOverhead;
+            }
+        }
         public double TotalOverhead
         {
             get 
@@ -157,7 +187,7 @@ namespace WalzExplorer.Database
                 if (vwTender_EstimateWorkGroupRate == null)
                     return 0;
                 else
-                    return vwTender_EstimateWorkGroupRate.Overhead; 
+                    return vwTender_EstimateWorkGroupRate.TotalOverhead; 
             }
         }
         public double TotalHours
@@ -199,17 +229,17 @@ namespace WalzExplorer.Database
     {
         public double TotalForProject
         {
-            get { return Count * Week  * HoursPerWeek * LitrePerHour * .06; }
+            get { return Count * Week  * HoursPerWeek * LitrePerHour * .6; }
         }
 
         public double CostTotalPerItem
         {
-            get { return Count * Week  * HoursPerWeek * LitrePerHour * .06 * CostPerLitre; }
+            get { return Count * Week  * HoursPerWeek * LitrePerHour * .6 * CostPerLitre; }
         }
 
         public double FuelCost
         {
-            get { return Count * Week  * HoursPerWeek * LitrePerHour * .06 * CostPerLitre * 0.825; }
+            get { return Count * Week  * HoursPerWeek * LitrePerHour * .6 * CostPerLitre * 0.825; }
         }
     }
     
@@ -238,7 +268,7 @@ namespace WalzExplorer.Database
         {
             get
             {
-                return tblTender_WorkGroup.TotalHours + tblTender_WorkGroup.TotalAdditionalHours;
+                return (tblTender_WorkGroup!=null?tblTender_WorkGroup.TotalHours + tblTender_WorkGroup.TotalAdditionalHours:0);
             }
         }
         public double Total
@@ -251,7 +281,7 @@ namespace WalzExplorer.Database
                 }
                 else
                 {
-                    return Count * Rate * tblTender_WorkGroup.TotalHours;
+                    return (tblTender_WorkGroup!=null?Count * Rate * tblTender_WorkGroup.TotalHours:0);
                 }
             }
         }
@@ -266,22 +296,18 @@ namespace WalzExplorer.Database
         {
             get
             {
-                if (tblTender_WorkGroup == null)
-                    return 0;
-                else
-                    return tblTender_WorkGroup.vwTender_EstimateWorkGroupRate.Rate * Hours * Quantity * Men * Days;
+                return (tblTender_WorkGroup != null ? tblTender_WorkGroup.vwTender_EstimateWorkGroupRate.Rate * Hours * Quantity * Men * Days : 0);
             }
         }
         public double Rate
         {
             get
-              {
-                if (tblTender_WorkGroup == null)
-                    return 0;
-                else
-                    return tblTender_WorkGroup.vwTender_EstimateWorkGroupRate.Rate;
+            {
+                return (tblTender_WorkGroup != null ? tblTender_WorkGroup.vwTender_EstimateWorkGroupRate.Rate : 0);
             }
-            
+
+
+
         }
     }
 

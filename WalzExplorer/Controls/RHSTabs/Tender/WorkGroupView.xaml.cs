@@ -42,9 +42,17 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
             grd.columnsettings.Add("WorkGroupID", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("TenderID", new GridEditViewBase.columnSetting() { isDeveloper = true });
+            grd.columnsettings.Add("Markup", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT, format = GridEditViewBase.columnSetting.formatType.TEXT });
             grd.columnsettings.Add("TotalHours", new GridEditViewBase.columnSetting() {  aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, format = GridEditViewBase.columnSetting.formatType.N2, isReadonly = true, tooltip = "Total hours for this workgroup from estimate (does not include Addtional hours)" });
             grd.columnsettings.Add("TotalAdditionalHours", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, format = GridEditViewBase.columnSetting.formatType.N2, isReadonly = true, tooltip = "Total hours from 'Addtional Hours' Tab" });
+
+            grd.columnsettings.Add("WorkGroupOverhead", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, format = GridEditViewBase.columnSetting.formatType.N2, isReadonly = true, tooltip = "All workgroup overheads" });
+            grd.columnsettings.Add("FuelOverhead", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, format = GridEditViewBase.columnSetting.formatType.N2, isReadonly = true, tooltip = "All fuel overheads" });
+            grd.columnsettings.Add("AddtionalHoursOverhead", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, format = GridEditViewBase.columnSetting.formatType.N2, isReadonly = true, tooltip = "All Addtional hour overheads" });
+
+
+
             grd.columnsettings.Add("TotalOverhead", new GridEditViewBase.columnSetting() {  aggregation = GridEditViewBase.columnSetting.aggregationType.SUM, format = GridEditViewBase.columnSetting.formatType.N2, isReadonly = true, tooltip = "All workgroup overheads (including fuel and Addtional hours costs)" });
             grd.columnsettings.Add("CalculatedRate", new GridEditViewBase.columnSetting() {  format = GridEditViewBase.columnSetting.formatType.N2, isReadonly = true, tooltip = "BaseRate+(TotalOverhead/Total Hours) note TotalHours does not include Additional Hours" });
         }

@@ -79,9 +79,9 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblTender_EstimateItem> tblTender_EstimateItem { get; set; }
         public virtual DbSet<vwProject_CostCodeIndirectView> vwProject_CostCodeIndirectView { get; set; }
         public virtual DbSet<tblTender_WorkgroupFuel> tblTender_WorkgroupFuel { get; set; }
-        public virtual DbSet<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
         public virtual DbSet<tblTender_OverheadType> tblTender_OverheadType { get; set; }
         public virtual DbSet<tblTender_WorkgroupAdditionalHours> tblTender_WorkgroupAdditionalHours { get; set; }
+        public virtual DbSet<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)

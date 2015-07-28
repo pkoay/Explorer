@@ -42,9 +42,9 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                 grd.SetGrid(settings, false, false, false);
 
            
-            grd.columnsettings.Add("SupplierID", new GridEditViewBase.columnSetting() { isDeveloper = true });
-            grd.columnsettings.Add("TenderID", new GridEditViewBase.columnSetting() { isDeveloper = true });
-            grd.columnsettings.Add("Title", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT ,format=  GridEditViewBase.columnSetting.formatType.TEXT});
+            grd.columnsettings.Add("SupplierID", new GridEditViewBase2.columnSetting() { isDeveloper = true });
+            grd.columnsettings.Add("TenderID", new GridEditViewBase2.columnSetting() { isDeveloper = true });
+            grd.columnsettings.Add("Title", new GridEditViewBase2.columnSetting() { aggregation = GridEditViewBase2.columnSetting.aggregationType.COUNT, format = GridEditViewBase2.columnSetting.formatType.TEXT });
            
           
         }
