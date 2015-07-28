@@ -140,6 +140,7 @@
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroupHeader" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_OverheadItem_tblTender_OverheadType" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" />
+        <EntityTypeShape EntityType="WalzExplorerModel.vwTender_EstimateDetail" Width="1.5" PointX="8.375" PointY="8.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

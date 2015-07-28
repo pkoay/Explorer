@@ -18,11 +18,11 @@
         </Grid.RowDefinitions>
 
         <WrapPanel HorizontalAlignment="Right" Grid.Row="0">
-            <telerik:RadRadioButton GroupName="rcb" Content="Labour"  Click="RadRadioButton_Click"/>
-            <telerik:RadRadioButton GroupName="rcb"  Content="Subcontractors" Click="RadRadioButton_Click" />
-            <telerik:RadRadioButton GroupName="rcb" Content="Materials" Click="RadRadioButton_Click"/>
+            <telerik:RadRadioButton x:Name="rbLabour" GroupName="rcb" Content="Labour"  Click="RadRadioButton_Click"/>
+            <telerik:RadRadioButton x:Name="rbSubcontractor" GroupName="rcb"  Content="Subcontractors" Click="RadRadioButton_Click" />
+            <telerik:RadRadioButton x:Name="rbMaterials" GroupName="rcb" Content="Materials" Click="RadRadioButton_Click"/>
             <telerik:RadRadioButton x:Name="rbBasic" GroupName="rcb"  Content="   Basic   " Click="RadRadioButton_Click" />
-            <telerik:RadRadioButton GroupName="rcb" Content="    All    " Click="RadRadioButton_Click"/>
+            <telerik:RadRadioButton x:Name="rbAll" GroupName="rcb" Content="    All    " Click="RadRadioButton_Click"/>
         </WrapPanel>
         <grid:GridEditViewBase2  x:Name="grd" Grid.Row="1" />
         <Button x:Name="btnSave"  Click="btnSave_Click"  Content="Save" Grid.Row="2" Width="100" HorizontalAlignment="Right" />

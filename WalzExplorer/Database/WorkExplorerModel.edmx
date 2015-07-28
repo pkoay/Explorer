@@ -868,11 +868,37 @@ warning 6002: The table/view 'Explorer.dbo.vwProject_CostCodeIndirectView' does 
           <Property Name="TempIsIndirect" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'Explorer.dbo.vwTender.EstimateDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwTender_EstimateDetail">
+          <Key>
+            <PropertyRef Name="TenderID" />
+            <PropertyRef Name="Schedule" />
+            <PropertyRef Name="EstimateItemType" />
+            <PropertyRef Name="Subcontractor" />
+            <PropertyRef Name="SubcontractorType" />
+            <PropertyRef Name="Hours" />
+            <PropertyRef Name="Cost" />
+          </Key>
+          <Property Name="TenderID" Type="int" Nullable="false" />
+          <Property Name="Schedule" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="EstimateItemType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Subcontractor" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="SubcontractorType" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Hours" Type="float" Nullable="false" />
+          <Property Name="Cost" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'Explorer.dbo.vwTender.EstimateWorkGroupRate' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwTender_EstimateWorkGroupRate">
           <Key>
             
             <PropertyRef Name="WorkGroupID" />
+            
+            
+            
+            
+            
+            
             
             
           </Key>
@@ -2047,6 +2073,17 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
     [vwProject_CostCodeIndirectView].[TempIsIndirect] AS [TempIsIndirect]
     FROM [dbo].[vwProject_CostCodeIndirectView] AS [vwProject_CostCodeIndirectView]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vwTender_EstimateDetail" EntityType="Self.vwTender_EstimateDetail" store:Type="Views" store:Schema="dbo" store:Name="vwTender.EstimateDetail">
+            <DefiningQuery>SELECT 
+    [vwTender_EstimateDetail].[TenderID] AS [TenderID], 
+    [vwTender_EstimateDetail].[Schedule] AS [Schedule], 
+    [vwTender_EstimateDetail].[EstimateItemType] AS [EstimateItemType], 
+    [vwTender_EstimateDetail].[Subcontractor] AS [Subcontractor], 
+    [vwTender_EstimateDetail].[SubcontractorType] AS [SubcontractorType], 
+    [vwTender_EstimateDetail].[Hours] AS [Hours], 
+    [vwTender_EstimateDetail].[Cost] AS [Cost]
+    FROM [dbo].[vwTender.EstimateDetail] AS [vwTender_EstimateDetail]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwTender_EstimateWorkGroupRate" EntityType="Self.vwTender_EstimateWorkGroupRate" store:Type="Views" store:Schema="dbo" store:Name="vwTender.EstimateWorkGroupRate">
             <DefiningQuery>SELECT 
     [vwTender_EstimateWorkGroupRate].[TenderID] AS [TenderID], 
@@ -3117,6 +3154,7 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             <End Role="tblTender_WorkGroup" EntitySet="tblTender_WorkGroup" />
             <End Role="tblTender_OverheadItem" EntitySet="tblTender_OverheadItem" />
           </AssociationSet>
+          <EntitySet Name="vwTender_EstimateDetail" EntityType="WalzExplorerModel.vwTender_EstimateDetail" />
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -5362,6 +5400,24 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vwTender_EstimateDetail">
+          <Key>
+            <PropertyRef Name="TenderID" />
+            <PropertyRef Name="Schedule" />
+            <PropertyRef Name="EstimateItemType" />
+            <PropertyRef Name="Subcontractor" />
+            <PropertyRef Name="SubcontractorType" />
+            <PropertyRef Name="Hours" />
+            <PropertyRef Name="Cost" />
+          </Key>
+          <Property Name="TenderID" Type="Int32" Nullable="false" />
+          <Property Name="Schedule" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="EstimateItemType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subcontractor" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SubcontractorType" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Hours" Type="Double" Nullable="false" />
+          <Property Name="Cost" Type="Double" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6823,6 +6879,19 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
                 <ScalarProperty Name="OverheadGroupID" ColumnName="OverheadGroupID" />
                 <ScalarProperty Name="WorkGroupID" ColumnName="WorkGroupID" />
                 <ScalarProperty Name="OverheadItemID" ColumnName="OverheadItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwTender_EstimateDetail">
+            <EntityTypeMapping TypeName="WalzExplorerModel.vwTender_EstimateDetail">
+              <MappingFragment StoreEntitySet="vwTender_EstimateDetail">
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="SubcontractorType" ColumnName="SubcontractorType" />
+                <ScalarProperty Name="Subcontractor" ColumnName="Subcontractor" />
+                <ScalarProperty Name="EstimateItemType" ColumnName="EstimateItemType" />
+                <ScalarProperty Name="Schedule" ColumnName="Schedule" />
+                <ScalarProperty Name="TenderID" ColumnName="TenderID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

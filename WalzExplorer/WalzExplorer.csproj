@@ -726,6 +726,9 @@
     <Compile Include="Database\vwProject_CostCodeIndirectView.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\vwTender_EstimateDetail.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\vwTender_EstimateWorkGroupRate.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>

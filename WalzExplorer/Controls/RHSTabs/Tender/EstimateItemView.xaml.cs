@@ -111,6 +111,13 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         {
             if (radioButtonLayout == "")
             {
+                rbLabour.IsChecked = true;
+                rbLabour.RaiseEvent(new RoutedEventArgs(RadRadioButton.ClickEvent));
+                rbMaterials.IsChecked = true;
+                rbMaterials.RaiseEvent(new RoutedEventArgs(RadRadioButton.ClickEvent));
+                rbSubcontractor.IsChecked = true;
+                rbSubcontractor.RaiseEvent(new RoutedEventArgs(RadRadioButton.ClickEvent));
+
                 rbBasic.IsChecked = true;
                 rbBasic.RaiseEvent(new RoutedEventArgs(RadRadioButton.ClickEvent));
             }
@@ -190,6 +197,8 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
            
                 c.MaxWidth = 0;
                 c.TabStopMode = GridViewTabStop.Skip;
+               
+
         }
 
         private void UnhideColumn(GridViewColumn c,int index)
@@ -219,6 +228,13 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                 grd.grd.Columns["Title"].TextWrapping = TextWrapping.Wrap;
                 grd.grd.Columns["Title"].Width = 400;
 
+                //Hide them all (so to remove tabstops, otherwise lease some "large " columns)
+                //foreach (GridViewColumn c in grd.grd.Columns)
+                //{
+                //    HideColumn(c);
+                //}
+
+
                 //columnn order must remain the same for cut and paste in different displays
                 UnhideColumn(grd.grd.Columns["cmbScheduleID"], 1);
                 UnhideColumn(grd.grd.Columns["Title"], 2);
@@ -227,9 +243,9 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                 UnhideColumn(grd.grd.Columns["Men"], 5);
                 UnhideColumn(grd.grd.Columns["HoursPerDay"], 6);
                 UnhideColumn(grd.grd.Columns["Days"], 7);
-                UnhideColumn(grd.grd.Columns["cmbSubcontractorID"], 8);
-                UnhideColumn(grd.grd.Columns["Quantity"], 9);
-                UnhideColumn(grd.grd.Columns["cmbUnitOfMeasureID"], 10);
+                UnhideColumn(grd.grd.Columns["Quantity"], 8);
+                UnhideColumn(grd.grd.Columns["cmbUnitOfMeasureID"], 9);
+                UnhideColumn(grd.grd.Columns["cmbSubcontractorID"], 10);
                 UnhideColumn(grd.grd.Columns["Cost"], 11);
                 UnhideColumn(grd.grd.Columns["Markup"], 12);
                 UnhideColumn(grd.grd.Columns["cmbMaterialID"], 13);
@@ -252,6 +268,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                 {
                     case "All":
                         break;
+
                     case "Labour":
                         HideColumn(grd.grd.Columns["UnitCost"]);
                         HideColumn(grd.grd.Columns["Cost"]);
@@ -262,10 +279,10 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                         HideColumn(grd.grd.Columns["Length"]);
                         HideColumn(grd.grd.Columns["Width"]);
                         HideColumn(grd.grd.Columns["Grade"]);
-
                         HideColumn(grd.grd.Columns["Weight"]);
                         HideColumn(grd.grd.Columns["MetresSquared"]);
                         break;
+
                     case "Subcontractors":
                         HideColumn(grd.grd.Columns["cmbWorkGroupID"]);
                         HideColumn(grd.grd.Columns["Men"]);
@@ -278,31 +295,28 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                         HideColumn(grd.grd.Columns["Grade"]);
                         HideColumn(grd.grd.Columns["TotalLabourHours"]);
                         HideColumn(grd.grd.Columns["WorkGroupRate"]);
-
                         HideColumn(grd.grd.Columns["Weight"]);
                         HideColumn(grd.grd.Columns["MetresSquared"]);
                         break;
+
                     case "Materials":
                         HideColumn(grd.grd.Columns["cmbWorkGroupID"]);
                         HideColumn(grd.grd.Columns["Men"]);
                         HideColumn(grd.grd.Columns["HoursPerDay"]);
                         HideColumn(grd.grd.Columns["Days"]);
-
                         HideColumn(grd.grd.Columns["cmbSubcontractorID"]);
                         HideColumn(grd.grd.Columns["TotalLabourHours"]);
                         HideColumn(grd.grd.Columns["WorkGroupRate"]);
                         break;
+
                     case "Basic":
                         HideColumn(grd.grd.Columns["cmbSubcontractorID"]);
-
                         HideColumn(grd.grd.Columns["cmbMaterialID"]);
                         HideColumn(grd.grd.Columns["cmbSupplierID"]);
                         HideColumn(grd.grd.Columns["cmbUnitOfMeasureID"]);
-
                         HideColumn(grd.grd.Columns["Length"]);
                         HideColumn(grd.grd.Columns["Width"]);
                         HideColumn(grd.grd.Columns["Grade"]);
-
                         HideColumn(grd.grd.Columns["Weight"]);
                         HideColumn(grd.grd.Columns["MetresSquared"]);
                         break;
