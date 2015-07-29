@@ -100,5 +100,6 @@ namespace WalzExplorer.Database
     
         public virtual ICollection<tblTender_Estimate> tblTender_Estimate { get; set; }
         public virtual ICollection<tblTender_EstimateItem> tblTender_EstimateItem { get; set; }
+        public virtual vwTender_ScheduleLevel vwTender_ScheduleLevel { get; set; }
     }
 }

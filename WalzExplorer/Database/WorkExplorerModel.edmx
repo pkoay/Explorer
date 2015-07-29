@@ -876,14 +876,22 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.EstimateDetail' does not hav
             <PropertyRef Name="EstimateItemType" />
             <PropertyRef Name="Subcontractor" />
             <PropertyRef Name="SubcontractorType" />
+            <PropertyRef Name="Supplier" />
+            <PropertyRef Name="WorkGroup" />
+            <PropertyRef Name="Drawing" />
+            <PropertyRef Name="Material" />
             <PropertyRef Name="Hours" />
             <PropertyRef Name="Cost" />
           </Key>
           <Property Name="TenderID" Type="int" Nullable="false" />
-          <Property Name="Schedule" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Schedule" Type="varchar" MaxLength="306" Nullable="false" />
           <Property Name="EstimateItemType" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Subcontractor" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="SubcontractorType" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Supplier" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="WorkGroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Drawing" Type="varchar" MaxLength="102" Nullable="false" />
+          <Property Name="Material" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Hours" Type="float" Nullable="false" />
           <Property Name="Cost" Type="float" Nullable="false" />
         </EntityType>
@@ -927,6 +935,15 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <Property Name="WorkGroupID" Type="int" Nullable="false" />
           <Property Name="WorkGroup" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LabourHours" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Explorer.dbo.vwTender.ScheduleLevel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwTender_ScheduleLevel">
+          <Key>
+            <PropertyRef Name="ScheduleID" />
+          </Key>
+          <Property Name="ScheduleID" Type="int" Nullable="false" />
+          <Property Name="Level" Type="int" />
         </EntityType>
         <Association Name="FK_tblPerson_Mimic_tblPerson">
           <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="1" />
@@ -2080,6 +2097,10 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
     [vwTender_EstimateDetail].[EstimateItemType] AS [EstimateItemType], 
     [vwTender_EstimateDetail].[Subcontractor] AS [Subcontractor], 
     [vwTender_EstimateDetail].[SubcontractorType] AS [SubcontractorType], 
+    [vwTender_EstimateDetail].[Supplier] AS [Supplier], 
+    [vwTender_EstimateDetail].[WorkGroup] AS [WorkGroup], 
+    [vwTender_EstimateDetail].[Drawing] AS [Drawing], 
+    [vwTender_EstimateDetail].[Material] AS [Material], 
     [vwTender_EstimateDetail].[Hours] AS [Hours], 
     [vwTender_EstimateDetail].[Cost] AS [Cost]
     FROM [dbo].[vwTender.EstimateDetail] AS [vwTender_EstimateDetail]</DefiningQuery>
@@ -2107,6 +2128,12 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
     [vwTender_ObjectHoursByWorkGroup].[WorkGroup] AS [WorkGroup], 
     [vwTender_ObjectHoursByWorkGroup].[LabourHours] AS [LabourHours]
     FROM [dbo].[vwTender.ObjectHoursByWorkGroup] AS [vwTender_ObjectHoursByWorkGroup]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwTender_ScheduleLevel" EntityType="Self.vwTender_ScheduleLevel" store:Type="Views" store:Schema="dbo" store:Name="vwTender.ScheduleLevel">
+            <DefiningQuery>SELECT 
+    [vwTender_ScheduleLevel].[ScheduleID] AS [ScheduleID], 
+    [vwTender_ScheduleLevel].[Level] AS [Level]
+    FROM [dbo].[vwTender.ScheduleLevel] AS [vwTender_ScheduleLevel]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_tblPerson_Mimic_tblPerson" Association="Self.FK_tblPerson_Mimic_tblPerson">
             <End Role="tblPerson" EntitySet="tblPerson" />
@@ -3155,6 +3182,11 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             <End Role="tblTender_OverheadItem" EntitySet="tblTender_OverheadItem" />
           </AssociationSet>
           <EntitySet Name="vwTender_EstimateDetail" EntityType="WalzExplorerModel.vwTender_EstimateDetail" />
+          <EntitySet Name="vwTender_ScheduleLevel" EntityType="WalzExplorerModel.vwTender_ScheduleLevel" />
+          <AssociationSet Name="tblTender_SchedulevwTender_ScheduleLevel" Association="WalzExplorerModel.tblTender_SchedulevwTender_ScheduleLevel">
+            <End Role="tblTender_Schedule" EntitySet="tblTender_Schedule" />
+            <End Role="vwTender_ScheduleLevel" EntitySet="vwTender_ScheduleLevel" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -4516,6 +4548,7 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
           <Property Name="RowVersion" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="tblTender_Estimate" Relationship="WalzExplorerModel.FK_tblTender_Item_tblTender_Schedule" FromRole="tblTender_Schedule" ToRole="tblTender_Estimate" />
           <NavigationProperty Name="tblTender_EstimateItem" Relationship="WalzExplorerModel.FK_tblTender_Work_tblTender_Schedule" FromRole="tblTender_Schedule" ToRole="tblTender_EstimateItem" />
+          <NavigationProperty Name="vwTender_ScheduleLevel" Relationship="WalzExplorerModel.tblTender_SchedulevwTender_ScheduleLevel" FromRole="tblTender_Schedule" ToRole="vwTender_ScheduleLevel" />
         </EntityType>
         <EntityType Name="tblTender_ObjectType">
           <Key>
@@ -5407,17 +5440,45 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
             <PropertyRef Name="EstimateItemType" />
             <PropertyRef Name="Subcontractor" />
             <PropertyRef Name="SubcontractorType" />
+            <PropertyRef Name="Supplier" />
+            <PropertyRef Name="WorkGroup" />
+            <PropertyRef Name="Drawing" />
+            <PropertyRef Name="Material" />
             <PropertyRef Name="Hours" />
             <PropertyRef Name="Cost" />
           </Key>
           <Property Name="TenderID" Type="Int32" Nullable="false" />
-          <Property Name="Schedule" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Schedule" Type="String" Nullable="false" MaxLength="306" FixedLength="false" Unicode="false" />
           <Property Name="EstimateItemType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Subcontractor" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="SubcontractorType" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Supplier" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkGroup" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Drawing" Type="String" Nullable="false" MaxLength="102" FixedLength="false" Unicode="false" />
+          <Property Name="Material" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Hours" Type="Double" Nullable="false" />
           <Property Name="Cost" Type="Double" Nullable="false" />
         </EntityType>
+        <EntityType Name="vwTender_ScheduleLevel">
+          <Key>
+            <PropertyRef Name="ScheduleID" />
+          </Key>
+          <Property Name="ScheduleID" Type="Int32" Nullable="false" />
+          <Property Name="Level" Type="Int32" />
+          <NavigationProperty Name="tblTender_Schedule" Relationship="WalzExplorerModel.tblTender_SchedulevwTender_ScheduleLevel" FromRole="vwTender_ScheduleLevel" ToRole="tblTender_Schedule" />
+        </EntityType>
+        <Association Name="tblTender_SchedulevwTender_ScheduleLevel">
+          <End Type="WalzExplorerModel.tblTender_Schedule" Role="tblTender_Schedule" Multiplicity="1" />
+          <End Type="WalzExplorerModel.vwTender_ScheduleLevel" Role="vwTender_ScheduleLevel" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="tblTender_Schedule">
+              <PropertyRef Name="ScheduleID" />
+            </Principal>
+            <Dependent Role="vwTender_ScheduleLevel">
+              <PropertyRef Name="ScheduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6887,11 +6948,23 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ObjectHoursByWorkGroup' does
               <MappingFragment StoreEntitySet="vwTender_EstimateDetail">
                 <ScalarProperty Name="Cost" ColumnName="Cost" />
                 <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="Drawing" ColumnName="Drawing" />
+                <ScalarProperty Name="WorkGroup" ColumnName="WorkGroup" />
+                <ScalarProperty Name="Supplier" ColumnName="Supplier" />
                 <ScalarProperty Name="SubcontractorType" ColumnName="SubcontractorType" />
                 <ScalarProperty Name="Subcontractor" ColumnName="Subcontractor" />
                 <ScalarProperty Name="EstimateItemType" ColumnName="EstimateItemType" />
                 <ScalarProperty Name="Schedule" ColumnName="Schedule" />
                 <ScalarProperty Name="TenderID" ColumnName="TenderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwTender_ScheduleLevel">
+            <EntityTypeMapping TypeName="WalzExplorerModel.vwTender_ScheduleLevel">
+              <MappingFragment StoreEntitySet="vwTender_ScheduleLevel">
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

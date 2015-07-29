@@ -46,7 +46,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             grd.columnsettings.Add("TenderID", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("CanAllocate", new GridEditViewBase.columnSetting() { isDeveloper = true });
             grd.columnsettings.Add("ClientCode", new GridEditViewBase.columnSetting() { aggregation = GridEditViewBase.columnSetting.aggregationType.COUNT, format = GridEditViewBase.columnSetting.formatType.TEXT });
-
+            grd.columnsettings.Add("Level", new GridEditViewBase.columnSetting() { isReadonly = true, format =   GridEditViewBase.columnSetting.formatType.G });
             
             grd.columnCombo.Clear();
             grd.columnCombo.Add("ParentID", GridLibrary.CreateCombo("cmbParentID", "Parent", vm.cmbParentList(), "ScheduleID", "ClientCode"));

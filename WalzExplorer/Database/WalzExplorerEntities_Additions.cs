@@ -318,4 +318,13 @@ namespace WalzExplorer.Database
             get { return Quantity * (1+MarkUp) * Rate; }
         }
     }
+
+    public partial class tblTender_Schedule:ModelBase
+    {
+        public int Level
+        {
+            get { return vwTender_ScheduleLevel == null ? 0:(int) vwTender_ScheduleLevel.Level; }
+            
+        }
+    }
 }

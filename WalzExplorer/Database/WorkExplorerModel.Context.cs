@@ -83,6 +83,7 @@ namespace WalzExplorer.Database
         public virtual DbSet<tblTender_WorkgroupAdditionalHours> tblTender_WorkgroupAdditionalHours { get; set; }
         public virtual DbSet<tblTender_OverheadItem> tblTender_OverheadItem { get; set; }
         public virtual DbSet<vwTender_EstimateDetail> vwTender_EstimateDetail { get; set; }
+        public virtual DbSet<vwTender_ScheduleLevel> vwTender_ScheduleLevel { get; set; }
     
         [DbFunction("WalzExplorerEntities", "fnCommon_Split_VarcharToTable")]
         public virtual IQueryable<string> fnCommon_Split_VarcharToTable(string input, string seperator)

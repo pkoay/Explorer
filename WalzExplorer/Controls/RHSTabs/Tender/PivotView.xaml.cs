@@ -6,11 +6,15 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Telerik.Pivot.Core;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
 using WalzExplorer.Common;
 using WalzExplorer.Controls.Grid;
+using System.Linq;
+using Telerik.Windows.Controls.FieldList;
+using Telerik.Pivot.Core.Fields;
 
 namespace WalzExplorer.Controls.RHSTabs.Tender
 {
@@ -22,7 +26,8 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
     public partial class PivotView : RHSTabViewBase
     {
 
-        //DrawingViewModel vm;
+        PivotViewModel vm;
+        
 
        public PivotView()
         {
@@ -31,8 +36,24 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
 
         public override void TabLoad()
         {
-            //vm = new DrawingViewModel(settings);
-            //grd.vm = vm;
+            vm = new PivotViewModel(settings);
+
+            LocalDataSourceProvider provider = new LocalDataSourceProvider();
+            provider.PrepareDescriptionForField+=provider_PrepareDescriptionForField;
+            provider.ItemsSource = vm.data;
+            
+            provider.RowGroupDescriptions.Add(new PropertyGroupDescription() { PropertyName = "Schedule" });
+            provider.ColumnGroupDescriptions.Add(new PropertyGroupDescription() { PropertyName = "EstimateItemType" });
+            provider.AggregateDescriptions.Add(new PropertyAggregateDescription() { PropertyName = "Cost"  ,StringFormat="#,##0.00"});
+            provider.FieldDescriptionsProvider = new CustomFieldDescriptionsProvider();
+
+            //IField f =FieldList.ViewModel.Fields.First(x => x.FieldInfo.DisplayName == "TenderID");
+
+
+            FieldList.DataProvider = provider;
+            Pivot.DataProvider = provider;
+
+           
             //grd.grd.DataContext = vm;
             //grd.grd.ItemsSource = vm.data;
 
@@ -57,6 +78,37 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             //    return "Not all data in the tab is saved (data in error not saved). Press ok to fix the errors, or press cancel to lose changes in error";
             //}
             return "";
+        }
+        public class CustomFieldDescriptionsProvider : LocalDataSourceFieldDescriptionsProvider
+        {
+            protected override System.Collections.Generic.IEnumerable<IPivotFieldInfo> GetDescriptions(IFieldInfoExtractor getter)
+            {
+                var result = base.GetDescriptions(getter);
+                List<string> PropertiesToSkip = new List<string>() { "TenderID", "Error","HasError","Item" };
+
+                // filter some of the results
+                List<PropertyInfoFieldInfo> itemsToShow = new List<PropertyInfoFieldInfo>();
+
+                foreach (PropertyInfoFieldInfo item in result)
+                {
+                    if (!PropertiesToSkip.Contains(item.DisplayName))
+                    
+                    {
+                        itemsToShow.Add(item);
+                    }
+                }
+                return itemsToShow;
+            }
+        }
+        private void provider_PrepareDescriptionForField(object sender, PrepareDescriptionForFieldEventArgs e)
+        {
+            List<string> PropertiesToFormat = new List<string>() { "Cost", "Hours" };
+            var aggregateDescription = e.Description as PropertyAggregateDescriptionBase;
+
+            if (e.DescriptionType == Telerik.Pivot.Core.DataProviderDescriptionType.Aggregate && aggregateDescription != null && PropertiesToFormat.Contains(aggregateDescription.PropertyName))
+            {
+                aggregateDescription.StringFormat = "#,##0.00";
+            }
         }
        
       

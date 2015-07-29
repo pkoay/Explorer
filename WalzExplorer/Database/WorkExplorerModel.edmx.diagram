@@ -130,7 +130,7 @@
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Work_tblTender_UnitOfMeasure" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Work_tblTender_WorkGroup" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_Work_tblTender_WorkType" />
-        <EntityTypeShape EntityType="WalzExplorerModel.vwProject_CostCodeIndirectView" Width="1.5" PointX="8.375" PointY="5.75" />
+        <EntityTypeShape EntityType="WalzExplorerModel.vwProject_CostCodeIndirectView" Width="2.25" PointX="9.125" PointY="5.75" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_WorkgroupFuel" Width="1.5" PointX="11.625" PointY="15.875" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkgroupFuel_tblTender_WorkGroup" />
         <EntityTypeShape EntityType="WalzExplorerModel.tblTender_OverheadType" Width="1.5" PointX="15.375" PointY="31.375" />
@@ -141,6 +141,8 @@
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_OverheadItem_tblTender_OverheadType" />
         <AssociationConnector Association="WalzExplorerModel.FK_tblTender_WorkGroupItem_tblTender_WorkGroup" />
         <EntityTypeShape EntityType="WalzExplorerModel.vwTender_EstimateDetail" Width="1.5" PointX="8.375" PointY="8.75" />
+        <EntityTypeShape EntityType="WalzExplorerModel.vwTender_ScheduleLevel" Width="1.5" PointX="15.125" PointY="15.875" />
+        <AssociationConnector Association="WalzExplorerModel.tblTender_SchedulevwTender_ScheduleLevel" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

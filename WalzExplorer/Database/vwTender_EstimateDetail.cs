@@ -49,6 +49,34 @@ namespace WalzExplorer.Database
     		set { SetProperty(ref _subcontractorType, value); } 
     	}
     
+        private string _supplier;
+    	public string Supplier 
+    	{ 
+    		get { return _supplier; } 
+    		set { SetProperty(ref _supplier, value); } 
+    	}
+    
+        private string _workGroup;
+    	public string WorkGroup 
+    	{ 
+    		get { return _workGroup; } 
+    		set { SetProperty(ref _workGroup, value); } 
+    	}
+    
+        private string _drawing;
+    	public string Drawing 
+    	{ 
+    		get { return _drawing; } 
+    		set { SetProperty(ref _drawing, value); } 
+    	}
+    
+        private string _material;
+    	public string Material 
+    	{ 
+    		get { return _material; } 
+    		set { SetProperty(ref _material, value); } 
+    	}
+    
         private double _hours;
     	public double Hours 
     	{ 

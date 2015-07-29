@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>115</ApplicationRevision>
+    <ApplicationRevision>116</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -252,6 +252,7 @@
       <DependentUpon>CostcodeIndirectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Project\CostcodeIndirectViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\PivotViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\PivotView.xaml.cs">
       <DependentUpon>PivotView.xaml</DependentUpon>
     </Compile>
@@ -740,6 +741,9 @@
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\vwTender_ObjectHoursByWorkGroup.cs">
+      <DependentUpon>WorkExplorerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\vwTender_ScheduleLevel.cs">
       <DependentUpon>WorkExplorerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\WalzExplorerEntites.cs" />
