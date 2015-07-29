@@ -138,6 +138,7 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Telerik.Pivot.Core, Version=2015.1.225.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
     <Reference Include="Telerik.Windows.Controls, Version=2015.1.225.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
       <HintPath>..\lib\RCWPF\2015.1.225.45.NoXaml\Telerik.Windows.Controls.dll</HintPath>
       <Private>True</Private>
@@ -162,6 +163,8 @@
       <HintPath>..\lib\RCWPF\2015.1.225.45.NoXaml\Telerik.Windows.Controls.Navigation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Telerik.Windows.Controls.Pivot, Version=2015.1.225.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Windows.Controls.PivotFieldList, Version=2015.1.225.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
     <Reference Include="Telerik.Windows.Data, Version=2015.1.225.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
       <HintPath>..\lib\RCWPF\2015.1.225.45.NoXaml\Telerik.Windows.Data.dll</HintPath>
       <Private>True</Private>
@@ -195,6 +198,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase">
       <Private>True</Private>
     </Reference>
@@ -248,6 +252,9 @@
       <DependentUpon>CostcodeIndirectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Project\CostcodeIndirectViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Tender\PivotView.xaml.cs">
+      <DependentUpon>PivotView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RHSTabs\Tender\EstimateItemView.xaml.cs">
       <DependentUpon>EstimateItemView.xaml</DependentUpon>
     </Compile>
@@ -811,6 +818,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Project\CostcodeIndirectView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Tender\PivotView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
