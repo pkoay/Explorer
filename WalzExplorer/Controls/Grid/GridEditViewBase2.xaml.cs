@@ -271,7 +271,7 @@ namespace WalzExplorer.Controls.Grid
 
                 if (e.LeftButton == MouseButtonState.Pressed &&
                     ((Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance) || (Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
-                    && grd.SelectedItem != null
+                    && grd.SelectedItem != null 
 
                     )
                 {

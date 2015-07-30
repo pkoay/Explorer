@@ -28,7 +28,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>116</ApplicationRevision>
+    <ApplicationRevision>119</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -224,6 +224,7 @@
     <Compile Include="Common\ConvertLibrary.cs" />
     <Compile Include="Common\Logging.cs" />
     <Compile Include="Common\ObjectLibrary.cs" />
+    <Compile Include="Common\PivotExportToExcel.cs" />
     <Compile Include="Common\WaitCursor.cs" />
     <Compile Include="Controls\Grid\GridEditViewBase2.xaml.cs">
       <DependentUpon>GridEditViewBase2.xaml</DependentUpon>
@@ -252,6 +253,10 @@
       <DependentUpon>CostcodeIndirectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RHSTabs\Project\CostcodeIndirectViewModel.cs" />
+    <Compile Include="Controls\RHSTabs\Project\CostPivotView.xaml.cs">
+      <DependentUpon>CostPivotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RHSTabs\Project\CostPivotViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\PivotViewModel.cs" />
     <Compile Include="Controls\RHSTabs\Tender\PivotView.xaml.cs">
       <DependentUpon>PivotView.xaml</DependentUpon>
@@ -822,6 +827,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RHSTabs\Project\CostcodeIndirectView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RHSTabs\Project\CostPivotView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

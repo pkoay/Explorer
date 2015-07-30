@@ -16,50 +16,44 @@ using System.Linq;
 using Telerik.Windows.Controls.FieldList;
 using Telerik.Pivot.Core.Fields;
 using System.Windows.Controls;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
 
-namespace WalzExplorer.Controls.RHSTabs.Tender
+namespace WalzExplorer.Controls.RHSTabs.Project
 {
     /// <summary>
     /// Interaction logic for TenderViewer.xaml
     /// </summary>
 
 
-    public partial class PivotView : RHSTabViewBase
+    public partial class CostPivotView : RHSTabViewBase
     {
 
-        PivotViewModel vm;
+        CostPivotViewModel vm;
         
 
-       public PivotView()
+       public CostPivotView()
         {
             InitializeComponent();
         }
 
         public override void TabLoad()
         {
-            vm = new PivotViewModel(settings);
+            vm = new CostPivotViewModel(settings);
 
             LocalDataSourceProvider provider = new LocalDataSourceProvider();
             provider.PrepareDescriptionForField+=provider_PrepareDescriptionForField;
             provider.ItemsSource = vm.data;
             
-            provider.RowGroupDescriptions.Add(new PropertyGroupDescription() { PropertyName = "Schedule" });
-            provider.ColumnGroupDescriptions.Add(new PropertyGroupDescription() { PropertyName = "EstimateItemType" });
-            provider.AggregateDescriptions.Add(new PropertyAggregateDescription() { PropertyName = "Cost"  ,StringFormat="#,##0.00"});
+            //provider.RowGroupDescriptions.Add(new PropertyGroupDescription() { PropertyName = "Schedule" });
+            //provider.ColumnGroupDescriptions.Add(new PropertyGroupDescription() { PropertyName = "EstimateItemType" });
+            //provider.AggregateDescriptions.Add(new PropertyAggregateDescription() { PropertyName = "Cost"  ,StringFormat="#,##0.00"});
             provider.FieldDescriptionsProvider = new CustomFieldDescriptionsProvider();
-
-            //IField f =FieldList.ViewModel.Fields.First(x => x.FieldInfo.DisplayName == "TenderID");
-
 
             FieldList.DataProvider = provider;
             Pivot.DataProvider = provider;
-
             Pivot.ContextMenu = CreateContextMenu();
 
-           
-          
         }
 
         public override string IssueIfClosed()
@@ -76,7 +70,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
             protected override System.Collections.Generic.IEnumerable<IPivotFieldInfo> GetDescriptions(IFieldInfoExtractor getter)
             {
                 var result = base.GetDescriptions(getter);
-                List<string> PropertiesToSkip = new List<string>() { "TenderID", "Error","HasError","Item" };
+                List<string> PropertiesToSkip = new List<string>() { "DataAreaID","ProjectID", "Error","HasError","Item" };
 
                 // filter some of the results
                 List<PropertyInfoFieldInfo> itemsToShow = new List<PropertyInfoFieldInfo>();
@@ -94,7 +88,7 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
         }
         private void provider_PrepareDescriptionForField(object sender, PrepareDescriptionForFieldEventArgs e)
         {
-            List<string> PropertiesToFormat = new List<string>() { "Cost", "Hours" };
+            List<string> PropertiesToFormat = new List<string>() { "PurchQtyPrice", "CostTotal" ,"CostOverhead","CostAmount","Quantity","Hours"};
             var aggregateDescription = e.Description as PropertyAggregateDescriptionBase;
 
             if (e.DescriptionType == Telerik.Pivot.Core.DataProviderDescriptionType.Aggregate && aggregateDescription != null && PropertiesToFormat.Contains(aggregateDescription.PropertyName))
@@ -102,15 +96,15 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                 aggregateDescription.StringFormat = "#,##0.00";
             }
         }
-        private ContextMenu CreateContextMenu()
-        {
-            // add context menu
+       private  ContextMenu CreateContextMenu()
+       {
+                       // add context menu
             ContextMenu cm = new ContextMenu();
             cm.FontSize = 12;
             MenuItem mi;
 
             cm.Items.Add(new MenuItem() { Name = "miExportExcel", Header = "Export to Excel", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
-
+           
             foreach (object o in cm.Items)
             {
                 if (!(o is Separator))
@@ -120,45 +114,44 @@ namespace WalzExplorer.Controls.RHSTabs.Tender
                 }
             }
             return cm;
-        }
+       }
 
-        public void cm_ItemClick(object sender, RoutedEventArgs e)
-        {
-            MenuItem mi = (MenuItem)sender;
-            switch (mi.Name)
-            {
+       public void cm_ItemClick(object sender, RoutedEventArgs e)
+       {
+           MenuItem mi = (MenuItem)sender;
+           switch (mi.Name)
+           {
+             
 
-
-                case "miExportExcel":
-                    if (Pivot.ColumnGroups.Count > 0 || Pivot.RowGroups.Count > 0)
-                    {
-                        //provider.ColumnGroupDescriptions.Add(new PropertyGroupDescription() { PropertyName = "EstimateItemType" });
-                        //provider.AggregateDescriptions.Add(new PropertyAggregateDescription() { PropertyName = "Cost"  ,StringFormat="#,##0.00"});
-                        string fileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".xlsx";
-                        using (Stream stream = File.Create(fileName))
-                        {
-                            PivotExportToExcel.ExportToExcel(stream, Pivot);
-                            //grd.Export(stream,
-                            // new GridViewExportOptions()
-                            // {
-                            //     Format = ExportFormat.ExcelML,
-                            //     ShowColumnHeaders = true,
-                            //     ShowColumnFooters = true,
-                            //     ShowGroupFooters = false,
-                            // });
-                        }
-                        Process excel = new Process();
-                        excel.StartInfo.FileName = fileName;
-                        excel.Start();
-                    }
-                    else
-                    {
-                        MessageBox.Show("No pivot to export");
-                    }
-                    break;
-            }
-        }
-       
+               case "miExportExcel":
+                   if (Pivot.ColumnGroups.Count > 0 || Pivot.RowGroups.Count > 0)
+                   {
+                       //provider.ColumnGroupDescriptions.Add(new PropertyGroupDescription() { PropertyName = "EstimateItemType" });
+                       //provider.AggregateDescriptions.Add(new PropertyAggregateDescription() { PropertyName = "Cost"  ,StringFormat="#,##0.00"});
+                       string fileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".xlsx";
+                       using (Stream stream = File.Create(fileName))
+                       {
+                           PivotExportToExcel.ExportToExcel(stream, Pivot);
+                           //grd.Export(stream,
+                           // new GridViewExportOptions()
+                           // {
+                           //     Format = ExportFormat.ExcelML,
+                           //     ShowColumnHeaders = true,
+                           //     ShowColumnFooters = true,
+                           //     ShowGroupFooters = false,
+                           // });
+                       }
+                       Process excel = new Process();
+                       excel.StartInfo.FileName = fileName;
+                       excel.Start();
+                   }
+                   else
+                   {
+                       MessageBox.Show("No pivot to export");
+                   }
+                   break;
+           }
+       }
       
     }
 

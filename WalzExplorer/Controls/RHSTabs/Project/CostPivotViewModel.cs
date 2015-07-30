@@ -12,17 +12,17 @@ using WalzExplorer.Common;
 using WalzExplorer.Controls.Grid;
 using WalzExplorer.Database;
 
-namespace WalzExplorer.Controls.RHSTabs.Tender
+namespace WalzExplorer.Controls.RHSTabs.Project
 {
-    public class PivotViewModel 
+    public class CostPivotViewModel 
     {
-        public ObservableCollection<vwTender_EstimateDetail> data;
+        public ObservableCollection<spWEX_RHS_Project_Cost_Result> data;
         public WalzExplorerEntities context = new WalzExplorerEntities(false);
-        int TenderID;
-        public PivotViewModel(WEXSettings settings)
+        int ProjectID;
+        public CostPivotViewModel(WEXSettings settings) 
         {
-            TenderID = ConvertLibrary.StringToInt(settings.node.FindID("TENDER", "-2"), -1);
-            data = new ObservableCollection<vwTender_EstimateDetail>(context.vwTender_EstimateDetail.Where(x => x.TenderID == TenderID));
+            ProjectID = ConvertLibrary.StringToInt(settings.node.FindID("PROJECT", "-2"), -1);
+            data = new ObservableCollection<spWEX_RHS_Project_Cost_Result>(context.spWEX_RHS_Project_Cost(ProjectID)); 
         }
     }
 }
