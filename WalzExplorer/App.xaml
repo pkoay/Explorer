@@ -21,8 +21,10 @@
                 <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.GridView.xaml" />
                 <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.Input.xaml" />
                 <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.Navigation.xaml" />
-
-            <ResourceDictionary Source="/Resources/Icons.xaml" />
+                <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.Pivot.xaml" />
+                <ResourceDictionary Source="Themes/VisualStudio2013/Telerik.Windows.Controls.PivotFieldList.xaml" />
+         
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
       </ResourceDictionary>
     </Application.Resources>

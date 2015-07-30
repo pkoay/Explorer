@@ -23,3 +23,4 @@
         <pivot:RadPivotFieldList x:Name="FieldList" Grid.Column="1" Margin="4 0 0 0" />
     </Grid>
 </base:RHSTabViewBase>
+

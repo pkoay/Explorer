@@ -29,14 +29,6 @@
     </ResourceDictionary.MergedDictionaries>
     <telerik1:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <telerik1:DoubleToThicknessConverter x:Key="DoubleToThicknessConverter"/>
-    <SolidColorBrush x:Key="RadTreeView_ForbiddenDragIcon1" Color="#4C000000"/>
-    <SolidColorBrush x:Key="RadTreeView_ForbiddenDragIcon2" Color="#FFFF0000"/>
-    <SolidColorBrush x:Key="RadTreeView_ForbiddenDragIcon3" Color="#FFFF0000"/>
-    <SolidColorBrush x:Key="RadTreeView_ForbiddenDragIcon4" Color="#FFFFFFFF"/>
-    <LinearGradientBrush x:Key="RadTreeView_ForbiddenDragIcon5" EndPoint="0.5,1" StartPoint="0.5,0">
-        <GradientStop Color="#FF2F0101" Offset="0"/>
-        <GradientStop Color="#FFFF0000" Offset="1"/>
-    </LinearGradientBrush>
     <CornerRadius x:Key="ValidationTooltip_CornerRadius">0</CornerRadius>
     <SolidColorBrush x:Key="TransparentBrush" Color="#01FFFFFF"/>
     <ControlTemplate x:Key="ErrorTooltipTemplate" TargetType="ToolTip">
@@ -100,6 +92,9 @@
     <Thickness x:Key="TabItem_Margin">0</Thickness>
     <Thickness x:Key="TabItem_Margin_Selected">0</Thickness>
     <SolidColorBrush x:Key="WindowBorderBackground" Color="#FFCCE4FC"/>
+    <SolidColorBrush x:Key="WindowModalBackground" Color="#333333FF"/>
+    <SolidColorBrush x:Key="RadTreeView_ForbiddenDragIcon" Color="#FFFF0000"/>
+    <ImageSource x:Key="DesktopAlertIcon">/Telerik.Windows.Controls.Navigation;component/Themes/Images/DesktopAlertIconFlatWhite.png</ImageSource>
     <Style TargetType="telerikNavigation:RadPanelBar" x:Key="RadPanelbarBaseStyle">
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Local"/>
         <Setter Property="Padding" Value="1 0 1 1"/>
@@ -1813,6 +1808,31 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid SnapsToDevicePixels="True" VerticalAlignment="Top" Width="14" Height="14" HorizontalAlignment="Left">
+                        <Border Background="Transparent" HorizontalAlignment="Right" VerticalAlignment="Top" Width="5" Height="5"/>
+                        <AdornedElementPlaceholder x:Name="Holder"/>
+                        <Border BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=ValidationBrush}" BorderThickness="1" Margin="1 1 0 0"/>
+                        <Path
+                                Data="M0,0L8,0L8,8z"
+                                Fill="{telerik1:VisualStudio2013Resource ResourceKey=ValidationBrush}"
+                                Width="8"
+                                Height="8"
+                                HorizontalAlignment="Right"
+                                Margin="0 1 0 0"
+                                VerticalAlignment="Top"/>
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="PART_ToolTip"
+                                    DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget.DataContext}"
+                                    Template="{StaticResource ErrorTooltipTemplate}"
+                                    Placement="Right"/>
+                        </ToolTipService.ToolTip>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
@@ -3673,6 +3693,7 @@
                                     MinHeight="14"
                                     Focusable="False"/>
                             <Border x:Name="MouseOverButtonVisual"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, Path=IsButtonPartVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Background="{x:Null}"
@@ -3680,16 +3701,16 @@
                                     IsHitTestVisible="False"
                                     Opacity="0"
                                     BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"/>
-                            <Border x:Name="CheckedToggleButtonVisual"
-                                    Grid.Row="1"
-                                    Grid.Column="2"
-                                    Margin="-1 0 0 0"
-                                    Background="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"
-                                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
-                                    BorderThickness="1"
-                                    IsHitTestVisible="False"
-                                    Visibility="{TemplateBinding DropDownIndicatorVisibility}"
-                                    Opacity="0"/>
+                            <Grid Grid.Row="1" Grid.Column="2" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, Path=IsButtonPartVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Border x:Name="CheckedToggleButtonVisual"
+                                        Margin="-1 0 0 0"
+                                        Background="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"
+                                        BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
+                                        BorderThickness="1"
+                                        IsHitTestVisible="False"
+                                        Visibility="{TemplateBinding DropDownIndicatorVisibility}"
+                                        Opacity="0"/>
+                            </Grid>
                             <Grid x:Name="PART_DropDownIndicator"
                                     IsHitTestVisible="False"
                                     HorizontalAlignment="Center"
@@ -3745,7 +3766,6 @@
                                         Height="{TemplateBinding DropDownHeight}"
                                         MaxWidth="{TemplateBinding DropDownMaxWidth}"
                                         MaxHeight="{TemplateBinding DropDownMaxHeight}"
-                                        CornerRadius="{TemplateBinding CornerRadius}"
                                         Background="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}"
                                         BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"
                                         Margin="0 0 2 2">
@@ -3781,7 +3801,7 @@
         <Setter Property="BorderBrush" Value="#FFFFFFFF"/>
     </Style>
     <Style x:Key="ToolBarTextBox_Expression" TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
-        <Setter Property="Foreground" Value="#DDDDDD"/>
+        <Setter Property="Foreground" Value="#FFDDDDDD"/>
     </Style>
     <Style TargetType="CheckBox" x:Key="ToolBarCheckBox" BasedOn="{StaticResource CheckBoxStyle}">
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -3834,80 +3854,8 @@
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="MinWidth" Value="22"/>
         <Setter Property="Margin" Value="1 3"/>
-        <Setter Property="Padding" Value="1"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal"/>
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Duration="0:0:0" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{telerik1:VisualStudio2013Resource ResourceKey=MouseOverBrush}"/>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Duration="0:0:0" Storyboard.TargetName="Border" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{telerik1:VisualStudio2013Resource ResourceKey=MouseOverBrush}"/>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CommonStatesWrapper" Storyboard.TargetProperty="Opacity">
-                                            <DiscreteDoubleKeyFrame KeyTime="00:00:00.050" Value="0"/>
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Duration="0:0:0" Storyboard.TargetName="Border" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{telerik1:VisualStudio2013Resource ResourceKey=MouseOverBrush}"/>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Duration="0:0:0" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"/>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation To="-1" Duration="0:0:0" Storyboard.TargetName="Content" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"/>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="Content" Storyboard.TargetProperty="Opacity" To="0.2"/>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="FocusStates">
-                                <VisualState x:Name="Focused">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Opacity">
-                                            <LinearDoubleKeyFrame KeyTime="00:00:00.115" Value="1"/>
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Unfocused"/>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"/>
-                        <ContentPresenter x:Name="Content"
-                                Margin="{TemplateBinding Padding}"
-                                Content="{TemplateBinding Content}"
-                                ContentTemplate="{TemplateBinding ContentTemplate}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
-                            <ContentPresenter.RenderTransform>
-                                <TranslateTransform/>
-                            </ContentPresenter.RenderTransform>
-                        </ContentPresenter>
-                        <Border x:Name="CommonStatesWrapper">
-                            <Border x:Name="FocusVisual" Visibility="Collapsed" Opacity="0" BorderThickness="1" BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Padding" Value="3"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
     </Style>
     <Style TargetType="ToggleButton" x:Key="ToolBarToggleButton">
         <Setter Property="BorderThickness" Value="1"/>
@@ -3919,9 +3867,10 @@
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="MinWidth" Value="22"/>
         <Setter Property="Margin" Value="1 3"/>
-        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Padding" Value="3"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
@@ -3931,30 +3880,33 @@
                                 <VisualState x:Name="Normal"/>
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Duration="0:0:0" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{telerik1:VisualStudio2013Resource ResourceKey=MouseOverBrush}"/>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Duration="0:0:0" Storyboard.TargetName="Border" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{telerik1:VisualStudio2013Resource ResourceKey=MouseOverBrush}"/>
-                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="OuterMouseOverBorder"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CommonStatesWrapper" Storyboard.TargetProperty="Opacity">
-                                            <DiscreteDoubleKeyFrame KeyTime="00:00:00.050" Value="0"/>
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Duration="0:0:0" Storyboard.TargetName="Border" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{telerik1:VisualStudio2013Resource ResourceKey=MouseOverBrush}"/>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OuterPressedBorder" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Duration="0:0:0" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"/>
+                                        <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetName="Content" Storyboard.TargetProperty="(TextBlock.Foreground)">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation To="-1" Duration="0:0:0" Storyboard.TargetName="Content" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"/>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="CommonStatesWrapper" Storyboard.TargetProperty="Opacity" To="0"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DisabledVisual" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
                                         <DoubleAnimation Duration="0" Storyboard.TargetName="Content" Storyboard.TargetProperty="Opacity" To="0.2"/>
                                     </Storyboard>
                                 </VisualState>
@@ -3962,46 +3914,73 @@
                             <VisualStateGroup x:Name="CheckStates">
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Duration="0:0:0" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"/>
-                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="CheckedVisual" Storyboard.TargetProperty="Opacity" To="1"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unchecked"/>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Unfocused">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00.150">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
                                 <VisualState x:Name="Focused">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00.115">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <Visibility>Visible</Visibility>
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Opacity">
-                                            <LinearDoubleKeyFrame KeyTime="00:00:00.115" Value="1"/>
-                                        </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Unfocused"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"/>
-                        <ContentControl x:Name="Content"
+                        <Border x:Name="OuterMouseOverBorder"
+                                Opacity="0"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{telerik1:VisualStudio2013Resource ResourceKey=MouseOverBrush}"
+                                BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"/>
+                        <Border x:Name="OuterPressedBorder"
+                                Visibility="Collapsed"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
+                                Background="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"/>
+                        <Border x:Name="DisabledVisual"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Visibility="Collapsed"
+                                BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=ComplementaryBrush}"
+                                Background="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}"/>
+                        <Grid x:Name="CommonStatesWrapper">
+                            <Border x:Name="CheckedVisual"
+                                    Opacity="0"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{telerik1:VisualStudio2013Resource ResourceKey=MouseOverBrush}"
+                                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
+                            <Border x:Name="FocusVisual"
+                                    Visibility="Collapsed"
+                                    Background="{x:Null}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
+                        </Grid>
+                        <ContentPresenter x:Name="Content"
                                 Margin="{TemplateBinding Padding}"
-                                Foreground="{TemplateBinding Foreground}"
                                 Content="{TemplateBinding Content}"
                                 ContentTemplate="{TemplateBinding ContentTemplate}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
-                            <ContentControl.RenderTransform>
-                                <TranslateTransform/>
-                            </ContentControl.RenderTransform>
-                        </ContentControl>
-                        <Border x:Name="CommonStatesWrapper">
-                            <Border x:Name="FocusVisual" Visibility="Collapsed" Opacity="0" BorderThickness="1" BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
-                        </Border>
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                RecognizesAccessKey="True"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -4011,10 +3990,10 @@
         <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
         <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
-        <Setter Property="MinHeight" Value="22"/>
-        <Setter Property="MinWidth" Value="22"/>
+        <Setter Property="MinHeight" Value="26"/>
+        <Setter Property="MinWidth" Value="26"/>
         <Setter Property="Margin" Value="1 3"/>
-        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Padding" Value="6 2"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -4028,7 +4007,7 @@
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="MinWidth" Value="22"/>
         <Setter Property="Margin" Value="1 3"/>
-        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Padding" Value="3"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -4042,7 +4021,7 @@
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="MinWidth" Value="22"/>
         <Setter Property="Margin" Value="1 3"/>
-        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Padding" Value="3"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -4056,7 +4035,7 @@
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="MinWidth" Value="22"/>
         <Setter Property="Margin" Value="1 3"/>
-        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Padding" Value="3"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -4070,7 +4049,7 @@
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="MinWidth" Value="22"/>
         <Setter Property="Margin" Value="1 3"/>
-        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Padding" Value="3"/>
         <Setter Property="IsTabStop" Value="false"/>
         <Setter Property="IsOpen" Value="false"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -4181,7 +4160,7 @@
                 </telerikNavigation:ToolBarContainerStyleSelector>
             </Setter.Value>
         </Setter>
-        <Setter Property="MinWidth" Value="25"/>
+        <Setter Property="MinWidth" Value="26"/>
         <Setter Property="Margin" Value="1"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Template">
@@ -4572,7 +4551,7 @@
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0" To=".5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ContentContainer"/>
+                                        <DoubleAnimation Duration="0" To="0.2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ContentContainer"/>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -4620,7 +4599,7 @@
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0" To=".5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ContentContainer"/>
+                                        <DoubleAnimation Duration="0" To="0.2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ContentContainer"/>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -4688,6 +4667,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="PanningMode" Value="None"/>
     </Style>
     <ControlTemplate x:Key="MenuItemTemplate" TargetType="telerikNavigation:RadMenuItem">
         <Grid x:Name="RootElement">
@@ -5029,9 +5009,7 @@
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}"
-                SnapsToDevicePixels="True"
-                RenderOptions.EdgeMode="Aliased"
-                RenderOptions.BitmapScalingMode="NearestNeighbor">
+                SnapsToDevicePixels="True">
             <ItemsPresenter Margin="{TemplateBinding Padding}"/>
         </Border>
     </ControlTemplate>
@@ -5759,7 +5737,7 @@
                 Height="32"
                 Stretch="Fill"
                 Width="8"
-                Data="F1M242.9468,305.3369L242.4158,318.8359L238.9138,318.8359L238.4058,305.3369z M243.1938,322.9739C243.1938,323.6119,242.9678,324.1499,242.5098,324.5869C242.0558,325.0239,241.4528,325.2429,240.7068,325.2429C239.9668,325.2429,239.3618,325.0199,238.8928,324.5719C238.4228,324.1259,238.1878,323.5939,238.1878,322.9739C238.1878,322.3169,238.4268,321.7809,238.9048,321.3619C239.3888,320.9439,239.9828,320.7339,240.7068,320.7339C241.4328,320.7339,242.0308,320.9459,242.4968,321.3689C242.9618,321.7909,243.1938,322.3269,243.1938,322.9739"
+                Data="F1M242.9,305.3L242.4,318.8L238.9,318.8L238.4,305.3z M243.1,322.9C243.1,323.6,242.9,324.1,242.5,324.5C242,325,241.4,325.2,240.7,325.2C239.9,325.2,239.3,325,238.8,324.5C238.4,324.1,238.1,323.5,238.1,322.9C238.1,322.3,238.4,321.7,238.9,321.3C239.3,320.9,239.9,320.7,240.7,320.7C241.4,320.7,242,320.9,242.4,321.3C242.9,321.7,243.1,322.3,243.1,322.9"
                 Fill="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
     </DataTemplate>
     <DataTemplate x:Key="ConfirmIconTemplate">
@@ -5767,7 +5745,7 @@
                 Stretch="Fill"
                 Width="22"
                 Height="32"
-                Data="M7.7728186,17.951994 C9.1318111,17.951994 10.230818,19.052002 10.230818,20.40601 C10.230818,21.760994 9.1318111,22.859995 7.7728186,22.859995 C6.4178162,22.859995 5.3198175,21.760994 5.3198171,20.40601 C5.3198175,19.052002 6.4178162,17.951994 7.7728186,17.951994 z M7.6010065,0 C9.0830011,0 10.316004,0.20300293 11.308001,0.60800171 C12.300005,1.0159912 13.096003,1.5220013 13.702005,2.1249981 C14.305002,2.729002 14.738001,3.3810091 14.999002,4.0790071 C15.262003,4.7770042 15.390001,5.4269972 15.390001,6.0320082 C15.390001,7.0320072 15.262003,7.8539972 14.999002,8.4989862 C14.738001,9.1459885 14.414003,9.6989975 14.031,10.157981 C13.645006,10.615989 13.216005,11.006979 12.750002,11.326986 C12.278002,11.651999 11.835001,11.974997 11.421007,12.296988 C11.000002,12.619985 10.630007,12.990986 10.308001,13.405994 C9.9820042,13.822987 9.7810001,14.343983 9.6980076,14.968982 L9.6980076,16.157 L5.4749994,16.157 L5.4749994,14.750996 C5.5360041,13.855976 5.7120066,13.103992 5.9879999,12.502004 C6.2710047,11.896994 6.5999994,11.379995 6.9749994,10.955008 C7.352006,10.525992 7.7470026,10.157981 8.163003,9.8459997 C8.5800028,9.5320053 8.9660044,9.2199936 9.3230076,8.9070053 C9.6770039,8.5939875 9.9640064,8.2510004 10.184,7.8749933 C10.403002,7.5020084 10.501001,7.0320072 10.480005,6.4699955 C10.480005,5.5089979 10.246004,4.8009911 9.7760029,4.3429832 C9.3070002,3.8869905 8.6559992,3.656003 7.8190012,3.656003 C7.2580042,3.656003 6.7720041,3.7669954 6.3660059,3.9829988 C5.96,4.2040062 5.625001,4.4959984 5.3680048,4.8609886 C5.102006,5.2239952 4.9100046,5.6509962 4.7850046,6.1409864 C4.663003,6.6310062 4.5980005,7.1560001 4.5980005,7.7189875 L0,7.7189875 C0.019004822,6.5939884 0.21700287,5.5629835 0.57900286,4.6249962 C0.94200182,3.6870089 1.4520037,2.8749981 2.1100013,2.1870098 C2.7680058,1.4999981 3.5600057,0.96200562 4.4879999,0.57901001 C5.4180002,0.1920166 6.4540033,0 7.6010065,0 z"
+                Data="M7.7,17.9 C9.1,17.9 10.2,19 10.2,20.4 C10.2,21.7 9.1,22.8 7.7,22.8 C6.4,22.8 5.3,21.7 5.3,20.4 C5.3,19 6.4,17.9 7.7,17.9 z M7.6,0 C9,0 10.3,0.2 11.3,0.6 C12.3,1 13,1.5 13.7,2.1 C14.3,2.7 14.7,3.3 14.9,4 C15.2,4.7 15.3,5.4 15.3,6 C15.3,7 15.2,7.8 14.9,8.4 C14.7,9.1 14.4,9.6 14,10.1 C13.6,10.6 13.2,11 12.7,11.3 C12.2,11.6 11.8,11.9 11.4,12.2 C11,12.6 10.6,12.9 10.3,13.4 C9.9,13.8 9.7,14.3 9.6,14.9 L9.6,16.1 L5.4,16.1 L5.4,14.7 C5.5,13.8 5.7,13.1 5.9,12.5 C6.2,11.8 6.5,11.3 6.9,10.9 C7.3,10.5 7.7,10.1 8.1,9.8 C8.5,9.5 8.9,9.2 9.3,8.9 C9.6,8.5 9.9,8.2 10.1,7.8 C10.4,7.5 10.5,7 10.4,6.4 C10.4,5.5 10.2,4.8 9.7,4.3 C9.3,3.8 8.6,3.6 7.8,3.6 C7.2,3.6 6.7,3.7 6.3,3.9 C5.9,4.2 5.6,4.4 5.3,4.8 C5.1,5.2 4.9,5.6 4.7,6.1 C4.6,6.6 4.5,7.1 4.5,7.7 L0,7.7 C0,6.5 0.2,5.5 0.5,4.6 C0.9,3.6 1.4,2.8 2.1,2.1 C2.7,1.4 3.5,0.9 4.4,0.5 C5.4,0.1 6.4,0 7.6,0 z"
                 Fill="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
     </DataTemplate>
     <Style x:Key="WindowButtonStyle" TargetType="telerik:RadButton">
@@ -5875,6 +5853,13 @@
                                 </DiscreteObjectKeyFrame>
                             </ObjectAnimationUsingKeyFrames>
                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="WindowOuterBorder" Storyboard.TargetProperty="BorderThickness">
+                                <DiscreteObjectKeyFrame KeyTime="0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Thickness>0</Thickness>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="WindowOuterBorder" Storyboard.TargetProperty="Margin">
                                 <DiscreteObjectKeyFrame KeyTime="0">
                                     <DiscreteObjectKeyFrame.Value>
                                         <Thickness>0</Thickness>
@@ -6048,6 +6033,7 @@
         <Setter Property="Template" Value="{StaticResource RadWindowTemplate}"/>
         <Setter Property="CaptionHeight" Value="28"/>
         <Setter Property="ResizeBorder" Value="5"/>
+        <Setter Property="ModalBackground" Value="{StaticResource WindowModalBackground}"/>
         <Setter Property="animation:AnimationManager.AnimationSelector">
             <Setter.Value>
                 <animation:AnimationSelector>
@@ -6268,41 +6254,13 @@
                                     RadiusY="0"
                                     Stroke="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"
                                     Fill="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
-                            <Grid Margin="5 0" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDropPossible, Converter={StaticResource IBTVC}}">
+                            <Grid Margin="5 0 0 0" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDropPossible, Converter={StaticResource IBTVC}}">
                                 <Path
+                                        Data="M2.7,3.7 L2.6,3.7 C2.2,4.4 2,5.1 2,6 C2,8.2 3.7,10 6,10 C6.7,10 7.5,9.7 8.1,9.3 L8.2,9.3 z M6,2 C5.1,2 4.4,2.2 3.7,2.6 L3.7,2.6 L9.2,8.3 L9.3,8.2 C9.7,7.5 10,6.8 10,6 C10,3.7 8.2,2 6,2 z M6,0 C9.3,0 12,2.6 12,6 C12,7.3 11.5,8.6 10.7,9.7 L10.3,10.1 L9.9,10.5 C8.8,11.4 7.5,12 6,12 C2.6,12 0,9.3 0,6 C0,4.6 0.4,3.3 1.2,2.2 L1.2,2.2 L1.5,2 L1.5,1.9 C2.6,0.7 4.2,0 6,0 z"
+                                        Fill="{StaticResource RadTreeView_ForbiddenDragIcon}"
+                                        Height="12"
                                         Stretch="Fill"
-                                        Fill="{StaticResource RadTreeView_ForbiddenDragIcon1}"
-                                        Data="M 9603.25,-9232.61C 9599.62,-9232.61 9596.66,-9235.57 9596.66,-9239.21C 9596.66,-9242.85 9599.62,-9245.81 9603.25,-9245.81C 9606.9,-9245.81 9609.85,-9242.85 9609.85,-9239.21C 9609.85,-9235.57 9606.9,-9232.61 9603.25,-9232.61 Z"
-                                        Width="13.195"
-                                        Height="13.197"
-                                        Margin="1.33, 1.08, 0, 0"/>
-                                <Path
-                                        Stretch="Fill"
-                                        Fill="{StaticResource RadTreeView_ForbiddenDragIcon2}"
-                                        Data="M 9605.12,-9238.52L 9605.14,-9238.55C 9605.42,-9239.07 9605.58,-9239.66 9605.58,-9240.29C 9605.58,-9242.31 9603.94,-9243.94 9601.93,-9243.94C 9601.3,-9243.94 9600.71,-9243.78 9600.19,-9243.5L 9600.16,-9243.48L 9605.12,-9238.52 Z"
-                                        Width="5.417"
-                                        Height="5.418"
-                                        Margin="4.83, 2.95, 0, 0"/>
-                                <Path
-                                        Stretch="Fill"
-                                        Fill="{StaticResource RadTreeView_ForbiddenDragIcon3}"
-                                        Data="M 9601.93,-9236.64C 9602.56,-9236.64 9603.15,-9236.8 9603.67,-9237.08L 9603.89,-9237.22L 9602.88,-9238.24C 9602.34,-9238.78 9601.79,-9239.32 9601.24,-9239.86L 9598.83,-9242.2L 9598.72,-9242.03C 9598.44,-9241.51 9598.28,-9240.92 9598.28,-9240.29C 9598.28,-9238.28 9599.92,-9236.64 9601.93,-9236.64 Z"
-                                        Width="5.604"
-                                        Height="5.555"
-                                        Margin="2.95, 4.69, 0, 0"/>
-                                <Path
-                                        Stretch="Fill"
-                                        Fill="{StaticResource RadTreeView_ForbiddenDragIcon4}"
-                                        Data="M 9601.93,-9233.69C 9598.29,-9233.69 9595.33,-9236.65 9595.33,-9240.29C 9595.33,-9243.93 9598.29,-9246.89 9601.93,-9246.89C 9605.57,-9246.89 9608.53,-9243.93 9608.53,-9240.29C 9608.53,-9236.65 9605.57,-9233.69 9601.93,-9233.69 Z"
-                                        Width="13.195"
-                                        Height="13.197"/>
-                                <Path
-                                        Stretch="Fill"
-                                        Fill="{StaticResource RadTreeView_ForbiddenDragIcon5}"
-                                        Data="M 9605.12,-9238.52L 9605.14,-9238.55C 9605.42,-9239.07 9605.58,-9239.66 9605.58,-9240.29C 9605.58,-9242.31 9603.94,-9243.94 9601.93,-9243.94C 9601.3,-9243.94 9600.71,-9243.78 9600.19,-9243.5L 9600.16,-9243.48M 9601.93,-9236.64C 9602.56,-9236.64 9603.15,-9236.8 9603.67,-9237.08L 9603.89,-9237.22L 9602.88,-9238.24C 9602.34,-9238.78 9601.79,-9239.32 9601.24,-9239.86L 9598.83,-9242.2L 9598.72,-9242.03C 9598.44,-9241.51 9598.28,-9240.92 9598.28,-9240.29C 9598.28,-9238.28 9599.92,-9236.64 9601.93,-9236.64 Z M 9601.93,-9234.76C 9598.88,-9234.76 9596.4,-9237.24 9596.4,-9240.29C 9596.4,-9243.35 9598.88,-9245.82 9601.93,-9245.82C 9604.98,-9245.82 9607.46,-9243.35 9607.46,-9240.29C 9607.46,-9237.24 9604.98,-9234.76 9601.93,-9234.76 Z"
-                                        Width="11.062"
-                                        Height="11.064"
-                                        Margin="1.07,1.07,0,0"/>
+                                        Width="12"/>
                             </Grid>
                             <Grid Margin="5 0" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDropPossible, Converter={StaticResource BTVC}}">
                                 <Path
@@ -6383,11 +6341,10 @@
                                     StrokeThickness="1"
                                     Stroke="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
                             <ContentPresenter x:Name="DropImpossibleIconElement"
-                                    Margin="5 0"
                                     Content="{TemplateBinding DropImpossibleIcon}"
                                     ContentTemplate="{TemplateBinding DropImpossibleIconTemplate}"
                                     Visibility="Collapsed"/>
-                            <ContentPresenter x:Name="DropPossibleIconElement" Margin="5 0" Content="{TemplateBinding DropPossibleIcon}" ContentTemplate="{TemplateBinding DropPossibleIconTemplate}"/>
+                            <ContentPresenter x:Name="DropPossibleIconElement" Content="{TemplateBinding DropPossibleIcon}" ContentTemplate="{TemplateBinding DropPossibleIconTemplate}"/>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1">
                                 <ContentControl
                                         Content="{TemplateBinding DragActionContent}"
@@ -6410,41 +6367,13 @@
         <Setter Property="DropImpossibleIconTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Margin="5 5 0 5" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDropPossible, Converter={StaticResource IBTVC}}">
                         <Path
+                                Data="M2.7,3.7 L2.6,3.7 C2.2,4.4 2,5.1 2,6 C2,8.2 3.7,10 6,10 C6.7,10 7.5,9.7 8.1,9.3 L8.2,9.3 z M6,2 C5.1,2 4.4,2.2 3.7,2.6 L3.7,2.6 L9.2,8.3 L9.3,8.2 C9.7,7.5 10,6.8 10,6 C10,3.7 8.2,2 6,2 z M6,0 C9.3,0 12,2.6 12,6 C12,7.3 11.5,8.6 10.7,9.7 L10.3,10.1 L9.9,10.5 C8.8,11.4 7.5,12 6,12 C2.6,12 0,9.3 0,6 C0,4.6 0.4,3.3 1.2,2.2 L1.2,2.2 L1.5,2 L1.5,1.9 C2.6,0.7 4.2,0 6,0 z"
+                                Fill="{StaticResource RadTreeView_ForbiddenDragIcon}"
+                                Height="12"
                                 Stretch="Fill"
-                                Fill="{StaticResource RadTreeView_ForbiddenDragIcon1}"
-                                Data="M 9603.25,-9232.61C 9599.62,-9232.61 9596.66,-9235.57 9596.66,-9239.21C 9596.66,-9242.85 9599.62,-9245.81 9603.25,-9245.81C 9606.9,-9245.81 9609.85,-9242.85 9609.85,-9239.21C 9609.85,-9235.57 9606.9,-9232.61 9603.25,-9232.61 Z"
-                                Width="13.195"
-                                Height="13.197"
-                                Margin="1.33, 1.08, 0, 0"/>
-                        <Path
-                                Stretch="Fill"
-                                Fill="{StaticResource RadTreeView_ForbiddenDragIcon2}"
-                                Data="M 9605.12,-9238.52L 9605.14,-9238.55C 9605.42,-9239.07 9605.58,-9239.66 9605.58,-9240.29C 9605.58,-9242.31 9603.94,-9243.94 9601.93,-9243.94C 9601.3,-9243.94 9600.71,-9243.78 9600.19,-9243.5L 9600.16,-9243.48L 9605.12,-9238.52 Z"
-                                Width="5.417"
-                                Height="5.418"
-                                Margin="4.83, 2.95, 0, 0"/>
-                        <Path
-                                Stretch="Fill"
-                                Fill="{StaticResource RadTreeView_ForbiddenDragIcon3}"
-                                Data="M 9601.93,-9236.64C 9602.56,-9236.64 9603.15,-9236.8 9603.67,-9237.08L 9603.89,-9237.22L 9602.88,-9238.24C 9602.34,-9238.78 9601.79,-9239.32 9601.24,-9239.86L 9598.83,-9242.2L 9598.72,-9242.03C 9598.44,-9241.51 9598.28,-9240.92 9598.28,-9240.29C 9598.28,-9238.28 9599.92,-9236.64 9601.93,-9236.64 Z"
-                                Width="5.604"
-                                Height="5.555"
-                                Margin="2.95, 4.69, 0, 0"/>
-                        <Path
-                                Stretch="Fill"
-                                Fill="{StaticResource RadTreeView_ForbiddenDragIcon4}"
-                                Data="M 9601.93,-9233.69C 9598.29,-9233.69 9595.33,-9236.65 9595.33,-9240.29C 9595.33,-9243.93 9598.29,-9246.89 9601.93,-9246.89C 9605.57,-9246.89 9608.53,-9243.93 9608.53,-9240.29C 9608.53,-9236.65 9605.57,-9233.69 9601.93,-9233.69 Z"
-                                Width="13.195"
-                                Height="13.197"/>
-                        <Path
-                                Stretch="Fill"
-                                Fill="{StaticResource RadTreeView_ForbiddenDragIcon5}"
-                                Data="M 9605.12,-9238.52L 9605.14,-9238.55C 9605.42,-9239.07 9605.58,-9239.66 9605.58,-9240.29C 9605.58,-9242.31 9603.94,-9243.94 9601.93,-9243.94C 9601.3,-9243.94 9600.71,-9243.78 9600.19,-9243.5L 9600.16,-9243.48M 9601.93,-9236.64C 9602.56,-9236.64 9603.15,-9236.8 9603.67,-9237.08L 9603.89,-9237.22L 9602.88,-9238.24C 9602.34,-9238.78 9601.79,-9239.32 9601.24,-9239.86L 9598.83,-9242.2L 9598.72,-9242.03C 9598.44,-9241.51 9598.28,-9240.92 9598.28,-9240.29C 9598.28,-9238.28 9599.92,-9236.64 9601.93,-9236.64 Z M 9601.93,-9234.76C 9598.88,-9234.76 9596.4,-9237.24 9596.4,-9240.29C 9596.4,-9243.35 9598.88,-9245.82 9601.93,-9245.82C 9604.98,-9245.82 9607.46,-9243.35 9607.46,-9240.29C 9607.46,-9237.24 9604.98,-9234.76 9601.93,-9234.76 Z"
-                                Width="11.062"
-                                Height="11.064"
-                                Margin="1.07,1.07,0,0"/>
+                                Width="12"/>
                     </Grid>
                 </DataTemplate>
             </Setter.Value>
@@ -6453,7 +6382,7 @@
         <Setter Property="DropPossibleIconTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Margin="5" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDropPossible, Converter={StaticResource BTVC}}">
                         <Path
                                 Stretch="Fill"
                                 Fill="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
@@ -6659,8 +6588,8 @@
                     <VisualState x:Name="Normal"/>
                     <VisualState x:Name="Disabled">
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Header" To="0.35" Duration="0:0:0.0"/>
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Image" To="0.35" Duration="0:0:0.0"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Header" To="0.2" Duration="0:0:0.0"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Image" To="0.2" Duration="0:0:0.0"/>
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="MouseOver">
@@ -6839,6 +6768,7 @@
         <Setter Property="IsDropAllowed" Value="True"/>
         <Setter Property="IsEnabled" Value="True"/>
         <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="telerik:DragDropManager.TouchDragTrigger" Value="TapAndHold"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Local"/>
         <Setter Property="Template" Value="{StaticResource TreeViewItemDefaultTemplate}"/>
         <Setter Property="ItemsPanel">
@@ -6930,11 +6860,12 @@
         <Setter Property="IsOpen" Value="false"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
-        <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=HeaderBrush}"/>
+        <Setter Property="Padding" Value="4 0 0 0"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="3"/>
+        <Setter Property="DropDownPlacement" Value="Right"/>
+        <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
+        <Setter Property="Margin" Value="-1 -1 -1 0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="telerik1:RadDropDownButton">
@@ -7452,6 +7383,7 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=MainBrush}"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
+        <Setter Property="HeaderBackground" Value="{telerik1:VisualStudio2013Resource ResourceKey=HeaderBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
         <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
@@ -7471,20 +7403,6 @@
         <Setter Property="HorizontalSplitterStyle" Value="{StaticResource OutlookBarHorizontalSplitter}"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Once"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="TitleTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <Grid>
-                        <ContentControl
-                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                FontWeight="Bold"
-                                IsTabStop="False"
-                                Content="{Binding}"
-                                Foreground="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
-                    </Grid>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="telerikNavigation:RadOutlookBar">
@@ -7516,15 +7434,17 @@
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="RootElement" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
                             <DockPanel>
-                                <Border Margin="-1 -1 -1 0" Visibility="{TemplateBinding HeaderVisibility}" Background="{telerik1:VisualStudio2013Resource ResourceKey=HeaderBrush}" DockPanel.Dock="Top">
+                                <Border Margin="-1 -1 -1 0" Background="{TemplateBinding HeaderBackground}" Visibility="{TemplateBinding HeaderVisibility}" DockPanel.Dock="Top">
                                     <Grid>
                                         <ContentControl x:Name="TitleElement"
                                                 IsTabStop="False"
                                                 VerticalAlignment="Center"
+                                                FontWeight="Bold"
                                                 HorizontalContentAlignment="Stretch"
                                                 VerticalContentAlignment="Center"
                                                 ContentTemplate="{TemplateBinding TitleTemplate}"
-                                                Margin="6 6 23 6"/>
+                                                Margin="6 6 23 6"
+                                                Foreground="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
                                         <telerik1:RadToggleButton x:Name="MinimizeButton"
                                                 Style="{TemplateBinding MinimizeButtonStyle}"
                                                 IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsMinimized, Mode=TwoWay}"
@@ -7579,9 +7499,7 @@
                                             Content="{TemplateBinding MinimizedButtonContent}"
                                             ContentTemplate="{TemplateBinding MinimizedButtonContentTemplate}"
                                             Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsMinimized, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                            DropDownPlacement="Right"
-                                            Padding="4 0 0 0"
-                                            Margin="-1 -1 -1 0">
+                                            Background="{TemplateBinding HeaderBackground}">
                                         <telerik1:RadDropDownButton.DropDownContent>
                                             <Grid>
                                                 <ContentPresenter x:Name="MinimizedContentPresenter" ContentTemplate="{TemplateBinding SelectedContentTemplate}" ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}"/>
@@ -7809,13 +7727,6 @@
                                         <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetName="DropDownIndicator" Storyboard.TargetProperty="Fill">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DropDownIndicatorChecked" Storyboard.TargetProperty="Visibility">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Collapsed</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
@@ -7869,8 +7780,8 @@
                                 BorderThickness="1"
                                 Opacity="0"/>
                         <Border x:Name="PressedVisual"
-                                Background="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"
-                                BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"
+                                Background="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
+                                BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
                                 BorderThickness="1"
                                 Opacity="0"/>
                         <Border x:Name="DisabledVisual" Background="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}" BorderBrush="Transparent" BorderThickness="0" Opacity="0"/>
@@ -7940,8 +7851,8 @@
                                 BorderThickness="1"
                                 Opacity="0"/>
                         <Border x:Name="PressedVisual"
-                                Background="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"
-                                BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"
+                                Background="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
+                                BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
                                 BorderThickness="1"
                                 Opacity="0"/>
                         <Border x:Name="DisabledVisual" Background="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}" BorderBrush="Transparent" BorderThickness="0" Opacity="0"/>
@@ -7968,9 +7879,10 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="3"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="TogglePartStyle" Value="{StaticResource BreadCrumbToggleButtonStyle}"/>
         <Setter Property="ButtonPartStyle" Value="{StaticResource BreadCrumbButtonStyle}"/>
+        <Setter Property="Padding" Value="4 0 4 0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="telerik:RadSplitButton">
@@ -8018,28 +7930,8 @@
                                 <VisualState x:Name="UnChecked"/>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="FocusStatesGroup">
-                                <VisualState x:Name="Unfocused">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility">
-                                            <DiscreteObjectKeyFrame KeyTime="00:00:00.150">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Collapsed</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Focused">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Visibility">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
+                                <VisualState x:Name="Unfocused"/>
+                                <VisualState x:Name="Focused"/>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="IsOpenState">
                                 <VisualState x:Name="Closed"/>
@@ -8116,8 +8008,8 @@
                                 Opacity="0"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding CornerRadius}"
-                                Background="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"
-                                BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"/>
+                                Background="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
+                                BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"/>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -8140,6 +8032,7 @@
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="0"
+                                    Margin="-1 0 0 0"
                                     IsChecked="{Binding Path=IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
                             <telerik:RadButton x:Name="ButtonPart"
                                     Grid.Row="1"
@@ -8165,7 +8058,8 @@
                                 StaysOpen="False"
                                 Focusable="False"
                                 Placement="Bottom"
-                                IsOpen="{Binding Path=IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                IsOpen="{Binding Path=IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                VerticalOffset="-1">
                             <Grid>
                                 <Border x:Name="DropDownPopupBorder"
                                         BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"
@@ -8175,7 +8069,6 @@
                                         Height="{TemplateBinding DropDownHeight}"
                                         MaxWidth="{TemplateBinding DropDownMaxWidth}"
                                         MaxHeight="{TemplateBinding DropDownMaxHeight}"
-                                        Margin="0 -1 0 0"
                                         MinHeight="26">
                                     <ContentControl x:Name="DropDownPopupContent"
                                             Foreground="{TemplateBinding Foreground}"
@@ -8189,7 +8082,6 @@
                         </Popup>
                         <Border x:Name="CommonStatesWrapper" IsHitTestVisible="false">
                             <Border x:Name="FocusVisual"
-                                    Visibility="Collapsed"
                                     Opacity="0"
                                     BorderThickness="1"
                                     CornerRadius="{TemplateBinding CornerRadius}"
@@ -8241,13 +8133,7 @@
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_DropDownIndicator" Storyboard.TargetProperty="Fill">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
+                                <VisualState x:Name="Pressed"/>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="DropDownPart" Storyboard.TargetProperty="Opacity" To="0" Duration="0"/>
@@ -8329,8 +8215,6 @@
                             <telerik:RadToggleButton x:Name="DropDownPart"
                                     IsTabStop="False"
                                     Margin="-1 0 0 0"
-                                    MinWidth="11"
-                                    MinHeight="7"
                                     Grid.Column="2"
                                     Grid.Row="1"
                                     Visibility="{TemplateBinding DropDownIndicatorVisibility}"
@@ -8342,11 +8226,8 @@
                                     Visibility="{TemplateBinding DropDownIndicatorVisibility}"
                                     Canvas.ZIndex="2"
                                     IsHitTestVisible="False"
-                                    Margin="-1 0 0 0"
-                                    MinWidth="11"
-                                    MinHeight="7"
-                                    Background="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"
-                                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"
+                                    Background="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
+                                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
                                     BorderThickness="1"
                                     Opacity="0"/>
                             <Grid Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 3 5 3" Canvas.ZIndex="2">
@@ -8377,14 +8258,14 @@
                                 StaysOpen="False"
                                 Focusable="False"
                                 Placement="Bottom"
-                                IsOpen="{Binding Path=IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                IsOpen="{Binding Path=IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                VerticalOffset="-1">
                             <Border x:Name="DropDownPopupBorder"
                                     BorderThickness="1"
                                     Width="{TemplateBinding DropDownWidth}"
                                     Height="{TemplateBinding DropDownHeight}"
                                     MaxWidth="{TemplateBinding DropDownMaxWidth}"
                                     MaxHeight="{TemplateBinding DropDownMaxHeight}"
-                                    Margin="0 -1 0 0"
                                     Background="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}"
                                     BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}">
                                 <ContentPresenter x:Name="DropDownPopupContent"
@@ -8497,7 +8378,7 @@
                             Command="{x:Static telerikBreadcrumb:RadBreadcrumbCommands.ClearSelectedItem}"
                             ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}">
                         <telerik:RadSplitButton.DropDownContent>
-                            <ScrollViewer HorizontalScrollBarVisibility="Auto" MaxHeight="250" MaxWidth="270" MinWidth="200" Padding="0" Margin="0" BorderThickness="0" VerticalScrollBarVisibility="Auto">
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" MaxWidth="270" MinWidth="148" MaxHeight="250" Padding="0" Margin="0" BorderThickness="0" VerticalScrollBarVisibility="Auto">
                                 <ItemsPresenter Margin="1"/>
                             </ScrollViewer>
                         </telerik:RadSplitButton.DropDownContent>
@@ -8666,12 +8547,11 @@
                                 Grid.Column="1"
                                 Grid.ColumnSpan="2">
                             <telerik:RadSplitButton.Content>
-                                <TextBox x:Name="pathTextBox" BorderThickness="0" Margin="1" IsTabStop="False" VerticalAlignment="Center" Opacity="0" FontSize="{TemplateBinding FontSize}" MinHeight="22"/>
+                                <TextBox x:Name="pathTextBox" BorderThickness="0" Margin="1" IsTabStop="False" VerticalAlignment="Center" Opacity="0" FontSize="{TemplateBinding FontSize}" MinHeight="20"/>
                             </telerik:RadSplitButton.Content>
                             <telerik:RadSplitButton.DropDownContent>
                                 <ListBox x:Name="HistoryListBox"
                                         BorderThickness="0"
-                                        Margin="0 -1 0 0"
                                         Foreground="{TemplateBinding Foreground}"
                                         ItemContainerStyle="{StaticResource BreadcrumbListBoxItemStyle}"
                                         ItemsSource="{TemplateBinding HistoryItems}"
@@ -8697,16 +8577,15 @@
                                 Visibility="Collapsed"
                                 Background="{x:Null}"
                                 BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
-                        <Popup x:Name="AutocompletePopup" AllowsTransparency="True" StaysOpen="False" Focusable="False" Placement="Bottom">
+                        <Popup x:Name="AutocompletePopup" AllowsTransparency="True" StaysOpen="False" Focusable="False" Placement="Bottom" VerticalOffset="-1">
                             <ListBox x:Name="AutoCompleteListBox"
-                                    FontSize="{TemplateBinding FontSize}"
-                                    BorderThickness="1"
                                     ItemsSource="{TemplateBinding AutocompleteItems}"
-                                    MaxWidth="650"
+                                    FontSize="{TemplateBinding FontSize}"
                                     Foreground="{TemplateBinding Foreground}"
+                                    BorderThickness="1"
+                                    MaxWidth="650"
                                     MaxHeight="500"
-                                    MinWidth="200"
-                                    Margin="0 -1 0 0"
+                                    MinWidth="150"
                                     ItemContainerStyle="{StaticResource BreadcrumbListBoxItemStyle}"
                                     SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedAutocompleteItem, Mode=TwoWay}"
                                     Background="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}"
@@ -8742,7 +8621,8 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="3 3 0 3"/>
+        <Setter Property="Padding" Value="3 3 3 0"/>
+        <Setter Property="MinHeight" Value="22"/>
     </Style>
     <Style TargetType="telerikNavigation:RadBreadcrumb" BasedOn="{StaticResource RadBreadcrumbStyle}"/>
     <Style TargetType="telerikBreadcrumb:RadBreadcrumbBar" BasedOn="{StaticResource RadBreadcrumbBarStyle}"/>
@@ -9316,6 +9196,10 @@
         <Setter Property="ItemsPanel" Value="{StaticResource CarouselItemsControlItemPanelTemplate}"/>
     </Style>
     <Style TargetType="{x:Type carousel:CarouselItemsControl}" BasedOn="{StaticResource CarouselItemsControlStyle}"/>
+    <Style x:Key="CarouselPanelStyle" TargetType="{x:Type telerikNavigation:RadCarouselPanel}">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style TargetType="{x:Type telerikNavigation:RadCarouselPanel}" BasedOn="{StaticResource CarouselPanelStyle}"/>
     <ControlTemplate x:Key="RadCarouselTemplate" TargetType="{x:Type telerikNavigation:RadCarousel}">
         <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
             <carousel:CarouselItemsControl x:Name="PART_RootItemsControl" Margin="{TemplateBinding Padding}"/>
@@ -9332,6 +9216,160 @@
         <Setter Property="ClipToBounds" Value="True"/>
     </Style>
     <Style TargetType="{x:Type telerikNavigation:RadCarousel}" BasedOn="{StaticResource RadCarouselStyle}"/>
+    <Style x:Key="DesktopAlertCloseButtonStyle" TargetType="telerik:RadButton">
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="MinHeight" Value="18"/>
+        <Setter Property="MinWidth" Value="19"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+        <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadButton">
+                    <Grid Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="OuterMouseOverBorder"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard/>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DisabledVisual" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="Content" Storyboard.TargetProperty="Opacity" To="0.2"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border x:Name="OuterBorder"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{TemplateBinding CornerRadius}"/>
+                        <Border x:Name="OuterMouseOverBorder"
+                                Opacity="0"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{telerik1:VisualStudio2013Resource ResourceKey=SemiBasicBrush}"/>
+                        <Border x:Name="OuterPressedBorder"
+                                Visibility="Collapsed"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Background="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
+                                BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"/>
+                        <Border x:Name="DisabledVisual"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Visibility="Collapsed"
+                                BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=ComplementaryBrush}"
+                                Background="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}"/>
+                        <Path x:Name="Content"
+                                Margin="{TemplateBinding Padding}"
+                                Fill="{TemplateBinding Foreground}"
+                                Stretch="Fill"
+                                RenderTransformOrigin="0.5,0.5"
+                                Width="8"
+                                Height="8"
+                                Data="M1,0 L5,4 L9,0 L10,1 L6,5 L10,9 L9,10 L5,6 L1,10 L0,9 L4,5 L0,1 z"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <DataTemplate x:Key="RadDesktopAlertHeaderTemplate">
+        <Grid x:Name="Header" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <telerik:RadButton Command="{x:Static telerik:DesktopAlertCommands.Close}" Style="{StaticResource DesktopAlertCloseButtonStyle}" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            <ContentPresenter Content="{Binding}" Grid.RowSpan="2" Margin="0 0 30 0" VerticalAlignment="Bottom" TextBlock.FontWeight="Bold">
+                <ContentPresenter.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="TextWrapping" Value="Wrap"/>
+                    </Style>
+                </ContentPresenter.Resources>
+            </ContentPresenter>
+        </Grid>
+    </DataTemplate>
+    <Storyboard x:Key="DesktopAlertOnMouseEnter">
+        <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="Opacity" To="1"/>
+    </Storyboard>
+    <Storyboard x:Key="DesktopAlertOnMouseLeave">
+        <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="Opacity" To="0.9"/>
+    </Storyboard>
+    <ControlTemplate x:Key="RadDesktopAlertTemplate" TargetType="telerikNavigation:RadDesktopAlert">
+        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid Margin="{TemplateBinding Padding}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ContentPresenter
+                        Content="{TemplateBinding Header}"
+                        ContentTemplate="{TemplateBinding HeaderTemplate}"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        VerticalAlignment="Top"
+                        TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                <ContentPresenter x:Name="Icon"
+                        Grid.Column="0"
+                        Grid.RowSpan="2"
+                        Content="{TemplateBinding Icon}"
+                        Width="{TemplateBinding IconColumnWidth}"
+                        Margin="{TemplateBinding IconMargin}"
+                        ContentTemplate="{TemplateBinding IconTemplate}"/>
+                <ContentPresenter x:Name="PART_Content" Grid.Row="1" Grid.Column="1" Margin="0 7 0 0" TextBlock.Foreground="{TemplateBinding Foreground}">
+                    <ContentPresenter.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextWrapping" Value="Wrap"/>
+                            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                        </Style>
+                    </ContentPresenter.Resources>
+                </ContentPresenter>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                <BeginStoryboard Storyboard="{StaticResource DesktopAlertOnMouseEnter}"/>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                <BeginStoryboard Storyboard="{StaticResource DesktopAlertOnMouseLeave}"/>
+            </EventTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <Style x:Key="RadDesktopAlertStyle" TargetType="telerikNavigation:RadDesktopAlert">
+        <Setter Property="IconColumnWidth" Value="0"/>
+        <Setter Property="Padding" Value="10 8"/>
+        <Setter Property="Opacity" Value="0.9"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
+        <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
+        <Setter Property="Background" Value="{telerik:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"/>
+        <Setter Property="Width" Value="360"/>
+        <Setter Property="Height" Value="100"/>
+        <Setter Property="Template" Value="{StaticResource RadDesktopAlertTemplate}"/>
+        <Setter Property="HeaderTemplate" Value="{StaticResource RadDesktopAlertHeaderTemplate}"/>
+    </Style>
+    <Style TargetType="telerikNavigation:RadDesktopAlert" BasedOn="{StaticResource RadDesktopAlertStyle}"/>
     <DataTemplate x:Key="FooterTemplate">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -9363,14 +9401,6 @@
                         MinWidth="70"
                         Visibility="{Binding NavigationButtonsVisibility.NextButtonVisibility}"
                         Command="{x:Static wizard:RadWizardCommands.MoveCurrentToNext}"/>
-                <telerik:RadButton x:Name="PART_Cancel"
-                        Content="{Binding CancelButtonContent, Mode=TwoWay}"
-                        Margin="7,0,0,0"
-                        VerticalAlignment="Center"
-                        MinHeight="22"
-                        MinWidth="70"
-                        Visibility="{Binding NavigationButtonsVisibility.CancelButtonVisibility}"
-                        Command="{x:Static wizard:RadWizardCommands.Cancel}"/>
                 <telerik:RadButton x:Name="PART_Finish"
                         Content="{Binding FinishButtonContent, Mode=TwoWay}"
                         Margin="7,0,0,0"
@@ -9379,6 +9409,14 @@
                         VerticalAlignment="Center"
                         Visibility="{Binding NavigationButtonsVisibility.FinishButtonVisibility}"
                         Command="{x:Static wizard:RadWizardCommands.Finish}"/>
+                <telerik:RadButton x:Name="PART_Cancel"
+                        Content="{Binding CancelButtonContent, Mode=TwoWay}"
+                        Margin="7,0,0,0"
+                        VerticalAlignment="Center"
+                        MinHeight="22"
+                        MinWidth="70"
+                        Visibility="{Binding NavigationButtonsVisibility.CancelButtonVisibility}"
+                        Command="{x:Static wizard:RadWizardCommands.Cancel}"/>
             </StackPanel>
         </Grid>
     </DataTemplate>

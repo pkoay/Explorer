@@ -265,7 +265,11 @@
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     Background="{TemplateBinding Background}"/>
-            <Border x:Name="ToggleButtonBackgroundChecked" Grid.ColumnSpan="2" Opacity="0" BorderThickness="1" BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"/>
+            <Border x:Name="ToggleButtonBackgroundChecked"
+                    Grid.ColumnSpan="2"
+                    Opacity="0"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"/>
             <Border x:Name="FocusVisual" Grid.ColumnSpan="2" Visibility="Collapsed" BorderThickness="1" BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
             <Path x:Name="DropDownIcon"
                     Grid.Column="1"
@@ -307,10 +311,10 @@
                     </VisualState>
                     <VisualState x:Name="Pressed">
                         <Storyboard>
+                            <DoubleAnimation Duration="0" Storyboard.TargetName="ToggleButtonPressed" Storyboard.TargetProperty="Opacity" To="1"/>
                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DropDownIcon" Storyboard.TargetProperty="Fill">
                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
                             </ObjectAnimationUsingKeyFrames>
-                            <DoubleAnimation Duration="0" Storyboard.TargetName="ToggleButtonPressed" Storyboard.TargetProperty="Opacity" To="1"/>
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="Disabled">
@@ -342,17 +346,17 @@
                     BorderThickness="{TemplateBinding BorderThickness}"/>
             <Border x:Name="ToggleButtonMouseOver"
                     Grid.ColumnSpan="2"
-                    Background="{telerik1:VisualStudio2013Resource ResourceKey=MouseOverBrush}"
-                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"
                     BorderThickness="1 0 0 0"
-                    Opacity="0"/>
+                    Opacity="0"
+                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"
+                    Background="{telerik1:VisualStudio2013Resource ResourceKey=MouseOverBrush}"/>
             <Border x:Name="ToggleButtonPressed"
                     Grid.ColumnSpan="2"
-                    Background="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
-                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
                     BorderThickness="1 0 0 0"
-                    Opacity="0"/>
-            <Border x:Name="CheckedVisual" Grid.ColumnSpan="2" BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}" BorderThickness="1" Opacity="0"/>
+                    Opacity="0"
+                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
+                    Background="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"/>
+            <Border x:Name="CheckedVisual" Grid.ColumnSpan="2" BorderThickness="1" Opacity="0" BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
             <Path x:Name="DropDownIcon"
                     Grid.Column="1"
                     Data="M0,0 L6,0 L3,4 z"
@@ -728,6 +732,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource ValidationTooltipTemplate}"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue"/>
     </Style>
     <Style TargetType="telerikInput:RadComboBoxItem" BasedOn="{StaticResource RadComboBoxItemStyle}"/>
     <Style TargetType="telerikInput:RadComboBox" BasedOn="{StaticResource RadComboBoxStyle}"/>
@@ -2367,6 +2372,7 @@
                                     MinHeight="14"
                                     Focusable="False"/>
                             <Border x:Name="MouseOverButtonVisual"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, Path=IsButtonPartVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Background="{x:Null}"
@@ -2374,16 +2380,16 @@
                                     IsHitTestVisible="False"
                                     Opacity="0"
                                     BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"/>
-                            <Border x:Name="CheckedToggleButtonVisual"
-                                    Grid.Row="1"
-                                    Grid.Column="2"
-                                    Margin="-1 0 0 0"
-                                    Background="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"
-                                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
-                                    BorderThickness="1"
-                                    IsHitTestVisible="False"
-                                    Visibility="{TemplateBinding DropDownIndicatorVisibility}"
-                                    Opacity="0"/>
+                            <Grid Grid.Row="1" Grid.Column="2" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, Path=IsButtonPartVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Border x:Name="CheckedToggleButtonVisual"
+                                        Margin="-1 0 0 0"
+                                        Background="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"
+                                        BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
+                                        BorderThickness="1"
+                                        IsHitTestVisible="False"
+                                        Visibility="{TemplateBinding DropDownIndicatorVisibility}"
+                                        Opacity="0"/>
+                            </Grid>
                             <Grid x:Name="PART_DropDownIndicator"
                                     IsHitTestVisible="False"
                                     HorizontalAlignment="Center"
@@ -2439,7 +2445,6 @@
                                         Height="{TemplateBinding DropDownHeight}"
                                         MaxWidth="{TemplateBinding DropDownMaxWidth}"
                                         MaxHeight="{TemplateBinding DropDownMaxHeight}"
-                                        CornerRadius="{TemplateBinding CornerRadius}"
                                         Background="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}"
                                         BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"
                                         Margin="0 0 2 2">
@@ -5232,6 +5237,7 @@
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <telerik:RadButton x:Name="moveDownButton"
                                         IsEnabled="{TemplateBinding IsEnabled}"
+                                        telerik:TouchManager.IsTouchHitTestVisible="False"
                                         Width="18"
                                         Height="18"
                                         MinHeight="18"
@@ -5270,6 +5276,7 @@
                                 </telerik:RadButton>
                                 <telerik:RadButton x:Name="moveUpButton"
                                         IsEnabled="{TemplateBinding IsEnabled}"
+                                        telerik:TouchManager.IsTouchHitTestVisible="False"
                                         Width="18"
                                         Height="18"
                                         MinHeight="18"
@@ -5360,6 +5367,7 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                             <telerik:RadButton
                                     IsEnabled="{TemplateBinding IsEnabled}"
+                                    telerik:TouchManager.IsTouchHitTestVisible="False"
                                     MinWidth="50"
                                     Margin="10,2"
                                     CornerRadius="0"
@@ -5367,6 +5375,7 @@
                                     Command="{x:Static propertyGrid:CollectionEditorCommands.AddNew}"/>
                             <telerik:RadButton
                                     IsEnabled="{TemplateBinding IsEnabled}"
+                                    telerik:TouchManager.IsTouchHitTestVisible="False"
                                     MinWidth="50"
                                     Margin="0,2,10,2"
                                     CornerRadius="0"

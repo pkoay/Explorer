@@ -30,9 +30,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
     {
 
         CostPivotViewModel vm;
-        
 
-       public CostPivotView()
+
+        public CostPivotView()
         {
             InitializeComponent();
         }
@@ -42,9 +42,9 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             vm = new CostPivotViewModel(settings);
 
             LocalDataSourceProvider provider = new LocalDataSourceProvider();
-            provider.PrepareDescriptionForField+=provider_PrepareDescriptionForField;
+            provider.PrepareDescriptionForField += provider_PrepareDescriptionForField;
             provider.ItemsSource = vm.data;
-            
+
             //provider.RowGroupDescriptions.Add(new PropertyGroupDescription() { PropertyName = "Schedule" });
             //provider.ColumnGroupDescriptions.Add(new PropertyGroupDescription() { PropertyName = "EstimateItemType" });
             //provider.AggregateDescriptions.Add(new PropertyAggregateDescription() { PropertyName = "Cost"  ,StringFormat="#,##0.00"});
@@ -70,7 +70,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             protected override System.Collections.Generic.IEnumerable<IPivotFieldInfo> GetDescriptions(IFieldInfoExtractor getter)
             {
                 var result = base.GetDescriptions(getter);
-                List<string> PropertiesToSkip = new List<string>() { "DataAreaID","ProjectID", "Error","HasError","Item" };
+                List<string> PropertiesToSkip = new List<string>() { "DataAreaID", "ProjectID", "Error", "HasError", "Item" };
 
                 // filter some of the results
                 List<PropertyInfoFieldInfo> itemsToShow = new List<PropertyInfoFieldInfo>();
@@ -78,7 +78,6 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 foreach (PropertyInfoFieldInfo item in result)
                 {
                     if (!PropertiesToSkip.Contains(item.DisplayName))
-                    
                     {
                         itemsToShow.Add(item);
                     }
@@ -88,7 +87,7 @@ namespace WalzExplorer.Controls.RHSTabs.Project
         }
         private void provider_PrepareDescriptionForField(object sender, PrepareDescriptionForFieldEventArgs e)
         {
-            List<string> PropertiesToFormat = new List<string>() { "PurchQtyPrice", "CostTotal" ,"CostOverhead","CostAmount","Quantity","Hours"};
+            List<string> PropertiesToFormat = new List<string>() { "PurchQtyPrice", "CostTotal", "CostOverhead", "CostAmount", "Quantity", "Hours" };
             var aggregateDescription = e.Description as PropertyAggregateDescriptionBase;
 
             if (e.DescriptionType == Telerik.Pivot.Core.DataProviderDescriptionType.Aggregate && aggregateDescription != null && PropertiesToFormat.Contains(aggregateDescription.PropertyName))
@@ -96,15 +95,15 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 aggregateDescription.StringFormat = "#,##0.00";
             }
         }
-       private  ContextMenu CreateContextMenu()
-       {
-                       // add context menu
+        private ContextMenu CreateContextMenu()
+        {
+            // add context menu
             ContextMenu cm = new ContextMenu();
             cm.FontSize = 12;
             MenuItem mi;
 
             cm.Items.Add(new MenuItem() { Name = "miExportExcel", Header = "Export to Excel", Icon = GraphicsLibrary.ResourceIconCanvasToSize("appbar_page_excel", 16, 16) });
-           
+
             foreach (object o in cm.Items)
             {
                 if (!(o is Separator))
@@ -114,45 +113,45 @@ namespace WalzExplorer.Controls.RHSTabs.Project
                 }
             }
             return cm;
-       }
+        }
 
-       public void cm_ItemClick(object sender, RoutedEventArgs e)
-       {
-           MenuItem mi = (MenuItem)sender;
-           switch (mi.Name)
-           {
-             
+        public void cm_ItemClick(object sender, RoutedEventArgs e)
+        {
+            MenuItem mi = (MenuItem)sender;
+            switch (mi.Name)
+            {
 
-               case "miExportExcel":
-                   if (Pivot.ColumnGroups.Count > 0 || Pivot.RowGroups.Count > 0)
-                   {
-                       //provider.ColumnGroupDescriptions.Add(new PropertyGroupDescription() { PropertyName = "EstimateItemType" });
-                       //provider.AggregateDescriptions.Add(new PropertyAggregateDescription() { PropertyName = "Cost"  ,StringFormat="#,##0.00"});
-                       string fileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".xlsx";
-                       using (Stream stream = File.Create(fileName))
-                       {
-                           PivotExportToExcel.ExportToExcel(stream, Pivot);
-                           //grd.Export(stream,
-                           // new GridViewExportOptions()
-                           // {
-                           //     Format = ExportFormat.ExcelML,
-                           //     ShowColumnHeaders = true,
-                           //     ShowColumnFooters = true,
-                           //     ShowGroupFooters = false,
-                           // });
-                       }
-                       Process excel = new Process();
-                       excel.StartInfo.FileName = fileName;
-                       excel.Start();
-                   }
-                   else
-                   {
-                       MessageBox.Show("No pivot to export");
-                   }
-                   break;
-           }
-       }
-      
+
+                case "miExportExcel":
+                    if (Pivot.ColumnGroups.Count > 0 || Pivot.RowGroups.Count > 0)
+                    {
+                        //provider.ColumnGroupDescriptions.Add(new PropertyGroupDescription() { PropertyName = "EstimateItemType" });
+                        //provider.AggregateDescriptions.Add(new PropertyAggregateDescription() { PropertyName = "Cost"  ,StringFormat="#,##0.00"});
+                        string fileName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".xlsx";
+                        using (Stream stream = File.Create(fileName))
+                        {
+                            PivotExportToExcel.ExportToExcel(stream, Pivot);
+                            //grd.Export(stream,
+                            // new GridViewExportOptions()
+                            // {
+                            //     Format = ExportFormat.ExcelML,
+                            //     ShowColumnHeaders = true,
+                            //     ShowColumnFooters = true,
+                            //     ShowGroupFooters = false,
+                            // });
+                        }
+                        Process excel = new Process();
+                        excel.StartInfo.FileName = fileName;
+                        excel.Start();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No pivot to export");
+                    }
+                    break;
+            }
+        }
+
     }
 
 }

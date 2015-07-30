@@ -233,7 +233,6 @@
     <Style x:Key="RadTileListStyle" TargetType="telerik1:RadTileList">
         <Setter Property="Template" Value="{StaticResource RadTileListTemplate}"/>
         <Setter Property="ItemsPanel" Value="{StaticResource RadTileListItemsPanelTemplate}"/>
-        <Setter Property="GroupHeaderHeight" Value="25"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
@@ -823,7 +822,13 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <ContentPresenter Grid.Row="0" Margin="6" HorizontalAlignment="Center" Content="{TemplateBinding BusyContent}" ContentTemplate="{TemplateBinding BusyContentTemplate}"/>
+                            <ContentPresenter
+                                    Grid.Row="0"
+                                    Margin="6"
+                                    HorizontalAlignment="Center"
+                                    Content="{TemplateBinding BusyContent}"
+                                    ContentTemplate="{TemplateBinding BusyContentTemplate}"
+                                    telerik1:LocalizationManager.ResourceKey="{Binding RelativeSource={RelativeSource TemplatedParent}, Path= BusyContent}"/>
                             <telerik1:RadProgressBar x:Name="ProgressBar"
                                     Grid.Row="1"
                                     IsIndeterminate="{TemplateBinding IsIndeterminate}"
@@ -3858,6 +3863,7 @@
                                     MinHeight="14"
                                     Focusable="False"/>
                             <Border x:Name="MouseOverButtonVisual"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, Path=IsButtonPartVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Background="{x:Null}"
@@ -3865,16 +3871,16 @@
                                     IsHitTestVisible="False"
                                     Opacity="0"
                                     BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"/>
-                            <Border x:Name="CheckedToggleButtonVisual"
-                                    Grid.Row="1"
-                                    Grid.Column="2"
-                                    Margin="-1 0 0 0"
-                                    Background="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"
-                                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
-                                    BorderThickness="1"
-                                    IsHitTestVisible="False"
-                                    Visibility="{TemplateBinding DropDownIndicatorVisibility}"
-                                    Opacity="0"/>
+                            <Grid Grid.Row="1" Grid.Column="2" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, Path=IsButtonPartVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Border x:Name="CheckedToggleButtonVisual"
+                                        Margin="-1 0 0 0"
+                                        Background="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"
+                                        BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
+                                        BorderThickness="1"
+                                        IsHitTestVisible="False"
+                                        Visibility="{TemplateBinding DropDownIndicatorVisibility}"
+                                        Opacity="0"/>
+                            </Grid>
                             <Grid x:Name="PART_DropDownIndicator"
                                     IsHitTestVisible="False"
                                     HorizontalAlignment="Center"
@@ -3930,7 +3936,6 @@
                                         Height="{TemplateBinding DropDownHeight}"
                                         MaxWidth="{TemplateBinding DropDownMaxWidth}"
                                         MaxHeight="{TemplateBinding DropDownMaxHeight}"
-                                        CornerRadius="{TemplateBinding CornerRadius}"
                                         Background="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}"
                                         BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"
                                         Margin="0 0 2 2">
@@ -3971,6 +3976,7 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="MarkerGeometry" Value="{Binding MarkerGeometry}"/>
+        <Setter Property="ContentTemplate" Value="{StaticResource DefaultLegendItemContentTemplate}"/>
         <Setter Property="DefaultMarkerGeometry">
             <Setter.Value>
                 <Binding Path="DefaultMarkerGeometry" RelativeSource="{RelativeSource AncestorType=telerik1:RadLegend}"/>
@@ -4269,9 +4275,9 @@
     </Style>
     <Style TargetType="telerik1:RadWatermarkTextBox" BasedOn="{StaticResource RadWatermarkTextBoxStyle}"/>
     <Style x:Key="DragVisualStyle" TargetType="telerikDragDrop:DragVisual">
-        <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
-        <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
-        <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
+        <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
+        <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Margin" Value="10 0 0 0"/>
         <Setter Property="Padding" Value="0 0 6 0"/>
@@ -4379,7 +4385,7 @@
                                         VerticalAlignment="Top"
                                         StrokeThickness="2"
                                         Data="M2,8 L8,2 M9,5 C9,7.2 7.2,9 5,9 C2.7,9 1,7 1,5 C1,2.8 2.8,1 5,1 C7.2,1 9,2.8 9,5 z"
-                                        Stroke="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"/>
+                                        Stroke="{telerik1:VisualStudio2013Resource ResourceKey=ValidationBrush}"/>
                                 <Path x:Name="MoveEffect"
                                         Visibility="Collapsed"
                                         Margin="5"
@@ -4632,6 +4638,7 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Once"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>

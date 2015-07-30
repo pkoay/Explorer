@@ -25,6 +25,7 @@
     </ResourceDictionary.MergedDictionaries>
     <telerik1:ColorToBrushConverter x:Key="converter"/>
     <telerik1:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <telerik1:InvertedBooleanConverter x:Key="InvertedBooleanConverter"/>
     <CornerRadius x:Key="ValidationTooltip_CornerRadius">0</CornerRadius>
     <Thickness x:Key="CalendarButtonMargin">1</Thickness>
     <Thickness x:Key="CalendarButtonTodayVisualMargin">1</Thickness>
@@ -1738,6 +1739,7 @@
                                     MinHeight="14"
                                     Focusable="False"/>
                             <Border x:Name="MouseOverButtonVisual"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, Path=IsButtonPartVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Background="{x:Null}"
@@ -1745,16 +1747,16 @@
                                     IsHitTestVisible="False"
                                     Opacity="0"
                                     BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"/>
-                            <Border x:Name="CheckedToggleButtonVisual"
-                                    Grid.Row="1"
-                                    Grid.Column="2"
-                                    Margin="-1 0 0 0"
-                                    Background="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"
-                                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
-                                    BorderThickness="1"
-                                    IsHitTestVisible="False"
-                                    Visibility="{TemplateBinding DropDownIndicatorVisibility}"
-                                    Opacity="0"/>
+                            <Grid Grid.Row="1" Grid.Column="2" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, Path=IsButtonPartVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Border x:Name="CheckedToggleButtonVisual"
+                                        Margin="-1 0 0 0"
+                                        Background="{telerik1:VisualStudio2013Resource ResourceKey=PrimaryBrush}"
+                                        BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
+                                        BorderThickness="1"
+                                        IsHitTestVisible="False"
+                                        Visibility="{TemplateBinding DropDownIndicatorVisibility}"
+                                        Opacity="0"/>
+                            </Grid>
                             <Grid x:Name="PART_DropDownIndicator"
                                     IsHitTestVisible="False"
                                     HorizontalAlignment="Center"
@@ -1810,7 +1812,6 @@
                                         Height="{TemplateBinding DropDownHeight}"
                                         MaxWidth="{TemplateBinding DropDownMaxWidth}"
                                         MaxHeight="{TemplateBinding DropDownMaxHeight}"
-                                        CornerRadius="{TemplateBinding CornerRadius}"
                                         Background="{telerik1:VisualStudio2013Resource ResourceKey=AlternativeBrush}"
                                         BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"
                                         Margin="0 0 2 2">
@@ -2042,7 +2043,11 @@
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     Background="{TemplateBinding Background}"/>
-            <Border x:Name="ToggleButtonBackgroundChecked" Grid.ColumnSpan="2" Opacity="0" BorderThickness="1" BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"/>
+            <Border x:Name="ToggleButtonBackgroundChecked"
+                    Grid.ColumnSpan="2"
+                    Opacity="0"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"/>
             <Border x:Name="FocusVisual" Grid.ColumnSpan="2" Visibility="Collapsed" BorderThickness="1" BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
             <Path x:Name="DropDownIcon"
                     Grid.Column="1"
@@ -2084,10 +2089,10 @@
                     </VisualState>
                     <VisualState x:Name="Pressed">
                         <Storyboard>
+                            <DoubleAnimation Duration="0" Storyboard.TargetName="ToggleButtonPressed" Storyboard.TargetProperty="Opacity" To="1"/>
                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DropDownIcon" Storyboard.TargetProperty="Fill">
                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{telerik1:VisualStudio2013Resource ResourceKey=SelectedBrush}"/>
                             </ObjectAnimationUsingKeyFrames>
-                            <DoubleAnimation Duration="0" Storyboard.TargetName="ToggleButtonPressed" Storyboard.TargetProperty="Opacity" To="1"/>
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="Disabled">
@@ -2119,17 +2124,17 @@
                     BorderThickness="{TemplateBinding BorderThickness}"/>
             <Border x:Name="ToggleButtonMouseOver"
                     Grid.ColumnSpan="2"
-                    Background="{telerik1:VisualStudio2013Resource ResourceKey=MouseOverBrush}"
-                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"
                     BorderThickness="1 0 0 0"
-                    Opacity="0"/>
+                    Opacity="0"
+                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentBrush}"
+                    Background="{telerik1:VisualStudio2013Resource ResourceKey=MouseOverBrush}"/>
             <Border x:Name="ToggleButtonPressed"
                     Grid.ColumnSpan="2"
-                    Background="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
-                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
                     BorderThickness="1 0 0 0"
-                    Opacity="0"/>
-            <Border x:Name="CheckedVisual" Grid.ColumnSpan="2" BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}" BorderThickness="1" Opacity="0"/>
+                    Opacity="0"
+                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"
+                    Background="{telerik1:VisualStudio2013Resource ResourceKey=AccentDarkBrush}"/>
+            <Border x:Name="CheckedVisual" Grid.ColumnSpan="2" BorderThickness="1" Opacity="0" BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
             <Path x:Name="DropDownIcon"
                     Grid.Column="1"
                     Data="M0,0 L6,0 L3,4 z"
@@ -2505,6 +2510,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource ValidationTooltipTemplate}"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue"/>
     </Style>
     <Style TargetType="telerikInput:RadComboBoxItem" BasedOn="{StaticResource RadComboBoxItemStyle}"/>
     <Style TargetType="telerikInput:RadComboBox" BasedOn="{StaticResource RadComboBoxStyle}"/>
@@ -2514,7 +2520,9 @@
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Disabled">
                         <Storyboard>
-                            <DoubleAnimation Duration="0:0:0" To="0.2" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Opacity"/>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="Fill">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{telerik1:VisualStudio2013Resource ResourceKey=ComplementaryBrush}"/>
+                            </ObjectAnimationUsingKeyFrames>
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="Normal"/>
@@ -2577,12 +2585,17 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
-                            <StackPanel Orientation="Horizontal">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
                                 <ContentPresenter x:Name="contentPresenter"
                                         Margin="{TemplateBinding Padding}"
                                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                 <telerik:RadButton x:Name="RemoveItemButton"
+                                        Grid.Column="1"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
                                         CornerRadius="0"
@@ -2595,7 +2608,7 @@
                                         Style="{StaticResource RadButtonCloseStyle}"
                                         Margin="2 1 2 1"
                                         Padding="2 4 2 3"/>
-                            </StackPanel>
+                            </Grid>
                         </Border>
                     </Grid>
                 </ControlTemplate>
@@ -2844,14 +2857,16 @@
     </ControlTemplate>
     <Style x:Key="IncreaseRepeatButtonStyle" TargetType="RepeatButton">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Template" Value="{StaticResource IncreaseRepeatButtonControlTemplate}"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="IsEnabled" Value="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InvertedBooleanConverter}}"/>
+        <Setter Property="Template" Value="{StaticResource IncreaseRepeatButtonControlTemplate}"/>
     </Style>
     <Style x:Key="DecreaseRepeatButtonStyle" TargetType="RepeatButton">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="IsEnabled" Value="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InvertedBooleanConverter}}"/>
         <Setter Property="Template" Value="{StaticResource DecreaseRepeatButtonControlTemplate}"/>
     </Style>
     <ControlTemplate x:Key="RadNumericUpDownControlTemplate" TargetType="telerikInput:RadNumericUpDown">
@@ -2995,12 +3010,13 @@
                     Grid.RowSpan="2"
                     Grid.ColumnSpan="2"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=ComplementaryBrush}"
                     Background="{TemplateBinding Background}"
                     IsHitTestVisible="False"
-                    Opacity="0"/>
+                    Opacity="0"
+                    BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=ComplementaryBrush}"/>
             <Rectangle x:Name="FocusVisual" Grid.RowSpan="2" Grid.ColumnSpan="2" StrokeThickness="1" Opacity="0" Stroke="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
             <TextBox x:Name="textbox"
+                    IsReadOnly="{TemplateBinding IsReadOnly}"
                     Grid.RowSpan="2"
                     TabIndex="{TemplateBinding TabIndex}"
                     BorderThickness="0"
@@ -3057,6 +3073,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="MinWidth" Value="22"/>
         <Setter Property="MinHeight" Value="22"/>
         <Setter Property="FontWeight" Value="Normal"/>
@@ -3200,7 +3217,6 @@
                                 IsTabStop="False"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Content="{TemplateBinding Content}"
-                                FontSize="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"
                                 ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
                                 ContentStringFormat="{TemplateBinding ContentStringFormat}"/>
                     </Grid>
@@ -3717,12 +3733,12 @@
         <Setter Property="TooltipTemplate" Value="{StaticResource TooltipTemplate}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="MinHeight" Value="22"/>
-        <Setter Property="Padding" Value="4 2"/>
         <Setter Property="BorderBrush" Value="{telerik1:VisualStudio2013Resource ResourceKey=BasicBrush}"/>
         <Setter Property="Foreground" Value="{telerik1:VisualStudio2013Resource ResourceKey=MarkerBrush}"/>
         <Setter Property="Background" Value="{telerik1:VisualStudio2013Resource ResourceKey=MainBrush}"/>
         <Setter Property="FontSize" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontSize}"/>
         <Setter Property="FontFamily" Value="{telerik1:VisualStudio2013Resource ResourceKey=FontFamily}"/>
+        <Setter Property="Padding" Value="4 2"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="DateTimeWatermarkTemplate" Value="{StaticResource WatermarkTemplate}"/>
@@ -3889,8 +3905,8 @@
                                 TabIndex="0"
                                 SelectionOnFocus="{TemplateBinding SelectionOnFocus}"
                                 FontSize="{TemplateBinding FontSize}"
+                                Padding="{TemplateBinding Padding}"
                                 MinHeight="0"
-                                Padding="4 2 4 2"
                                 Margin="1"
                                 FontFamily="{TemplateBinding FontFamily}"/>
                         <Border x:Name="FocusVisual"
@@ -4669,6 +4685,9 @@
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <DoubleAnimation Duration="0" Storyboard.TargetName="Content" Storyboard.TargetProperty="Opacity" To="0.5"/>
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" Storyboard.TargetName="Content" Storyboard.TargetProperty="Opacity" To="0.2"/>
+                                        </Storyboard>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Normal"/>
@@ -4857,6 +4876,7 @@
                                     Grid.Row="7"
                                     x:Name="RecentColorsPalette"
                                     Margin="0 0 0 1"
+                                    ItemTemplate="{TemplateBinding PaletteItemsTemplate}"
                                     ColorPropertyPath="{TemplateBinding ColorPropertyPath}"
                                     BorderThickness="0"
                                     Background="{TemplateBinding Background}"
@@ -6037,7 +6057,6 @@
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
                                         <DoubleAnimation Duration="0" Storyboard.TargetName="DisplayText" Storyboard.TargetProperty="Opacity" To="0.2"/>
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="EditorSite" Storyboard.TargetProperty="Opacity" To="0.2"/>
                                         <DoubleAnimation Duration="0" Storyboard.TargetName="Content" Storyboard.TargetProperty="Opacity" To="0.2"/>
                                     </Storyboard>
                                 </VisualState>
@@ -6171,7 +6190,10 @@
                                 BorderThickness="1"
                                 Background="{x:Null}"
                                 BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=AccentMainBrush}"/>
-                        <Border x:Name="DisabledVisual" Visibility="Collapsed" BorderThickness="1" BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=ComplementaryBrush}"/>
+                        <Border x:Name="DisabledVisual"
+                                Visibility="Collapsed"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{telerik1:VisualStudio2013Resource ResourceKey=ComplementaryBrush}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

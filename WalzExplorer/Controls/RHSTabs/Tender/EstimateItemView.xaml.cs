@@ -10,7 +10,7 @@ using System.Windows.Threading;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Data;
-using Telerik.Windows.Documents.Primitives;
+//using Telerik.Windows.Documents.Primitives;
 using WalzExplorer.Common;
 using WalzExplorer.Controls.Grid;
 
