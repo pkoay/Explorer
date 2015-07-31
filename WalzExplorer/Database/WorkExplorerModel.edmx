@@ -2016,6 +2016,14 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ScheduleLevel' does not have
           <Parameter Name="ManagerID" Type="int" Mode="In" />
           <Parameter Name="CustomerID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spWEX_RHS_Project_Summary_v3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Summary_v3">
+          <Parameter Name="UserPersonID" Type="nvarchar" Mode="In" />
+          <Parameter Name="NodeTypeID" Type="varchar" Mode="In" />
+          <Parameter Name="SearchCriteria" Type="varchar(max)" Mode="In" />
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
+          <Parameter Name="ManagerID" Type="int" Mode="In" />
+          <Parameter Name="CustomerID" Type="int" Mode="In" />
+        </Function>
         <Function Name="spWEX_RHSTabList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHSTabList">
           <Parameter Name="TreeNodeTypeID" Type="varchar" Mode="In" />
           <Parameter Name="NTSecurityGroups" Type="varchar(max)" Mode="In" />
@@ -3187,6 +3195,14 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ScheduleLevel' does not have
             <End Role="tblTender_Schedule" EntitySet="tblTender_Schedule" />
             <End Role="vwTender_ScheduleLevel" EntitySet="vwTender_ScheduleLevel" />
           </AssociationSet>
+          <FunctionImport Name="spWEX_RHS_Project_Summary_v3" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_Summary_v3_Result)">
+            <Parameter Name="UserPersonID" Mode="In" Type="String" />
+            <Parameter Name="NodeTypeID" Mode="In" Type="String" />
+            <Parameter Name="SearchCriteria" Mode="In" Type="String" />
+            <Parameter Name="ProjectID" Mode="In" Type="Int32" />
+            <Parameter Name="ManagerID" Mode="In" Type="Int32" />
+            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
           <Property Type="Int32" Name="TopParentID" Nullable="false" />
@@ -5479,6 +5495,34 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ScheduleLevel' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="spWEX_RHS_Project_Summary_v3_Result">
+          <Property Type="Int32" Name="ProjectID" Nullable="false" />
+          <Property Type="String" Name="AXProjectID" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="AXDataAreaID" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Manager" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="OperationsManager" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Customer" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+          <Property Type="Double" Name="Contract" Nullable="true" />
+          <Property Type="Double" Name="CostBudget" Nullable="true" />
+          <Property Type="Double" Name="Cost" Nullable="true" />
+          <Property Type="Double" Name="Committed" Nullable="true" />
+          <Property Type="Double" Name="Invoiced" Nullable="true" />
+          <Property Type="Double" Name="Margin" Nullable="true" />
+          <Property Type="Double" Name="MarginPercent" Nullable="true" />
+          <Property Type="Double" Name="Planned" Nullable="true" />
+          <Property Type="Double" Name="Earned" Nullable="true" />
+          <Property Type="Double" Name="Actual" Nullable="true" />
+          <Property Type="Double" Name="CostVariance" Nullable="true" />
+          <Property Type="Double" Name="ScheduleVariance" Nullable="true" />
+          <Property Type="Double" Name="CPI" Nullable="true" />
+          <Property Type="Double" Name="SPI" Nullable="true" />
+          <Property Type="DateTime" Name="SignDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="UpdatedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6968,6 +7012,38 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ScheduleLevel' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_Summary_v3" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_Summary_v3">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_Summary_v3_Result">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="AXProjectID" ColumnName="AXProjectID" />
+                <ScalarProperty Name="AXDataAreaID" ColumnName="AXDataAreaID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+                <ScalarProperty Name="OperationsManager" ColumnName="OperationsManager" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Contract" ColumnName="Contract" />
+                <ScalarProperty Name="CostBudget" ColumnName="CostBudget" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Committed" ColumnName="Committed" />
+                <ScalarProperty Name="Invoiced" ColumnName="Invoiced" />
+                <ScalarProperty Name="Margin" ColumnName="Margin" />
+                <ScalarProperty Name="MarginPercent" ColumnName="MarginPercent" />
+                <ScalarProperty Name="Planned" ColumnName="Planned" />
+                <ScalarProperty Name="Earned" ColumnName="Earned" />
+                <ScalarProperty Name="Actual" ColumnName="Actual" />
+                <ScalarProperty Name="CostVariance" ColumnName="CostVariance" />
+                <ScalarProperty Name="ScheduleVariance" ColumnName="ScheduleVariance" />
+                <ScalarProperty Name="CPI" ColumnName="CPI" />
+                <ScalarProperty Name="SPI" ColumnName="SPI" />
+                <ScalarProperty Name="SignDate" ColumnName="SignDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

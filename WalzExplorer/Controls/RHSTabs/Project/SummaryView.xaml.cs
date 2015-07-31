@@ -52,23 +52,55 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.columnSettings.format.Add("Cost", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grd.columnSettings.format.Add("Committed", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
             grd.columnSettings.format.Add("Invoiced", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("Margin", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("MarginPercent", Grid.Grid_Read.columnFormat.PERCENT_NO_TOTAL_TWO_DECIMAL);
+            grd.columnSettings.rename.Add("MarginPercent", "Margin%");
           
             grd.columnSettings.toolTip.Add("Contract", "Contract Value including all approved variations");
             grd.columnSettings.toolTip.Add("CostBudget", "Cost Budget including all approved variations");
             grd.columnSettings.toolTip.Add("Cost", "Costs to date (Includes Overheads) (Excludes Committed Costs)");
             grd.columnSettings.toolTip.Add("Committed", "Committed Costs to date (Open purchase orders)");
             grd.columnSettings.toolTip.Add("Invoiced", "Invoiced to client to date");
+            grd.columnSettings.toolTip.Add("Margin", String.Join(Environment.NewLine,
+            "Net profit: Invoiced-Costs",
+            "Note: costs include overheads and excludes committed costs"));
+            grd.columnSettings.toolTip.Add("MarginPercent", String.Join(Environment.NewLine,
+             "Net profit margin: (Invoiced-Costs)/Invoiced ",
+             "Note: if invoiced is 0 then this field will be blank",
+             "Note: costs include overheads and excludes committed costs"));
+
+            
+            grd.columnSettings.format.Add("SignDate", Grid.Grid_Read.columnFormat.DATE);
+            grd.columnSettings.format.Add("Planned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("Earned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("Actual", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("ScheduleVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("CostVariance", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("SPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            grd.columnSettings.format.Add("CPI", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
+            
 
 
-            grd.columnSettings.toolTip.Add("CostSignDate", "Latest signed Date for CostPlanned,CostEarned and CostActual columns (from Performance tab) ");
-            grd.columnSettings.toolTip.Add("CostPlanned", "Latest signed Planned cost amount (from Performance tab)");
-            grd.columnSettings.toolTip.Add("CostEarned", "Latest signed Earned cost amount (from Performance tab)");
-            grd.columnSettings.toolTip.Add("CostActual", "Latest signed Actual cost amount (from Performance tab)");
-            grd.columnSettings.format.Add("CostSignDate", Grid.Grid_Read.columnFormat.DATE);
-            grd.columnSettings.format.Add("CostPlanned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
-            grd.columnSettings.format.Add("CostEarned", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
-            grd.columnSettings.format.Add("CostActual", Grid.Grid_Read.columnFormat.TWO_DECIMAL);
-
+            grd.columnSettings.toolTip.Add("SignDate", "Latest signed Date for CostPlanned,CostEarned and CostActual columns (from Performance tab) ");
+            grd.columnSettings.toolTip.Add("Planned", "Latest signed 'Planned' in cost dollars (from Performance tab)");
+            grd.columnSettings.toolTip.Add("Earned", "Latest signed 'Earned' in cost dollars (from Performance tab)");
+            grd.columnSettings.toolTip.Add("Actual", "Latest signed 'Actual' in cost dollars (from Performance tab)");
+            grd.columnSettings.toolTip.Add("ScheduleVariance", String.Join(Environment.NewLine,
+              "Latest signed 'Schedule Variance' ",
+              "in cost dollars (from Performance tab)",
+              "Calculated by Earned-Planned"));
+            grd.columnSettings.toolTip.Add("CostVariance", String.Join(Environment.NewLine,
+              "Latest signed 'Cost Variance' ",
+              "in cost dollars (from Performance tab)",
+              "Calculated by Earned-Actual"));
+            grd.columnSettings.toolTip.Add("SPI", String.Join(Environment.NewLine,
+                "Latest signed 'Schedule Performance Index' ",
+                "in cost dollars (from Performance tab)",
+                "Calculated by Earned/Planned"));
+            grd.columnSettings.toolTip.Add("CPI", String.Join(Environment.NewLine,
+                "Latest signed 'Cost Performance Index' ",
+                "in cost dollars (from Performance tab)",
+                "Calculated by Earned/Actual"));
             grd.columnSettings.drilldown.Add("Committed");
             grd.columnSettings.drilldown.Add("Cost");
 

@@ -740,5 +740,34 @@ namespace WalzExplorer.Database
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_FixedAsset_Summary2_Result>("spWEX_RHS_FixedAsset_Summary2", nodeTypeIDParameter, searchCriteriaParameter, assetIDParameter, assetGroupParameter);
         }
+    
+        public virtual ObjectResult<spWEX_RHS_Project_Summary_v3_Result> spWEX_RHS_Project_Summary_v3(string userPersonID, string nodeTypeID, string searchCriteria, Nullable<int> projectID, Nullable<int> managerID, Nullable<int> customerID)
+        {
+            var userPersonIDParameter = userPersonID != null ?
+                new ObjectParameter("UserPersonID", userPersonID) :
+                new ObjectParameter("UserPersonID", typeof(string));
+    
+            var nodeTypeIDParameter = nodeTypeID != null ?
+                new ObjectParameter("NodeTypeID", nodeTypeID) :
+                new ObjectParameter("NodeTypeID", typeof(string));
+    
+            var searchCriteriaParameter = searchCriteria != null ?
+                new ObjectParameter("SearchCriteria", searchCriteria) :
+                new ObjectParameter("SearchCriteria", typeof(string));
+    
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            var managerIDParameter = managerID.HasValue ?
+                new ObjectParameter("ManagerID", managerID) :
+                new ObjectParameter("ManagerID", typeof(int));
+    
+            var customerIDParameter = customerID.HasValue ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_Summary_v3_Result>("spWEX_RHS_Project_Summary_v3", userPersonIDParameter, nodeTypeIDParameter, searchCriteriaParameter, projectIDParameter, managerIDParameter, customerIDParameter);
+        }
     }
 }
