@@ -769,5 +769,14 @@ namespace WalzExplorer.Database
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_Summary_v3_Result>("spWEX_RHS_Project_Summary_v3", userPersonIDParameter, nodeTypeIDParameter, searchCriteriaParameter, projectIDParameter, managerIDParameter, customerIDParameter);
         }
+    
+        public virtual ObjectResult<spWEX_RHS_Project_ContractValueVsInvoiced_Result> spWEX_RHS_Project_ContractValueVsInvoiced(Nullable<int> projectID)
+        {
+            var projectIDParameter = projectID.HasValue ?
+                new ObjectParameter("ProjectID", projectID) :
+                new ObjectParameter("ProjectID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spWEX_RHS_Project_ContractValueVsInvoiced_Result>("spWEX_RHS_Project_ContractValueVsInvoiced", projectIDParameter);
+        }
     }
 }

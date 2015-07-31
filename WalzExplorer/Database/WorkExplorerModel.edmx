@@ -1959,6 +1959,9 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ScheduleLevel' does not have
         <Function Name="spWEX_RHS_Project_ContractValue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_ContractValue">
           <Parameter Name="ProjectID" Type="int" Mode="In" />
         </Function>
+        <Function Name="spWEX_RHS_Project_ContractValueVsInvoiced" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_ContractValueVsInvoiced">
+          <Parameter Name="ProjectID" Type="int" Mode="In" />
+        </Function>
         <Function Name="spWEX_RHS_Project_Cost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="spWEX.RHS_Project_Cost">
           <Parameter Name="ProjectID" Type="int" Mode="In" />
         </Function>
@@ -3202,6 +3205,9 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ScheduleLevel' does not have
             <Parameter Name="ProjectID" Mode="In" Type="Int32" />
             <Parameter Name="ManagerID" Mode="In" Type="Int32" />
             <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spWEX_RHS_Project_ContractValueVsInvoiced" ReturnType="Collection(WalzExplorerModel.spWEX_RHS_Project_ContractValueVsInvoiced_Result)">
+            <Parameter Name="ProjectID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="fnTender_Schedule_List_Result">
@@ -5523,6 +5529,16 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ScheduleLevel' does not have
           <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
           <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" />
         </ComplexType>
+        <ComplexType Name="spWEX_RHS_Project_ContractValueVsInvoiced_Result">
+          <Property Type="String" Name="DataAreaID" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="ProjID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ProjName" Nullable="false" MaxLength="60" />
+          <Property Type="Decimal" Name="OriginalBudget" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="BudgetVariation" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="CurrentBudget" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="Invoiced" Nullable="true" Precision="38" Scale="12" />
+          <Property Type="Decimal" Name="Remaining" Nullable="true" Precision="38" Scale="12" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7041,6 +7057,20 @@ warning 6002: The table/view 'Explorer.dbo.vwTender.ScheduleLevel' does not have
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spWEX_RHS_Project_ContractValueVsInvoiced" FunctionName="WalzExplorerModel.Store.spWEX_RHS_Project_ContractValueVsInvoiced">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WalzExplorerModel.spWEX_RHS_Project_ContractValueVsInvoiced_Result">
+                <ScalarProperty Name="DataAreaID" ColumnName="DataAreaID" />
+                <ScalarProperty Name="ProjID" ColumnName="ProjID" />
+                <ScalarProperty Name="ProjName" ColumnName="ProjName" />
+                <ScalarProperty Name="OriginalBudget" ColumnName="OriginalBudget" />
+                <ScalarProperty Name="BudgetVariation" ColumnName="BudgetVariation" />
+                <ScalarProperty Name="CurrentBudget" ColumnName="CurrentBudget" />
+                <ScalarProperty Name="Invoiced" ColumnName="Invoiced" />
+                <ScalarProperty Name="Remaining" ColumnName="Remaining" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

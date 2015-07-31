@@ -61,9 +61,11 @@ namespace WalzExplorer.Controls.RHSTabs.Project
             grd.columnSettings.toolTip.Add("Cost", "Costs to date (Includes Overheads) (Excludes Committed Costs)");
             grd.columnSettings.toolTip.Add("Committed", "Committed Costs to date (Open purchase orders)");
             grd.columnSettings.toolTip.Add("Invoiced", "Invoiced to client to date");
+
             grd.columnSettings.toolTip.Add("Margin", String.Join(Environment.NewLine,
             "Net profit: Invoiced-Costs",
             "Note: costs include overheads and excludes committed costs"));
+
             grd.columnSettings.toolTip.Add("MarginPercent", String.Join(Environment.NewLine,
              "Net profit margin: (Invoiced-Costs)/Invoiced ",
              "Note: if invoiced is 0 then this field will be blank",
